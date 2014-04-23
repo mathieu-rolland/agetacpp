@@ -1,13 +1,21 @@
-package com.istic.agetac;
+package com.istic.agetac.activities;
 
-import com.istic.agetic.R;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+
+import com.istic.agetac.R;
 
 public class MainActivity extends Activity {
 
+	
+	public static void launchActivity(Context context) {
+		Intent intent = new Intent(context, MainActivity.class);
+		context.startActivity(intent);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

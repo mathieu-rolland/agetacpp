@@ -28,6 +28,4 @@
     <string name="labelCodeIntervention">Code sinistre :</string>
     <string name="CreateIntervention">Entrer un nom d\'intervention</string>
     <string name="CreateCode">Entrer un code sinistre</string>
-    
-    
 </resources>

@@ -1,5 +1,7 @@
 package com.istic.agetac.model;
 
+import java.sql.Date;
+
 import org.json.JSONObject;
 
 import android.os.Parcel;
@@ -21,6 +23,11 @@ public class Moyen extends Entity {
 	private IProperty typePropertie;
 	// TODO private Intervention intervention;
 	// TODO private GroupeMoyen group;
+	private Date mHourDemand;	
+	private Date mHourEngagement;
+	private Date mHourArrivedOnSite;
+	private Date mHourFree;
+	private String mSector;
 	
 	/**
 	 * Constructeur de la classe Moyen
@@ -146,5 +153,46 @@ public class Moyen extends Entity {
 	public void setFrozen(boolean frozen) {
 		super.setFrozen(frozen);
 	}
+	
+	public Date getmHourDemand() {
+		return mHourDemand;
+	}
+
+	public void setmHourDemand(Date mHourDemand) {
+		this.mHourDemand = mHourDemand;
+	}
+
+	public Date getmHourEngagement() {
+		return mHourEngagement;
+	}
+
+	public void setmHourEngagement(Date mHourEngagement) {
+		this.mHourEngagement = mHourEngagement;
+	}
+
+	public Date getmHourArrivedOnSite() {
+		return mHourArrivedOnSite;
+	}
+
+	public void setmHourArrivedOnSite(Date mHourArrivedOnSite) {
+		this.mHourArrivedOnSite = mHourArrivedOnSite;
+	}
+
+	public Date getmHourFree() {
+		return mHourFree;
+	}
+
+	public void setmHourFree(Date mHourFree) {
+		this.mHourFree = mHourFree;
+	}
+
+	public String getmSector() {
+		return mSector;
+	}
+
+	public void setmSector(String mSector) {
+		this.mSector = mSector;
+	}
+
 
 }

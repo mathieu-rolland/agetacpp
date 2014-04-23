@@ -24,20 +24,19 @@
     
     
     <!--  Layout intervention -->
-    <string name="labelNameIntervention">Intervention :</string>
-    <string name="labelCodeIntervention">Code sinistre :</string>
-    <string name="TextIntervention">Entrer un nom d\'intervention</string>
-    <string name="TextCode">Entrer un code sinistre</string>
-    <string name="ValidIntervention">Valider</string>
+    <string name="textIntervention">Entrer un nom d\'intervention</string>
+    <string name="textCode">Entrer un code sinistre</string>
+    <string name="switchFragment">Ajouter un moyen</string>
+    <string name="validIntervention">Valider</string>              
     
     <!-- Layout : tableau des moyens -->
-    <string name ="demande">GH_Demande</string>
-    <string name ="arrive">GH_Arrive</string>
-    <string name ="retour">GH_Retour</string>
-    <string name ="depart">GH_Depart</string>
-          
-    <string name="CreateIntervention">Entrer un nom d\'intervention</string>
-    <string name="CreateCode">Entrer un code sinistre</string>
+    <string name ="fragment_tableau_nameAndType">Nom et type</string>
+    <string name ="fragment_tableau_demand">Heure de demande</string>
+    <string name ="fragment_tableau_engage">Heure d\'engagement</string>
+    <string name ="fragment_tableau_arrive">Heure d\'arrivée sur site</string>
+    <string name ="fragment_tableau_free">Heure de libération</string>
+    <string name ="fragment_tableau_sector">Secteur</string>
+
     
     <!-- Messages : Possibilité de prefix -->
     <string-array name="prefixes_rendre_compte">

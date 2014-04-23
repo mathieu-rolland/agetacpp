@@ -1,6 +1,7 @@
 package com.istic.agetac.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,41 +11,53 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.istic.agetac.R;
+import com.istic.agetac.fragments.DemandeDeMoyensFragment;
 import com.istic.agetac.fragments.TableauMoyenFragment;
 
 public class InterventionActivity extends FragmentActivity{
 
 	// Layout
-	private Button validButton;
+	private Button mValidButton;
+	private Button mSwitchButton;
+	private FrameLayout mFragment;
+	private CurrentFragment mCurrentFragment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_intervention);
-		//validButton= (Button) findViewById(R.id.activity_intervention_buttonValidIntervention);
+		mValidButton= (Button) findViewById(R.id.activity_intervention_buttonValid);
+		mSwitchButton = (Button) findViewById(R.id.activity_intervention_buttonSwitch);
 		
-		FrameLayout frameHome = (FrameLayout) findViewById(R.id.activity_intervention_frame_tableau);
+		mFragment = (FrameLayout) findViewById(R.id.activity_intervention_frame_tableau);
         
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        if(frameHome != null) {
+        if(mFragment != null) {
         	ft.replace(R.id.activity_intervention_frame_tableau, new TableauMoyenFragment());
         	ft.addToBackStack(null);
+        	mCurrentFragment = CurrentFragment.tableau;
         }
         ft.commit();
 		
 		
-		/*validButton.setOnClickListener(new View.OnClickListener() {
+		mValidButton.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
 		        ValidNewIntervention();
 		    }
-		});*/
+		});
+		
+		mSwitchButton.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		        SwitchFragment();
+		    }
+		});
 	}	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -57,6 +70,37 @@ public class InterventionActivity extends FragmentActivity{
 		intent.putExtras(b); //Put your id to your next Intent
 		startActivity(intent);
 		finish();*/
+	}
+	
+	private void SwitchFragment()
+	{
+		FragmentManager fm = getSupportFragmentManager();
+		Fragment fragment = null;
+		
+		if(mCurrentFragment==CurrentFragment.tableau)
+		{
+			fragment = new DemandeDeMoyensFragment();
+			mCurrentFragment = CurrentFragment.ajoutMoyen;
+		}
+		else
+		{
+			fragment = new TableauMoyenFragment();
+			mCurrentFragment = CurrentFragment.tableau;
+		}
+		
+		
+		FragmentTransaction ft = fm.beginTransaction();
+		if (mFragment != null) {
+			ft.replace(R.id.activity_intervention_frame_tableau,fragment);
+			ft.addToBackStack(null);
+		}
+		ft.commit();
+	}
+	
+	public enum CurrentFragment
+	{
+		tableau,
+		ajoutMoyen
 	}
 	
 }

@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    
     <string name="app_name">Agetac++</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    
+    <!-- General -->
+    <string name="general_empty_string"></string>
+    
+    <!-- Layout : Demande de moyens -->
+    <string name="demande_de_moyen_TextView_layoutTitle">AGETAC++ - Demande de moyens</string>
+    <string name="demande_de_moyen_TextView_GridViewTitle">Choisissez un moyen (Véhicule ou sapeur-pompier)</string>
+    <string name="demande_de_moyen_TextView_TextField">Chercher un autre moyen : </string>
+    <string name="demande_de_moyen_ButtonText_OneMore">+</string>
+    <string name="demande_de_moyen_ButtonText_OneLess">-</string>
+    <string name="demande_de_moyen_EditText_DefaultQuantity">1</string>
+    <string name="demande_de_moyen_ButtonText_AddToList">Ajouter à la liste </string>
+    <string name="demande_de_moyen_ButtonText_SendList">Envoyer cette liste</string>
+    <string name="demande_de_moyen_TextView_Quantity">Quantité :  </string>
+    <string name="demande_de_moyen_TextView_ListViewTitle">Liste des moyens demandés : </string>
+    <string name="demande_de_moyen_Dialog_ButtonText_Cancel">Annuler</string>
+    <string name="demande_de_moyen_Dialog_ButtonText_Delete">Supprimer</string>
+    
 </resources>

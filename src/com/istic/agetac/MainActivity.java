@@ -1,4 +1,6 @@
-package com.istic.agetic;
+package com.istic.agetac;
+
+import com.istic.agetic.R;
 
 import android.os.Bundle;
 import android.app.Activity;

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/demande_de_moyen_ListView_relativelayout"
+    android:layout_width="match_parent"
+    android:layout_height="100dip"
+    android:background="@drawable/button_style_red">
+
+    <TextView
+        android:id="@+id/demande_de_moyen_item_TextView_Quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:text="@string/general_empty_string"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textSize="30sp"
+        android:padding="15dip"
+        android:background="@drawable/button_style_grey"
+        android:textColor="#efefef"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/demande_de_moyen_item_TextView_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textColor="#efefef"
+        android:textSize="20dip"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/demande_de_moyen_item_Button_Delete_icon"
+        android:layout_width="60dip"
+        android:layout_height="match_parent"
+        android:layout_alignRight="@+id/demande_de_moyen_item_TextView_name"
+        android:layout_alignTop="@+id/demande_de_moyen_item_TextView_name"
+        android:background="@drawable/image_corbeille_rouge"
+        android:gravity="right" />
+    
+</RelativeLayout>

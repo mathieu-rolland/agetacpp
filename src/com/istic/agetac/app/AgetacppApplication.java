@@ -1,4 +1,4 @@
-package com.istic.agetic.app;
+package com.istic.agetac.app;
 
 import com.istic.sit.framework.application.FrameworkApplication;
 

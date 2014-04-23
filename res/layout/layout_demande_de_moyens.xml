@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#171f21"
+    android:orientation="horizontal"
+    android:paddingTop="15dp"
+    tools:ignore="DisableBaselineAlignment" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingRight="5dp" >
+
+        <TextView
+            android:id="@+id/moyens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="15dp"
+            android:text="@string/demande_de_moyen_TextView_GridViewTitle"
+            android:textColor="#efefef"
+            android:textSize="22sp" />
+
+        <GridView
+            android:id="@+id/demande_de_moyen_GridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:columnWidth="100dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:longClickable="false"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:verticalSpacing="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="15dp" >
+
+            <TextView
+                android:id="@+id/demande_de_moyen_TextView_TextField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="7dp"
+                android:paddingRight="10dp"
+                android:text="@string/demande_de_moyen_TextView_TextField"
+                android:textColor="#efefef"
+                android:textSize="22sp" />
+
+            <AutoCompleteTextView
+                android:id="@+id/demande_de_moyen_AutoCompleteTextView_TextField"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="0.99"
+                android:background="#efefef"
+                android:completionThreshold="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="15dp" >
+
+            <TextView
+                android:id="@+id/demande_de_moyen_TextView_Quantity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:paddingRight="10dp"
+                android:text="@string/demande_de_moyen_TextView_Quantity"
+                android:textColor="#efefef"
+                android:textSize="22sp" />
+
+            <EditText
+                android:id="@+id/demande_de_moyen_EditText_DefaultQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="60dp"
+                android:layout_weight="1"
+                android:background="#efefef"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="@string/demande_de_moyen_EditText_DefaultQuantity"
+                android:textIsSelectable="false"
+                android:textSize="40sp"
+                android:color="#000000" >
+            </EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/demande_de_moyen_Button_OneMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="50"
+                    android:background="@drawable/button_style_red"
+                    android:text="@string/demande_de_moyen_ButtonText_OneMore"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/demande_de_moyen_Button_OneLess"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="50"
+                    android:background="@drawable/button_style_red"
+                    android:text="@string/demande_de_moyen_ButtonText_OneLess"
+                    android:textSize="25sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/demande_de_moyen_Button_AddToList"
+            android:layout_width="match_parent"
+            android:layout_height="70dip"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_style_red"
+            android:text="@string/demande_de_moyen_ButtonText_AddToList"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp" >
+
+        <TextView
+            android:id="@+id/demande_de_moyen_TextView_ListViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="15dp"
+            android:text="@string/demande_de_moyen_TextView_ListViewTitle"
+            android:textColor="#efefef"
+            android:textSize="22sp" />
+
+        <ListView
+            android:id="@+id/demande_de_moyen_ListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1" >
+        </ListView>
+
+        <Button
+            android:id="@+id/demande_de_moyen_Button_SendList"
+            android:layout_width="match_parent"
+            android:layout_height="70dip"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_style_grey"
+            android:text="@string/demande_de_moyen_ButtonText_SendList"
+            android:textColor="#efefef"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+</LinearLayout>

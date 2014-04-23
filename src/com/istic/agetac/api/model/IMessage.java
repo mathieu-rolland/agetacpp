@@ -7,6 +7,9 @@ public interface IMessage {
 	public void setText(String text);
 	public String getText();
 	public boolean isEditable();
+	public boolean isValidate();
+	public void validate();
+	public void unvalidate();
 	public void lock();
 	public void unlock();
 	public void save();

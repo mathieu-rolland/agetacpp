@@ -36,5 +36,18 @@
     <string name ="retour">GH_Retour</string>
     <string name ="depart">GH_Depart</string>
           
+    <string name="CreateIntervention">Entrer un nom d\'intervention</string>
+    <string name="CreateCode">Entrer un code sinistre</string>
+    
+    <!-- Messages : Possibilité de prefix -->
+    <string-array name="prefixes_rendre_compte">
+        <item name="je_suis">Je suis</item>
+        <item name="je_vois">Je vois</item>
+        <item name="je_prevois">Je prevois</item>
+        <item name="je_fais">Je fais</item>
+        <item name="je_demande">Je demande</item>
+    </string-array>
+    
+    <string name="fragment_messages_list_message_validate_text">Envoyer</string>
     
 </resources>

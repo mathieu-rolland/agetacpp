@@ -9,6 +9,16 @@ public class Message implements IMessage {
 	private String message;
 	
 	@Override
+	public String getUid() {
+		return uid;
+	}
+
+	@Override
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	
+	@Override
 	public void setText(String text) {
 		this.message = text;
 	}

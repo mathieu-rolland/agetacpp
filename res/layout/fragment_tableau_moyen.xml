@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"    
+    android:orientation="vertical" >
+    
+        <TableLayout
+        android:id="@+id/fragment_tableau_moyen_tableGr"
+        android:layout_width="match_parent"
+        android:background="#171f21"
+        android:layout_height="match_parent" >
+
+        <TableRow
+            android:id="@+id/fragment_tableau_moyen_tableRow0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/fragment_tableau_moyen_gh_demande"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/demande"
+                android:textColor="#efefef"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/fragment_tableau_moyen_gh_depart"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/depart"
+                android:textColor="#efefef"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/fragment_tableau_moyen_gh_arrive"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/arrive"
+                android:textColor="#efefef"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/fragment_tableau_moyen_gh_retour"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/retour"
+                android:textColor="#efefef"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/fragment_tableau_moyen_gh_groupe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textColor="#992f2f"
+                android:textSize="30sp" 
+                />
+            
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+			android:layout_height="1dp" 
+			android:background="#BDBDBD">
+            
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_span="2"
+                android:text="" 
+                />
+            
+        </TableRow>
+        
+    </TableLayout>
+
+</LinearLayout>

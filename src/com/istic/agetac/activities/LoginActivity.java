@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -211,7 +212,10 @@ public class LoginActivity extends Activity {
 				//finish();
 				if (mUser.equals("codis"))
 					//CreateInterventionActivity.launchActivity(LoginActivity.this);
-					MainActivity.launchActivity(LoginActivity.this);
+				{
+					Intent intent = new Intent(getApplicationContext(), InterventionActivity.class); 
+					startActivity(intent);
+				}
 				else MainActivity.launchActivity(LoginActivity.this);
 			} else {
 				mPasswordView

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#171f21"
+    android:orientation="vertical" >
+
+
+    <EditText
+        android:id="@+id/activity_intervention_nameIntervention"
+        android:layout_width="978dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/TextIntervention"
+        android:inputType="text"
+        android:textColor="#efefef" />
+
+    <EditText
+        android:id="@+id/activity_intervention_codeIntervention"
+        android:layout_width="978dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/TextCode"
+        android:inputType="text"
+        android:textColor="#efefef" />
+
+    <FrameLayout
+        android:id="@+id/activity_intervention_frame_tableau"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.41" />
+
+</LinearLayout>

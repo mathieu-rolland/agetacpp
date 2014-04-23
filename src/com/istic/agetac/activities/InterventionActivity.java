@@ -1,52 +1,45 @@
 package com.istic.agetac.activities;
 
-import com.istic.agetac.R;
-import com.istic.agetac.fragments.TableauMoyenFragment;
-
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
+
+import com.istic.agetac.R;
+import com.istic.agetac.fragments.TableauMoyenFragment;
 
 public class InterventionActivity extends FragmentActivity{
 
 	// Layout
 	private Button validButton;
-	private EditText nameIntervention;
-	private EditText codeIntervention;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_intervention);
-		validButton= (Button) findViewById(R.id.layout_intervention_buttonValidIntervention);
-		nameIntervention =(EditText) findViewById(R.id.layout_intervention_nameIntervention);
-		codeIntervention =(EditText) findViewById(R.id.layout_intervention_codeIntervention);
+		setContentView(R.layout.activity_intervention);
+		//validButton= (Button) findViewById(R.id.activity_intervention_buttonValidIntervention);
 		
-		FrameLayout frameHome = (FrameLayout) findViewById(R.id.layout_intervention_frameLayout_tableauMoyen);
+		FrameLayout frameHome = (FrameLayout) findViewById(R.id.activity_intervention_frame_tableau);
         
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if(frameHome != null) {
-        	ft.replace(R.id.layout_intervention_frameLayout_tableauMoyen, new TableauMoyenFragment());
+        	ft.replace(R.id.activity_intervention_frame_tableau, new TableauMoyenFragment());
+        	ft.addToBackStack(null);
         }
         ft.commit();
 		
 		
-		validButton.setOnClickListener(new View.OnClickListener() {
+		/*validButton.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
 		        ValidNewIntervention();
 		    }
-		});
+		});*/
 	}	
 	
 	@Override

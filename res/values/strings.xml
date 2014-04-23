@@ -22,4 +22,12 @@
     <string name="demande_de_moyen_Dialog_ButtonText_Cancel">Annuler</string>
     <string name="demande_de_moyen_Dialog_ButtonText_Delete">Supprimer</string>
     
+    
+    <!--  Layout intervention -->
+    <string name="labelNameIntervention">Intervention :</string>
+    <string name="labelCodeIntervention">Code sinistre :</string>
+    <string name="CreateIntervention">Entrer un nom d\'intervention</string>
+    <string name="CreateCode">Entrer un code sinistre</string>
+    
+    
 </resources>

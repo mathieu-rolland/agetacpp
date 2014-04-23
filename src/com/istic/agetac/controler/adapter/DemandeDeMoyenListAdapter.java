@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.controllers.listeners.demandeDeMoyens.ListenerSupressionItem;
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
 import com.istic.agetac.view.item.DemandeDeMoyensItem;
 
@@ -76,7 +77,7 @@ public class DemandeDeMoyenListAdapter extends ArrayAdapter<DemandeDeMoyensItem>
 	        quantityMoyen.setText("" + String.valueOf(itemMoyen.getNombre()) + "");
 	        
 	        // Ajout du listener de supression au boutton corbeille
-	        // TODO buttonDeleteItem.setOnClickListener(new ListenerSupressionItem(itemMoyen, this.demandeDeMoyens));
+	        buttonDeleteItem.setOnClickListener(new ListenerSupressionItem(itemMoyen, this.demandeDeMoyens));
 	  
 		}// if
 

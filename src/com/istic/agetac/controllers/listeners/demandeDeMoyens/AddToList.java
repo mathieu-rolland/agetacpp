@@ -62,10 +62,7 @@ public class AddToList implements OnClickListener {
 
 			// Si j'ai déjà ajouté ce type de moyen pour ce secteur, alors
 			// j'augmente seulement sont nombre de +1
-			/*DemandeDeMoyensItem searchSameElement = UtilsTypesMoyens
-					.searchMoyensAlreadyAdded(nomElementSelectionne,
-							this.demandeDeMoyens.getAllMoyenAddedToList());*/
-			DemandeDeMoyensItem searchSameElement = this.demandeDeMoyens.getAllMoyenAddedToList().get(0);
+			DemandeDeMoyensItem searchSameElement = this.searchSameMoyenAddedPreviously(nomElementSelectionne);
 			
 			if (searchSameElement != null) {
 				searchSameElement.setNombre(searchSameElement.getNombre()
@@ -102,10 +99,7 @@ public class AddToList implements OnClickListener {
 
 			// Si j'ai déjà ajouté ce type de moyen pour ce secteur, alors
 			// j'augmente seulement sont nombre de +1
-			/*DemandeDeMoyensItem searchSameElement = UtilsTypesMoyens
-			.searchMoyensAlreadyAdded(nomElementSelectionne,
-					this.demandeDeMoyens.getAllMoyenAddedToList());*/
-			DemandeDeMoyensItem searchSameElement = this.demandeDeMoyens.getAllMoyenAddedToList().get(0);
+			DemandeDeMoyensItem searchSameElement = this.searchSameMoyenAddedPreviously(nomElementSelectionne);
 	
 			if (searchSameElement != null) {
 				searchSameElement.setNombre(searchSameElement.getNombre()
@@ -132,7 +126,7 @@ public class AddToList implements OnClickListener {
 		// dans tous les autres cas
 		else {
 			Toast.makeText(v.getContext().getApplicationContext(),
-					"Veuillez sélectionner un moyens à ajouter",
+					"Veuillez sélectionner un moyen à ajouter",
 					Toast.LENGTH_SHORT).show();
 		} // if else
 
@@ -141,6 +135,28 @@ public class AddToList implements OnClickListener {
 	/********************************************************************************************************/
 	/** GETTEURS ET SETTEURS **/
 	/********************************************************************************************************/
+
+	/**
+	 * Méthode qui dit si un moyen du même nom à déjà été ajouté.
+	 * @param nomElementSelectionne
+	 * @return DemandeDeMoyensItem trouvé
+	 */
+	private DemandeDeMoyensItem searchSameMoyenAddedPreviously(
+			DemandeDeMoyensItem elementSelectionne) {
+		if (this.demandeDeMoyens.getAllMoyenAddedToList().size() <= 0) {
+			return null;
+		}
+		else
+		{
+			for (DemandeDeMoyensItem item : this.demandeDeMoyens.getAllMoyenAddedToList()) {
+				if(item.getNom().equals(elementSelectionne.getNom())) {
+					return item;
+				}
+			}
+			
+			return null;
+		}
+	} // method searchSameMoyenAddedPreviously
 
 	/**
 	 * @param demandeDeMoyens

@@ -5,7 +5,7 @@
     <!-- Login progress -->
 
     <LinearLayout
-        android:id="@+id/login_status"
+        android:id="@+id/activity_login_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -20,18 +20,18 @@
             android:layout_marginBottom="8dp" />
 
         <TextView
-            android:id="@+id/login_status_message"
+            android:id="@+id/activity_login_status_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="@string/login_progress_login_in"
+            android:text="@string/activity_login_progress_login_in"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
     <!-- Login form -->
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/activity_login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#161e21" >
@@ -43,12 +43,12 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/lab_welcome"
+                android:id="@+id/activity_login_welcome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="100dp"
                 android:gravity="center"
-                android:text="@string/login_welcome"
+                android:text="@string/activity_login_welcome"
                 android:textColor="#efefef"
                 android:textSize="60sp" />
 
@@ -61,33 +61,33 @@
                 android:paddingRight="10dp" >
 
                 <EditText
-                    android:id="@+id/login_user"
+                    android:id="@+id/activity_login_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
                     android:background="#efefef"
-                    android:hint="@string/login_user"
+                    android:hint="@string/activity_login_user"
                     android:padding="4dp"
                     android:textSize="30sp" />
 
                 <EditText
-                    android:id="@+id/login_password"
+                    android:id="@+id/activity_login_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
                     android:background="#efefef"
-                    android:hint="@string/login_password"
+                    android:hint="@string/activity_login_password"
                     android:inputType="textPassword"
                     android:padding="4dp"
                     android:textSize="30sp" />
 
                 <Button
-                    android:id="@+id/btnLogin"
+                    android:id="@+id/activity_login_btnLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/red_button"
-                    android:text="@string/login_validate"
+                    android:text="@string/activity_login_validate"
                     android:textSize="30sp" />
             </LinearLayout>
         </LinearLayout>

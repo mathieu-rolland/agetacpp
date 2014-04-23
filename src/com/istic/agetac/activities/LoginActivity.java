@@ -44,16 +44,16 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
-		mUserView = (EditText) findViewById(R.id.login_user);
+		mUserView = (EditText) findViewById(R.id.activity_login_user);
 		mUserView.setText(mUser);
 
-		mPasswordView = (EditText) findViewById(R.id.login_password);
+		mPasswordView = (EditText) findViewById(R.id.activity_login_password);
 		mPasswordView
 				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override
 					public boolean onEditorAction(TextView textView, int id,
 							KeyEvent keyEvent) {
-						if (id == R.id.login_user || id == EditorInfo.IME_NULL) {
+						if (id == R.id.activity_login_user || id == EditorInfo.IME_NULL) {
 							attemptLogin();
 							return true;
 						}
@@ -61,11 +61,11 @@ public class LoginActivity extends Activity {
 					}
 				});
 
-		mLoginFormView = findViewById(R.id.login_form);
-		mLoginStatusView = findViewById(R.id.login_status);
-		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+		mLoginFormView = findViewById(R.id.activity_login_form);
+		mLoginStatusView = findViewById(R.id.activity_login_status);
+		mLoginStatusMessageView = (TextView) findViewById(R.id.activity_login_status_message);
 
-		findViewById(R.id.btnLogin).setOnClickListener(
+		findViewById(R.id.activity_login_btnLogin).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
@@ -126,7 +126,7 @@ public class LoginActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_login_in);
+			mLoginStatusMessageView.setText(R.string.activity_login_progress_login_in);
 			showProgress(true);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);

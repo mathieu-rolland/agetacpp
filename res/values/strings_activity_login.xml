@@ -4,11 +4,11 @@
     <string name="error_incorrect_password">Ce mot de passe est incorrect</string>
     <string name="error_field_required">Champs obligatoire</string>
     <string name="action_forgot_password">Mot de passe oublié</string>
-    <string name="login_progress_login_in">Connexion&#8230;</string>
+    <string name="activity_login_progress_login_in">Connexion&#8230;</string>
 
-    <string name="login_password">Mot de passe</string>
-    <string name="login_user">Nom d\'utilisateur</string>
-    <string name="login_validate">Se connecter</string>
-    <string name="login_welcome">Bienvenue sur Agetac++</string>
+    <string name="activity_login_password">Mot de passe</string>
+    <string name="activity_login_user">Nom d\'utilisateur</string>
+    <string name="activity_login_validate">Se connecter</string>
+    <string name="activity_login_welcome">Bienvenue sur Agetac++</string>
 
 </resources>

@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="14" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -32,7 +32,7 @@
         <!-- Meta data necessaire pour Google maps -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCaNqurEz3u6e8ADh3pbIGWaIBm-A7C5p8" />
+            android:value="AIzaSyDpgjc7ha5hXkpnR2R8T8z9NkrTtuLTEbM" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -13,7 +15,7 @@ import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class Message implements IMessage, IPersistant {
+public class Message implements IMessage, IPersistant, Parcelable {
 
 	private String _id;
 	private String _rev;
@@ -27,6 +29,22 @@ public class Message implements IMessage, IPersistant {
 		messages = new HashMap<IMessage.Message_part, String>();
 		validate = false;
 		lock = false;
+		_id = "";
+		_rev = "";
+	}
+	
+	public Message(Parcel source) {
+		String serializedJson = source.readString();
+		try {
+			Message message = (Message) JsonSerializer.deserialize(Message.class, new JSONObject(serializedJson));
+			this.setId( message.getId() );
+			this.setRev(message.getRev());
+			this.lock = message.lock;
+			this.messages = message.messages;
+			this.validate = message.validate;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -116,7 +134,7 @@ public class Message implements IMessage, IPersistant {
 
 	@Override
 	public String getUrl(int method) {
-		return DataBaseCommunication.BASE_URL + "_design/";
+		return DataBaseCommunication.BASE_URL + _id;
 	}
 
 	@Override
@@ -154,4 +172,33 @@ public class Message implements IMessage, IPersistant {
 		this._rev = rev;
 	}
 
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		try {
+			String message = JsonSerializer.serialize(this).toString();
+			dest.writeString(message);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>()
+	{
+		@Override
+		public Message createFromParcel(Parcel source)
+		{
+			return new Message(source);
+		}
+
+		@Override
+		public Message[] newArray(int size)
+		{
+			return new Message[size];
+		}
+	};
 }

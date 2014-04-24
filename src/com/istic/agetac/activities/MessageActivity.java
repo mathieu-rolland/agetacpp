@@ -1,8 +1,18 @@
 package com.istic.agetac.activities;
 
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +26,8 @@ import com.istic.agetac.api.view.ItemView;
 import com.istic.agetac.controler.adapter.ItemListAdapter;
 import com.istic.agetac.model.Message;
 import com.istic.agetac.model.MessageWorkflow;
+import com.istic.agetac.sync.MessageBroadcastReceiver;
+import com.istic.agetac.sync.MessageServiceSynchronisation;
 import com.istic.agetac.view.item.MessageItem;
 
 public class MessageActivity extends Activity {
@@ -29,6 +41,11 @@ public class MessageActivity extends Activity {
 	
 	private EditText message;
 	private IMessage currentMessage;
+	
+	private MessageBroadcastReceiver receiver;
+	private MessageServiceSynchronisation serviceSync;
+	
+	private PendingIntent pendingIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +73,26 @@ public class MessageActivity extends Activity {
 		
 		displayNewState(previous, current, next);
 		displayInWorkflow(current);
+		
+		//Start sync :
+		receiver = new MessageBroadcastReceiver(this);
+		serviceSync = new MessageServiceSynchronisation("Service message sync");
+		
+		Intent intent = new Intent(this.getApplicationContext(), serviceSync.getClass());
+		pendingIntent = PendingIntent.getService(this, 0, intent, 0);
+		
+		receiver.setPendingIntent(pendingIntent);
+		
+		LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(this);
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction( MessageServiceSynchronisation.FILTER_MESSAGE_RECEIVER );
+		bManager.registerReceiver( receiver , intentFilter);
+
+		Calendar cal = Calendar.getInstance();
+		AlarmManager alarm = (AlarmManager) getSystemService( Context.ALARM_SERVICE );
+		alarm.setInexactRepeating( AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 
+				serviceSync.getIntervalToRefresh() * 1000 , pendingIntent); 
+		Log.d("SERVICE", "Service "+ serviceSync.getName() +" now started.");
 	}
 	
 	public void message_next(View v){
@@ -86,7 +123,6 @@ public class MessageActivity extends Activity {
 				    MessageWorkflow.getWording(getApplicationContext(), currentPart),
 					Toast.LENGTH_LONG).show();
 		}
-
 	}
 	
 	private void displayNewState( IMessage.Message_part previous, IMessage.Message_part current, IMessage.Message_part next )
@@ -148,6 +184,7 @@ public class MessageActivity extends Activity {
 		if( currentMessage.isComplet() ){
 			ItemView view = new MessageItem(currentMessage);
 			messageAdapter.addLast(view);
+			currentMessage.save();
 			currentMessage = new Message();
 		}
 	}
@@ -210,6 +247,23 @@ public class MessageActivity extends Activity {
 			label.setTextColor(Color.BLACK);
 			background.setBackgroundColor(Color.TRANSPARENT);
 		}
+	}
+	
+	public void update(List<IMessage> newMessageState)
+	{
+		Log.d("Service message sync","Receive data from synchronisation");
+	}
+	
+	private void stopSynchronisation(){
+		AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+		PendingIntent pi = receiver.getPendingIntent();
+		alarm.cancel(pi);
+	}
+	
+	@Override
+	public void finish() {
+		stopSynchronisation();
+		super.finish();
 	}
 	
 }

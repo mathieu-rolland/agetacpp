@@ -1,12 +1,9 @@
 package com.istic.agetac.activities;
 
-import com.istic.agetac.R;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,10 +15,17 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.istic.agetac.R;
+import com.istic.agetac.api.model.IUser;
+import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.model.User;
+
 public class LoginActivity extends Activity {
 
 	private static final String[] DUMMY_CREDENTIALS = new String[] {
 			"toto:toto", "codis:codis" };
+	
+	private static final int MIN_SIZE_PASSWORD = 4;
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
@@ -46,7 +50,6 @@ public class LoginActivity extends Activity {
 
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);
-		mUserView.setText(mUser);
 
 		mPasswordView = (EditText) findViewById(R.id.activity_login_password);
 		mPasswordView
@@ -108,7 +111,7 @@ public class LoginActivity extends Activity {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
-		} else if (mPassword.length() < 4) {
+		} else if (mPassword.length() < MIN_SIZE_PASSWORD) {
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			focusView = mPasswordView;
 			cancel = true;
@@ -210,13 +213,21 @@ public class LoginActivity extends Activity {
 
 			if (success) {
 				//finish();
-				if (mUser.equals("codis"))
-					//CreateInterventionActivity.launchActivity(LoginActivity.this);
-				{
-					Intent intent = new Intent(getApplicationContext(), InterventionActivity.class); 
-					startActivity(intent);
+				if (mUser.equals("codis")){
+					// Bonchon
+					IUser user = new User("codis","codis","codis");
+					AgetacppApplication.setUser(user);
+					
+					
+					InterventionActivity.launchActivity(LoginActivity.this);
+				}else{
+					// Bouchon
+					IUser user = new User("tuyau","user","pompier");
+					AgetacppApplication.setUser(user);
+					
+					
+					MainActivity.launchActivity(LoginActivity.this);
 				}
-				else MainActivity.launchActivity(LoginActivity.this);
 			} else {
 				mPasswordView
 						.setError(getString(R.string.error_incorrect_password));

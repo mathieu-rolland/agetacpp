@@ -17,7 +17,8 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/progress"/>
 
         <TextView
             android:id="@+id/activity_login_status_message"
@@ -40,6 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
             android:orientation="vertical" >
 
             <TextView
@@ -68,6 +71,7 @@
                     android:background="#efefef"
                     android:hint="@string/activity_login_user"
                     android:padding="4dp"
+                    android:text="toto"
                     android:textSize="30sp" />
 
                 <EditText
@@ -79,6 +83,7 @@
                     android:hint="@string/activity_login_password"
                     android:inputType="textPassword"
                     android:padding="4dp"
+                    android:text="toto"
                     android:textSize="30sp" />
 
                 <Button

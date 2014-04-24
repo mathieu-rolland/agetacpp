@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.istic.agetac.R;
+import com.istic.agetac.app.AgetacppApplication;
 
 public class MainActivity extends Activity {
 
@@ -20,6 +22,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		Toast.makeText(this.getBaseContext(), AgetacppApplication.getUser().getName(),
+				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override

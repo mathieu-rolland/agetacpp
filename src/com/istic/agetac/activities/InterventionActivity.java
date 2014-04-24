@@ -1,5 +1,7 @@
 package com.istic.agetac.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +18,13 @@ import com.istic.agetac.fragments.TableauMoyenFragment;
 
 public class InterventionActivity extends FragmentActivity{
 
+	
+	public static void launchActivity(Context context) {
+		Intent intent = new Intent(context, InterventionActivity.class);
+		context.startActivity(intent);
+	}
+	
+	
 	// Layout
 	private Button mValidButton;
 	private Button mSwitchButton;

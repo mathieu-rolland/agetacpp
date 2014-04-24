@@ -56,6 +56,4 @@ public class ItemListAdapter extends BaseAdapter {
 		return item.getView( context, view, root );
 	}
 
-	
-	
 }

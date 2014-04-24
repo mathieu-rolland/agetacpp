@@ -7,39 +7,172 @@
     
 	<ListView
 	    android:id="@+id/fragment_messages_list_list"
-	    android:layout_width="match_parent"
-	    android:layout_weight="70" />
+	    android:layout_width="wrap_content"
+	    android:layout_height="0dip"
+	    android:layout_weight="75" 
+	    android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"/>
 	
 	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_weight="30"
+	    android:layout_weight="20"
 	    android:orientation="vertical"
 	    android:weightSum="100" >
 	
-	    <TextView
-	        android:id="@+id/fragment_messages_list_prefix"
+	    <LinearLayout 
 	        android:layout_width="match_parent"
-	        android:layout_weight="15"  />
-	    
+	        android:layout_height="0dip"
+	        android:orientation="horizontal"
+	        android:layout_weight="15"
+	        android:weightSum="100">
+	    	
+	        <TextView 
+	            android:id="@+id/fragment_message_list_label_je_suis"
+           	  	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+       			 android:gravity="center_vertical|center_horizontal"
+       			 android:text="@string/prefixes_rendre_compte_je_suis"
+       			 android:layout_weight="15"
+       			 />
+	        
+	        <TextView 
+	            android:id="@+id/fragment_message_list_label_je_vois"
+            	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+      			 android:gravity="center_vertical|center_horizontal"
+       			 android:text="@string/prefixes_rendre_compte_je_vois"
+       			 android:layout_weight="15"
+       			 />
+	        
+	        <TextView 
+	            android:id="@+id/fragment_message_list_label_je_prevois"
+            	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+       			 android:layout_weight="15"
+       			 android:gravity="center_vertical|center_horizontal"
+       			 android:text="@string/prefixes_rendre_compte_je_prevois"
+       			 />
+	        
+	        <TextView 
+	            android:id="@+id/fragment_message_list_label_je_fais"
+            	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+       			 android:layout_weight="15"
+    			 android:gravity="center_vertical|center_horizontal"
+       			 android:text="@string/prefixes_rendre_compte_je_fais"
+       			 />
+	        
+	        <TextView 
+	            android:id="@+id/fragment_message_list_label_je_demande"
+           	  	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+       			 android:layout_weight="15"
+       			 android:gravity="center_vertical|center_horizontal"
+       			 android:text="@string/prefixes_rendre_compte_je_demande"
+       			 />
+	        
+	    </LinearLayout>
+		<LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
+	        android:orientation="horizontal"
+	        android:layout_weight="5"
+	        android:weightSum="100">
+	    	
+	        <TextView 
+	            android:id="@+id/fragment_message_list_background_je_suis"
+           	  	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+       			 android:gravity="center_vertical|center_horizontal"
+       			 android:text=""
+       			 android:layout_weight="15"
+       			 />
+	        
+	        <TextView 
+	             android:id="@+id/fragment_message_list_background_je_vois"
+            	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+      			 android:gravity="center_vertical|center_horizontal"
+       			 android:text=""
+       			 android:layout_weight="15" />
+	        
+	        <TextView 
+	             android:id="@+id/fragment_message_list_background_je_prevois"
+            	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+       			 android:layout_weight="15"
+       			 android:gravity="center_vertical|center_horizontal"
+       			 android:text="" />
+	        
+	        <TextView 
+	             android:id="@+id/fragment_message_list_background_je_fais"
+            	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+       			 android:layout_weight="15"
+    			 android:gravity="center_vertical|center_horizontal"
+       			 android:text=""
+       			 />
+	        
+	        <TextView 
+	             android:id="@+id/fragment_message_list_background_je_demande"
+           	  	 android:layout_width="0dip"
+       			 android:layout_height="match_parent"
+       			 android:layout_weight="15"
+       			 android:gravity="center_vertical|center_horizontal"
+       			 android:text=""
+       			 />
+	        
+	    </LinearLayout>
 	    <LinearLayout
 	        android:orientation="horizontal"
-	        android:layout_weight="85"
+	        android:layout_height="0dip"
+	        android:layout_weight="90"
 	        android:weightSum="100"
 	        android:layout_width="match_parent" >
 	        
 			<EditText
-	        	android:id="@+id/fragment_messages_list_message_text"
-	        	android:layout_height="match_parent"
-	        	android:layout_weight="80"/>
+			    android:id="@+id/fragment_messages_list_message_text"
+			    android:layout_width="0dip"
+			    android:layout_height="match_parent"
+			    android:layout_weight="100"/>
 			
-			<Button 
-			    android:id="@+id/fragment_messages_list_message_validate"
-			    android:layout_height="wrap_content"
+			<LinearLayout 
 			    android:layout_width="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    />
-				        
+			    android:layout_height="wrap_content"
+			    android:orientation="vertical"
+			    android:gravity="center" >
+			    
+				<LinearLayout 
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:orientation="horizontal">
+						
+						<Button 
+						    android:id="@+id/fragment_messages_list_message_previous"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:onClick="message_previous"
+						    android:text="@string/fragment_message_list_button_previous"/>
+						
+						<Button 
+						    android:id="@+id/fragment_messages_list_message_next"
+						    android:layout_width="match_parent"
+						    android:layout_height="wrap_content"
+						    android:onClick="message_next"
+						    android:text="@string/fragment_message_list_button_next"/>
+					
+					</LinearLayout>	
+					 
+					<Button 
+						    android:id="@+id/fragment_messages_list_message_validate"
+						    android:layout_height="wrap_content"
+						    android:layout_width="match_parent"
+						    android:layout_gravity="center_horizontal"
+						    android:onClick="message_validate"
+						    android:text="@string/fragment_messages_list_message_validate_text"
+						    />
+				</LinearLayout>
 	    </LinearLayout>
 	
 	</LinearLayout>

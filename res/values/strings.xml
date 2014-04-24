@@ -40,12 +40,21 @@
     
     <!-- Messages : Possibilité de prefix -->
     <string-array name="prefixes_rendre_compte">
-        <item name="je_suis">Je suis</item>
-        <item name="je_vois">Je vois</item>
-        <item name="je_prevois">Je prevois</item>
-        <item name="je_fais">Je fais</item>
-        <item name="je_demande">Je demande</item>
+        <item name="je_suis">Je suis </item>
+        <item name="je_vois">Je vois </item>
+        <item name="je_prevois">Je prevois </item>
+        <item name="je_fais">Je fais </item>
+        <item name="je_demande">Je demande </item>
     </string-array>
+    
+    <string name="prefixes_rendre_compte_je_suis">Je suis </string>
+    <string name="prefixes_rendre_compte_je_vois">Je vois</string>
+    <string name="prefixes_rendre_compte_je_prevois">Je prevois </string>
+    <string name="prefixes_rendre_compte_je_fais">Je fais </string>
+    <string name="prefixes_rendre_compte_je_demande">Je demande </string>
+    
+    <string name="fragment_message_list_button_next">Suivant</string>
+    <string name="fragment_message_list_button_previous">Précédent</string>
     
     <string name="fragment_messages_list_message_validate_text">Envoyer</string>
     

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
+import android.widget.RelativeLayout;
 
 import com.istic.agetac.R;
 import com.istic.sit.framework.api.model.IEntity;
@@ -12,6 +13,7 @@ import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.view.MainActivity;
+import com.istic.sit.framework.view.MainActivity.EnvironmentButton;
 
 public class SitacActivity extends MainActivity {
 
@@ -74,6 +76,13 @@ public class SitacActivity extends MainActivity {
 				0);
 
 		this.mDrawerLayout.closeDrawer(listMenu);
+	}
+
+	@Override
+	public void onCreateMapMenu(View view, RelativeLayout menu) {
+		EnvironmentButton environment_water = new EnvironmentButton("Point d'eau", view.getContext(), R.drawable.environment_water);
+		menu.addView(environment_water);
+		
 	}
 
 }

@@ -7,14 +7,14 @@ import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.sit.framework.couch.APersitantRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.couch.DataBaseCommunication;
-import com.istic.sit.framework.couch.IPersitant;
+import com.istic.sit.framework.couch.IPersistant;
 
 /**
 * Classe Abstraite ADao
 * 
 * @author Anthony LE MEE - 10003134
 */
-public abstract class ADao<T extends IPersitant> {
+public abstract class ADao<T extends IPersistant> {
 
 	private final static String BASE_URL = "http://148.60.11.236:5984/sitac/";
 	private IViewReceiver<T> iViewReceiver;

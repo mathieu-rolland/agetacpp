@@ -426,6 +426,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	@Override
 	public void notifyResponseFail(VolleyError error) {
 		Log.e("Antho",  "FAIL to get datas MOYEN - " + error.toString());
+		Log.e("Antho", error.getMessage());
 		onMessageReveive("Impossible de récupérer les données MOYEN !");
 	}
 

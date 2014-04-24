@@ -1,6 +1,7 @@
 package com.istic.agetac.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,13 +18,17 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.istic.agetac.R;
+import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenGridViewAdapter;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenListAdapter;
+import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.AddToList;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.AutoCompleteField;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.SpinnerVariation;
 import com.istic.agetac.filters.FilterInputNumber;
+import com.istic.agetac.model.Moyen;
 import com.istic.agetac.saveInstanceState.DemandeMoyensSavedInstanceState;
 import com.istic.agetac.view.item.DemandeDeMoyensItem;
 
@@ -33,13 +38,10 @@ import com.istic.agetac.view.item.DemandeDeMoyensItem;
 * 
 * @author Anthony LE MEE - 10003134
 */
-public class DemandeDeMoyensFragment extends Fragment {
-	
-	/** Instance des Handler */
-	//Updater handler;
+public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<Moyen> {
 	
 	/** Instances des modèles à utiliser */
-	//private TypesMoyensDTO 	mTypesMoyens;
+	private MoyensDao mMoyens;
 	
 	/** Instances des controlers à utiliser */
 	private AddToList 				cAddToList;					// Listener (Controler) sur le boutton d'ajout à la liste des moyens
@@ -48,7 +50,6 @@ public class DemandeDeMoyensFragment extends Fragment {
 	
 	/** Éléments de la vue */
 	private GridView 				gridViewMoyens; 			// GridView correspondant à l'ensemble des moyens
-	private ArrayAdapter<String> 	arrayAdapterSecteur; 		// ArrayAdapter qui fera office de liste déroulante de secteurs 
 	private AutoCompleteTextView 	textViewAutresMoyens; 		// Champs d'auto-complétion pour la recherche d'un autre moyen 
 	private Button 					buttonAddToList; 			// Boutton d'ajout du moyen à la liste 
 	private Button 					buttonQuantityMore; 		// Augmente le nombre de moyens à ajouter 
@@ -89,25 +90,20 @@ public class DemandeDeMoyensFragment extends Fragment {
 	   	/** Chargement du layout */
 		View view = inflater.inflate(R.layout.fragment_demande_de_moyens, container, false);
 		
-		/** Instanciation des handler */
-		//this.handler = new Updater(this);
-		
 		/** Instanciations des contrôlers */
 		this.cAddToList 		= new AddToList(this);
 		this.cQuantiteMoyens 	= new SpinnerVariation(this);
 		this.cAutresMoyens 		= new AutoCompleteField(this);
 		
 		/** Instanciations des modèles */
-		//this.mTypesMoyens 		= new TypesMoyensDTO();
-		//this.mTypesMoyens.update	= this.handler;		
+		this.mMoyens 			= new MoyensDao(this);
 		
 		/** Récupérations des données via les modèles */
-		// TODO TypesMoyens[] donneesMoyensAll 		= this.mTypesMoyens.findAll(-1);
-		// TODO TypesMoyens[] donneesMoyensUsest 		= this.mTypesMoyens.findAll(15);
+		this.mMoyens.findAll();
 		
 		/** Chargements des données dans les attributs correspondants */
-		this.namesOfAllMoyens 			= new String[]{"FPT","VSAV"};//UtilsTypesMoyens.getNamesOfTypesMoyens(donneesMoyensAll);
-		this.namesOfUsestMoyens 		= new String[]{"FPT","VSAV"}; //UtilsTypesMoyens.getNamesOfTypesMoyens(donneesMoyensUsest);
+		this.namesOfAllMoyens 			= new String[]{};
+		this.namesOfUsestMoyens 		= new String[]{};
 		this.allMoyenAddedToList		= new ArrayList<DemandeDeMoyensItem>();
 		this.adapterListToSend 			= new DemandeDeMoyenListAdapter(this, android.R.layout.simple_list_item_1, this.allMoyenAddedToList);		
 		
@@ -131,11 +127,11 @@ public class DemandeDeMoyensFragment extends Fragment {
 	    }
 					
 		// Récupération des éléments 
-		buttonAddToList = (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_AddToList);
-		buttonQuantityMore 	= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_OneMore);
-		buttonQuantityLess 	= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_OneLess);
+		buttonAddToList 		= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_AddToList);
+		buttonQuantityMore 		= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_OneMore);
+		buttonQuantityLess 		= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_OneLess);
 		textViewAutresMoyens 	= (AutoCompleteTextView) getActivity().findViewById(R.id.demande_de_moyen_AutoCompleteTextView_TextField);
-		editTextQuantity 	= (EditText) getActivity().findViewById(R.id.demande_de_moyen_EditText_DefaultQuantity);
+		editTextQuantity 		= (EditText) getActivity().findViewById(R.id.demande_de_moyen_EditText_DefaultQuantity);
 		gridViewMoyens 			= (GridView) getActivity().findViewById(R.id.demande_de_moyen_GridView);
 		listViewMoyensToSend	= (ListView) getActivity().findViewById(R.id.demande_de_moyen_ListView);
 		
@@ -164,7 +160,7 @@ public class DemandeDeMoyensFragment extends Fragment {
 	    // Liste des moyens demandés : Si la sauvegarde a du contenu qui nous manque alors on le charge
 	    if (this.allMoyenAddedToList.size() < sauvegarde.getDonneesMoyensAddedToList().size()) {
 	    	this.allMoyenAddedToList 	= sauvegarde.getDonneesMoyensAddedToList();
-	    	this.adapterListToSend 			= new DemandeDeMoyenListAdapter(this, android.R.layout.simple_dropdown_item_1line, this.allMoyenAddedToList);
+	    	this.adapterListToSend 		= new DemandeDeMoyenListAdapter(this, android.R.layout.simple_dropdown_item_1line, this.allMoyenAddedToList);
 	    }
 	
 	 	// Création du ListView de la liste de moyens demandés	 
@@ -188,13 +184,6 @@ public class DemandeDeMoyensFragment extends Fragment {
     /********************************************************************************************************/
     /** GETTEURS ET SETTEURS
     /********************************************************************************************************/
-
-	/**
-	 * @return the mTypesMoyens
-	 */
-	/*public TypesMoyensDTO getmTypesMoyens() {
-		return mTypesMoyens;
-	}*/
 
 	/**
 	 * @return the cAjoutToList
@@ -250,20 +239,6 @@ public class DemandeDeMoyensFragment extends Fragment {
 	 */
 	public void setGridViewMoyens(GridView gridViewMoyens) {
 		this.gridViewMoyens = gridViewMoyens;
-	}
-
-	/**
-	 * @return the arrayAdapterSecteur
-	 */
-	public ArrayAdapter<String> getArrayAdapterSecteur() {
-		return arrayAdapterSecteur;
-	}
-
-	/**
-	 * @param arrayAdapterSecteur the arrayAdapterSecteur to set
-	 */
-	public void setArrayAdapterSecteur(ArrayAdapter<String> arrayAdapterSecteur) {
-		this.arrayAdapterSecteur = arrayAdapterSecteur;
 	}
 
 	/**
@@ -419,6 +394,39 @@ public class DemandeDeMoyensFragment extends Fragment {
 	 */
 	public void setAdapterListToSend(DemandeDeMoyenListAdapter adapterListToSend) {
 		this.adapterListToSend = adapterListToSend;
+	}
+
+	/**
+	 * @return the mMoyens
+	 */
+	public MoyensDao getmMoyens() {
+		return mMoyens;
+	}
+
+	/**
+	 * @param mMoyens the mMoyens to set
+	 */
+	public void setmMoyens(MoyensDao mMoyens) {
+		this.mMoyens = mMoyens;
+	}
+
+	/********************************************************************************************************/
+    /** IViewReceiver methods
+    /********************************************************************************************************/
+
+	@Override
+	public void notifyResponseSuccess(List<Moyen> objects) {
+		this.namesOfAllMoyens 	= new String[]{"FPT","VSAV"};
+		this.namesOfUsestMoyens = new String[]{"FPT"};
+		((DemandeDeMoyenGridViewAdapter)getGridViewMoyens().getAdapter()).notifyDataSetChanged();
+		((ArrayAdapter)getTextViewAutresMoyens().getAdapter()).notifyDataSetChanged();
+		onMessageReveive("Récupération des données MOYEN réussie !"); 
+	}
+
+	@Override
+	public void notifyResponseFail(VolleyError error) {
+		Log.e("Antho",  "FAIL to get datas MOYEN - " + error.toString());
+		onMessageReveive("Impossible de récupérer les données MOYEN !");
 	}
 
 }// Class DemandeDeMoyensFragment

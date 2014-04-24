@@ -20,7 +20,6 @@ import com.istic.sit.framework.model.Property;
  */
 public class Moyen extends Entity {
 
-	private IProperty typePropertie;
 	// TODO private Intervention intervention;
 	// TODO private GroupeMoyen group;
 	private Date mHourDemand;	
@@ -31,18 +30,51 @@ public class Moyen extends Entity {
 	
 	/**
 	 * Constructeur de la classe Moyen
-	 * @param type : Type d'un moyen
+	 * @param typeValue : Type of moyen
 	 */
-	public Moyen (String type) {
-		this.typePropertie = new Property();
-		this.typePropertie.setNom("type");
-		this.typePropertie.setValeur(type);
+	public Moyen (String typeValue) {
+		super();
+		IProperty typePropertie;
+		typePropertie = new Property();
+		typePropertie.setNom("type");
+		typePropertie.setValeur(typeValue);
 		super.addPropriete(typePropertie);
 	}
 	
-	public String getType () {
-		return typePropertie.getValeur();
+	/**
+	 * Constructeur de la classe Moyen
+	 * @param typeValue : Type of moyen
+	 * @param position : position of moyen
+	 */
+	public Moyen (String typeValue, IPosition position) {
+		super(position);
+		IProperty typePropertie;
+		typePropertie = new Property();
+		typePropertie.setNom("type");
+		typePropertie.setValeur(typeValue);
+		super.addPropriete(typePropertie);
 	}
+	
+	/**
+	 * Constructeur de la classe Moyen
+	 * @param source : moyen
+	 */
+	public Moyen (Parcel source) {
+		super(source);
+	}
+	
+	/**
+	 * Method which return type of moyen
+	 * @return String : Type of moyen
+	 */
+	public String getType () {
+		for (IProperty propertie : super.getProprietes()) {
+			if (propertie.getNom().equals("type")) {
+				return propertie.getValeur();
+			}
+		}
+		return null;
+	} // method
 	
 	@Override
 	public String getUrl(int method) {

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,7 +26,7 @@ public class LoginActivity extends Activity {
 
 	private static final String[] DUMMY_CREDENTIALS = new String[] {
 			"toto:toto", "codis:codis" };
-	
+
 	private static final int MIN_SIZE_PASSWORD = 4;
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
@@ -57,7 +59,8 @@ public class LoginActivity extends Activity {
 					@Override
 					public boolean onEditorAction(TextView textView, int id,
 							KeyEvent keyEvent) {
-						if (id == R.id.activity_login_user || id == EditorInfo.IME_NULL) {
+						if (id == R.id.activity_login_user
+								|| id == EditorInfo.IME_NULL) {
 							attemptLogin();
 							return true;
 						}
@@ -73,6 +76,9 @@ public class LoginActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(
+								mPasswordView.getWindowToken(), 0);
 						attemptLogin();
 					}
 				});
@@ -130,7 +136,8 @@ public class LoginActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.activity_login_progress_login_in);
+			mLoginStatusMessageView
+					.setText(R.string.activity_login_progress_login_in);
 			showProgress(true);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((Void) null);
@@ -212,21 +219,19 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 
 			if (success) {
-				//finish();
-				if (mUser.equals("codis")){
+				// finish();
+				if (mUser.equals("codis")) {
 					// Bonchon
-					IUser user = new User("codis","codis","codis");
+					IUser user = new User("codis", "codis", "codis");
 					AgetacppApplication.setUser(user);
-					
-					
+
 					InterventionActivity.launchActivity(LoginActivity.this);
-				}else{
+				} else {
 					// Bouchon
-					IUser user = new User("tuyau","user","pompier");
+					IUser user = new User("tuyau", "user", "pompier");
 					AgetacppApplication.setUser(user);
-					
-					
-					MainActivity.launchActivity(LoginActivity.this);
+
+					SitacActivity.launchActivity(LoginActivity.this);
 				}
 			} else {
 				mPasswordView

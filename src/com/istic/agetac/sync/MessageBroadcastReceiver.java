@@ -1,11 +1,14 @@
 package com.istic.agetac.sync;
 
+import java.util.List;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
 import com.istic.agetac.activities.MessageActivity;
 import com.istic.sit.framework.sync.ASyncReceiver;
+import com.istic.sit.framework.sync.ASynchornisationService;
 
 public class MessageBroadcastReceiver extends ASyncReceiver{
 
@@ -21,8 +24,9 @@ public class MessageBroadcastReceiver extends ASyncReceiver{
 	}
 
 	@Override
-	public void onReceive(Context arg0, Intent arg1) {
-		messageActivity.update(null);
+	public void onReceive(Context arg0, Intent intent) {
+		messageActivity.update((List)intent.getExtras()
+				.getParcelableArrayList(ASynchornisationService.SYNC_SERVICE_EXTRA));
 	}
 
 }

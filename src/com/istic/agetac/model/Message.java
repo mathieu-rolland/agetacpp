@@ -1,6 +1,8 @@
 package com.istic.agetac.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,24 +11,28 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.istic.agetac.pattern.observer.Observer;
+import com.istic.agetac.pattern.observer.Subject;
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IMessage;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class Message implements IMessage, IPersistant, Parcelable {
+public class Message implements IMessage, IPersistant, Parcelable, Subject {
 
 	private String _id;
 	private String _rev;
 	private boolean lock;
-	private String uid;
 	private boolean validate;
 	private HashMap<Message_part, String> messages;
+	
+	private transient List<Observer> observers;
 	
 	public Message()
 	{
 		messages = new HashMap<IMessage.Message_part, String>();
+		observers = new ArrayList<Observer>();
 		validate = false;
 		lock = false;
 		_id = "";
@@ -35,8 +41,11 @@ public class Message implements IMessage, IPersistant, Parcelable {
 	
 	public Message(Parcel source) {
 		String serializedJson = source.readString();
+		observers = new ArrayList<Observer>();
 		try {
 			Message message = (Message) JsonSerializer.deserialize(Message.class, new JSONObject(serializedJson));
+			_id = "";
+			_rev = "";
 			this.setId( message.getId() );
 			this.setRev(message.getRev());
 			this.lock = message.lock;
@@ -45,16 +54,6 @@ public class Message implements IMessage, IPersistant, Parcelable {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	@Override
-	public String getUid() {
-		return uid;
-	}
-
-	@Override
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 	
 	@Override
@@ -116,12 +115,17 @@ public class Message implements IMessage, IPersistant, Parcelable {
 	}
 
 	@Override
-	public void onResponse(JSONObject arg0) {
-		Message msg = (Message) JsonSerializer.deserialize(getClass(), arg0);
-		this.messages = msg.messages;
-		this.lock = msg.lock;
-		this.uid = msg.uid;
-		this.validate = msg.validate;
+	public void onResponse(JSONObject json) {
+		try {
+			if( ((Boolean) json.get("ok")) == true ){
+				this._id = json.getString("id");
+				this._rev = json.getString("rev");
+				notifyObservers();
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			notifyObservers();
+		}
 	}
 
 	@Override
@@ -201,4 +205,31 @@ public class Message implements IMessage, IPersistant, Parcelable {
 			return new Message[size];
 		}
 	};
+
+	@Override
+	public boolean isLock() {
+		return lock;
+	}
+
+	@Override
+	public void registerObserver(Observer observer) {
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void notifyObserver(Observer observer) {
+		observer.update(this);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for( Observer obs : observers ){
+			obs.update(this);
+		}
+	}
+
+	@Override
+	public void unregisterObserver(Observer observer) {
+		observers.remove(observer);
+	}
 }

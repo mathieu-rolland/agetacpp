@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.api.view.ItemView;
-import com.istic.agetac.R;
 
-public class MessageItem implements ItemView {
+public class MessageItem implements ItemView<IMessage> {
 
 	private IMessage message;
 	
@@ -51,6 +51,16 @@ public class MessageItem implements ItemView {
 	@Override
 	public long getId() {
 		return 0;
+	}
+
+	@Override
+	public IMessage getObject() {
+		return message;
+	}
+
+	@Override
+	public void setObject(IMessage object) {
+		this.message = object;
 	}
 	
 }

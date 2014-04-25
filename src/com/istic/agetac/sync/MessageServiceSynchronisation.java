@@ -12,7 +12,6 @@ import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.model.ADao;
 import com.istic.agetac.model.Message;
 import com.istic.sit.framework.sync.ASynchornisationService;
-import com.istic.sit.framework.sync.EntitySyncService;
 
 public class MessageServiceSynchronisation 
 	extends ASynchornisationService implements IViewReceiver<Message> {
@@ -45,17 +44,15 @@ public class MessageServiceSynchronisation
 	}
 
 	private class MessageDAO extends ADao<Message>{
-
 		public MessageDAO(IViewReceiver<Message> iViewReceiver) {
 			super(iViewReceiver);
 		}
-		
 	}
 
 	@Override
 	public void notifyResponseSuccess(List<Message> objects) {
 		Intent intentReceiver = new Intent( FILTER_MESSAGE_RECEIVER );
-		intentReceiver.putParcelableArrayListExtra( FILTER_MESSAGE_RECEIVER , 
+		intentReceiver.putParcelableArrayListExtra( ASynchornisationService.SYNC_SERVICE_EXTRA , 
 				(ArrayList<? extends Parcelable>) objects);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intentReceiver);
 	}

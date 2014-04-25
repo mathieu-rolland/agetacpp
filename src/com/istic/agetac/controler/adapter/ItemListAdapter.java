@@ -19,6 +19,10 @@ public class ItemListAdapter extends BaseAdapter {
 		this.context = context;
 	}
 	
+	public ArrayList<ItemView> getItems(){
+		return items;
+	}
+	
 	public void addItem( ItemView item ){
 		this.items.add(item);
 	}

@@ -1,5 +1,6 @@
 package com.istic.agetac.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -8,7 +9,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,13 +22,15 @@ import com.istic.agetac.api.view.ItemView;
 import com.istic.agetac.controler.adapter.ItemListAdapter;
 import com.istic.agetac.model.Message;
 import com.istic.agetac.model.MessageWorkflow;
+import com.istic.agetac.pattern.observer.Observer;
+import com.istic.agetac.pattern.observer.Subject;
 import com.istic.agetac.sync.MessageBroadcastReceiver;
 import com.istic.agetac.sync.MessageServiceSynchronisation;
 import com.istic.agetac.view.item.MessageItem;
 import com.istic.sit.framework.application.FrameworkApplication;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
-public class MessageActivity extends Activity {
+public class MessageActivity extends Activity implements Observer {
 
 	private ItemListAdapter messageAdapter;
 	private IMessage.Message_part currentPart;
@@ -43,15 +45,15 @@ public class MessageActivity extends Activity {
 	private MessageBroadcastReceiver receiver;
 	private MessageServiceSynchronisation serviceSync;
 	
-	private PendingIntent pendingIntent;
+	private boolean isWaitingForSave = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_messages_list);
 		
-		currentPart = MessageWorkflow.firstState();
-		currentMessage = new Message();
+//		currentPart = MessageWorkflow.firstState();
+//		currentMessage = new Message();
 		
 		messageAdapter = new ItemListAdapter(this);
 		ListView messagesList = (ListView) findViewById(R.id.fragment_messages_list_list);
@@ -65,12 +67,13 @@ public class MessageActivity extends Activity {
 		previous = (Button) findViewById(R.id.fragment_messages_list_message_previous);
 		validate = (Button) findViewById(R.id.fragment_messages_list_message_validate);
 
-		IMessage.Message_part current = currentPart;
-		IMessage.Message_part next = MessageWorkflow.messageNext(currentPart);
-		IMessage.Message_part previous = MessageWorkflow.messagePrevious(current);
-		
-		displayNewState(previous, current, next);
-		displayInWorkflow(current);
+//		IMessage.Message_part current = currentPart;
+//		IMessage.Message_part next = MessageWorkflow.messageNext(currentPart);
+//		IMessage.Message_part previous = MessageWorkflow.messagePrevious(current);
+//		
+//		displayNewState(previous, current, next);
+//		displayInWorkflow(current);
+		initWithMessage( new Message() );
 		
 		//Start sync :
 		receiver = new MessageBroadcastReceiver(this);
@@ -78,6 +81,7 @@ public class MessageActivity extends Activity {
 		
 		PoolSynchronisation synchro = FrameworkApplication.getPoolSynchronisation();
 		synchro.registerServiceSync(MessageServiceSynchronisation.FILTER_MESSAGE_RECEIVER, serviceSync, receiver);
+	
 	}
 	
 	public void message_next(View v){
@@ -112,7 +116,6 @@ public class MessageActivity extends Activity {
 	
 	private void displayNewState( IMessage.Message_part previous, IMessage.Message_part current, IMessage.Message_part next )
 	{
-
 		//save text before any changes :
 		currentMessage.setText(currentPart, message.getText().toString());
 		
@@ -167,11 +170,30 @@ public class MessageActivity extends Activity {
 			currentMessage.setText( currentPart , text);
 		}
 		if( currentMessage.isComplet() ){
-			ItemView view = new MessageItem(currentMessage);
-			messageAdapter.addLast(view);
+			currentMessage.registerObserver(this);
+			isWaitingForSave = true;
 			currentMessage.save();
-			currentMessage = new Message();
 		}
+	}
+	
+	private void initWithMessage( IMessage message ){
+		
+		//Réinitialisation de la vue :
+		hideInWorkflow(IMessage.Message_part.JE_VOIS);
+		hideInWorkflow(IMessage.Message_part.JE_PREVOIS);
+		hideInWorkflow(IMessage.Message_part.JE_FAIS);
+		hideInWorkflow(IMessage.Message_part.JE_DEMANDE);
+		
+		currentPart = MessageWorkflow.firstState();
+		IMessage.Message_part previousPart = MessageWorkflow.messagePrevious(currentPart);
+		IMessage.Message_part nextPart = MessageWorkflow.messageNext(currentPart);
+		
+		//Initialisation des valeurs stoquées :
+		currentMessage = message;
+		this.message.setText( message.getText(currentPart) );
+		
+		displayNewState( previousPart , currentPart , nextPart );
+		displayInWorkflow(currentPart);
 	}
 	
 	private void displayInWorkflow( IMessage.Message_part current )
@@ -235,12 +257,43 @@ public class MessageActivity extends Activity {
 	}
 	
 	public void update(List<IMessage> newMessageState)
-	{
-		Log.d("Service message sync","Receive data from synchronisation");
+	{	
+		//Attente de la reception du message;
+		if( isWaitingForSave ) return;
+		
+		ArrayList<IMessage> waitingMessage = new ArrayList<IMessage>();
+		
+		for( IMessage serverMsg : newMessageState )
+		{
+			boolean found = false;
+			//merge des deux listes :
+			for( ItemView<IMessage> msgView : messageAdapter.getItems() ){
+				IMessage msg = msgView.getObject();
+//				Log.d("Compare" , msg.getId() + " == " + serverMsg.getId() 
+//						+" ? " +msg.getId().equals( serverMsg.getId() ) );
+				if( msg.getId().equals( serverMsg.getId() )){
+					found = true;
+					if( !msg.isLock() ){
+						msgView.setObject(msg);
+					}
+					break;
+				}
+			}
+			if( !found ){ waitingMessage.add(serverMsg); }
+		}
+		
+		//Ajout des message non trouvé :
+		for( IMessage msg : waitingMessage ){
+			ItemView<IMessage> view = new MessageItem(msg);
+			messageAdapter.addLast(view);
+		}
+
+		//Refresh view :
+		messageAdapter.notifyDataSetChanged();
 	}
 	
 	private void stopSynchronisation(){
-		AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+		AlarmManager alarm = (AlarmManager) getSystemService( Context.ALARM_SERVICE );
 		PendingIntent pi = receiver.getPendingIntent();
 		alarm.cancel(pi);
 	}
@@ -249,6 +302,21 @@ public class MessageActivity extends Activity {
 	public void finish() {
 		stopSynchronisation();
 		super.finish();
+	}
+
+	@Override
+	public void update(Subject subject) {
+		IMessage msg = (IMessage) subject;
+		if( msg.getId().trim().equals("") ){
+			Toast.makeText(this, "Erreur d'enregistrement du message.", Toast.LENGTH_LONG).show();
+			initWithMessage(currentMessage);
+		}else{
+			isWaitingForSave = false;
+			ItemView<IMessage> view = new MessageItem(currentMessage);
+			messageAdapter.addLast(view);
+			currentMessage.unregisterObserver(this);
+			initWithMessage(new Message());
+		}
 	}
 	
 }

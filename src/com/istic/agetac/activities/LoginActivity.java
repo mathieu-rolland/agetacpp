@@ -1,11 +1,12 @@
 package com.istic.agetac.activities;
 
+import java.util.List;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,21 +19,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.api.model.IUser;
+import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.model.User;
 
 public class LoginActivity extends Activity {
-
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"toto:toto", "codis:codis" };
 
 	private static final int MIN_SIZE_PASSWORD = 4;
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
-	private UserLoginTask mAuthTask = null;
+	private UserDao mAuthTask = null;
 
 	// Values for email and password at the time of the login attempt.
 	private String mUser;
@@ -51,6 +52,8 @@ public class LoginActivity extends Activity {
 
 		setContentView(R.layout.activity_login);
 
+		
+		
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);
 
@@ -140,8 +143,8 @@ public class LoginActivity extends Activity {
 			mLoginStatusMessageView
 					.setText(R.string.activity_login_progress_login_in);
 			showProgress(true);
-			mAuthTask = new UserLoginTask();
-			mAuthTask.execute((Void) null);
+			mAuthTask = new UserDao(new UserViewReceiver());
+			mAuthTask.findAll();
 		}
 	}
 
@@ -190,61 +193,33 @@ public class LoginActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-
-			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
-			}
-
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mUser)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
-
-			// TODO: register the new account here.
-			return true;
-		}
+	public class UserViewReceiver implements IViewReceiver<User> {
 
 		@Override
-		protected void onPostExecute(final Boolean success) {
-			mAuthTask = null;
-			showProgress(false);
-
-			if (success) {
-				// finish();
-				if (mUser.equals("codis")) {
-					// Bonchon
-					IUser user = new User("codis", "codis", "codis");
+		public void notifyResponseSuccess(List<User> objects) {
+			for(User user : objects){
+				if(user.getUsername().equals(mUser) && user.getPassword().equals(mPassword)){
+					mAuthTask = null;
+					showProgress(false);
 					AgetacppApplication.setUser(user);
-
-					InterventionActivity.launchActivity(LoginActivity.this);
-				} else {
-					// Bouchon
-					IUser user = new User("tuyau", "user", "pompier");
-					AgetacppApplication.setUser(user);
-
-					SitacActivity.launchActivity(LoginActivity.this);
+					if(user.getRole().equals(Role.codis)){
+						InterventionActivity.launchActivity(LoginActivity.this);
+					}
+					else if(user.getRole().equals(Role.intervenant)){
+						SitacActivity.launchActivity(LoginActivity.this);
+					}
 				}
-			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
+				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
 			}
 		}
 
 		@Override
-		protected void onCancelled() {
+		public void notifyResponseFail(VolleyError error) {
 			mAuthTask = null;
 			showProgress(false);
+			Log.e("LoginActivity", error.getMessage());
 		}
+		
 	}
 }

@@ -2,6 +2,7 @@ package com.istic.agetac.app;
 
 import com.istic.agetac.api.model.IUser;
 import com.istic.sit.framework.application.FrameworkApplication;
+import com.istic.sit.framework.couch.DataBaseCommunication;
 
 public class AgetacppApplication extends FrameworkApplication {
 
@@ -10,6 +11,7 @@ public class AgetacppApplication extends FrameworkApplication {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/agetacpp";
 	}
 
 	/**

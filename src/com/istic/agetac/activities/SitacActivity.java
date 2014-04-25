@@ -3,6 +3,8 @@ package com.istic.agetac.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.widget.RelativeLayout;
@@ -62,6 +64,10 @@ public class SitacActivity extends MainActivity {
 		this.addItemMenu(entityDynamic);
 		this.addItemMenu(entityVirtuel);
 		this.addItemMenu(entityStatic);
+		
+		/*for (IEntity moyen : listMoyen){
+			this.addItemMenu(moyen);
+		}*/
 	}
 
 	@Override

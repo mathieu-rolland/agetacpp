@@ -8,6 +8,7 @@
 
     <LinearLayout 
 	    android:layout_width="match_parent"
+	    android:baselineAligned="false"
 	    android:layout_height="0dip"
 	    android:background="#171f21"
 	    android:weightSum="100"

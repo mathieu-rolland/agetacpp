@@ -1,6 +1,6 @@
 package com.istic.agetac.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.json.JSONObject;
 
@@ -20,8 +20,6 @@ import com.istic.sit.framework.model.Property;
  */
 public class Moyen extends Entity {
 
-	// TODO private Intervention intervention;
-	// TODO private GroupeMoyen group;
 	private Date mHourDemand;	
 	private Date mHourEngagement;
 	private Date mHourArrivedOnSite;
@@ -38,6 +36,7 @@ public class Moyen extends Entity {
 		typePropertie = new Property();
 		typePropertie.setNom("type");
 		typePropertie.setValeur(typeValue);
+		mHourDemand = new Date();
 		super.addPropriete(typePropertie);
 	}
 	
@@ -52,6 +51,7 @@ public class Moyen extends Entity {
 		typePropertie = new Property();
 		typePropertie.setNom("type");
 		typePropertie.setValeur(typeValue);
+		mHourDemand = new Date();
 		super.addPropriete(typePropertie);
 	}
 	
@@ -61,6 +61,7 @@ public class Moyen extends Entity {
 	 */
 	public Moyen (Parcel source) {
 		super(source);
+		mHourDemand = new Date();
 	}
 	
 	/**

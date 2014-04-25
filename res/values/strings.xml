@@ -36,7 +36,11 @@
     <string name ="fragment_tableau_arrive">Heure d\'arrivée sur site</string>
     <string name ="fragment_tableau_free">Heure de libération</string>
     <string name ="fragment_tableau_sector">Secteur</string>
-
+    <string name ="list_moyen_description"> image du moyen</string>
+    <string name ="list_moyen_button_engage"> Engager </string>
+    
+	<!-- Boite de dialogue : Tableau des moyen engagement -->
+	<string name ="dialog_tableau_moyen_engage_name">Entrer le nom du véhicule à engager</string>
     
     <!-- Messages : Possibilité de prefix -->
     <string-array name="prefixes_rendre_compte">

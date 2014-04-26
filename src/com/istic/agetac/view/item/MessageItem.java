@@ -9,18 +9,23 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.activities.MessageActivity;
 import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.view.ItemView;
 import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.controllers.messages.OnModifyMessage;
+import com.istic.agetac.controllers.messages.OnValidateMessage;
 
-public class MessageItem implements ItemView<IMessage>, OnClickListener {
+public class MessageItem implements ItemView<IMessage> {
 
 	private IMessage message;
+	private MessageActivity activity;
 	
-	public MessageItem( IMessage message )
+	public MessageItem( IMessage message , MessageActivity activity )
 	{
 		this.message = message;
+		this.activity = activity;
 	}
 	
 	public View getView(Context context, View view, ViewGroup root){
@@ -46,11 +51,13 @@ public class MessageItem implements ItemView<IMessage>, OnClickListener {
 		
 		//Ajout du listener sur le bouton de validation dans le cas du codis
 		if( AgetacppApplication.getUser().getRole() == IUser.Role.codis ){
-			
 			Button validate = (Button) view.findViewById(R.id.fragment_messages_list_message_validate);
-			validate.setOnClickListener(this);
+			validate.setOnClickListener( new OnValidateMessage(message) );
+		}else{
+			//Ajout du comportement pour activer la modification par le COS :
+			Button modify = (Button) view.findViewById(R.id.item_message_list_button_message_modify);
+			modify.setOnClickListener( new OnModifyMessage(message, activity) );
 		}
-		
 		return view;
 	}
 
@@ -76,11 +83,6 @@ public class MessageItem implements ItemView<IMessage>, OnClickListener {
 	@Override
 	public void setObject(IMessage object) {
 		this.message = object;
-	}
-
-	@Override
-	public void onClick(View arg0) {
-		message.validate();	
 	}
 	
 }

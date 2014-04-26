@@ -5,8 +5,10 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -290,7 +292,7 @@ public class MessageActivity extends Activity implements Observer {
 		
 		//Ajout des message non trouvé :
 		for( IMessage msg : waitingMessage ){
-			ItemView<IMessage> view = new MessageItem(msg);
+			ItemView<IMessage> view = new MessageItem(msg, this);
 			messageAdapter.addLast(view);
 		}
 
@@ -318,11 +320,37 @@ public class MessageActivity extends Activity implements Observer {
 			initWithMessage(currentMessage);
 		}else{
 			isWaitingForSave = false;
-			ItemView<IMessage> view = new MessageItem(currentMessage);
+			ItemView<IMessage> view = new MessageItem(currentMessage, this);
 			messageAdapter.addLast(view);
 			currentMessage.unregisterObserver(this);
 			initWithMessage(new Message());
 		}
+	}
+	
+	public void setCurrentMessage(final IMessage message){
+		
+		if( currentMessage.isLock()  ){
+			Toast.makeText(this, "Un message est actuellement en cours de sauvegarde. Veuillez patienter"
+					, Toast.LENGTH_LONG).show();
+			return;
+		}
+		if( !currentMessage.isComplet() ){
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        builder.setMessage(R.string.fragment_messages_list_alert_modification)
+	               .setPositiveButton(R.string.fragment_messages_list_alert_modification_yes,
+	            		   new DialogInterface.OnClickListener() {
+	                   public void onClick(DialogInterface dialog, int id) {
+	                	   initWithMessage( message );
+	                   }
+	               })
+	               .setNegativeButton(R.string.fragment_messages_list_alert_modification_no, new DialogInterface.OnClickListener() {
+	                   public void onClick(DialogInterface dialog, int id) {
+	                   }
+	               });
+	        builder.create();
+	        return;
+		}
+		
 	}
 	
 }

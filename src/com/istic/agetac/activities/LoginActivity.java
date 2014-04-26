@@ -203,10 +203,10 @@ public class LoginActivity extends Activity {
 					showProgress(false);
 					AgetacppApplication.setUser(user);
 					if(user.getRole().equals(Role.codis)){
-						InterventionActivity.launchActivity(LoginActivity.this);
+						MessageActivity.launchActivity(LoginActivity.this);
 					}
 					else if(user.getRole().equals(Role.intervenant)){
-						SitacActivity.launchActivity(LoginActivity.this);
+						MessageActivity.launchActivity(LoginActivity.this);
 					}
 				}
 				mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -218,7 +218,7 @@ public class LoginActivity extends Activity {
 		public void notifyResponseFail(VolleyError error) {
 			mAuthTask = null;
 			showProgress(false);
-			Log.e("LoginActivity", error.getMessage());
+			Log.e("LoginActivity", error.getMessage() == null ? error.toString() : error.getMessage() );
 		}
 		
 	}

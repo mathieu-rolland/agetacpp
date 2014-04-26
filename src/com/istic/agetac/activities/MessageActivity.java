@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -46,6 +47,11 @@ public class MessageActivity extends Activity implements Observer {
 	private MessageServiceSynchronisation serviceSync;
 	
 	private boolean isWaitingForSave = false;
+	
+	public static void launchActivity(Context context) {
+		Intent intent = new Intent(context, MessageActivity.class);
+		context.startActivity(intent);
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package com.istic.agetac.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	private String _rev;
 	private boolean lock;
 	private boolean validate;
+	private Date dateEmission;
 	private HashMap<Message_part, String> messages;
 	
 	private transient List<Observer> observers;
@@ -231,5 +233,15 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	@Override
 	public void unregisterObserver(Observer observer) {
 		observers.remove(observer);
+	}
+
+	@Override
+	public void setDateEmission(Date date) {
+		this.dateEmission = date;
+	}
+
+	@Override
+	public Date getDateEmission() {
+		return dateEmission;
 	}
 }

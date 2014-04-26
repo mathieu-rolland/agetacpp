@@ -1,5 +1,7 @@
 package com.istic.agetac.api.model;
 
+import java.util.Date;
+
 import com.istic.agetac.pattern.observer.Subject;
 
 public interface IMessage extends Subject{
@@ -22,5 +24,7 @@ public interface IMessage extends Subject{
 	public void save();
 	public void update();
 	public boolean isComplet();
+	public void setDateEmission( Date date );
+	public Date getDateEmission();
 	
 }

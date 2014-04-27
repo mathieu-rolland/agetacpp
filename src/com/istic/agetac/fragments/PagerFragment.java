@@ -72,7 +72,7 @@ public class PagerFragment extends Fragment {
 		}
 		
 		tabFragments = new ArrayList<Fragment>();
-		tabFragments.add(DemandeDeMoyensFragment.newInstance());
+		tabFragments.add(SitacFragment.newInstance());
 		tabFragments.add(TableauMoyenFragment.newInstance());
 		tabFragments.add(DemandeDeMoyensFragment.newInstance());
 		/*

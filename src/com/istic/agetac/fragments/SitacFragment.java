@@ -1,10 +1,10 @@
-package com.istic.agetac.activities;
+package com.istic.agetac.fragments;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.istic.agetac.R;
@@ -12,21 +12,23 @@ import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
-import com.istic.sit.framework.view.MainActivity;
+import com.istic.sit.framework.view.MainFragment;
 
-public class SitacActivity extends MainActivity {
+public class SitacFragment extends MainFragment {
 
-	public static void launchActivity(Context context) {
-		Intent intent = new Intent(context, SitacActivity.class);
-		context.startActivity(intent);
+	public static SitacFragment newInstance() {
+		SitacFragment fragment = new SitacFragment();
+		return fragment;
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
 		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/sitac/";
 		initializeBackground(TypeBackgroundEnum.Map, savedInstanceState);
+		
+		return super.onCreateView(inflater,container, savedInstanceState);
 	}
 
 	@Override

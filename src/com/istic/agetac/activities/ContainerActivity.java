@@ -13,17 +13,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.istic.agetac.R;
 import com.istic.agetac.fragments.PagerFragment;
+import com.istic.sit.framework.view.MapFragment.MapMenuListener;
 
 /**
  * @author Christophe
  * 
  */
-public class ContainerActivity extends FragmentActivity {
+public class ContainerActivity extends FragmentActivity implements MapMenuListener{
 
 	public static void launchActivity(Context context) {
 		Intent intent = new Intent(context, ContainerActivity.class);
@@ -73,6 +76,12 @@ public class ContainerActivity extends FragmentActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	public void onCreateMapMenu(View view, RelativeLayout menu) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -3,8 +3,6 @@ package com.istic.agetac.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.widget.RelativeLayout;
@@ -15,7 +13,6 @@ import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.view.MainActivity;
-import com.istic.sit.framework.view.MainActivity.EnvironmentButton;
 
 public class SitacActivity extends MainActivity {
 
@@ -80,8 +77,6 @@ public class SitacActivity extends MainActivity {
 				entityShadow, // View.DragShadowBuilder
 				entity, // Object myLocalState
 				0);
-
-		this.mDrawerLayout.closeDrawer(listMenu);
 	}
 
 	@Override

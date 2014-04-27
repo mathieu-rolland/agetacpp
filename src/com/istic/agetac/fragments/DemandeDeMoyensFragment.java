@@ -40,6 +40,12 @@ import com.istic.agetac.view.item.DemandeDeMoyensItem;
 */
 public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<Moyen> {
 	
+	
+	public static DemandeDeMoyensFragment newInstance() {
+		DemandeDeMoyensFragment fragment = new DemandeDeMoyensFragment();
+		return fragment;
+	}
+	
 	/** Instances des modèles à utiliser */
 	private MoyensDao mMoyens;
 	
@@ -78,7 +84,6 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
-		setRetainInstance(true);
 		super.onCreate(savedInstanceState);
 		
 	}

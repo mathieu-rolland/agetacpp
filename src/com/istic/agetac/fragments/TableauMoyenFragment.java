@@ -17,6 +17,12 @@ import android.widget.ListView;
 
 public class TableauMoyenFragment extends Fragment {
 	
+	
+	public static TableauMoyenFragment newInstance() {
+		TableauMoyenFragment fragment = new TableauMoyenFragment();
+		return fragment;
+	}
+	
 	private List<Moyen> mListMoyen;
 	private MoyenListAdapter mAdapterMoyen;
 	

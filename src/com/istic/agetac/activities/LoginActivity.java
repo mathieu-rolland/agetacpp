@@ -203,10 +203,10 @@ public class LoginActivity extends Activity {
 					showProgress(false);
 					AgetacppApplication.setUser(user);
 					if(user.getRole().equals(Role.codis)){
-						MessageActivity.launchActivity(LoginActivity.this);
+						InterventionActivity.launchActivity(LoginActivity.this);
 					}
 					else if(user.getRole().equals(Role.intervenant)){
-						MessageActivity.launchActivity(LoginActivity.this);
+						ContainerActivity.launchActivity(LoginActivity.this);
 					}
 				}
 				mPasswordView.setError(getString(R.string.error_incorrect_password));

@@ -10,11 +10,13 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -45,6 +47,10 @@ public class PagerFragment extends Fragment {
 		mActivityActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		mViewPager = (ViewPager) view.findViewById(R.id.pager);
+		
+		/*PagerTabStrip pagerTabStrip = (PagerTabStrip) view.findViewById(R.id.pager_header);
+		pagerTabStrip.setDrawFullUnderline(true);
+		pagerTabStrip.setTabIndicatorColor(Color.RED);*/
 		
 		TabListener tabListener = new TabListener() {
 			

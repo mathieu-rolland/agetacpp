@@ -1,28 +1,23 @@
-package com.istic.agetac.model;
+package com.istic.agetac.controllers.dao;
 
 import java.util.List;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.communication.IViewReceiver;
-import com.istic.sit.framework.couch.APersitantRecuperator;
+import com.istic.sit.framework.couch.AEntityRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.couch.DataBaseCommunication;
-import com.istic.sit.framework.couch.IPersistant;
+import com.istic.sit.framework.model.Entity;
 
-/**
-* Classe Abstraite ADao
-* 
-* @author Anthony LE MEE - 10003134
-*/
-public abstract class ADao<T extends IPersistant> {
-
+public abstract class AnotherDao<T extends Entity> {
+	
 	private final static String BASE_URL = "http://148.60.11.236:5984/agetacpp/";
 	private IViewReceiver<T> iViewReceiver;
 	
 	/**
 	 * Constructeur
 	 */
-	public ADao(IViewReceiver<T> iViewReceiver) {
+	public AnotherDao(IViewReceiver<T> iViewReceiver) {
 		DataBaseCommunication.BASE_URL = BASE_URL;
 		this.setViewReceiver(iViewReceiver);
 	}
@@ -33,7 +28,7 @@ public abstract class ADao<T extends IPersistant> {
 	 */
 	public final void executeFindAll(Class<T> type) {
 						
-		CouchDBUtils.getFromCouch(new APersitantRecuperator<T>(type) {
+		CouchDBUtils.getEntityFromCouch(new AEntityRecuperator<T>(type) {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
@@ -77,5 +72,4 @@ public abstract class ADao<T extends IPersistant> {
 	private void onResponseFail(VolleyError error) {
 		iViewReceiver.notifyResponseFail(error);
 	}
-
-} // abstract class
+}

@@ -1,7 +1,6 @@
 package com.istic.agetac.controllers.dao;
 
 import com.istic.agetac.api.communication.IViewReceiver;
-import com.istic.agetac.model.ADao;
 import com.istic.agetac.model.User;
 
 

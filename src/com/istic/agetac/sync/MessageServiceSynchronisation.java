@@ -9,7 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.communication.IViewReceiver;
-import com.istic.agetac.model.ADao;
+import com.istic.agetac.controllers.dao.ADao;
 import com.istic.agetac.model.Message;
 import com.istic.sit.framework.sync.ASynchornisationService;
 

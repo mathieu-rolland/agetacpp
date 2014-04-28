@@ -308,7 +308,7 @@ public class MessageActivity extends Fragment implements Observer {
 				if( msg.getId().equals( serverMsg.getId() )){
 					found = true;
 					if( !msg.isLock() ){
-						msgView.setObject(msg);
+						msgView.setObject(serverMsg);
 					}
 					break;
 				}

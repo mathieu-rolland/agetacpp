@@ -60,36 +60,6 @@ public class MessageItem implements ItemView<IMessage> {
 			modifyButton.setOnClickListener(new OnModifyMessage(message, activity));
 		}
 		
-		//Ajout du listener sur le bouton de validation dans le cas du codis
-//		if( AgetacppApplication.getUser().getRole() == IUser.Role.codis ){
-//			Button validate = (Button) view.findViewById(R.id.fragment_messages_list_message_validate);
-//			validate.setOnClickListener( new OnValidateMessage(message) );
-//			
-//			//Si le message est valide, on ne peut pas le revalider :
-//			if( message.isValidate() ){
-//				validate.setVisibility( View.GONE );
-//				imgValidate.setVisibility(View.VISIBLE);
-//				labelValidate.setText(R.string.fragment_messages_list_image_validate);
-//			}else{
-//				imgValidate.setVisibility(View.GONE);
-//				labelValidate.setText(R.string.fragment_messages_list_image_not_validate);
-//			}
-//		}else{
-//			//Ajout du comportement pour activer la modification par le COS :
-//			Button modify = (Button) view.findViewById(R.id.item_message_list_button_message_modify);
-//			
-//			//Si le message est valide, le COS ne peut plus le modifier :
-//			if( message.isValidate() ){
-//				modify.setVisibility( View.GONE );
-//				imgValidate.setVisibility(View.VISIBLE);
-//				labelValidate.setText(R.string.fragment_messages_list_image_validate);
-//			}else{
-//				modify.setOnClickListener( new OnModifyMessage(message, activity) );
-//				imgValidate.setVisibility(View.GONE);
-//				labelValidate.setText(R.string.fragment_messages_list_image_not_validate);
-//			}
-//		}
-		
 		//Si le message est valide, on ne peut pas le revalider :
 		if( modifyButton != null 
 				&& validateButton != null

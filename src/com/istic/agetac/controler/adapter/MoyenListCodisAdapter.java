@@ -42,7 +42,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
             holder.hourEngage =(TextView) convertView.findViewById( R.id.list_moyen_hour_engage );
             holder.hourArrived =(TextView) convertView.findViewById( R.id.list_moyen_hour_arrive );
             holder.hourFree =(TextView) convertView.findViewById( R.id.list_moyen_hour_free );
-            holder.sector =(TextView) convertView.findViewById( R.id.list_moyen_sector );
+            //holder.sector =(TextView) convertView.findViewById( R.id.list_moyen_sector );
             holder.buttonDemand = (Button)convertView.findViewById(R.id.list_moyen_button_engage);
             holder.name =(TextView)convertView.findViewById(R.id.list_moyen_name);
             convertView.setTag(holder);

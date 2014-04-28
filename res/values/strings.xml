@@ -31,10 +31,10 @@
     
     <!-- Layout : tableau des moyens -->
     <string name ="fragment_tableau_nameAndType">Nom et type</string>
-    <string name ="fragment_tableau_demand">Heure de demande</string>
-    <string name ="fragment_tableau_engage">Heure d\'engagement</string>
-    <string name ="fragment_tableau_arrive">Heure d\'arrivée sur site</string>
-    <string name ="fragment_tableau_free">Heure de libération</string>
+    <string name ="fragment_tableau_demand">Heure demande</string>
+    <string name ="fragment_tableau_engage">Heure engagement</string>
+    <string name ="fragment_tableau_arrive">Heure arrivée</string>
+    <string name ="fragment_tableau_free">Heure libération</string>
     <string name ="fragment_tableau_sector">Secteur</string>
     <string name ="list_moyen_description"> image du moyen</string>
     <string name ="list_moyen_button_engage"> Engager </string>

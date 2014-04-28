@@ -36,7 +36,6 @@
                 android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
         <!-- Hour of demand -->
@@ -92,27 +91,55 @@
 
         <!-- Hour free -->
 
-        <TextView
-            android:id="@+id/list_moyen_hour_free"
+        <RelativeLayout
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="80dip"
             android:layout_weight="16.67"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:background="#000000" >
+
+            <Button
+                android:id="@+id/list_moyen_button_free"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_style_red"
+                android:text="@string/list_moyen_button_free" />
+
+            <TextView
+                android:id="@+id/list_moyen_hour_free"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_moyen_button_free"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <!-- Hour sector -->
 
-        <TextView
-            android:id="@+id/list_moyen_sector"
+        <RelativeLayout
             android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_height="80dip"
             android:layout_weight="16.67"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:background="#000000" >
+
+            <Button
+                android:id="@+id/list_moyen_button_sector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_style_red"
+                android:text="@string/list_moyen_button_secteur" />
+
+            <TextView
+                android:id="@+id/list_moyen_sector"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                 android:layout_below="@+id/list_moyen_button_sector"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

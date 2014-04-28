@@ -38,6 +38,9 @@
     <string name ="fragment_tableau_sector">Secteur</string>
     <string name ="list_moyen_description"> image du moyen</string>
     <string name ="list_moyen_button_engage"> Engager </string>
+     <string name ="list_moyen_button_free"> Libérer </string>
+      <string name ="list_moyen_button_secteur"> Secteur </string>
+     
     
 	<!-- Boite de dialogue : Tableau des moyen engagement -->
 	<string name ="dialog_tableau_moyen_engage_name">Entrer le nom du véhicule à engager</string>

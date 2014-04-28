@@ -89,7 +89,7 @@ public class PagerFragment extends Fragment {
 			String modeStr = args.getString(ARGS_MODE);
 			if(modeStr.equals(MODE.CODIS.toString())) {
 				titles = titlesCodis;
-				tabFragments.add(SitacFragment.newInstance());
+				tabFragments.add(TableauMoyenFragment.newInstance());
 			} else if(modeStr.equals(MODE.INTERVENANT.toString())) {
 				titles = titlesIntervenant;
 				tabFragments.add(SitacFragment.newInstance());

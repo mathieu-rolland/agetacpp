@@ -194,6 +194,8 @@ public class LoginActivity extends Activity {
 
 		@Override
 		public void notifyResponseSuccess(List<User> objects) {
+			mUserView.setError(null);
+			mPasswordView.setError(null);
 			boolean find = false;
 			for(User user : objects){
 				if(user.getUsername().equals(mUser)){
@@ -202,13 +204,9 @@ public class LoginActivity extends Activity {
 					if(user.getPassword().equals(mPassword)){
 						AgetacppApplication.setUser(user);
 						if(user.getRole().equals(Role.codis)){
-							mUserView.setError(null);
-							mPasswordView.setError(null);
 							InterventionActivity.launchActivity(LoginActivity.this);
 						}
 						else if(user.getRole().equals(Role.intervenant)){
-							mUserView.setError(null);
-							mPasswordView.setError(null);
 							ContainerActivity.launchActivity(LoginActivity.this);
 						}
 					}

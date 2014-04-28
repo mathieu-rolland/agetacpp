@@ -16,7 +16,7 @@ public class OnSendMessage implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		activity.message_cancel(v);
+		activity.message_validate(v);
 	}
 	
 }

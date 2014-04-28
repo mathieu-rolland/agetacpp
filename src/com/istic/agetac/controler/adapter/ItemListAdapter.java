@@ -3,44 +3,39 @@ package com.istic.agetac.controler.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.istic.agetac.R;
 import com.istic.agetac.api.view.ItemView;
 
-public class ItemListAdapter extends BaseAdapter {
+public class ItemListAdapter<T> extends BaseAdapter {
 
-	private ArrayList<ItemView> items;
+	private ArrayList<ItemView<T>> items;
 	private Context context;
 	
 	public ItemListAdapter( Context context ){
-		this.items = new ArrayList<ItemView>();
+		this.items = new ArrayList<ItemView<T>>();
 		this.context = context;
 	}
 	
-	public ArrayList<ItemView> getItems(){
+	public ArrayList<ItemView<T>> getItems(){
 		return items;
 	}
 	
-	public void addItem( ItemView item ){
+	public void addItem( ItemView<T> item ){
 		this.items.add(item);
 	}
 	
-	public void removeItem( ItemView item ){
+	public void removeItem( ItemView<T> item ){
 		this.items.remove(item);
 	}
 	
-	public void addLast( ItemView item ){
+	public void addLast( ItemView<T> item ){
 		this.items.add(getCount(), item);
 	}
 	
-	public void addFirst( ItemView item ){
+	public void addFirst( ItemView<T> item ){
 		this.items.add(0, item);
 	}
 	
@@ -61,9 +56,8 @@ public class ItemListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View view, ViewGroup root) {
-		ItemView item = items.get(position);
+		ItemView<T> item = (ItemView<T>) items.get(position);
 		
-		// FIXME NullPointerException
 		return item.getView(context, view, root);
 		
 //		View convertView = LayoutInflater.from(context).inflate(R.layout.item_message_view, null);

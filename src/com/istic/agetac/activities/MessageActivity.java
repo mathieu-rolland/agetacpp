@@ -3,6 +3,8 @@ package com.istic.agetac.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -11,6 +13,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,17 +39,15 @@ import com.istic.agetac.sync.MessageBroadcastReceiver;
 import com.istic.agetac.sync.MessageServiceSynchronisation;
 import com.istic.agetac.view.item.MessageItem;
 import com.istic.sit.framework.application.FrameworkApplication;
+import com.istic.sit.framework.couch.IPersistant;
+import com.istic.sit.framework.couch.JsonSerializer;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
 public class MessageActivity extends Fragment implements Observer {
 
-	private ItemListAdapter messageAdapter;
+	private ItemListAdapter<IMessage> messageAdapter;
 	private ListView messagesList;
 	private IMessage.Message_part currentPart;
-	
-	private Button validate;
-	private Button previous;
-	private Button next;
 	
 	private EditText message;
 	private IMessage currentMessage;
@@ -62,7 +63,7 @@ public class MessageActivity extends Fragment implements Observer {
 	
 	private boolean isWaitingForSave = false;
 	
-	private boolean isMessageModify = false ;
+	private boolean isMessageModify;
 
 	public static Fragment newInstance() {
 		MessageActivity fragment = new MessageActivity();
@@ -77,17 +78,11 @@ public class MessageActivity extends Fragment implements Observer {
 		/** Chargement du layout */
 		View view = inflater.inflate(R.layout.fragment_messages_list, container, false);
 		
-		messageAdapter = new ItemListAdapter(getActivity());
+		messageAdapter = new ItemListAdapter<IMessage>(getActivity());
 		messagesList = (ListView) view.findViewById(R.id.fragment_messages_list_list);
 		messagesList.setAdapter(messageAdapter);
 		
 		message = (EditText) view.findViewById(R.id.fragment_messages_list_message_text);
-		next = (Button) view.findViewById(R.id.fragment_messages_list_message_next);
-		
-		String currentWording = MessageWorkflow.getWording(getActivity().getApplicationContext(), currentPart);
-		message.setHint(currentWording);
-		previous = (Button) view.findViewById(R.id.fragment_messages_list_message_previous);
-		validate = (Button) view.findViewById(R.id.fragment_messages_list_message_validate);
 
 		//Récupération des boutons :
 		buttonCancel = (Button) view.findViewById(R.id.fragment_messages_list_message_cancel);
@@ -101,7 +96,10 @@ public class MessageActivity extends Fragment implements Observer {
 		buttonPrevious.setOnClickListener(new OnPreviousMessagePart(this));
 		buttonValidate.setOnClickListener(new OnSendMessage(this));
 		
+		//Init message with new message :
+		isMessageModify = false;
 		initWithMessage( new Message() );
+		
 		
 		//Start sync :
 		receiver = new MessageBroadcastReceiver(this);
@@ -154,26 +152,26 @@ public class MessageActivity extends Fragment implements Observer {
 		
 		this.currentPart = current;
 		
-		this.next.setText( getString(R.string.fragment_message_list_button_next) + " ("+ wordingNext +")" );
+		this.buttonNext.setText( getString(R.string.fragment_message_list_button_next) + " ("+ wordingNext +")" );
 		
 		if( !MessageWorkflow.isFirst(currentPart) ){
-			this.previous.setEnabled(true);
-			this.previous.setText( getString(R.string.fragment_message_list_button_previous) + " ("+ wordingPreviousStep +")");
+			this.buttonPrevious.setEnabled(true);
+			this.buttonPrevious.setText( getString(R.string.fragment_message_list_button_previous) + " ("+ wordingPreviousStep +")");
 		}else{
-			this.previous.setEnabled(false);
-			this.previous.setText( getString(R.string.fragment_message_list_button_previous));
+			this.buttonPrevious.setEnabled(false);
+			this.buttonPrevious.setText( getString(R.string.fragment_message_list_button_previous));
 		}
 		
 		if( MessageWorkflow.isLastState(currentPart) ){
-			this.next.setEnabled(false);
-			validate.setEnabled(true);
+			this.buttonNext.setEnabled(false);
+			buttonValidate.setEnabled(true);
 		}else{
 			if( !currentMessage.isComplet() ){
-				validate.setEnabled(false);
+				buttonValidate.setEnabled(false);
 			}else{
-				validate.setEnabled(true);
+				buttonValidate.setEnabled(true);
 			}
-			this.next.setEnabled(true);
+			this.buttonNext.setEnabled(true);
 		}
 		
 		message.setHint(currentWording);
@@ -183,7 +181,6 @@ public class MessageActivity extends Fragment implements Observer {
 		}else{
 			message.setText("");
 		}
-		
 	}
 	
 	public void message_previous( View v )
@@ -205,11 +202,15 @@ public class MessageActivity extends Fragment implements Observer {
 		if( currentMessage.isComplet() ){
 			currentMessage.registerObserver(this);
 			isWaitingForSave = true;
+			try {
+				Log.d("MESSAGE"," Send message " + JsonSerializer.serialize((IPersistant) currentMessage));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			currentMessage.save();
 			if( !isMessageModify ){
 				messagesList.setSelection( messageAdapter.getCount() );
 			}
-			isMessageModify = false;
 		}
 	}
 	
@@ -236,7 +237,7 @@ public class MessageActivity extends Fragment implements Observer {
 		this.message.setText( message.getText(currentPart) );
 		
 		displayNewState( previousPart , currentPart , nextPart );
-		displayInWorkflow(currentPart);
+		displayInWorkflow( currentPart );
 	}
 	
 	private void displayInWorkflow( IMessage.Message_part current )
@@ -311,7 +312,9 @@ public class MessageActivity extends Fragment implements Observer {
 		{
 			boolean found = false;
 			//merge des deux listes :
-			for( ItemView<IMessage> msgView : messageAdapter.getItems() ){
+			for( Object row : messageAdapter.getItems() ){
+				@SuppressWarnings("unchecked")
+				ItemView<IMessage> msgView = (ItemView<IMessage>) row;
 				IMessage msg = msgView.getObject();
 //				Log.d("Compare" , msg.getId() + " == " + serverMsg.getId() 
 //						+" ? " +msg.getId().equals( serverMsg.getId() ) );
@@ -356,11 +359,12 @@ public class MessageActivity extends Fragment implements Observer {
 			initWithMessage(currentMessage);
 		}else{
 			isWaitingForSave = false;
-			ItemView<IMessage> view = new MessageItem(currentMessage, this);
 			if( !isMessageModify ){
+				ItemView<IMessage> view = new MessageItem(currentMessage, this);
 				messageAdapter.addLast(view);
 				currentMessage.unregisterObserver(this);
 			}
+			isMessageModify = false;
 			initWithMessage(new Message());
 		}
 	}

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
 
 import com.istic.agetac.R;
@@ -79,7 +80,13 @@ public class ContainerActivity extends FragmentActivity implements MapMenuListen
 	}
 
 	@Override
-	public void onCreateMapMenu(View view, RelativeLayout menu) {
+	public void onInitializeMapMenu(GridView menu) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCreateMapMenu(GridView menu) {
 		// TODO Auto-generated method stub
 		
 	}

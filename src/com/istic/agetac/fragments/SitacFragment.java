@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.GridView;
 
 import com.istic.agetac.R;
 import com.istic.sit.framework.api.model.IEntity;
@@ -13,6 +14,7 @@ import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.view.MainFragment;
+import com.istic.sit.framework.view.MainActivity;
 
 public class SitacFragment extends MainFragment {
 
@@ -79,12 +81,26 @@ public class SitacFragment extends MainFragment {
 				entityShadow, // View.DragShadowBuilder
 				entity, // Object myLocalState
 				0);
+//		this.mDrawerLayout.closeDrawer(listMenu);
 	}
 
 	@Override
-	public void onCreateMapMenu(View view, RelativeLayout menu) {
-		EnvironmentButton environment_water = new EnvironmentButton("Point d'eau", view.getContext(), R.drawable.environment_water);
-		menu.addView(environment_water);
+	public void onCreateMapMenu(GridView menu) {
+		IEntity environment_water = new Entity();
+		environment_water.setLibelle("Point d'eau");
+		environment_water.setRepresentation(new Representation(R.drawable.environment_water));
+		
+//		this.addItemEntityGridMenu(environment_water);
+//		this.addItemEntityGridMenu(environment_water);
+		
+//		EnvironmentButton environment_water = new EnvironmentButton("Point d'eau", view.getContext(), R.drawable.environment_water);
+		
+		
+	}
+
+	@Override
+	public void onInitializeMapMenu(GridView menu) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -202,15 +202,7 @@ public class MessageActivity extends Fragment implements Observer {
 		if( currentMessage.isComplet() ){
 			currentMessage.registerObserver(this);
 			isWaitingForSave = true;
-			try {
-				Log.d("MESSAGE"," Send message " + JsonSerializer.serialize((IPersistant) currentMessage));
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
 			currentMessage.save();
-			if( !isMessageModify ){
-				messagesList.setSelection( messageAdapter.getCount() );
-			}
 		}
 	}
 	
@@ -363,6 +355,7 @@ public class MessageActivity extends Fragment implements Observer {
 				ItemView<IMessage> view = new MessageItem(currentMessage, this);
 				messageAdapter.addLast(view);
 				currentMessage.unregisterObserver(this);
+				messagesList.setSelection( messageAdapter.getCount() );
 			}
 			isMessageModify = false;
 			initWithMessage(new Message());

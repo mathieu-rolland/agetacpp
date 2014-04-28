@@ -55,7 +55,13 @@ public class MessageItem implements ItemView<IMessage> {
 		}else{
 			//Ajout du comportement pour activer la modification par le COS :
 			Button modify = (Button) view.findViewById(R.id.item_message_list_button_message_modify);
-			modify.setOnClickListener( new OnModifyMessage(message, activity) );
+			
+			//Si le message est valide, le COS ne peut plus le modifier :
+			if( message.isValidate() ){
+				modify.setVisibility( View.GONE );
+			}else{
+				modify.setOnClickListener( new OnModifyMessage(message, activity) );
+			}
 		}
 		return view;
 	}

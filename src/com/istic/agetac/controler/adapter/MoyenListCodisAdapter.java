@@ -10,6 +10,7 @@ import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
 import com.istic.agetac.model.Moyen;
 
 import android.content.Context;
+import android.opengl.Visibility;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MoyenListCodisAdapter extends AMoyenListAdapter {
@@ -29,7 +31,6 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
-		SimpleDateFormat  formater = new SimpleDateFormat("ddMM '-' hhmm");
 		Date aujourdhui = new Date();
 		Moyen current = mList.get(position);
 		
@@ -42,7 +43,8 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
             holder.hourEngage =(TextView) convertView.findViewById( R.id.list_moyen_hour_engage );
             holder.hourArrived =(TextView) convertView.findViewById( R.id.list_moyen_hour_arrive );
             holder.hourFree =(TextView) convertView.findViewById( R.id.list_moyen_hour_free );
-            //holder.sector =(TextView) convertView.findViewById( R.id.list_moyen_sector );
+            holder.buttonFree = (Button) convertView.findViewById(R.id.list_moyen_button_free);
+            holder.buttonSector =(Spinner) convertView.findViewById( R.id.list_moyen_button_sector);
             holder.buttonDemand = (Button)convertView.findViewById(R.id.list_moyen_button_engage);
             holder.name =(TextView)convertView.findViewById(R.id.list_moyen_name);
             convertView.setTag(holder);
@@ -50,35 +52,46 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         
-        
+        holder.buttonFree.setVisibility(Button.GONE);
+        holder.buttonSector.setVisibility(Button.GONE);
         holder.logo.setImageResource(R.drawable.fpt_1_alim);
-        holder.hourDemand.setText(formater.format(current.getmHourDemand()));
+        
+        if(current.getLibelle()!="")
+        {
+        	holder.name.setText(current.getLibelle());
+        }
         
         if(current.getmHourDemand()!=null)
         {
-        	holder.hourDemand.setText(formater.format(current.getmHourDemand()));      
-        	holder.buttonDemand.setOnClickListener(new ListenerEngage(current,this, convertView));
+        	holder.hourDemand.setText(mFormater.format(current.getmHourDemand()));  
+        	holder.hourDemand.setVisibility(TextView.VISIBLE);
+        	holder.buttonDemand.setOnClickListener(new ListenerEngage(current,this));
         }
+        
         if(current.getmHourEngagement()!=null)        
         {
-        	holder.hourEngage.setText(formater.format(current.getmHourEngagement())); 
+        	holder.hourEngage.setText(mFormater.format(current.getmHourEngagement())); 
+        	holder.hourEngage.setVisibility(TextView.VISIBLE);
         	holder.buttonDemand.setVisibility(Button.GONE);
-        	ViewGroup.LayoutParams params = holder.hourDemand.getLayoutParams();
-        	params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        	holder.hourDemand.setLayoutParams(params);
-        	holder.hourDemand.setGravity(Gravity.CENTER);
-        	holder.hourDemand.setTextSize(18);
+//        	ViewGroup.LayoutParams params = holder.hourDemand.getLayoutParams();
+//        	params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//        	holder.hourDemand.setLayoutParams(params);
+//        	holder.hourDemand.setGravity(Gravity.CENTER);
+//        	holder.hourDemand.setTextSize(18);
         	holder.name.setText(current.getLibelle());
         }
         
         if(current.getmHourArrivedOnSite()!=null)
         {
-        	holder.hourArrived.setText(formater.format(current.getmHourArrivedOnSite()));
+        	holder.hourArrived.setText(mFormater.format(current.getmHourArrivedOnSite()));
+        	holder.buttonSector.setVisibility(Button.GONE);
+//        	holder.sector.setText(current.getmSector());
+//        	holder.sector.setVisibility(TextView.VISIBLE);
         }
         
         if(current.getmHourFree()!=null)
         {
-        	holder.hourFree.setText(formater.format(current.getmHourFree()));
+        	holder.hourFree.setText(mFormater.format(current.getmHourFree()));
         }
         
         return convertView;

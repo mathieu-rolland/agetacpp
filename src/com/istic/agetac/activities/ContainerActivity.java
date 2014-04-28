@@ -48,9 +48,9 @@ public class ContainerActivity extends FragmentActivity implements MapMenuListen
 
 		Bundle extras = getIntent().getExtras();
 		if(extras != null) {
-			if (extras.getString(MODE_EXTRA).equals(PagerFragment.MODE.CODIS.toString())){
+			if (extras.getString(MODE_EXTRA).equals(MODE.CODIS.toString())){
 				displayFragment(PagerFragment.newInstance(MODE.CODIS));
-			}else if (extras.getString(MODE_EXTRA).equals(PagerFragment.MODE.INTERVENANT.toString())){
+			}else if (extras.getString(MODE_EXTRA).equals(MODE.INTERVENANT.toString())){
 				displayFragment(PagerFragment.newInstance(MODE.INTERVENANT));
 			}
 		}

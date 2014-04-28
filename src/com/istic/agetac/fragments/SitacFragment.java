@@ -5,16 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.GridView;
 
 import com.istic.agetac.R;
 import com.istic.sit.framework.api.model.IEntity;
-import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.view.MainFragment;
-import com.istic.sit.framework.view.MainActivity;
 
 public class SitacFragment extends MainFragment {
 
@@ -27,7 +24,7 @@ public class SitacFragment extends MainFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/sitac/";
+		//DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/sitac/";
 		initializeBackground(TypeBackgroundEnum.Map, savedInstanceState);
 		
 		return super.onCreateView(inflater,container, savedInstanceState);
@@ -36,8 +33,8 @@ public class SitacFragment extends MainFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		//loadEntities();
-		//startServiceSynchronisation();
+		loadEntities();
+		startServiceSynchronisation();
 	}
 
 	@Override

@@ -10,13 +10,11 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
@@ -24,16 +22,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.istic.agetac.R;
-import com.istic.agetac.activities.MessageActivity;
 
 /**
  * @author Christophe
  *
  */
 public class PagerFragment extends Fragment {
+	
+	private static final String ARGS_MODE = "args_mode";
+	
+	public static enum MODE {
+		CODIS, INTERVENANT
+	}
+	
+	public static PagerFragment newInstance(MODE mode) {
+		PagerFragment fragment = new PagerFragment();
+		Bundle args = new Bundle();
+		args.putString(ARGS_MODE, mode.toString());
+		fragment.setArguments(args);
+		return fragment;
+	}
+	
 	private ViewPager mViewPager;
 	private SuggestionsPagerAdapter mPagerAdapter;
-	private final String[] titles = new String[]{"Sitac", "Tableau des Moyens", "Messages"};
+	private final String[] titlesCodis = new String[]{"Creation Intervention"};
+	private final String[] titlesIntervenant = new String[]{"Sitac", "Tableau des Moyens", "Messages"};
+	
+	String[] titles = new String[]{"init"};
 	
 	// Fragments
 	private List<Fragment> tabFragments;
@@ -67,20 +82,25 @@ public class PagerFragment extends Fragment {
 			public void onTabReselected(Tab tab, FragmentTransaction ft) {}
 		};
 		
+		tabFragments = new ArrayList<Fragment>();
+		Bundle args = getArguments();
+		if(args != null) {
+			String modeStr = args.getString(ARGS_MODE);
+			if(modeStr.equals(MODE.CODIS.toString())) {
+				/*titles = titlesCodis;
+				tabFragments.add(InterventionFragment.newInstance());*/
+			} else if(modeStr.equals(MODE.INTERVENANT.toString())) {
+				titles = titlesIntervenant;
+				tabFragments.add(SitacFragment.newInstance());
+				tabFragments.add(TableauMoyenFragment.newInstance());
+				tabFragments.add(MessageFragment.newInstance());
+			} 
+		}
+		
 		mActivityActionBar.removeAllTabs();
 		for(int i = 0 ; i < 3 ; i++) {
 			mActivityActionBar.addTab(mActivityActionBar.newTab().setText(titles[i]).setTabListener(tabListener));
 		}
-		
-		tabFragments = new ArrayList<Fragment>();
-		tabFragments.add(SitacFragment.newInstance());
-		tabFragments.add(TableauMoyenFragment.newInstance());
-		tabFragments.add(MessageActivity.newInstance());
-		/*
-		tabFragments.add(SitacFragment.newInstance());
-		tabFragments.add(DemandeDeMoyensFragment.newInstance());
-		tabFragments.add(MessageFragment.newInstance());
-		*/
 		
 		mViewPager.setOffscreenPageLimit(tabFragments.size());
 		mPagerAdapter = new SuggestionsPagerAdapter(getChildFragmentManager());

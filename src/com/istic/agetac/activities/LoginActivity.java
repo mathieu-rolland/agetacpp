@@ -25,6 +25,7 @@ import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.UserDao;
+import com.istic.agetac.fragments.PagerFragment;
 import com.istic.agetac.model.User;
 
 public class LoginActivity extends Activity {
@@ -202,10 +203,10 @@ public class LoginActivity extends Activity {
 					if(user.getPassword().equals(mPassword)){
 						AgetacppApplication.setUser(user);
 						if(user.getRole().equals(Role.codis)){
-							InterventionActivity.launchActivity(LoginActivity.this);
+							ContainerActivity.launchActivity(PagerFragment.MODE.CODIS, LoginActivity.this);
 						}
 						else if(user.getRole().equals(Role.intervenant)){
-							ContainerActivity.launchActivity(LoginActivity.this);
+							ContainerActivity.launchActivity(PagerFragment.MODE.INTERVENANT, LoginActivity.this);
 						}
 					}
 					else{

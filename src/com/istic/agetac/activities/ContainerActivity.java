@@ -13,14 +13,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
 
 import com.istic.agetac.R;
 import com.istic.agetac.fragments.PagerFragment;
+import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.sit.framework.view.MapFragment.MapMenuListener;
 
 /**
@@ -29,11 +28,14 @@ import com.istic.sit.framework.view.MapFragment.MapMenuListener;
  */
 public class ContainerActivity extends FragmentActivity implements MapMenuListener{
 
-	public static void launchActivity(Context context) {
+	public static final String MODE_EXTRA = "MODE_EXTRA";
+	
+	public static void launchActivity(PagerFragment.MODE mode, Context context) {
 		Intent intent = new Intent(context, ContainerActivity.class);
+		intent.putExtra(MODE_EXTRA, mode);
 		context.startActivity(intent);
 	}
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,7 +46,14 @@ public class ContainerActivity extends FragmentActivity implements MapMenuListen
 		//getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
-		displayFragment(new PagerFragment());
+		Bundle extras = getIntent().getExtras();
+		if(extras != null) {
+			if (extras.getString(MODE_EXTRA).equals(PagerFragment.MODE.CODIS.toString())){
+				displayFragment(PagerFragment.newInstance(MODE.CODIS));
+			}else if (extras.getString(MODE_EXTRA).equals(PagerFragment.MODE.INTERVENANT.toString())){
+				displayFragment(PagerFragment.newInstance(MODE.INTERVENANT));
+			}
+		}
 	}
 
 	private void displayFragment(Fragment fragment) {

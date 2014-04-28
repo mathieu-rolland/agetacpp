@@ -32,7 +32,7 @@ public class ContainerActivity extends FragmentActivity implements MapMenuListen
 	
 	public static void launchActivity(PagerFragment.MODE mode, Context context) {
 		Intent intent = new Intent(context, ContainerActivity.class);
-		intent.putExtra(MODE_EXTRA, mode);
+		intent.putExtra(MODE_EXTRA, mode.toString());
 		context.startActivity(intent);
 	}
 	

@@ -25,7 +25,6 @@ import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.UserDao;
-import com.istic.agetac.fragments.PagerFragment;
 import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.User;
 

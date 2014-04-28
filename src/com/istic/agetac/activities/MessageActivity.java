@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMessage;
+import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.api.view.ItemView;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.ItemListAdapter;
 import com.istic.agetac.controllers.messages.OnCancelMessage;
 import com.istic.agetac.controllers.messages.OnNextMessagePart;
@@ -303,8 +305,6 @@ public class MessageActivity extends Fragment implements Observer {
 				@SuppressWarnings("unchecked")
 				ItemView<IMessage> msgView = (ItemView<IMessage>) row;
 				IMessage msg = msgView.getObject();
-//				Log.d("Compare" , msg.getId() + " == " + serverMsg.getId() 
-//						+" ? " +msg.getId().equals( serverMsg.getId() ) );
 				if( msg.getId().equals( serverMsg.getId() )){
 					found = true;
 					if( !msg.isLock() ){
@@ -313,7 +313,13 @@ public class MessageActivity extends Fragment implements Observer {
 					break;
 				}
 			}
-			if( !found ){ waitingMessage.add(serverMsg); }
+			if( !found ){
+				if( AgetacppApplication.getUser().getRole() == Role.codis ){
+					if( serverMsg.isValidate()) waitingMessage.add(serverMsg);
+				}else{
+					waitingMessage.add(serverMsg);
+				}
+			}
 		}
 		
 		//Ajout des message non trouvé :

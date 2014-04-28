@@ -131,24 +131,18 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_weight="15"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal" 
-            android:weightSum="100">
+        android:orientation="horizontal" 
+        android:weightSum="100">
 
             <ImageView
                 android:id="@+id/item_message_list_image_validated"
                 android:layout_width="0dip"
-                android:layout_weight="33"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="25"
                 android:contentDescription="@string/fragment_messages_list_image_validate"
                 android:src="@drawable/validated"
                 android:visibility="visible" />
@@ -164,8 +158,6 @@
                 android:paddingLeft="10dp"
                 android:textColor="#efefef"
                 android:textSize="@dimen/text_size" />
-        
-        </LinearLayout>
         
     </LinearLayout>
 

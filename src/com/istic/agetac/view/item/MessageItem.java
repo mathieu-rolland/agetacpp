@@ -66,11 +66,14 @@ public class MessageItem implements ItemView<IMessage> {
 				&& message.isValidate() ){
 			modifyButton.setVisibility( View.GONE );
 			validateButton.setVisibility( View.GONE );
-			imgValidate.setVisibility(View.VISIBLE);
-			labelValidate.setText(R.string.fragment_messages_list_image_validate);
 		}else{
 			imgValidate.setVisibility(View.GONE);
 			labelValidate.setText(R.string.fragment_messages_list_image_not_validate);
+		}
+		
+		if( message.isValidate() ){
+			imgValidate.setVisibility(View.VISIBLE);
+			labelValidate.setText(R.string.fragment_messages_list_image_validate);
 		}
 		
 		return view;

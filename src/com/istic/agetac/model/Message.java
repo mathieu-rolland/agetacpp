@@ -87,7 +87,12 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 
 	@Override
 	public void save() {
-		DataBaseCommunication.sendPost(this);
+		if(this.getId().isEmpty()){
+			DataBaseCommunication.sendPost(this);
+		}
+		else{
+			DataBaseCommunication.sendPut(this);
+		}
 	}
 
 	@Override
@@ -109,11 +114,11 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 
 	@Override
 	public boolean isComplet() {
-		return  !(messages.get(Message_part.JE_SUIS) == null ? true : messages.get(Message_part.JE_SUIS).isEmpty())
-				&& !(messages.get(Message_part.JE_VOIS) == null ? true : messages.get(Message_part.JE_VOIS).isEmpty())
-				&& !(messages.get(Message_part.JE_PREVOIS) == null ? true : messages.get(Message_part.JE_PREVOIS).isEmpty() )
-				&& !(messages.get(Message_part.JE_FAIS) == null ? true : messages.get(Message_part.JE_FAIS).isEmpty())
-				&& !(messages.get(Message_part.JE_DEMANDE) == null ? true : messages.get(Message_part.JE_DEMANDE).isEmpty());
+		return  (messages.get(Message_part.JE_SUIS) != null && !messages.get(Message_part.JE_SUIS).isEmpty())
+				&& (messages.get(Message_part.JE_VOIS) != null && !messages.get(Message_part.JE_VOIS).isEmpty())
+				&& (messages.get(Message_part.JE_PREVOIS) != null&& !messages.get(Message_part.JE_PREVOIS).isEmpty() )
+				&& (messages.get(Message_part.JE_FAIS) != null && !messages.get(Message_part.JE_FAIS).isEmpty())
+				&& (messages.get(Message_part.JE_DEMANDE) != null && !messages.get(Message_part.JE_DEMANDE).isEmpty());
 	}
 
 	@Override

@@ -65,6 +65,7 @@
     
     <string name="fragment_messages_list_message_validate_text">Envoyer</string>
     <string name="fragment_messages_list_cos_message_button_validate">Valider</string>
+    <string name="fragment_messages_list_cos_message_button_cancle">Annuler</string>
     <string name="fragment_messages_list_cos_message_button_modify">Modifier</string>
     <string name="fragment_messages_list_alert_modification">Modifier ce message va supprimer le message en cours d\'édition. Voulez-vous continuer?</string>
 	<string name="fragment_messages_list_alert_modification_yes">Oui</string>

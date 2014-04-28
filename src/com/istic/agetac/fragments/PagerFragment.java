@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.istic.agetac.R;
+import com.istic.agetac.activities.MessageActivity;
 
 /**
  * @author Christophe
@@ -74,7 +75,7 @@ public class PagerFragment extends Fragment {
 		tabFragments = new ArrayList<Fragment>();
 		tabFragments.add(SitacFragment.newInstance());
 		tabFragments.add(TableauMoyenFragment.newInstance());
-		tabFragments.add(DemandeDeMoyensFragment.newInstance());
+		tabFragments.add(MessageActivity.newInstance());
 		/*
 		tabFragments.add(SitacFragment.newInstance());
 		tabFragments.add(DemandeDeMoyensFragment.newInstance());

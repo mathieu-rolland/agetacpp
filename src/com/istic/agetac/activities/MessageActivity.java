@@ -3,16 +3,17 @@ package com.istic.agetac.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -23,6 +24,10 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.api.view.ItemView;
 import com.istic.agetac.controler.adapter.ItemListAdapter;
+import com.istic.agetac.controllers.messages.OnCancelMessage;
+import com.istic.agetac.controllers.messages.OnNextMessagePart;
+import com.istic.agetac.controllers.messages.OnPreviousMessagePart;
+import com.istic.agetac.controllers.messages.OnSendMessage;
 import com.istic.agetac.model.Message;
 import com.istic.agetac.model.MessageWorkflow;
 import com.istic.agetac.pattern.observer.Observer;
@@ -33,9 +38,10 @@ import com.istic.agetac.view.item.MessageItem;
 import com.istic.sit.framework.application.FrameworkApplication;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
-public class MessageActivity extends Activity implements Observer {
+public class MessageActivity extends Fragment implements Observer {
 
 	private ItemListAdapter messageAdapter;
+	private ListView messagesList;
 	private IMessage.Message_part currentPart;
 	
 	private Button validate;
@@ -48,39 +54,53 @@ public class MessageActivity extends Activity implements Observer {
 	private MessageBroadcastReceiver receiver;
 	private MessageServiceSynchronisation serviceSync;
 	
+	//Gestion des boutons :
+	private Button buttonValidate;
+	private Button buttonNext;
+	private Button buttonCancel;
+	private Button buttonPrevious;
+	
 	private boolean isWaitingForSave = false;
 	
-	public static void launchActivity(Context context) {
-		Intent intent = new Intent(context, MessageActivity.class);
-		context.startActivity(intent);
+	private boolean isMessageModify = false ;
+
+	public static Fragment newInstance() {
+		MessageActivity fragment = new MessageActivity();
+		return fragment;
 	}
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_messages_list);
 		
-//		currentPart = MessageWorkflow.firstState();
-//		currentMessage = new Message();
+		/** Chargement du layout */
+		View view = inflater.inflate(R.layout.fragment_messages_list, container, false);
 		
-		messageAdapter = new ItemListAdapter(this);
-		ListView messagesList = (ListView) findViewById(R.id.fragment_messages_list_list);
+		messageAdapter = new ItemListAdapter(getActivity());
+		messagesList = (ListView) view.findViewById(R.id.fragment_messages_list_list);
 		messagesList.setAdapter(messageAdapter);
 		
-		message = (EditText) findViewById(R.id.fragment_messages_list_message_text);
-		next = (Button) findViewById(R.id.fragment_messages_list_message_next);
+		message = (EditText) view.findViewById(R.id.fragment_messages_list_message_text);
+		next = (Button) view.findViewById(R.id.fragment_messages_list_message_next);
 		
-		String currentWording = MessageWorkflow.getWording(getApplicationContext(), currentPart);
+		String currentWording = MessageWorkflow.getWording(getActivity().getApplicationContext(), currentPart);
 		message.setHint(currentWording);
-		previous = (Button) findViewById(R.id.fragment_messages_list_message_previous);
-		validate = (Button) findViewById(R.id.fragment_messages_list_message_validate);
+		previous = (Button) view.findViewById(R.id.fragment_messages_list_message_previous);
+		validate = (Button) view.findViewById(R.id.fragment_messages_list_message_validate);
 
-//		IMessage.Message_part current = currentPart;
-//		IMessage.Message_part next = MessageWorkflow.messageNext(currentPart);
-//		IMessage.Message_part previous = MessageWorkflow.messagePrevious(current);
-//		
-//		displayNewState(previous, current, next);
-//		displayInWorkflow(current);
+		//Récupération des boutons :
+		buttonCancel = (Button) view.findViewById(R.id.fragment_messages_list_message_cancel);
+		buttonNext = (Button) view.findViewById(R.id.fragment_messages_list_message_next);
+		buttonValidate = (Button) view.findViewById(R.id.fragment_messages_list_message_validate);
+		buttonPrevious = (Button) view.findViewById(R.id.fragment_messages_list_message_previous);
+		
+		//Add listeners :
+		buttonCancel.setOnClickListener( new OnCancelMessage(this) );
+		buttonNext.setOnClickListener(new OnNextMessagePart(this));
+		buttonPrevious.setOnClickListener(new OnPreviousMessagePart(this));
+		buttonValidate.setOnClickListener(new OnSendMessage(this));
+		
 		initWithMessage( new Message() );
 		
 		//Start sync :
@@ -90,6 +110,7 @@ public class MessageActivity extends Activity implements Observer {
 		PoolSynchronisation synchro = FrameworkApplication.getPoolSynchronisation();
 		synchro.registerServiceSync(MessageServiceSynchronisation.FILTER_MESSAGE_RECEIVER, serviceSync, receiver);
 	
+		return view;
 	}
 	
 	public void message_next(View v){
@@ -106,7 +127,7 @@ public class MessageActivity extends Activity implements Observer {
 			//Test que le text n'est pas vide :
 			text = message.getText().toString();
 			if( text.trim().equals("") ){
-				Toast.makeText(getApplicationContext(), "Vous devez saisir un message",
+				Toast.makeText(getActivity().getApplicationContext(), "Vous devez saisir un message",
 						Toast.LENGTH_LONG).show();
 				return;
 			}
@@ -115,9 +136,9 @@ public class MessageActivity extends Activity implements Observer {
 		}
 		
 		if( MessageWorkflow.isLastState(newCurrent) ){
-			Toast.makeText(getApplicationContext(), 
+			Toast.makeText(getActivity().getApplicationContext(), 
 					"Aucune étape suivant " + 
-				    MessageWorkflow.getWording(getApplicationContext(), currentPart),
+				    MessageWorkflow.getWording(getActivity().getApplicationContext(), currentPart),
 					Toast.LENGTH_LONG).show();
 		}
 	}
@@ -127,9 +148,9 @@ public class MessageActivity extends Activity implements Observer {
 		//save text before any changes :
 		currentMessage.setText(currentPart, message.getText().toString());
 		
-		String wordingPreviousStep = MessageWorkflow.getWording(getApplicationContext(), previous);
-		String currentWording = MessageWorkflow.getWording(getApplicationContext(), current);
-		String wordingNext = MessageWorkflow.getWording(getApplicationContext(), next);
+		String wordingPreviousStep = MessageWorkflow.getWording(getActivity().getApplicationContext(), previous);
+		String currentWording = MessageWorkflow.getWording(getActivity().getApplicationContext(), current);
+		String wordingNext = MessageWorkflow.getWording(getActivity().getApplicationContext(), next);
 		
 		this.currentPart = current;
 		
@@ -147,8 +168,12 @@ public class MessageActivity extends Activity implements Observer {
 			this.next.setEnabled(false);
 			validate.setEnabled(true);
 		}else{
+			if( !currentMessage.isComplet() ){
+				validate.setEnabled(false);
+			}else{
+				validate.setEnabled(true);
+			}
 			this.next.setEnabled(true);
-			validate.setEnabled(false);
 		}
 		
 		message.setHint(currentWording);
@@ -181,9 +206,17 @@ public class MessageActivity extends Activity implements Observer {
 			currentMessage.registerObserver(this);
 			isWaitingForSave = true;
 			currentMessage.save();
-			ListView messagesList = (ListView) findViewById(R.id.fragment_messages_list_list);
-			messagesList.setSelection( messageAdapter.getCount() );
+			if( !isMessageModify ){
+				messagesList.setSelection( messageAdapter.getCount() );
+			}
+			isMessageModify = false;
 		}
+	}
+	
+	public void message_cancel( View v )
+	{
+		isMessageModify = false;
+		initWithMessage(new Message());
 	}
 	
 	private void initWithMessage( IMessage message ){
@@ -211,24 +244,24 @@ public class MessageActivity extends Activity implements Observer {
 		TextView label = null;
 		TextView background = null;
 		if( current == IMessage.Message_part.JE_SUIS ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_suis);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_suis);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_suis);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_suis);
 		}
 		if( current == IMessage.Message_part.JE_VOIS ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_vois);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_vois);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_vois);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_vois);
 		}
 		if( current == IMessage.Message_part.JE_PREVOIS ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_prevois);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_prevois);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_prevois);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_prevois);
 		}
 		if( current == IMessage.Message_part.JE_FAIS ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_fais);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_fais);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_fais);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_fais);
 		}
 		if( current == IMessage.Message_part.JE_DEMANDE ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_demande);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_demande);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_demande);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_demande);
 		}
 		if( label != null && background != null ){
 			//label.setTextColor(Color.parseColor("#992f2f"));
@@ -242,24 +275,24 @@ public class MessageActivity extends Activity implements Observer {
 		TextView label = null;
 		TextView background = null;
 		if( part == IMessage.Message_part.JE_SUIS ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_suis);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_suis);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_suis);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_suis);
 		}
 		if( part == IMessage.Message_part.JE_VOIS ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_vois);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_vois);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_vois);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_vois);
 		}
 		if( part == IMessage.Message_part.JE_PREVOIS ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_prevois);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_prevois);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_prevois);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_prevois);
 		}
 		if( part == IMessage.Message_part.JE_FAIS ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_fais);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_fais);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_fais);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_fais);
 		}
 		if( part == IMessage.Message_part.JE_DEMANDE ){
-			label = (TextView) findViewById(R.id.fragment_message_list_label_je_demande);
-			background = (TextView) findViewById(R.id.fragment_message_list_background_je_demande);
+			label = (TextView) getActivity().findViewById(R.id.fragment_message_list_label_je_demande);
+			background = (TextView) getActivity().findViewById(R.id.fragment_message_list_background_je_demande);
 		}
 		if( label != null && background != null ){
 			label.setTextColor(Color.parseColor("#efefef"));
@@ -304,28 +337,30 @@ public class MessageActivity extends Activity implements Observer {
 	}
 	
 	private void stopSynchronisation(){
-		AlarmManager alarm = (AlarmManager) getSystemService( Context.ALARM_SERVICE );
+		AlarmManager alarm = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
 		PendingIntent pi = receiver.getPendingIntent();
 		alarm.cancel(pi);
 	}
 	
 	@Override
-	public void finish() {
+	public void onStop() {
 		stopSynchronisation();
-		super.finish();
+		super.onStop();
 	}
 
 	@Override
 	public void update(Subject subject) {
 		IMessage msg = (IMessage) subject;
 		if( msg.getId().trim().equals("") ){
-			Toast.makeText(this, "Erreur d'enregistrement du message.", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "Erreur d'enregistrement du message.", Toast.LENGTH_LONG).show();
 			initWithMessage(currentMessage);
 		}else{
 			isWaitingForSave = false;
 			ItemView<IMessage> view = new MessageItem(currentMessage, this);
-			messageAdapter.addLast(view);
-			currentMessage.unregisterObserver(this);
+			if( !isMessageModify ){
+				messageAdapter.addLast(view);
+				currentMessage.unregisterObserver(this);
+			}
 			initWithMessage(new Message());
 		}
 	}
@@ -333,16 +368,17 @@ public class MessageActivity extends Activity implements Observer {
 	public void setCurrentMessage(final IMessage message){
 		
 		if( currentMessage.isLock()  ){
-			Toast.makeText(this, "Un message est actuellement en cours de sauvegarde. Veuillez patienter"
+			Toast.makeText(getActivity(), "Un message est actuellement en cours de sauvegarde. Veuillez patienter"
 					, Toast.LENGTH_LONG).show();
 			return;
 		}
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.fragment_messages_list_alert_modification)
                .setPositiveButton(R.string.fragment_messages_list_alert_modification_yes,
             		   new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                 	   initWithMessage( message );
+                	   isMessageModify = true;
                    }
                })
                .setNegativeButton(R.string.fragment_messages_list_alert_modification_no, new DialogInterface.OnClickListener() {
@@ -352,7 +388,10 @@ public class MessageActivity extends Activity implements Observer {
         builder.create();
         builder.show();
         return;
-		
+	}
+
+	public void resetEditor(  ){
+		isMessageModify = false;
 	}
 	
 }

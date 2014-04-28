@@ -100,10 +100,15 @@ public class User implements IUser, IPersistant {
 
 	@Override
 	public void onErrorResponse(VolleyError error) {
-		if(error.getMessage() != null)
-			Log.v("CONNARD_ID", error.getMessage());
-		if(error.getCause() != null)
-			Log.v("CONNARD_ID", "error");
+		if(error.getMessage() != null){
+			Log.v("agetacpp - User", error.getMessage());
+			if(error.getCause() != null){
+				Log.v("agetacpp - User", error.getCause().toString());
+			}
+		}
+		else{
+			Log.v("agetacpp - User", "error");
+		}
 	}
 
 	@Override

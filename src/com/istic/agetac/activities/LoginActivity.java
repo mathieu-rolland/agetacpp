@@ -101,9 +101,6 @@ public class LoginActivity extends Activity {
 	 * errors are presented and no actual login attempt is made.
 	 */
 	public void attemptLogin() {
-		if (mAuthTask != null) {
-			return;
-		}
 
 		// Reset errors.
 		mUserView.setError(null);
@@ -197,26 +194,35 @@ public class LoginActivity extends Activity {
 
 		@Override
 		public void notifyResponseSuccess(List<User> objects) {
+			boolean find = false;
 			for(User user : objects){
-				if(user.getUsername().equals(mUser) && user.getPassword().equals(mPassword)){
-					mAuthTask = null;
+				if(user.getUsername().equals(mUser)){
+					find = true;
 					showProgress(false);
-					AgetacppApplication.setUser(user);
-					if(user.getRole().equals(Role.codis)){
-						InterventionActivity.launchActivity(LoginActivity.this);
+					if(user.getPassword().equals(mPassword)){
+						AgetacppApplication.setUser(user);
+						if(user.getRole().equals(Role.codis)){
+							InterventionActivity.launchActivity(LoginActivity.this);
+						}
+						else if(user.getRole().equals(Role.intervenant)){
+							ContainerActivity.launchActivity(LoginActivity.this);
+						}
 					}
-					else if(user.getRole().equals(Role.intervenant)){
-						ContainerActivity.launchActivity(LoginActivity.this);
+					else{
+						mPasswordView.setError(getString(R.string.error_incorrect_password));
+						mPasswordView.requestFocus();
 					}
 				}
-				mPasswordView.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+			}
+			if(!find){
+				showProgress(false);
+				mUserView.setError(getString(R.string.error_incorrect_login));
+				mUserView.requestFocus();
 			}
 		}
 
 		@Override
 		public void notifyResponseFail(VolleyError error) {
-			mAuthTask = null;
 			showProgress(false);
 			Log.e("LoginActivity", error.getMessage() == null ? error.toString() : error.getMessage() );
 		}

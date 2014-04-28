@@ -1,6 +1,7 @@
 <resources>
     <!-- Strings related to login -->
     <string name="error_invalid_password">Ce mot de passe est trop court</string>
+    <string name="error_incorrect_login">Cet utilisateur n\'existe pas</string>
     <string name="error_incorrect_password">Ce mot de passe est incorrect</string>
     <string name="error_field_required">Champs obligatoire</string>
     <string name="action_forgot_password">Mot de passe oublié</string>

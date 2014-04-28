@@ -4,27 +4,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import com.istic.agetac.R;
-import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
-import com.istic.agetac.model.Moyen;
-
 import android.content.Context;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MoyenListCodisAdapter extends AMoyenListAdapter {
-	
-	public MoyenListCodisAdapter(Context context,List<Moyen> moyens) {
-		super(context, moyens);       
-    }
+import com.istic.agetac.R;
+import com.istic.agetac.controler.adapter.AMoyenListAdapter.ViewHolder;
+import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
+import com.istic.agetac.model.Moyen;
+
+public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
+
+	public MoyenListIntervenantAdapter(Context context, List<Moyen> moyens) {
+		super(context, moyens);
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -57,7 +54,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
         if(current.getmHourDemand()!=null)
         {
         	holder.hourDemand.setText(formater.format(current.getmHourDemand()));      
-        	holder.buttonDemand.setOnClickListener(new ListenerEngage(current,this, convertView));
+        	
         }
         if(current.getmHourEngagement()!=null)        
         {
@@ -83,9 +80,5 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
         
         return convertView;
 	}
-	
-	public void setEngage(Moyen item, Date dateEngage) {
-		item.setmHourEngagement(dateEngage);
-		this.notifyDataSetChanged();
-	}
+
 }

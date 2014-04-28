@@ -88,16 +88,4 @@ public class ContainerActivity extends FragmentActivity implements MapMenuListen
 		return true;
 	}
 
-	@Override
-	public void onInitializeMapMenu(GridView menu) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onCreateMapMenu(GridView menu) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

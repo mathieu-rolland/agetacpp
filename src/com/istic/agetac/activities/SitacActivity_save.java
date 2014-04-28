@@ -77,18 +77,18 @@ public class SitacActivity_save extends MainActivity {
 //		this.mDrawerLayout.closeDrawer(listMenu);
 	}
 
-	@Override
-	public void onCreateMapMenu(GridView menu) {
-		IEntity environment_water = new Entity();
-		environment_water.setLibelle("Point d'eau");
-		environment_water.setRepresentation(new Representation(R.drawable.environment_water));
-		
-		this.addItemEntityGridMenu(environment_water);
-		this.addItemEntityGridMenu(environment_water);
-		
-//		EnvironmentButton environment_water = new EnvironmentButton("Point d'eau", view.getContext(), R.drawable.environment_water);
-		
-		
-	}
+//	@Override
+//	public void onCreateMapMenu(GridView menu) {
+//		IEntity environment_water = new Entity();
+//		environment_water.setLibelle("Point d'eau");
+//		environment_water.setRepresentation(new Representation(R.drawable.environment_water));
+//		
+//		this.addItemEntityGridMenu(environment_water);
+//		this.addItemEntityGridMenu(environment_water);
+//		
+////		EnvironmentButton environment_water = new EnvironmentButton("Point d'eau", view.getContext(), R.drawable.environment_water);
+//		
+//		
+//	}
 
 }

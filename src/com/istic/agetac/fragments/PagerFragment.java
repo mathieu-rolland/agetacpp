@@ -45,7 +45,7 @@ public class PagerFragment extends Fragment {
 	}
 	
 	private ViewPager mViewPager;
-	private SuggestionsPagerAdapter mPagerAdapter;
+	private PagerAdapter mPagerAdapter;
 	private final String[] titlesCodis = new String[]{"Creation Intervention"};
 	private final String[] titlesIntervenant = new String[]{"Sitac", "Tableau des Moyens", "Messages"};
 	
@@ -88,8 +88,8 @@ public class PagerFragment extends Fragment {
 		if(args != null) {
 			String modeStr = args.getString(ARGS_MODE);
 			if(modeStr.equals(MODE.CODIS.toString())) {
-				/*titles = titlesCodis;
-				tabFragments.add(InterventionFragment.newInstance());*/
+				titles = titlesCodis;
+				tabFragments.add(SitacFragment.newInstance());
 			} else if(modeStr.equals(MODE.INTERVENANT.toString())) {
 				titles = titlesIntervenant;
 				tabFragments.add(SitacFragment.newInstance());
@@ -99,12 +99,12 @@ public class PagerFragment extends Fragment {
 		}
 		
 		mActivityActionBar.removeAllTabs();
-		for(int i = 0 ; i < 3 ; i++) {
+		for(int i = 0 ; i < titles.length ; i++) {
 			mActivityActionBar.addTab(mActivityActionBar.newTab().setText(titles[i]).setTabListener(tabListener));
 		}
 		
 		mViewPager.setOffscreenPageLimit(tabFragments.size());
-		mPagerAdapter = new SuggestionsPagerAdapter(getChildFragmentManager());
+		mPagerAdapter = new PagerAdapter(getChildFragmentManager(),titles.length);
 		mViewPager.setAdapter(mPagerAdapter);
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			
@@ -129,12 +129,13 @@ public class PagerFragment extends Fragment {
 		return view;
 	}
 	
-	public class SuggestionsPagerAdapter extends FragmentStatePagerAdapter {
+	public class PagerAdapter extends FragmentStatePagerAdapter {
 
-		private static final int PAGE_COUNT = 3;
+		private int nbPage;
 		
-		public SuggestionsPagerAdapter(FragmentManager fm) {
+		public PagerAdapter(FragmentManager fm, int nb) {
 			super(fm);
+			this.nbPage = nb;
 		}
 
 		@Override
@@ -144,7 +145,7 @@ public class PagerFragment extends Fragment {
 
 		@Override
 		public int getCount() {
-			return PAGE_COUNT;
+			return nbPage;
 		}
 
 		@Override

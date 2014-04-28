@@ -1,13 +1,7 @@
 package com.istic.agetac.controler.adapter;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import com.istic.agetac.R;
-import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
-import com.istic.agetac.model.Moyen;
 
 import android.content.Context;
 import android.opengl.Visibility;
@@ -15,14 +9,19 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.istic.agetac.R;
+import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
+import com.istic.agetac.model.Moyen;
+
 public class MoyenListCodisAdapter extends AMoyenListAdapter {
+
+	private List<Moyen> mList;
+	private LayoutInflater mInflater;
 	
 	public MoyenListCodisAdapter(Context context,List<Moyen> moyens) {
 		super(context, moyens);       
@@ -61,16 +60,16 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
         	holder.name.setText(current.getLibelle());
         }
         
-        if(current.getmHourDemand()!=null)
+        if(current.getHDemande()!=null)
         {
-        	holder.hourDemand.setText(mFormater.format(current.getmHourDemand()));  
+        	holder.hourDemand.setText(mFormater.format(current.getHDemande()));  
         	holder.hourDemand.setVisibility(TextView.VISIBLE);
         	holder.buttonDemand.setOnClickListener(new ListenerEngage(current,this));
         }
         
-        if(current.getmHourEngagement()!=null)        
+        if(current.getHEngagement()!=null)        
         {
-        	holder.hourEngage.setText(mFormater.format(current.getmHourEngagement())); 
+        	holder.hourEngage.setText(mFormater.format(current.getHEngagement())); 
         	holder.hourEngage.setVisibility(TextView.VISIBLE);
         	holder.buttonDemand.setVisibility(Button.GONE);
 //        	ViewGroup.LayoutParams params = holder.hourDemand.getLayoutParams();
@@ -81,24 +80,24 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
         	holder.name.setText(current.getLibelle());
         }
         
-        if(current.getmHourArrivedOnSite()!=null)
+        if(current.getHArrival()!=null)
         {
-        	holder.hourArrived.setText(mFormater.format(current.getmHourArrivedOnSite()));
+        	holder.hourArrived.setText(mFormater.format(current.getHArrival()));
         	holder.buttonSector.setVisibility(Button.GONE);
 //        	holder.sector.setText(current.getmSector());
 //        	holder.sector.setVisibility(TextView.VISIBLE);
         }
         
-        if(current.getmHourFree()!=null)
+        if(current.getHFree()!=null)
         {
-        	holder.hourFree.setText(mFormater.format(current.getmHourFree()));
+        	holder.hourFree.setText(mFormater.format(current.getHFree()));
         }
         
         return convertView;
 	}
 	
 	public void setEngage(Moyen item, Date dateEngage) {
-		item.setmHourEngagement(dateEngage);
+		item.setHEngagement(dateEngage);
 		this.notifyDataSetChanged();
 	}
 }

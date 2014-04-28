@@ -1,5 +1,6 @@
 package com.istic.agetac.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONObject;
@@ -19,25 +20,40 @@ import com.istic.sit.framework.model.Property;
  * @author Anthony LE MEE - 10003134
  */
 public class Moyen extends Entity {
-
-	private Date mHourDemand;	
-	private Date mHourEngagement;
-	private Date mHourArrivedOnSite;
-	private Date mHourFree;
-	private String mSector;
 	
+	SimpleDateFormat  formater = new SimpleDateFormat("ddMM '-' hhmm"); //("ddMM '-' hhmm");
+	
+	/** Constante string which defines name of property of type of moyen */
+	private static final String NAME_PROPERTY_TYPE 				= "moyen_type";
+	/** Constante string which defines name of property of moyen demand hour */
+	private static final String NAME_PROPERTY_HOUR_DEMAND 		= "moyen_hour_demand";
+	/** Constante string which defines name of property of moyen engagement hour */
+	private static final String NAME_PROPERTY_HOUR_ENGAGEMENT 	= "moyen_hour_engagement";
+	/** Constante string which defines name of property of moyen arrival hour */
+	private static final String NAME_PROPERTY_HOUR_ARRIVAL 		= "moyen_hour_arrival";
+	/** Constante string which defines name of property of moyen free hour */
+	private static final String NAME_PROPERTY_HOUR_FREE 		= "moyen_hour_free";
+	/** Constante string which defines name of property of moyen secteur hour */
+	private static final String NAME_PROPERTY_SECTEUR 			= "moyen_secteur";
+
 	/**
 	 * Constructeur de la classe Moyen
 	 * @param typeValue : Type of moyen
 	 */
 	public Moyen (String typeValue) {
 		super();
-		IProperty typePropertie;
-		typePropertie = new Property();
-		typePropertie.setNom("type");
-		typePropertie.setValeur(typeValue);
-		mHourDemand = new Date();
-		super.addPropriete(typePropertie);
+		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue);
+		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, formater.format(new Date()));
+		IProperty hEngagementProperty 	= creatProperty(NAME_PROPERTY_HOUR_ENGAGEMENT, null);
+		IProperty hArrivalProperty 		= creatProperty(NAME_PROPERTY_HOUR_ARRIVAL, null);
+		IProperty hFreeProperty 		= creatProperty(NAME_PROPERTY_HOUR_FREE, null);
+		IProperty secteurProperty 		= creatProperty(NAME_PROPERTY_SECTEUR, null);
+		super.addPropriete(typeProperty);
+		super.addPropriete(hDemandProperty);
+		super.addPropriete(hEngagementProperty);
+		super.addPropriete(hArrivalProperty);
+		super.addPropriete(hFreeProperty);
+		super.addPropriete(secteurProperty);
 	}
 	
 	/**
@@ -47,12 +63,18 @@ public class Moyen extends Entity {
 	 */
 	public Moyen (String typeValue, IPosition position) {
 		super(position);
-		IProperty typePropertie;
-		typePropertie = new Property();
-		typePropertie.setNom("type");
-		typePropertie.setValeur(typeValue);
-		mHourDemand = new Date();
-		super.addPropriete(typePropertie);
+		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue);
+		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, formater.format(new Date()));
+		IProperty hEngagementProperty 	= creatProperty(NAME_PROPERTY_HOUR_ENGAGEMENT, null);
+		IProperty hArrivalProperty 		= creatProperty(NAME_PROPERTY_HOUR_ARRIVAL, null);
+		IProperty hFreeProperty 		= creatProperty(NAME_PROPERTY_HOUR_FREE, null);
+		IProperty secteurProperty 		= creatProperty(NAME_PROPERTY_SECTEUR, null);
+		super.addPropriete(typeProperty);
+		super.addPropriete(hDemandProperty);
+		super.addPropriete(hEngagementProperty);
+		super.addPropriete(hArrivalProperty);
+		super.addPropriete(hFreeProperty);
+		super.addPropriete(secteurProperty);
 	}
 	
 	/**
@@ -61,21 +83,66 @@ public class Moyen extends Entity {
 	 */
 	public Moyen (Parcel source) {
 		super(source);
-		mHourDemand = new Date();
 	}
+
+	public String getType () {
+		return super.getProperty(NAME_PROPERTY_TYPE).getValeur();
+	} // method
+
+	public String getHDemande () {
+		return super.getProperty(NAME_PROPERTY_HOUR_DEMAND).getValeur();
+	} // method
+
+	public String getHArrival () {
+		return super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).getValeur();
+	} // method
+	
+	public String getHEngagement () {
+		return super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).getValeur();
+	} // method
+
+	public String getHFree () {
+		return super.getProperty(NAME_PROPERTY_HOUR_FREE).getValeur();
+	} // method
+
+	public String getSecteur () {
+		return super.getProperty(NAME_PROPERTY_SECTEUR).getValeur();
+	} // method
+	
+	public void setType (Date valeur) {
+		super.getProperty(NAME_PROPERTY_TYPE).setValeur(formater.format(valeur));
+	} // method
+
+	public void setHDemande (Date valeur) {
+		super.getProperty(NAME_PROPERTY_HOUR_DEMAND).setValeur(formater.format(valeur));
+	} // method
+
+	public void setHArrival (Date valeur) {
+		super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).setValeur(formater.format(valeur));
+	} // method
+
+	public void setHEngagement (Date dateEngage) {
+		super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).setValeur(formater.format(dateEngage));
+	} // method
+
+	public void setHFree (Date valeur) {
+		super.getProperty(NAME_PROPERTY_HOUR_FREE).setValeur(formater.format(valeur));
+	} // method
 	
 	/**
-	 * Method which return type of moyen
-	 * @return String : Type of moyen
+	 * Method which return secteur of moyen
+	 * @return String : secteur of moyen
 	 */
-	public String getType () {
-		for (IProperty propertie : super.getProprietes()) {
-			if (propertie.getNom().equals("type")) {
-				return propertie.getValeur();
-			}
-		}
-		return null;
+	public void setSecteur (String valeur) {
+		super.getProperty(NAME_PROPERTY_SECTEUR).setValeur(valeur);
 	} // method
+	
+	public IProperty creatProperty (String name, String value) {
+		IProperty property = new Property();
+		property.setNom(name);
+		property.setValeur(value);
+		return property;
+	}
 	
 	@Override
 	public String getUrl(int method) {
@@ -186,46 +253,5 @@ public class Moyen extends Entity {
 	public void setFrozen(boolean frozen) {
 		super.setFrozen(frozen);
 	}
-	
-	public Date getmHourDemand() {
-		return mHourDemand;
-	}
-
-	public void setmHourDemand(Date mHourDemand) {
-		this.mHourDemand = mHourDemand;
-	}
-
-	public Date getmHourEngagement() {
-		return mHourEngagement;
-	}
-
-	public void setmHourEngagement(Date mHourEngagement) {
-		this.mHourEngagement = mHourEngagement;
-	}
-
-	public Date getmHourArrivedOnSite() {
-		return mHourArrivedOnSite;
-	}
-
-	public void setmHourArrivedOnSite(Date mHourArrivedOnSite) {
-		this.mHourArrivedOnSite = mHourArrivedOnSite;
-	}
-
-	public Date getmHourFree() {
-		return mHourFree;
-	}
-
-	public void setmHourFree(Date mHourFree) {
-		this.mHourFree = mHourFree;
-	}
-
-	public String getmSector() {
-		return mSector;
-	}
-
-	public void setmSector(String mSector) {
-		this.mSector = mSector;
-	}
-
 
 }

@@ -1,11 +1,9 @@
 package com.istic.agetac.controler.adapter;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,8 +23,8 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
 		
+		ViewHolder holder;
 		Date aujourdhui = new Date();
 		Moyen current = mList.get(position);
 		
@@ -55,50 +53,51 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
         
         holder.logo.setImageResource(R.drawable.fpt_1_alim);
                
-        if(current.getmHourDemand()!=null)
+        if(current.getHDemande()!=null)
         {
-        	holder.hourDemand.setText(mFormater.format(current.getmHourDemand()));
-        	if(current.getmHourEngagement()==null)
+        	holder.hourDemand.setText(current.getHDemande());
+        	if(current.getHEngagement()==null)
         	{
-        		holder.hourEngage.setText("En attente de confirmation du codis");
+        		holder.hourEngage.setText("En attente du codis");
         		holder.hourEngage.setVisibility(TextView.VISIBLE);
         	}
         }
         
-        if(current.getmHourEngagement()!=null)        
+        if(current.getHEngagement()!=null)        
         {
-        	holder.hourEngage.setText(mFormater.format(current.getmHourEngagement()));
+        	holder.hourEngage.setText(current.getHEngagement());
         	holder.hourEngage.setVisibility(TextView.VISIBLE);
-        	if(current.getmSector()==null)
+        	if(current.getSecteur()==null)
         	{
         		holder.buttonSector.setVisibility(Button.VISIBLE);
         	}
+
         	holder.name.setText(current.getLibelle());
         }
         
-        if(current.getmHourArrivedOnSite()!=null)
+        if(current.getHArrival()!=null)
         {
-        	holder.hourArrived.setText(mFormater.format(current.getmHourArrivedOnSite()));
+        	holder.hourArrived.setText(current.getHArrival());
         	holder.hourArrived.setVisibility(TextView.VISIBLE);
         }
         
-        if(current.getmSector()!=null)
+        if(current.getSecteur()!=null)
         {
         	holder.buttonFree.setVisibility(Button.VISIBLE);
         }
         
-        if(current.getmHourFree()!=null)
+        if(current.getHFree()!=null)
         {
         	holder.hourFree.setVisibility(View.VISIBLE);
         	holder.buttonFree.setVisibility(View.GONE);
-        	holder.hourFree.setText(mFormater.format(current.getmHourFree()));        	
+        	holder.hourFree.setText(current.getHFree());        	
         }
         
         return convertView;
 	}
 
 	public void setFree(Moyen mItemMoyen, Date date) {
-		mItemMoyen.setmHourFree(date);
+		mItemMoyen.setHFree(date);
 		this.notifyDataSetChanged();
 	}
 

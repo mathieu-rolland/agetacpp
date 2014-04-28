@@ -17,7 +17,7 @@ public class SpinnerVariation implements OnClickListener {
 	private DemandeDeMoyensFragment demandeDeMoyens;
 	
 	/**
-	 * Constructeur ListenerSecteur
+	 * Constructeur SwitchSector
 	 * @param a DemandeDeMoyensFragment
 	 */
 	public SpinnerVariation (DemandeDeMoyensFragment a) {

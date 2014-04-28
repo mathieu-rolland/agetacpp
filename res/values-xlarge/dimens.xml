@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="text_size">20sp</dimen>
+	<dimen name="activity_login_text_size_title">60sp</dimen>
+	<dimen name="activity_login_margin_side">100dp</dimen>
+</resources>

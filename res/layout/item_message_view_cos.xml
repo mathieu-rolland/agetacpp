@@ -2,16 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#171f21"
     android:orientation="horizontal"
     android:weightSum="100" >
 
-    <LinearLayout  
-        	android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="85">
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="85"
+        android:orientation="vertical" >
 
         <!-- Je suis -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,12 +24,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/prefixes_rendre_compte_je_suis"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="#b6b6b6"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/item_message_list_je_suis_message"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dip"
+                android:textColor="#efefef"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <!-- Je vois -->
@@ -42,12 +48,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/prefixes_rendre_compte_je_vois"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="#b6b6b6"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/item_message_list_je_vois_message"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dip"
+                android:textColor="#efefef"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <!-- Je prevois -->
@@ -61,12 +71,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/prefixes_rendre_compte_je_prevois"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="#b6b6b6"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/item_message_list_je_prevois_message"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dip"
+                android:textColor="#efefef"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <!-- Je fais -->
@@ -80,12 +94,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/prefixes_rendre_compte_je_fais"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="#b6b6b6"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/item_message_list_je_fais_message"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dip"
+                android:textColor="#efefef"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
 
         <!-- Je demande -->
@@ -99,22 +117,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/prefixes_rendre_compte_je_demande"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="#b6b6b6"
+                android:textSize="@dimen/text_size" />
 
             <TextView
                 android:id="@+id/item_message_list_je_demande_message"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dip"
+                android:textColor="#efefef"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/item_message_list_button_je_valide"
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_gravity="center_vertical|right"
+        android:layout_weight="15"
+        android:background="@drawable/button_style_grey"
+        android:gravity="center"
         android:text="@string/fragment_messages_list_cos_message_button_validate"
-        android:layout_weight="15" />
-    
+        android:textColor="#efefef" />
+
 </LinearLayout>

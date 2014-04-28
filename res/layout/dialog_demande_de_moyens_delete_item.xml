@@ -13,7 +13,7 @@
         android:gravity="center"
         android:text=""
         android:textColor="#efefef"
-        android:textSize="25sp"
+        android:textSize="@dimen/text_size"
         android:textStyle="normal" />
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="@string/demande_de_moyen_ButtonText_OneLess"
             android:textColor="#efefef"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" >
         </Button>
 
@@ -43,7 +43,7 @@
             android:background="@drawable/button_style_noir"
             android:gravity="center"
             android:textColor="#efefef"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" >
         </TextView>
 
@@ -56,7 +56,7 @@
             android:gravity="center"
             android:text="@string/demande_de_moyen_ButtonText_OneMore"
             android:textColor="#efefef"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" >
         </Button>
     </LinearLayout>
@@ -76,7 +76,7 @@
             android:gravity="center"
             android:text="@string/demande_de_moyen_Dialog_ButtonText_Cancel"
             android:textColor="#efefef"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
 
         <Button
@@ -88,7 +88,7 @@
             android:gravity="center"
             android:text="@string/demande_de_moyen_Dialog_ButtonText_Delete"
             android:textColor="#efefef"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_size"
             android:textStyle="bold" />
         
     </LinearLayout>

@@ -3,10 +3,15 @@ package com.istic.agetac.controler.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.istic.agetac.R;
 import com.istic.agetac.api.view.ItemView;
 
 public class ItemListAdapter extends BaseAdapter {
@@ -57,7 +62,14 @@ public class ItemListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View view, ViewGroup root) {
 		ItemView item = items.get(position);
-		return item.getView( context, view, root );
+		
+		// FIXME NullPointerException
+		// return item.getView(context, view, root);
+		
+		View convertView = LayoutInflater.from(context).inflate(R.layout.item_message_view, null);
+        convertView.findViewById( R.id.list_moyen_logo );
+		return convertView;
+		
 	}
 
 }

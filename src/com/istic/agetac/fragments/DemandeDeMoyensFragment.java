@@ -107,8 +107,8 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		this.mMoyens.findAll();
 		
 		/** Chargements des données dans les attributs correspondants */
-		this.namesOfAllMoyens 			= new String[]{};
-		this.namesOfUsestMoyens 		= new String[]{};
+		this.namesOfAllMoyens 			= new String[]{"FPT","VSAV","TGD", "RPI","ESPA","POI","RGH"};
+		this.namesOfUsestMoyens 		= new String[]{"FPT","VSAV", "TGD", "RPI","ESPA","POI"};
 		this.allMoyenAddedToList		= new ArrayList<DemandeDeMoyensItem>();
 		this.adapterListToSend 			= new DemandeDeMoyenListAdapter(this, android.R.layout.simple_list_item_1, this.allMoyenAddedToList);		
 		

@@ -229,8 +229,9 @@ public class MessageActivity extends Activity implements Observer {
 			background = (TextView) findViewById(R.id.fragment_message_list_background_je_demande);
 		}
 		if( label != null && background != null ){
-			label.setTextColor(Color.BLUE);
-			background.setBackgroundColor(Color.BLUE);
+			//label.setTextColor(Color.parseColor("#992f2f"));
+			//background.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.button_style_blue));
+			background.setBackgroundColor(Color.parseColor("#992f2f"));
 		}
 	}
 	
@@ -259,7 +260,7 @@ public class MessageActivity extends Activity implements Observer {
 			background = (TextView) findViewById(R.id.fragment_message_list_background_je_demande);
 		}
 		if( label != null && background != null ){
-			label.setTextColor(Color.BLACK);
+			label.setTextColor(Color.parseColor("#efefef"));
 			background.setBackgroundColor(Color.TRANSPARENT);
 		}
 	}

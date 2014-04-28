@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/progress"/>
+            android:background="@drawable/progress" />
 
         <TextView
             android:id="@+id/activity_login_status_message"
@@ -26,76 +26,73 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/activity_login_progress_login_in"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
     <!-- Login form -->
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/activity_login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#161e21" >
+        android:layout_gravity="center"
+        android:background="#161e21"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/activity_login_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_login_text_size_title"
+            android:layout_marginTop="@dimen/activity_login_text_size_title"
+            android:gravity="center"
+            android:text="@string/activity_login_welcome"
+            android:textColor="#efefef"
+            android:textSize="@dimen/activity_login_text_size_title" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_login_margin_side"
+            android:paddingRight="@dimen/activity_login_margin_side" >
 
-            <TextView
-                android:id="@+id/activity_login_welcome"
+            <EditText
+                android:id="@+id/activity_login_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="100dp"
-                android:gravity="center"
-                android:text="@string/activity_login_welcome"
-                android:textColor="#efefef"
-                android:textSize="60sp" />
+                android:layout_marginBottom="10dp"
+                android:background="#efefef"
+                android:hint="@string/activity_login_user"
+                android:padding="4dp"
+                android:text="toto"
+                android:textSize="@dimen/text_size" />
 
-            <LinearLayout
-                android:layout_width="500dp"
+            <EditText
+                android:id="@+id/activity_login_password"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" >
+                android:layout_marginBottom="10dp"
+                android:background="#efefef"
+                android:hint="@string/activity_login_password"
+                android:inputType="textPassword"
+                android:padding="4dp"
+                android:text="toto"
+                android:textSize="@dimen/text_size" />
 
-                <EditText
-                    android:id="@+id/activity_login_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="30dp"
-                    android:background="#efefef"
-                    android:hint="@string/activity_login_user"
-                    android:padding="4dp"
-                    android:text="toto"
-                    android:textSize="30sp" />
-
-                <EditText
-                    android:id="@+id/activity_login_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="30dp"
-                    android:background="#efefef"
-                    android:hint="@string/activity_login_password"
-                    android:inputType="textPassword"
-                    android:padding="4dp"
-                    android:text="toto"
-                    android:textSize="30sp" />
-
-                <Button
-                    android:id="@+id/activity_login_btnLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/red_button"
-                    android:text="@string/activity_login_validate"
-                    android:textSize="30sp" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/activity_login_btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/red_button"
+                android:text="@string/activity_login_validate"
+                android:textSize="@dimen/text_size" />
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </merge>

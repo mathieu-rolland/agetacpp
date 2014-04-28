@@ -2,179 +2,195 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#b6b6b6"
     android:orientation="vertical"
     android:weightSum="100" >
-    
-	<ListView
-	    android:id="@+id/fragment_messages_list_list"
-	    android:layout_width="wrap_content"
-	    android:layout_height="0dip"
-	    android:layout_weight="75" 
-	    android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"/>
-	
-	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_weight="20"
-	    android:orientation="vertical"
-	    android:weightSum="100" >
-	
-	    <LinearLayout 
-	        android:layout_width="match_parent"
-	        android:layout_height="0dip"
-	        android:orientation="horizontal"
-	        android:layout_weight="15"
-	        android:weightSum="100">
-	    	
-	        <TextView 
-	            android:id="@+id/fragment_message_list_label_je_suis"
-           	  	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-       			 android:gravity="center_vertical|center_horizontal"
-       			 android:text="@string/prefixes_rendre_compte_je_suis"
-       			 android:layout_weight="15"
-       			 />
-	        
-	        <TextView 
-	            android:id="@+id/fragment_message_list_label_je_vois"
-            	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-      			 android:gravity="center_vertical|center_horizontal"
-       			 android:text="@string/prefixes_rendre_compte_je_vois"
-       			 android:layout_weight="15"
-       			 />
-	        
-	        <TextView 
-	            android:id="@+id/fragment_message_list_label_je_prevois"
-            	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-       			 android:layout_weight="15"
-       			 android:gravity="center_vertical|center_horizontal"
-       			 android:text="@string/prefixes_rendre_compte_je_prevois"
-       			 />
-	        
-	        <TextView 
-	            android:id="@+id/fragment_message_list_label_je_fais"
-            	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-       			 android:layout_weight="15"
-    			 android:gravity="center_vertical|center_horizontal"
-       			 android:text="@string/prefixes_rendre_compte_je_fais"
-       			 />
-	        
-	        <TextView 
-	            android:id="@+id/fragment_message_list_label_je_demande"
-           	  	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-       			 android:layout_weight="15"
-       			 android:gravity="center_vertical|center_horizontal"
-       			 android:text="@string/prefixes_rendre_compte_je_demande"
-       			 />
-	        
-	    </LinearLayout>
-		<LinearLayout 
-	        android:layout_width="match_parent"
-	        android:layout_height="0dip"
-	        android:orientation="horizontal"
-	        android:layout_weight="5"
-	        android:weightSum="100">
-	    	
-	        <TextView 
-	            android:id="@+id/fragment_message_list_background_je_suis"
-           	  	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-       			 android:gravity="center_vertical|center_horizontal"
-       			 android:text=""
-       			 android:layout_weight="15"
-       			 />
-	        
-	        <TextView 
-	             android:id="@+id/fragment_message_list_background_je_vois"
-            	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-      			 android:gravity="center_vertical|center_horizontal"
-       			 android:text=""
-       			 android:layout_weight="15" />
-	        
-	        <TextView 
-	             android:id="@+id/fragment_message_list_background_je_prevois"
-            	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-       			 android:layout_weight="15"
-       			 android:gravity="center_vertical|center_horizontal"
-       			 android:text="" />
-	        
-	        <TextView 
-	             android:id="@+id/fragment_message_list_background_je_fais"
-            	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-       			 android:layout_weight="15"
-    			 android:gravity="center_vertical|center_horizontal"
-       			 android:text=""
-       			 />
-	        
-	        <TextView 
-	             android:id="@+id/fragment_message_list_background_je_demande"
-           	  	 android:layout_width="0dip"
-       			 android:layout_height="match_parent"
-       			 android:layout_weight="15"
-       			 android:gravity="center_vertical|center_horizontal"
-       			 android:text=""
-       			 />
-	        
-	    </LinearLayout>
-	    <LinearLayout
-	        android:orientation="horizontal"
-	        android:layout_height="0dip"
-	        android:layout_weight="90"
-	        android:weightSum="100"
-	        android:layout_width="match_parent" >
-	        
-			<EditText
-			    android:id="@+id/fragment_messages_list_message_text"
-			    android:layout_width="0dip"
-			    android:layout_height="match_parent"
-			    android:layout_weight="100"/>
-			
-			<LinearLayout 
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="vertical"
-			    android:gravity="center" >
-			    
-				<LinearLayout 
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal">
-						
-						<Button 
-						    android:id="@+id/fragment_messages_list_message_previous"
-						    android:layout_width="wrap_content"
-						    android:layout_height="wrap_content"
-						    android:onClick="message_previous"
-						    android:text="@string/fragment_message_list_button_previous"/>
-						
-						<Button 
-						    android:id="@+id/fragment_messages_list_message_next"
-						    android:layout_width="match_parent"
-						    android:layout_height="wrap_content"
-						    android:onClick="message_next"
-						    android:text="@string/fragment_message_list_button_next"/>
-					
-					</LinearLayout>	
-					 
-					<Button 
-						    android:id="@+id/fragment_messages_list_message_validate"
-						    android:layout_height="wrap_content"
-						    android:layout_width="match_parent"
-						    android:layout_gravity="center_horizontal"
-						    android:onClick="message_validate"
-						    android:text="@string/fragment_messages_list_message_validate_text"
-						    />
-				</LinearLayout>
-	    </LinearLayout>
-	
-	</LinearLayout>
-	
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#363736"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip"
+        android:weightSum="100" >
+
+        <TextView
+            android:id="@+id/fragment_message_list_label_je_suis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/prefixes_rendre_compte_je_suis"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/fragment_message_list_label_je_vois"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/prefixes_rendre_compte_je_vois"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/fragment_message_list_label_je_prevois"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/prefixes_rendre_compte_je_prevois"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/fragment_message_list_label_je_fais"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/prefixes_rendre_compte_je_fais"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+
+        <TextView
+            android:id="@+id/fragment_message_list_label_je_demande"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/prefixes_rendre_compte_je_demande"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#363736"
+        android:orientation="horizontal"
+        android:weightSum="100" >
+
+        <TextView
+            android:id="@+id/fragment_message_list_background_je_suis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/fragment_message_list_background_je_vois"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/fragment_message_list_background_je_prevois"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/fragment_message_list_background_je_fais"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/fragment_message_list_background_je_demande"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/fragment_messages_list_message_text"
+        android:layout_width="match_parent"
+        android:layout_height="30dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:background="#b6b6b6"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#b6b6b6"
+        android:orientation="horizontal"
+        android:layout_margin="5dip"
+        android:weightSum="100" >
+
+        <Button
+            android:id="@+id/fragment_messages_list_message_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="25"
+            android:background="@drawable/button_style_grey"
+            android:gravity="center"
+            android:onClick="message_previous"
+            android:text="@string/fragment_message_list_button_previous"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/fragment_messages_list_message_validate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:background="@drawable/button_style_red"
+            android:gravity="center"
+            android:onClick="message_validate"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:text="@string/fragment_messages_list_message_validate_text"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/fragment_messages_list_message_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="25"
+            android:background="@drawable/button_style_grey"
+            android:gravity="center"
+            android:onClick="message_next"
+            android:text="@string/fragment_message_list_button_next"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/fragment_messages_list_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#cccccc"
+        android:stackFromBottom="true"
+        android:layout_weight="20"
+        android:transcriptMode="alwaysScroll" />
+
 </LinearLayout>

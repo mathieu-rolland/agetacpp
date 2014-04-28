@@ -10,17 +10,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import com.istic.agetac.R;
-import com.istic.agetac.controler.adapter.MoyenListAdapter;
+import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.model.Moyen;
 
 public class ListenerEngage implements OnClickListener {
 
 	/** Attributs */
 	private Moyen mItemMoyen; // Instance de l'item à traiter
-	private MoyenListAdapter mAdapterMoyen; // Instance de la vue d'où est joué le listener
+	private MoyenListCodisAdapter mAdapterMoyen; // Instance de la vue d'où est joué le listener
 	private View mView;
 
-	public ListenerEngage(Moyen item, MoyenListAdapter adapter, View view)
+	public ListenerEngage(Moyen item, MoyenListCodisAdapter adapter, View view)
 	{		
 		this.mItemMoyen = item;
 		this.mAdapterMoyen = adapter;

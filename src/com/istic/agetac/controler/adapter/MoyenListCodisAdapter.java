@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.istic.agetac.R;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
 import com.istic.agetac.model.Moyen;
 
@@ -19,30 +20,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MoyenListAdapter extends BaseAdapter {
-
-	private List<Moyen> mList;
-	private LayoutInflater mInflater;
+public class MoyenListCodisAdapter extends AMoyenListAdapter {
 	
-	public MoyenListAdapter(Context context,List<Moyen> moyens) {
-        this.mInflater = LayoutInflater.from(context);
-        this.mList = moyens;
+	public MoyenListCodisAdapter(Context context,List<Moyen> moyens) {
+		super(context, moyens);       
     }
-	
-	@Override
-	public int getCount() {
-		return mList.size();
-	}
-
-	@Override
-	public Object getItem(int position) {
-		return mList.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -53,7 +35,7 @@ public class MoyenListAdapter extends BaseAdapter {
 		
         if(convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.list_moyen, null);
+            convertView = mInflater.inflate(R.layout.list_moyen_codis, null);
             
             holder.logo =(ImageView) convertView.findViewById( R.id.list_moyen_logo );
             holder.hourDemand =(TextView) convertView.findViewById( R.id.list_moyen_hour_demand );
@@ -63,7 +45,6 @@ public class MoyenListAdapter extends BaseAdapter {
             holder.sector =(TextView) convertView.findViewById( R.id.list_moyen_sector );
             holder.buttonDemand = (Button)convertView.findViewById(R.id.list_moyen_button_engage);
             holder.name =(TextView)convertView.findViewById(R.id.list_moyen_name);
-     
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -90,23 +71,21 @@ public class MoyenListAdapter extends BaseAdapter {
         	holder.name.setText(current.getLibelle());
         }
         
+        if(current.getmHourArrivedOnSite()!=null)
+        {
+        	holder.hourArrived.setText(formater.format(current.getmHourArrivedOnSite()));
+        }
+        
+        if(current.getmHourFree()!=null)
+        {
+        	holder.hourFree.setText(formater.format(current.getmHourFree()));
+        }
+        
         return convertView;
 	}
 	
-	private class ViewHolder {
-		ImageView logo;
-		TextView hourDemand;
-		Button buttonDemand;
-        TextView hourEngage;
-        TextView hourArrived;
-        TextView hourFree;
-        TextView sector;
-        TextView name;
-    }
-
 	public void setEngage(Moyen item, Date dateEngage) {
 		item.setmHourEngagement(dateEngage);
 		this.notifyDataSetChanged();
 	}
-
 }

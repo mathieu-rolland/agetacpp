@@ -29,6 +29,22 @@ public class Intervention implements IIntervention, IPersistant {
 		this.codeSinistre = "";
 		this.moyens = new ArrayList<Moyen>();
 	}
+	
+	public Intervention(String adresse, String codeSinistre){
+		this._id = "";
+		this._rev = "";
+		this.adresse = adresse;
+		this.codeSinistre = codeSinistre;
+		this.moyens = new ArrayList<Moyen>();
+	}
+	
+	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens){
+		this._id = "";
+		this._rev = "";
+		this.adresse = "";
+		this.codeSinistre = "";
+		this.moyens = moyens;
+	}
 
 	/**
 	 * @return the adresse

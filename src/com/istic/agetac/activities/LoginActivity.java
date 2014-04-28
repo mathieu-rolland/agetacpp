@@ -51,8 +51,6 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
-
-		
 		
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);

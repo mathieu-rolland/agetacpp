@@ -32,7 +32,7 @@ import com.istic.agetac.R;
 public class PagerFragment extends Fragment {
 	private ViewPager mViewPager;
 	private SuggestionsPagerAdapter mPagerAdapter;
-	private final String[] titles = new String[]{"Sitac", "Moyens", "Messages"};
+	private final String[] titles = new String[]{"Sitac", "Tableau des Moyens", "Messages"};
 	
 	// Fragments
 	private List<Fragment> tabFragments;

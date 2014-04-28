@@ -64,11 +64,11 @@ public class ItemListAdapter extends BaseAdapter {
 		ItemView item = items.get(position);
 		
 		// FIXME NullPointerException
-		// return item.getView(context, view, root);
+		return item.getView(context, view, root);
 		
-		View convertView = LayoutInflater.from(context).inflate(R.layout.item_message_view, null);
-        convertView.findViewById( R.id.list_moyen_logo );
-		return convertView;
+//		View convertView = LayoutInflater.from(context).inflate(R.layout.item_message_view, null);
+//        convertView.findViewById( R.id.list_moyen_logo );
+//		return convertView;
 		
 	}
 

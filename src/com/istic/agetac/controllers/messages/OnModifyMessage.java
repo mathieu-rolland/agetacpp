@@ -13,6 +13,7 @@ public class OnModifyMessage implements OnClickListener {
 	
 	public OnModifyMessage( IMessage message , MessageActivity activity ){
 		this.message = message;
+		this.activity = activity;
 	}
 	
 	@Override

@@ -70,4 +70,6 @@
     <string name="fragment_messages_list_alert_modification">Modifier ce message va supprimer le message en cours d\'édition. Voulez-vous continuer?</string>
 	<string name="fragment_messages_list_alert_modification_yes">Oui</string>
 	<string name="fragment_messages_list_alert_modification_no">Non</string>
+	<string name="fragment_messages_list_image_validate">Validé</string>
+	<string name="fragment_messages_list_image_not_validate">En attente de validation</string>
 </resources>

@@ -12,10 +12,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.istic.agetac.pattern.observer.Observer;
-import com.istic.agetac.pattern.observer.Subject;
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IMessage;
+import com.istic.agetac.pattern.observer.Observer;
+import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;

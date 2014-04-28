@@ -3,8 +3,6 @@ package com.istic.agetac.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -13,7 +11,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +36,6 @@ import com.istic.agetac.sync.MessageBroadcastReceiver;
 import com.istic.agetac.sync.MessageServiceSynchronisation;
 import com.istic.agetac.view.item.MessageItem;
 import com.istic.sit.framework.application.FrameworkApplication;
-import com.istic.sit.framework.couch.IPersistant;
-import com.istic.sit.framework.couch.JsonSerializer;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
 public class MessageActivity extends Fragment implements Observer {

@@ -181,6 +181,8 @@ public class MessageActivity extends Activity implements Observer {
 			currentMessage.registerObserver(this);
 			isWaitingForSave = true;
 			currentMessage.save();
+			ListView messagesList = (ListView) findViewById(R.id.fragment_messages_list_list);
+			messagesList.setSelection( messageAdapter.getCount() );
 		}
 	}
 	
@@ -335,22 +337,21 @@ public class MessageActivity extends Activity implements Observer {
 					, Toast.LENGTH_LONG).show();
 			return;
 		}
-		if( !currentMessage.isComplet() ){
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	        builder.setMessage(R.string.fragment_messages_list_alert_modification)
-	               .setPositiveButton(R.string.fragment_messages_list_alert_modification_yes,
-	            		   new DialogInterface.OnClickListener() {
-	                   public void onClick(DialogInterface dialog, int id) {
-	                	   initWithMessage( message );
-	                   }
-	               })
-	               .setNegativeButton(R.string.fragment_messages_list_alert_modification_no, new DialogInterface.OnClickListener() {
-	                   public void onClick(DialogInterface dialog, int id) {
-	                   }
-	               });
-	        builder.create();
-	        return;
-		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.fragment_messages_list_alert_modification)
+               .setPositiveButton(R.string.fragment_messages_list_alert_modification_yes,
+            		   new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                	   initWithMessage( message );
+                   }
+               })
+               .setNegativeButton(R.string.fragment_messages_list_alert_modification_no, new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                   }
+               });
+        builder.create();
+        builder.show();
+        return;
 		
 	}
 	

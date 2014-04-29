@@ -42,12 +42,8 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 		View view = super.onCreateView(inflater, container, savedInstanceState);
 		
 		if( entity != null ){
-			Log.d("Panel","Add ok");
 			ImageView img = (ImageView) view.findViewById(R.id.fragment_entity_image_display);
 			img.setImageResource( entity.getRepresentationOK().getDrawable() );
-		
-			TextView label = (TextView) view.findViewById(R.id.fragment_entity_label);
-			label.setText( entity.getLibelle() );
 			
 			TextView lat = (TextView) view.findViewById(R.id.fragment_activity_position_lat_value);
 			lat.setText( String.valueOf(entity.getPosition().get(AXIS.LAT)) );
@@ -57,6 +53,9 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 			
 			Button modify = (Button) view.findViewById(R.id.fragment_entity_button_supprimer);
 			modify.setOnClickListener(new OnDeleteButton(fragment));
+			
+			Button arrived = (Button) view.findViewById(R.id.fragment_entity_button_arrived);
+			arrived.setOnClickListener(new OnArrivedButton(fragment));
 			
 		}else{
 			Log.d("Panel","Add ko");
@@ -107,5 +106,25 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 		}
 		
 	}
+	
+	private class OnArrivedButton implements OnClickListener{
+
+		private MapFragment map;
+		
+		public OnArrivedButton( MapFragment  map ){
+			this.map = map;
+		}
+		
+		@Override
+		public void onClick(View arg0) {
+        	   Property property = new Property();
+        	   property.setNom(Moyen.NAME_PROPERTY_HOUR_ARRIVAL);
+        	   property.setValeur( Moyen.FORMATER.format(new Date()) );
+        	   entity.addPropriete( property );
+        	   entity.save();
+		}
+		
+	}
+	
 	
 }

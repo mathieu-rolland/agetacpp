@@ -3,10 +3,6 @@
  */
 package com.istic.agetac.api.model;
 
-import java.util.List;
-
-import com.istic.agetac.exceptions.AddInterventionException;
-import com.istic.agetac.model.Intervention;
 import com.istic.sit.framework.couch.IPersistant;
 
 /**

@@ -20,10 +20,12 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IUser.Role;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.InterventionAdapter;
 import com.istic.agetac.controllers.dao.InterventionDao;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
+import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.User;
@@ -63,10 +65,13 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
         
         mListIntervention.setOnItemClickListener(this);
         
-        InterventionDao intervention = new InterventionDao(new InterventionViewReceiver(this));
-        intervention.findAll();
-        
-        
+        Codis codis =  (Codis)(AgetacppApplication.getUser());
+       
+        mAdapter.addAll(codis.getInterventions());
+		mAdapter.notifyDataSetChanged();
+		
+		UserDao users = new UserDao(new UsersViewReceiver());
+		users.findAll();
 	}
 	
 	 @Override
@@ -78,28 +83,6 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 	public void CreateIntervention() {
 		CreateInterventionActivity.launchActivity(this);
 	}		
-	
-	public class InterventionViewReceiver implements IViewReceiver<Intervention> {
-		
-		public InterventionViewReceiver(CodisActivity activity)
-		{
-		}
-		
-		@Override
-		public void notifyResponseSuccess(List<Intervention> interventions) {
-			
-			mAdapter.addAll(interventions);
-			mAdapter.notifyDataSetChanged();
-			
-			UserDao users = new UserDao(new UsersViewReceiver());
-			users.findAll();
-		}
-
-		@Override
-		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getApplicationContext(), "Impossible de récupérer les interventions",	Toast.LENGTH_SHORT).show();
-		}		
-	}
 	
 	public class UsersViewReceiver implements IViewReceiver<User> {
 

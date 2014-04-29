@@ -55,8 +55,15 @@ public class CreationBase {
 		i1.save();
 	}
 	
+	public static void createCodis()
+	{
+		Codis c = new Codis("codis2", "codis2");
+		c.setPassword("codis2");
+		c.save();
+	}
+	
 	public static void testRecupUser(){
-		CouchDBUtils.getObjectById(new AObjectRecuperator<Codis>(Codis.class, "2c536599-9699-44cf-a2ed-0d213d0f4a43") {
+		CouchDBUtils.getObjectById(new AObjectRecuperator<Codis>(Codis.class, "3fcd9849-a748-4a56-88ba-59c3b291e0b4") {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
@@ -72,14 +79,22 @@ public class CreationBase {
 			@Override
 			public void onResponse(Codis objet) {
 				// TODO Auto-generated method stub
-				objet.getInterventions().get(0).getIntervenants(new Observer() {
-					
-					@Override
-					public void update(Subject subject) {
-						// TODO Auto-generated method stub
-						((Intervention)subject).getIntervenants();
-					}
-				});
+//				objet.getInterventions().get(0).getIntervenants(new Observer() {
+//					
+//					@Override
+//					public void update(Subject subject) {
+//						// TODO Auto-generated method stub
+//						((Intervention)subject).getIntervenants();
+//					}
+//				});
+				Intervention inter = new Intervention();
+				inter.setAdresse("5 rue de la piquetière");
+				inter.setCodeSinistre("feu de cigarette");
+				inter.setCodis(objet);
+			
+				objet.addIntervention(inter);
+				objet.save();
+				inter.save();
 			}
 		});
 	}

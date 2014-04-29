@@ -62,11 +62,9 @@ public class TableauMoyenFragment extends Fragment {
 		mListMoyen.add(m3);
 
 		if (AgetacppApplication.getUser().getRole() == Role.codis) {
-			mAdapterMoyen = new MoyenListCodisAdapter(this.getActivity(),
-					mListMoyen);
+			mAdapterMoyen = new MoyenListCodisAdapter(this.getActivity(),mListMoyen);
 		} else {
-			mAdapterMoyen = new MoyenListIntervenantAdapter(this.getActivity(),
-					mListMoyen);
+			mAdapterMoyen = new MoyenListIntervenantAdapter(this.getActivity(),	mListMoyen);
 		}
 
 		mListViewMoyen.setAdapter(mAdapterMoyen);

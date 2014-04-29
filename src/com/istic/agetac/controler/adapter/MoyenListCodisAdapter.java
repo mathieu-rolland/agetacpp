@@ -19,12 +19,9 @@ import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
 import com.istic.agetac.model.Moyen;
 
 public class MoyenListCodisAdapter extends AMoyenListAdapter {
-
-	private List<Moyen> mList;
-	private LayoutInflater mInflater;
 	
 	public MoyenListCodisAdapter(Context context,List<Moyen> moyens) {
-		super(context, moyens);       
+		super(context, moyens); 
     }
 
 	@Override
@@ -62,14 +59,14 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
         
         if(current.getHDemande()!=null)
         {
-        	holder.hourDemand.setText(mFormater.format(current.getHDemande()));  
+        	holder.hourDemand.setText(current.getHDemande());  
         	holder.hourDemand.setVisibility(TextView.VISIBLE);
         	holder.buttonDemand.setOnClickListener(new ListenerEngage(current,this));
         }
         
         if(current.getHEngagement()!=null)        
         {
-        	holder.hourEngage.setText(mFormater.format(current.getHEngagement())); 
+        	holder.hourEngage.setText(current.getHEngagement()); 
         	holder.hourEngage.setVisibility(TextView.VISIBLE);
         	holder.buttonDemand.setVisibility(Button.GONE);
 //        	ViewGroup.LayoutParams params = holder.hourDemand.getLayoutParams();
@@ -82,7 +79,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
         
         if(current.getHArrival()!=null)
         {
-        	holder.hourArrived.setText(mFormater.format(current.getHArrival()));
+        	holder.hourArrived.setText(current.getHArrival());
         	holder.buttonSector.setVisibility(Button.GONE);
 //        	holder.sector.setText(current.getmSector());
 //        	holder.sector.setVisibility(TextView.VISIBLE);
@@ -90,7 +87,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
         
         if(current.getHFree()!=null)
         {
-        	holder.hourFree.setText(mFormater.format(current.getHFree()));
+        	holder.hourFree.setText(current.getHFree());
         }
         
         return convertView;

@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,7 +25,7 @@ import com.istic.agetac.model.Moyen;
 
 public class TableauMoyenFragment extends Fragment {
 
-	/** Instances des modèles à utiliser */
+	/** Instances des modÃ¨les Ã  utiliser */
 	private SecteurDao mSecteur;
 	private ListView mListViewMoyen;
 	private List<Moyen> mListMoyen;
@@ -95,7 +94,7 @@ public class TableauMoyenFragment extends Fragment {
 
 		@Override
 		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
+			Toast.makeText(getActivity(), "Impossible de rï¿½cupï¿½rer les moyens",
 					Toast.LENGTH_SHORT).show();
 		}
 

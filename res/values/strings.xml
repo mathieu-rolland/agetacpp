@@ -83,6 +83,6 @@
 	<!-- Dock entity -->
 	<string name="fragment_entity_label_lat">Latitude :</string>
 	<string name="fragment_entity_label_lng">Longitude :</string>
-	<string name="fragment_entity_button_supprimer">Supprimer</string>
-	
+	<string name="fragment_entity_button_supprimer">Libérer</string>
+	<string name="fragment_entity_alert_libererRessource">Vous êtes sur le point de libérer la ressource %s. Voulez-vous continuer?</string>
 </resources>

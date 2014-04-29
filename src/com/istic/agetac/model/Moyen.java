@@ -15,26 +15,26 @@ import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Property;
 
 /**
- * Classe Moyen : Modèle qui représente un moyen (i.e. Véhicule)
+ * Classe Moyen : Modï¿½le qui reprï¿½sente un moyen (i.e. Vï¿½hicule)
  * 
  * @author Anthony LE MEE - 10003134
  */
 public class Moyen extends Entity {
 	
-	private static final SimpleDateFormat  formater = new SimpleDateFormat("ddMM '-' hhmm"); //("ddMM '-' hhmm");
+	public static final SimpleDateFormat FORMATER = new SimpleDateFormat("ddMM '-' hhmm"); //("ddMM '-' hhmm");
 	
 	/** Constante string which defines name of property of type of moyen */
-	private static final String NAME_PROPERTY_TYPE 				= "moyen_type";
+	public static final String NAME_PROPERTY_TYPE 				= "moyen_type";
 	/** Constante string which defines name of property of moyen demand hour */
-	private static final String NAME_PROPERTY_HOUR_DEMAND 		= "moyen_hour_demand";
+	public static final String NAME_PROPERTY_HOUR_DEMAND 		= "moyen_hour_demand";
 	/** Constante string which defines name of property of moyen engagement hour */
-	private static final String NAME_PROPERTY_HOUR_ENGAGEMENT 	= "moyen_hour_engagement";
+	public static final String NAME_PROPERTY_HOUR_ENGAGEMENT 	= "moyen_hour_engagement";
 	/** Constante string which defines name of property of moyen arrival hour */
-	private static final String NAME_PROPERTY_HOUR_ARRIVAL 		= "moyen_hour_arrival";
+	public static final String NAME_PROPERTY_HOUR_ARRIVAL 		= "moyen_hour_arrival";
 	/** Constante string which defines name of property of moyen free hour */
-	private static final String NAME_PROPERTY_HOUR_FREE 		= "moyen_hour_free";
+	public static final String NAME_PROPERTY_HOUR_FREE 		= "moyen_hour_free";
 	/** Constante string which defines name of property of moyen secteur hour */
-	private static final String NAME_PROPERTY_SECTEUR 			= "moyen_secteur";
+	public static final String NAME_PROPERTY_SECTEUR 			= "moyen_secteur";
 
 	/**
 	 * Constructeur de la classe Moyen
@@ -43,7 +43,7 @@ public class Moyen extends Entity {
 	public Moyen (String typeValue) {
 		super();
 		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue);
-		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, formater.format(new Date()));
+		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, FORMATER.format(new Date()));
 		IProperty hEngagementProperty 	= creatProperty(NAME_PROPERTY_HOUR_ENGAGEMENT, null);
 		IProperty hArrivalProperty 		= creatProperty(NAME_PROPERTY_HOUR_ARRIVAL, null);
 		IProperty hFreeProperty 		= creatProperty(NAME_PROPERTY_HOUR_FREE, null);
@@ -64,7 +64,7 @@ public class Moyen extends Entity {
 	public Moyen (String typeValue, IPosition position) {
 		super(position);
 		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue);
-		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, formater.format(new Date()));
+		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, FORMATER.format(new Date()));
 		IProperty hEngagementProperty 	= creatProperty(NAME_PROPERTY_HOUR_ENGAGEMENT, null);
 		IProperty hArrivalProperty 		= creatProperty(NAME_PROPERTY_HOUR_ARRIVAL, null);
 		IProperty hFreeProperty 		= creatProperty(NAME_PROPERTY_HOUR_FREE, null);
@@ -114,19 +114,19 @@ public class Moyen extends Entity {
 	} // method
 
 	public void setHDemande (Date valeur) {
-		super.getProperty(NAME_PROPERTY_HOUR_DEMAND).setValeur(formater.format(valeur));
+		super.getProperty(NAME_PROPERTY_HOUR_DEMAND).setValeur(FORMATER.format(valeur));
 	} // method
 
 	public void setHArrival (Date valeur) {
-		super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).setValeur(formater.format(valeur));
+		super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).setValeur(FORMATER.format(valeur));
 	} // method
 
 	public void setHEngagement (Date dateEngage) {
-		super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).setValeur(formater.format(dateEngage));
+		super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).setValeur(FORMATER.format(dateEngage));
 	} // method
 
 	public void setHFree (Date valeur) {
-		super.getProperty(NAME_PROPERTY_HOUR_FREE).setValeur(formater.format(valeur));
+		super.getProperty(NAME_PROPERTY_HOUR_FREE).setValeur(FORMATER.format(valeur));
 	} // method
 	
 	/**

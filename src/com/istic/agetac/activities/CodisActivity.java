@@ -7,7 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,9 +20,10 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.controler.adapter.InterventionAdapter;
 import com.istic.agetac.controllers.dao.InterventionDao;
+import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.Intervention;
 
-public class CodisActivity extends FragmentActivity{
+public class CodisActivity extends FragmentActivity implements OnItemClickListener{
 
 	public static void launchActivity(Context context) {
 		Intent intent = new Intent(context, CodisActivity.class);
@@ -52,27 +56,37 @@ public class CodisActivity extends FragmentActivity{
 		    public void onClick(View v) {
 		        CreateIntervention();
 		    }
-		});		
+		});
         
-        InterventionDao intervention = new InterventionDao(new InterventionViewReceiver());
-        intervention.findAll();
+        mListIntervention.setOnItemClickListener(this);
         
-        
-       /* mList.add(new Intervention("istic", "feu"));
-        mList.add(new Intervention("RU", "feu"));
-        mList.add(new Intervention("istic", "SAP"));*/
-        
+        InterventionDao intervention = new InterventionDao(new InterventionViewReceiver(this));
+        intervention.findAll(); 
 	}
 	
+	 @Override
+     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+     	Intervention intervention =  (Intervention) mListIntervention.getItemAtPosition(position);
+     	Log.e("VINCENT", "LALALALAA");
+     	ContainerActivity.launchActivity(MODE.CODIS, getApplicationContext());
+     }
+	
 	public void CreateIntervention() {
-		
+		CreateInterventionActivity.launchActivity(this);
 	}		
 	
 	public class InterventionViewReceiver implements IViewReceiver<Intervention> {
 
+		private CodisActivity mActivity;
+		
+		public InterventionViewReceiver(CodisActivity activity)
+		{
+			this.mActivity = activity;
+		}
+		
 		@Override
 		public void notifyResponseSuccess(List<Intervention> interventions) {			
-			mAdapter = new InterventionAdapter(getApplicationContext(), interventions);
+			mAdapter = new InterventionAdapter(mActivity, interventions);
 			mListIntervention.setAdapter(mAdapter);
 			mAdapter.notifyDataSetChanged();
 		}
@@ -82,4 +96,5 @@ public class CodisActivity extends FragmentActivity{
 			Toast.makeText(getApplicationContext(), "Impossible de récupérer les interventions",	Toast.LENGTH_SHORT).show();
 		}		
 	}
+	
 }

@@ -45,8 +45,9 @@
      <string name = "codis_activity_create">Créer une nouvelle intervention</string>
       
     <!-- Layout : ajout user -->
-    <string name ="fragment_add_user_add"> &lt;</string>
-    <string name ="fragment_add_user_remove"> &gt; </string>
+    <string name ="fragment_add_user_dispo">Utilisateur(s) disponible(s)</string>
+    <string name ="fragment_add_user_added">Utilisateur(s) ajouté(s) à l\'intervention</string>
+    <string name ="fragment_add_user_empty_list">La liste est vide</string>
     
 	<!-- Boite de dialogue : Tableau des moyen engagement -->
 	<string name ="dialog_tableau_moyen_engage_name">Entrer le nom du véhicule à engager</string>

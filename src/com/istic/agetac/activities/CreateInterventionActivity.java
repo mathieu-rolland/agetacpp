@@ -42,7 +42,7 @@ public class CreateInterventionActivity extends FragmentActivity{
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if(mFragment != null) {
-        	ft.replace(R.id.activity_intervention_frame_tableau, new MessageFragment());
+        	ft.replace(R.id.activity_intervention_frame_tableau, new TableauMoyenFragment());
         	ft.addToBackStack(null);
         	mCurrentFragment = CurrentFragment.tableau;
         }

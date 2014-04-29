@@ -10,21 +10,20 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
-import com.istic.agetac.api.model.IUser;
+import com.istic.agetac.model.User;
 
-public class UserAdapter extends BaseAdapter{
+public class UserAdapter extends BaseAdapter {
 
-	private List<IUser> mList;	
+	private List<User> mList;
 	private LayoutInflater mInflater;
-	
-	public UserAdapter(Context context,List<IUser> list)
-	{
-		this.mList = list;
+
+	public UserAdapter(Context context, List<User> users) {
+		this.mList = users;
 		this.mInflater = LayoutInflater.from(context);
 	}
-	
+
 	@Override
-	public int getCount() {		
+	public int getCount() {
 		return mList.size();
 	}
 
@@ -42,20 +41,40 @@ public class UserAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 
-        if(convertView == null) {
-            holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.item_user, null);  
-            holder.name = (TextView) convertView.findViewById( R.id.item_user_name );         
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        
-        return convertView;
+		if (convertView == null) {
+			holder = new ViewHolder();
+			convertView = mInflater.inflate(R.layout.item_user, null);
+			holder.name = (TextView) convertView.findViewById(R.id.item_user_name);
+
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
+
+		holder.name.setText(mList.get(position).getName());
+
+		return convertView;
 	}
 
-	public class ViewHolder {		
-		TextView name;		
-    }
-	
+	public class ViewHolder {
+		TextView name;
+	}
+
+	public void Add(User u) {
+		if (!Contains(u)) {
+			mList.add(u);
+			notifyDataSetChanged();
+		}
+	}
+
+	public void Remove(User u) {
+		if (Contains(u)) {
+			mList.remove(u);
+			notifyDataSetChanged();
+		}
+	}
+
+	public boolean Contains(User u) {
+		return mList.contains(u);
+	}
 }

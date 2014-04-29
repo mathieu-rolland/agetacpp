@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,24 +25,35 @@ import com.istic.agetac.controler.adapter.AMoyenListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
 import com.istic.agetac.controllers.dao.MoyensDao;
-import com.istic.agetac.controllers.listeners.tableauMoyen.SwitchSector;
+import com.istic.agetac.controllers.dao.SecteurDao;
+import com.istic.agetac.controllers.listeners.demandeDeMoyens.SwitchSector;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
+import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
+import com.istic.sit.framework.sync.PoolSynchronisation;
 
 public class TableauMoyenFragment extends Fragment {
 
-	/* Instances des modèles à utiliser */
-	private MoyensDao mMoyen; // Modèle Moyen
+	/* Instances des modï¿½les ï¿½ utiliser */
+	private MoyensDao mMoyen; // Modï¿½le Moyen
 
-	/* Données récupérées */
-	private List<Moyen> datasMoyen; // Datas moyens récupérés
+	/* Donnï¿½es rï¿½cupï¿½rï¿½es */
+	private List<Moyen> datasMoyen; // Datas moyens rï¿½cupï¿½rï¿½s
 
-	/* Éléments graphiques */
+	/* ï¿½lï¿½ments graphiques */
 	private ListView listViewMoyen; // ListView des moyens
 	private AMoyenListAdapter adapterMoyens; // Adapter des moyens
 
 	/* Controlers */
 	private SwitchSector cSecteur;
 
+	/** Instances des modÃ¨les Ã  utiliser */
+	private SecteurDao mSecteur;
+	private ListView mListViewMoyen;
+	private List<Moyen> mListMoyen;
+	private AMoyenListAdapter mAdapterMoyen;
+	private TableauDesMoyensReceiver receiver;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -49,14 +64,14 @@ public class TableauMoyenFragment extends Fragment {
 		listViewMoyen = (ListView) view
 				.findViewById(R.id.fragment_tableau_moyen_list_view);
 
-		/* Instanciations des modèles */
+		/* Instanciations des modï¿½les */
 		// mMoyen = new MoyensDao(new MoyenViewReceiver());
 
-		/* Récupérations des données via les modèles */
+		/* Rï¿½cupï¿½rations des donnï¿½es via les modï¿½les */
 		datasMoyen = new ArrayList<Moyen>();
 		// mMoyen.findAll();
 
-		/* Instanciations des contrôlers */
+		/* Instanciations des contrï¿½lers */
 		this.cSecteur = new SwitchSector(this);
 
 		Moyen m1 = new Moyen("essai");
@@ -111,10 +126,9 @@ public class TableauMoyenFragment extends Fragment {
 
 		@Override
 		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de rï¿½cupï¿½rer les moyens",
+			Toast.makeText(getActivity(), "Impossible de rÃ©cupÃ©rer les moyens",
 					Toast.LENGTH_SHORT).show();
 		}
-
 	}
 
 	/**
@@ -132,4 +146,36 @@ public class TableauMoyenFragment extends Fragment {
 		this.mMoyen = mMoyen;
 	}
 
+	public void updateTableauDesMoyen( List<Moyen> moyens )
+	{
+		//TODO implÃ©menter la rÃ©ception de la synchro.
+		Log.d("Synch"," Recieve sync for tableau des moyens : " +
+				moyens == null ? "Moyen is null" : "Size : " + moyens.size());
+	}
+
+	private void stopSynchronisation(){
+		AlarmManager alarm = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
+		PendingIntent pi = receiver.getPendingIntent();
+		alarm.cancel(pi);
+	}
+	
+	@Override
+	public void onStop() {
+		stopSynchronisation();
+		super.onStop();
+	}
+	
+	@Override
+	public void onResume() {
+
+		PoolSynchronisation pool = AgetacppApplication.getPoolSynchronisation();
+
+		receiver = new TableauDesMoyensReceiver(this);
+		TableauDesMoyensSync sync = new TableauDesMoyensSync();
+		
+		pool.registerServiceSync( 
+				TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER , sync, receiver);
+		super.onResume();
+	}
+	
 }

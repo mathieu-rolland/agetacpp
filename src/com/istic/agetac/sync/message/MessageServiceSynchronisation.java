@@ -1,4 +1,4 @@
-package com.istic.agetac.sync;
+package com.istic.agetac.sync.message;
 
 import java.util.ArrayList;
 import java.util.List;

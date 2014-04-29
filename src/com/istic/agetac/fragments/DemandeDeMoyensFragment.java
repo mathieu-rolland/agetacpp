@@ -28,6 +28,7 @@ import com.istic.agetac.controllers.listeners.demandeDeMoyens.AddToList;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.AutoCompleteField;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.SpinnerVariation;
 import com.istic.agetac.filters.FilterInputNumber;
+import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.saveInstanceState.DemandeMoyensSavedInstanceState;
 import com.istic.agetac.view.item.DemandeDeMoyensItem;
@@ -88,6 +89,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		CreationBase.createMoyen();
 		
 	}
 	

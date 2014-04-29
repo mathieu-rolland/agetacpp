@@ -189,4 +189,8 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 		return this.color;
 	}
 	
+	public String toString() {
+		return this.libelle;
+	}
+	
 }

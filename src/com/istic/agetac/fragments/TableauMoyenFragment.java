@@ -20,16 +20,24 @@ import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.AMoyenListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
-import com.istic.agetac.controllers.dao.SecteurDao;
+import com.istic.agetac.controllers.dao.MoyensDao;
+import com.istic.agetac.controllers.listeners.tableauMoyen.SwitchSector;
 import com.istic.agetac.model.Moyen;
 
 public class TableauMoyenFragment extends Fragment {
 
-	/** Instances des modÃ¨les Ã  utiliser */
-	private SecteurDao mSecteur;
-	private ListView mListViewMoyen;
-	private List<Moyen> mListMoyen;
-	private AMoyenListAdapter mAdapterMoyen;
+	/* Instances des modèles à utiliser */
+	private MoyensDao mMoyen; // Modèle Moyen
+
+	/* Données récupérées */
+	private List<Moyen> datasMoyen; // Datas moyens récupérés
+
+	/* Éléments graphiques */
+	private ListView listViewMoyen; // ListView des moyens
+	private AMoyenListAdapter adapterMoyens; // Adapter des moyens
+
+	/* Controlers */
+	private SwitchSector cSecteur;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,19 +46,26 @@ public class TableauMoyenFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_tableau_moyen,
 				container, false);
 
-		mListViewMoyen = (ListView) view
+		listViewMoyen = (ListView) view
 				.findViewById(R.id.fragment_tableau_moyen_list_view);
 
-		// MoyensDao moyen = new MoyensDao(new MoyenViewReceiver());
-		// moyen.findAll();
-		mListMoyen = new ArrayList<Moyen>();
+		/* Instanciations des modèles */
+		// mMoyen = new MoyensDao(new MoyenViewReceiver());
+
+		/* Récupérations des données via les modèles */
+		datasMoyen = new ArrayList<Moyen>();
+		// mMoyen.findAll();
+
+		/* Instanciations des contrôlers */
+		this.cSecteur = new SwitchSector(this);
+
 		Moyen m1 = new Moyen("essai");
-		mListMoyen.add(m1);
+		datasMoyen.add(m1);
 		Moyen m2 = new Moyen("essai2");
 		m2.setHDemande(new Date());
 		m2.setHEngagement(new Date());
 		m2.setLibelle("ambulance");
-		mListMoyen.add(m2);
+		datasMoyen.add(m2);
 		Moyen m3 = new Moyen("essai3");
 		m3.setHDemande(new Date(2014, 06, 06));
 		m3.setHEngagement(new Date(2014, 07, 07));
@@ -58,15 +73,17 @@ public class TableauMoyenFragment extends Fragment {
 		m3.setHArrival(new Date(2014, 8, 8));
 		m3.setHFree(new Date());
 		m3.setLibelle("camion rouge");
-		mListMoyen.add(m3);
+		datasMoyen.add(m3);
 
 		if (AgetacppApplication.getUser().getRole() == Role.codis) {
-			mAdapterMoyen = new MoyenListCodisAdapter(this.getActivity(),mListMoyen);
+			adapterMoyens = new MoyenListCodisAdapter(this.getActivity(),
+					datasMoyen, null, this.cSecteur);
 		} else {
-			mAdapterMoyen = new MoyenListIntervenantAdapter(this.getActivity(),	mListMoyen);
+			adapterMoyens = new MoyenListIntervenantAdapter(this.getActivity(),
+					datasMoyen, this.cSecteur);
 		}
 
-		mListViewMoyen.setAdapter(mAdapterMoyen);
+		listViewMoyen.setAdapter(adapterMoyens);
 
 		return view;
 	}
@@ -82,14 +99,14 @@ public class TableauMoyenFragment extends Fragment {
 	}
 
 	public AMoyenListAdapter getAdapter() {
-		return mAdapterMoyen;
+		return adapterMoyens;
 	}
 
 	public class MoyenViewReceiver implements IViewReceiver<Moyen> {
 		@Override
 		public void notifyResponseSuccess(List<Moyen> moyens) {
-			mListMoyen = moyens;
-			mAdapterMoyen.notifyDataSetChanged();
+			datasMoyen = moyens;
+			adapterMoyens.notifyDataSetChanged();
 		}
 
 		@Override
@@ -101,18 +118,18 @@ public class TableauMoyenFragment extends Fragment {
 	}
 
 	/**
-	 * @return the mSecteur
+	 * @return the mMoyen
 	 */
-	public SecteurDao getmSecteur() {
-		return mSecteur;
+	public MoyensDao getmMoyen() {
+		return mMoyen;
 	}
 
 	/**
-	 * @param mSecteur
-	 *            the mSecteur to set
+	 * @param mMoyen
+	 *            the mMoyen to set
 	 */
-	public void setmSecteur(SecteurDao mSecteur) {
-		this.mSecteur = mSecteur;
+	public void setmMoyen(MoyensDao mMoyen) {
+		this.mMoyen = mMoyen;
 	}
 
 }

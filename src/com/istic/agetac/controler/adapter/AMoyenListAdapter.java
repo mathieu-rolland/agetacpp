@@ -3,8 +3,6 @@ package com.istic.agetac.controler.adapter;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import com.istic.agetac.model.Moyen;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.istic.agetac.model.Moyen;
+
 public abstract class AMoyenListAdapter extends BaseAdapter {
 
 	protected List<Moyen> mList;
@@ -22,7 +22,7 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 	protected final static SimpleDateFormat  mFormater = new SimpleDateFormat("ddMM '-' hhmm");
 	
 	public AMoyenListAdapter(Context context,List<Moyen> moyens) {
-        this.mInflater = LayoutInflater.from(context);
+		this.mInflater= (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         this.mList = moyens;
     }
 	
@@ -52,7 +52,7 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
         TextView hourArrived;
         TextView hourFree;
         Button buttonFree;
-        Spinner buttonSector;
+        Spinner spinnerChoixSecteurs;
         TextView name;
     }
 }

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.os.Parcel;
 
 import com.android.volley.VolleyError;
+import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;

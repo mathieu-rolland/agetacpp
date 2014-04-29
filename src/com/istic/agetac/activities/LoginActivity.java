@@ -207,7 +207,7 @@ public class LoginActivity extends Activity {
 					if(user.getPassword().equals(mPassword)){
 						AgetacppApplication.setUser(user);
 						if(user.getRole().equals(Role.codis)){
-							ContainerActivity.launchActivity(MODE.CODIS, LoginActivity.this);
+							CodisActivity.launchActivity(LoginActivity.this);
 						}
 						else if(user.getRole().equals(Role.intervenant)){
 							ContainerActivity.launchActivity(MODE.INTERVENANT, LoginActivity.this);

@@ -41,7 +41,8 @@
      <string name ="list_moyen_button_free"> Libérer </string>
       <string name ="list_moyen_button_secteur"> Secteur </string>
      
-     
+     <!-- Layout : home codis -->
+     <string name = "codis_activity_create">Créer une nouvelle intervention</string>
       
     <!-- Layout : ajout user -->
     <string name ="fragment_add_user_add"> &lt;</string>

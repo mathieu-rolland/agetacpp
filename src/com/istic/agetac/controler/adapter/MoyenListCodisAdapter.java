@@ -4,9 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
-import android.opengl.Visibility;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,7 +24,6 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
-		Date aujourdhui = new Date();
 		Moyen current = mList.get(position);
 		
         if(convertView == null) {

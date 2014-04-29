@@ -25,7 +25,6 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
 		ViewHolder holder;
-		Date aujourdhui = new Date();
 		Moyen current = mList.get(position);
 		
         if(convertView == null) {

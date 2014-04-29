@@ -8,22 +8,25 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="10"
         android:layout_gravity="right" >
 
         <Button
-            android:id="@+id/activity_intervention_buttonValid"
+            android:id="@+id/activity_codis_buttonValid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_style_red"
-            android:text="@string/validIntervention" />
+            android:text="@string/codis_activity_create" />
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/activity_intervention_frame_tableau"
+    <ListView
+        android:id="@+id/activity_codis_list_intervention"
         android:layout_width="match_parent"
+        android:layout_weight="90"
         android:layout_height="0dip"
-        android:layout_weight="80" >
-    </FrameLayout>
+        android:layout_marginRight="7dp"
+        android:layout_marginTop="7dp" >
+    </ListView>
 
 </LinearLayout>

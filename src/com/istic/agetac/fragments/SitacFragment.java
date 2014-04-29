@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.controllers.dao.MoyensDao;
+import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.sit.framework.api.model.IEntity;
@@ -49,8 +50,8 @@ public class SitacFragment extends MainFragment {
 	public void onResume() {
 		super.onResume();
 		Log.d("TOTO","onResume");
-		loadEntities();
-		startServiceSynchronisation();
+		//loadEntities();
+		//startServiceSynchronisation();
 	}
 
 	@Override
@@ -92,12 +93,16 @@ public class SitacFragment extends MainFragment {
 		this.addItemMenu(entityVirtuel);
 		this.addItemMenu(entityStatic);
 		
+		CreationBase.createMoyen();
 		
 		new MoyensDao(new IViewReceiver<Moyen>() {
 			
 			@Override
 			public void notifyResponseSuccess(List<Moyen> objects) {
 				listMoyens = objects;
+				for (IEntity moyenToadd : objects){
+					addItemMenu(moyenToadd);
+				}
 			}
 			
 			@Override
@@ -106,12 +111,6 @@ public class SitacFragment extends MainFragment {
 				
 			}
 		}).findAll();
-		
-		if (listMoyens != null){
-			for (IEntity moyenToadd : listMoyens){
-				this.addItemMenu(moyenToadd);
-			}
-		}
 	}
 
 	@Override

@@ -243,6 +243,11 @@ public class Moyen extends Entity {
 	public void setRepresentationKO(IRepresentation representation) {
 		super.setRepresentationKO(representation);
 	}
+	
+	@Override
+	public IRepresentation getRepresentation() {
+		return super.getRepresentation();
+	}
 
 	@Override
 	public IPosition getPosition() {
@@ -270,13 +275,13 @@ public class Moyen extends Entity {
 	}
 
 	@Override
-	public boolean isDraggable() {
-		return super.isDraggable();
+	public boolean isOk() {
+		return super.isOk();
 	}
 
 	@Override
-	public void setDraggable(boolean draggable) {
-		super.setDraggable(draggable);
+	public void setOk(boolean ok) {
+		super.setOk(ok);
 	}
 	
 	@Override

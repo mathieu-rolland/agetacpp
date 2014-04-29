@@ -17,5 +17,7 @@ public class CreationBase {
 		m1.setLibelle("VSAV1");
 		m1.setRepresentationOK(new Representation(R.drawable.vsav));
 		m1.setSecteur("S.L.L");
+		
+		m1.save();
 	}
 }

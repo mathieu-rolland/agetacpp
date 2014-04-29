@@ -50,8 +50,8 @@ public class SitacFragment extends MainFragment {
 	public void onResume() {
 		super.onResume();
 		Log.d("TOTO","onResume");
-		//loadEntities();
-		//startServiceSynchronisation();
+		loadEntities();
+		startServiceSynchronisation();
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class SitacFragment extends MainFragment {
 		IEntity moyen = new Entity();
 		moyen.setLibelle("Moyens");
 		moyen.setId("#moyen");
-		moyen.setRepresentationOK(new Representation(R.drawable.camion));
+		moyen.setRepresentationOK(new Representation(R.drawable.ic_camion));
 		
 		IEntity environment = new Entity();
 		environment.setLibelle("Environnement");
@@ -92,8 +92,6 @@ public class SitacFragment extends MainFragment {
 		this.addItemMenu(entityDynamic);
 		this.addItemMenu(entityVirtuel);
 		this.addItemMenu(entityStatic);
-		
-		CreationBase.createMoyen();
 		
 		new MoyensDao(new IViewReceiver<Moyen>() {
 			

@@ -11,14 +11,12 @@ import com.istic.sit.framework.model.Entity;
 
 public abstract class AnotherDao<T extends Entity> {
 	
-	private final static String BASE_URL = "http://148.60.11.236:5984/agetacpp/";
 	private IViewReceiver<T> iViewReceiver;
 	
 	/**
 	 * Constructeur
 	 */
 	public AnotherDao(IViewReceiver<T> iViewReceiver) {
-		DataBaseCommunication.BASE_URL = BASE_URL;
 		this.setViewReceiver(iViewReceiver);
 	}
 	

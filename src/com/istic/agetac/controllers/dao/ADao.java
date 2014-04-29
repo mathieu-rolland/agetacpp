@@ -16,14 +16,12 @@ import com.istic.sit.framework.couch.IPersistant;
 */
 public abstract class ADao<T extends IPersistant> {
 
-	private final static String BASE_URL = "http://148.60.11.236:5984/agetacpp/";
 	private IViewReceiver<T> iViewReceiver;
 	
 	/**
 	 * Constructeur
 	 */
 	public ADao(IViewReceiver<T> iViewReceiver) {
-		DataBaseCommunication.BASE_URL = BASE_URL;
 		this.setViewReceiver(iViewReceiver);
 	}
 	

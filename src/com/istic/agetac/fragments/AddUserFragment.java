@@ -26,6 +26,7 @@ import com.istic.agetac.model.User;
 
 public class AddUserFragment extends Fragment implements OnDragListener{
 
+
 	private ListView mListDispo;
 	private ListView mListAdded;
 	

@@ -64,10 +64,11 @@
         </activity>
         
         <activity android:name="com.istic.agetac.fragments.MessageFragment" />
+
         <service android:name="com.istic.agetac.sync.message.MessageServiceSynchronisation" />
         <service android:name="com.istic.sit.framework.sync.ASynchronisationService"/> 
         <service android:name="com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync" />
-        
+        <service android:name="com.istic.sit.framework.sync.EntitySyncService" />       
     </application>
 
 </manifest>

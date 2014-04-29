@@ -3,6 +3,9 @@ package com.istic.agetac.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,7 +92,8 @@ public class SitacFragment extends MainFragment {
 		IEntity environment = new Entity();
 		environment.setLibelle("Environnement");
 		environment.setId("#environment");
-		environment.setRepresentationOK(new Representation(R.drawable.ic_water));
+		environment
+				.setRepresentationOK(new Representation(R.drawable.ic_water));
 
 		Log.d("TOTO", "onCreateSlideMenu");
 		IEntity entityDynamic = new Entity();
@@ -112,7 +116,7 @@ public class SitacFragment extends MainFragment {
 		this.addItemMenu(entityDynamic);
 		this.addItemMenu(entityVirtuel);
 		this.addItemMenu(entityStatic);
-		
+
 		new MoyensDao(new IViewReceiver<Moyen>() {
 
 			@Override
@@ -144,7 +148,7 @@ public class SitacFragment extends MainFragment {
 						oldentity.setOk(newMoyen.isOk());
 					if (newMoyen.isOnMap() && oldentity.isOnMap())
 						oldentity.setOnMap(newMoyen.isOnMap());
-					
+
 					entityAdapter.notifyDataSetChanged();
 				}
 			}
@@ -170,11 +174,25 @@ public class SitacFragment extends MainFragment {
 
 	@Override
 	public void updateEntities(List<Entity> synchronizedEntities) {
-		((MapFragment) getFragment()).updateEntities(synchronizedEntities);
+		if (synchronizedEntities != null)
+			((MapFragment) getFragment()).updateEntities(synchronizedEntities);
 
 		menuMoyenUpdate.findAll();
 	}
 
+	
+	private void stopSynchronisation(){
+		AlarmManager alarm = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
+		PendingIntent pi = ser.getPendingIntent();
+		alarm.cancel(pi);
+	}
+	
+	@Override
+	public void onStop() {
+		stopSynchronisation();
+		super.onStop();
+	}
+	
 	// @Override
 	// public void onCreateMapMenu(GridView menu) {
 	// IEntity environment_water = new Entity();

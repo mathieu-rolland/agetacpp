@@ -77,7 +77,10 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	 * @param message
 	 */
 	public void onMessageReveive(String message) {
-		Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+		try {
+			Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+		} catch (Exception e) {
+		}
 	}
 	
 	/** Méthode onCreate */

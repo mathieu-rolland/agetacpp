@@ -1,8 +1,10 @@
 package com.istic.agetac.controler.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.provider.ContactsContract.CommonDataKinds.Note;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,15 +17,17 @@ import com.istic.agetac.R;
 import com.istic.agetac.activities.UserActivity;
 import com.istic.agetac.model.Intervention;
 
+import de.greenrobot.event.EventBus;
+
 public class InterventionAdapter extends BaseAdapter{
 
 	private List<Intervention> mList;	
 	private LayoutInflater mInflater;
 	private Context mContext;
 	
-	public InterventionAdapter(Context context, List<Intervention> intervention)
+	public InterventionAdapter(Context context)
 	{
-		this.mList = intervention;
+		this.mList = new ArrayList<Intervention>();
 		this.mInflater = LayoutInflater.from(context);
 		this.mContext = context;
 	}
@@ -43,6 +47,20 @@ public class InterventionAdapter extends BaseAdapter{
 		return position;
 	}
 
+	public void addAll(List<Intervention> list)
+	{
+		for (Intervention item : list) {
+			mList.add(item);
+		}
+		
+		notifyDataSetChanged();
+	}
+	
+	public List<Intervention> getAll()
+	{
+		return mList;
+	}
+	
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
@@ -80,5 +98,6 @@ public class InterventionAdapter extends BaseAdapter{
 	public void showDialogUser(Intervention intervention)
 	{
 		UserActivity.launchActivity(mContext); 
+		EventBus.getDefault().postSticky(intervention);
 	}
 }

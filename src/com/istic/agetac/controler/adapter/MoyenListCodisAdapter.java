@@ -63,8 +63,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
             holder.spinnerChoixSecteurs.setAdapter(this.adapterSecteurs);
             holder.buttonDemand 		=	(Button)convertView.findViewById(R.id.list_moyen_button_engage);
             holder.name 				=	(TextView)convertView.findViewById(R.id.list_moyen_name);
-            convertView.setTag(holder);
-            
+            convertView.setTag(holder);            
             
             
         } else {

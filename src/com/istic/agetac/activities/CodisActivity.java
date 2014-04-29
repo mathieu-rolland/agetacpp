@@ -1,6 +1,7 @@
 package com.istic.agetac.activities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -18,10 +19,14 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.controler.adapter.InterventionAdapter;
 import com.istic.agetac.controllers.dao.InterventionDao;
+import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
+import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
+import com.istic.agetac.model.User;
 
 public class CodisActivity extends FragmentActivity implements OnItemClickListener{
 
@@ -33,12 +38,10 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 	private Button mValidButton;
 	private ListView mListIntervention;
 	private InterventionAdapter mAdapter;
-	
-	private List<Intervention> mList;
+
 	
 	public CodisActivity()
 	{
-		mList = new ArrayList<Intervention>();
 	}
 	
 	@Override
@@ -48,7 +51,7 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 		
 		mValidButton= (Button) findViewById(R.id.activity_codis_buttonValid);        
 		mListIntervention = (ListView) findViewById(R.id.activity_codis_list_intervention);
-		mAdapter = new InterventionAdapter(this, mList);
+		mAdapter = new InterventionAdapter(this);
 		mListIntervention.setAdapter(mAdapter);
 		
         mValidButton.setOnClickListener(new View.OnClickListener() {
@@ -61,13 +64,14 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
         mListIntervention.setOnItemClickListener(this);
         
         InterventionDao intervention = new InterventionDao(new InterventionViewReceiver(this));
-        intervention.findAll(); 
+        intervention.findAll();
+        
+        
 	}
 	
 	 @Override
      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
      	Intervention intervention =  (Intervention) mListIntervention.getItemAtPosition(position);
-     	Log.e("VINCENT", "LALALALAA");
      	ContainerActivity.launchActivity(MODE.CODIS, getApplicationContext());
      }
 	
@@ -76,19 +80,19 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 	}		
 	
 	public class InterventionViewReceiver implements IViewReceiver<Intervention> {
-
-		private CodisActivity mActivity;
 		
 		public InterventionViewReceiver(CodisActivity activity)
 		{
-			this.mActivity = activity;
 		}
 		
 		@Override
-		public void notifyResponseSuccess(List<Intervention> interventions) {			
-			mAdapter = new InterventionAdapter(mActivity, interventions);
-			mListIntervention.setAdapter(mAdapter);
+		public void notifyResponseSuccess(List<Intervention> interventions) {
+			
+			mAdapter.addAll(interventions);
 			mAdapter.notifyDataSetChanged();
+			
+			UserDao users = new UserDao(new UsersViewReceiver());
+			users.findAll();
 		}
 
 		@Override
@@ -97,4 +101,33 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 		}		
 	}
 	
+	public class UsersViewReceiver implements IViewReceiver<User> {
+
+		@Override
+		public void notifyResponseSuccess(List<User> users) {
+			HashMap<String, Intervention> hashMap = new HashMap<String, Intervention>();
+			for (Intervention item : mAdapter.getAll()) {
+				hashMap.put(item.getId()+"", item);
+			}
+			
+			for (User user : users) {
+				if(user.getRole()!=Role.codis)
+				{
+					Intervenant intervenant = (Intervenant)user;
+					
+					if( intervenant.getIntervention() != null
+							&& hashMap.get(intervenant.getIntervention().getId()) != null ){
+						hashMap.get(intervenant.getIntervention().getId()).addIntervenant(intervenant);
+					}
+				}
+			}
+		}
+
+		@Override
+		public void notifyResponseFail(VolleyError error) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
+
 }

@@ -26,6 +26,7 @@ import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
+import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.User;
 
 public class LoginActivity extends Activity {
@@ -70,7 +71,7 @@ public class LoginActivity extends Activity {
 						return false;
 					}
 				});
-
+		
 		mLoginFormView = findViewById(R.id.activity_login_form);
 		mLoginStatusView = findViewById(R.id.activity_login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.activity_login_status_message);

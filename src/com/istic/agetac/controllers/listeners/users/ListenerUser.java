@@ -1,18 +1,16 @@
 package com.istic.agetac.controllers.listeners.users;
 
-import java.util.List;
-
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.istic.agetac.controler.adapter.UserAdapter;
-import com.istic.agetac.model.User;
+import com.istic.agetac.model.Intervenant;
 
 public class ListenerUser implements OnItemLongClickListener{
 
-	private UserAdapter mAdapter;
+	private  UserAdapter mAdapter;
 	
 	public ListenerUser( UserAdapter adapter)
 	{
@@ -22,7 +20,7 @@ public class ListenerUser implements OnItemLongClickListener{
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
-		User selectedUser = (User) mAdapter.getItem(position);		
+		Intervenant selectedUser = (Intervenant) mAdapter.getItem(position);
 			DragShadowBuilder productShadow = new DragShadowBuilder(view);
 	
 			view.startDrag(null,	//ClipData
@@ -30,7 +28,7 @@ public class ListenerUser implements OnItemLongClickListener{
 	                selectedUser,		//Object myLocalState
 	                0);	
 			
-			mAdapter.Remove(selectedUser);
+			mAdapter.remove(selectedUser);
 			
 			return true;
 		

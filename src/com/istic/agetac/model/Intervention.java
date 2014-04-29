@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -334,4 +336,5 @@ public class Intervention implements IIntervention, Subject {
 			observer.update(this);
 		}
 	}
+
 }

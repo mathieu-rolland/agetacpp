@@ -1,5 +1,6 @@
 package com.istic.agetac.controler.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -10,15 +11,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.User;
 
 public class UserAdapter extends BaseAdapter {
 
-	private List<User> mList;
+	private List<Intervenant> mList;
 	private LayoutInflater mInflater;
 
-	public UserAdapter(Context context, List<User> users) {
-		this.mList = users;
+	public UserAdapter(Context context) {
+		this.mList = new ArrayList<Intervenant>();
 		this.mInflater = LayoutInflater.from(context);
 	}
 
@@ -37,6 +39,11 @@ public class UserAdapter extends BaseAdapter {
 		return position;
 	}
 
+	public List<Intervenant> getAll()
+	{
+		return mList;
+	}
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
@@ -60,21 +67,31 @@ public class UserAdapter extends BaseAdapter {
 		TextView name;
 	}
 
-	public void Add(User u) {
-		if (!Contains(u)) {
+	public void add(Intervenant u) {
+		if (!contains(u)) {
 			mList.add(u);
 			notifyDataSetChanged();
 		}
 	}
+	
+	public void addAll(List<Intervenant> list)
+	{
+		for (Intervenant item : list) {
+			mList.add(item);
+		}
+		
+		notifyDataSetChanged();
+	}
 
-	public void Remove(User u) {
-		if (Contains(u)) {
+	public void remove(Intervenant u) {
+		if (contains(u)) {
 			mList.remove(u);
 			notifyDataSetChanged();
 		}
 	}
 
-	public boolean Contains(User u) {
+	public boolean contains(User u) {
 		return mList.contains(u);
 	}
+
 }

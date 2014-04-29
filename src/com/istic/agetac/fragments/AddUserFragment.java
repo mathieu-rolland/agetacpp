@@ -1,10 +1,10 @@
 package com.istic.agetac.fragments;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,48 +22,57 @@ import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.controler.adapter.UserAdapter;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.controllers.listeners.users.ListenerUser;
+import com.istic.agetac.model.Intervenant;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.User;
+import de.greenrobot.event.EventBus;
 
 public class AddUserFragment extends Fragment implements OnDragListener{
-
 
 	private ListView mListDispo;
 	private ListView mListAdded;
 	
 	private UserAdapter mAdapterDispo;
 	private UserAdapter mAdapterAdded;
-	
-	private List<User> mDispo;
-	private List<User> mAdded;
-	
+		
 	private Button mButton;
+	private Intervention mIntervention;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-
-		
+		Log.e("VINCENT", "LALALA");
 		View view = inflater.inflate(R.layout.fragment_add_user, container, false);
 
 		mListDispo = (ListView) view.findViewById(R.id.fragment_add_user_list_user_dispo);
 		mListAdded = (ListView) view.findViewById(R.id.fragment_add_user_list_to_add);
 		mButton = (Button)view.findViewById(R.id.fragment_add_user_button_send);
 		
-		mDispo = new ArrayList<User>();
-		mAdded = new ArrayList<User>();
+		mIntervention = EventBus.getDefault().removeStickyEvent(Intervention.class);
 		
-		mAdapterDispo = new UserAdapter(this.getActivity(), mDispo);
-		mListDispo.setAdapter(mAdapterDispo);
+//		mIntervention.getIntervenants(new Observer() {			
+//			@Override
+//			public void update(Subject subject) {
+//				Intervention intervention = (Intervention) subject;	
+//				Log.e("Vincent", intervention.getIntervenants().size()+"");
+//				mAdapterAdded.addAll(intervention.getIntervenants());			
+//			}
+//		});
+			
 		
-		mAdapterAdded = new UserAdapter(this.getActivity(), mAdded);
+		mAdapterAdded = new UserAdapter(getActivity());
+		mAdapterAdded.addAll(mIntervention.getIntervenants());
 		mListAdded.setAdapter(mAdapterAdded);
 		
+		mAdapterDispo = new UserAdapter(this.getActivity());
+		mListDispo.setAdapter(mAdapterDispo);
+				
 		mListAdded.setOnDragListener(this);
 		mListDispo.setOnDragListener(this);
 		mListAdded.setOnItemLongClickListener(new ListenerUser(mAdapterAdded));
 		mListDispo.setOnItemLongClickListener(new ListenerUser(mAdapterDispo));
-		
+						
 		mButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -71,34 +80,57 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 				Send();
 			}
 		});
+				
+		UserDao userdao= new UserDao(new UserViewReceiver());
+		userdao.findAll();
 		
-		UserDao user = new UserDao(new UserViewReceiver());
-		user.findAll();
 		return view;
 	}	
-	
-	public void Send()
-	{
-		this.getActivity().finish();
-	}
 	
 	public class UserViewReceiver implements IViewReceiver<User>
 	{
 		@Override
 		public void notifyResponseSuccess(List<User> users) {
-			
 			for (User user : users) {
 				if(user.getRole()!=Role.codis)
-					mAdapterDispo.Add(user);
-			}			
+				{
+					Intervenant intervenant=(Intervenant)user;
+					if(intervenant.getIntervention()==null)
+					{
+						mAdapterDispo.add(intervenant);			
+					}
+				}
+			}
+			mAdapterDispo.notifyDataSetChanged();
 		}
 
 		@Override
 		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de charger les utilisateurs", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "Impossible de charger les utilisateurs disponibles", Toast.LENGTH_SHORT).show();
 		}
 		
 	}
+	
+	public void Send()
+	{
+		mIntervention.getIntervenants().clear();
+		
+		for (Intervenant item : mAdapterAdded.getAll()) {
+			item.setIntervention(mIntervention);
+			item.save();
+			mIntervention.addIntervenant(item);
+		}
+		
+		for (Intervenant item : mAdapterDispo.getAll()) {
+			item.setIntervention(null);
+			item.save();
+		}
+		
+		mIntervention.save();
+		
+		this.getActivity().finish();
+	}
+	
 	
 	@Override
 	public boolean onDrag(View v, DragEvent event) {
@@ -114,12 +146,12 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 				return true;
 			case DragEvent.ACTION_DROP:
 				if(v == mListAdded) {
-					User u = (User) event.getLocalState();					
-					mAdapterAdded.Add(u);
+					Intervenant u = (Intervenant) event.getLocalState();					
+					mAdapterAdded.add(u);
 					return true;
 				} else if(v == mListDispo){
-					User u = (User) event.getLocalState();
-					mAdapterDispo.Add(u);
+					Intervenant u = (Intervenant) event.getLocalState();
+					mAdapterDispo.add(u);
 					return true;
 				}else
 				{					
@@ -129,12 +161,11 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 				if (event.getResult()) {					
 					return true;
 				} else {					
-					if(v == mListAdded) {
-						User u = (User) event.getLocalState();					
-						mAdapterDispo.Add(u);
-					} else if(v == mListDispo){
-						User u = (User) event.getLocalState();
-						mAdapterAdded.Add(u);
+					Intervenant u = (Intervenant) event.getLocalState();
+					if(v == mListAdded) {											
+						mAdapterDispo.add(u);
+					} else if(v == mListDispo){						
+						mAdapterAdded.add(u);
 					}
 					return false;
 				}

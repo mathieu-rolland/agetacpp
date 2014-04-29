@@ -1,8 +1,5 @@
 package com.istic.agetac.activities;
 
-import com.istic.agetac.R;
-import com.istic.agetac.fragments.AddUserFragment;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +8,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 
+import com.istic.agetac.R;
+import com.istic.agetac.fragments.AddUserFragment;
+
 public class UserActivity extends FragmentActivity{
 
 	public static void launchActivity(Context context) {
 		Intent intent = new Intent(context, UserActivity.class);
-		context.startActivity(intent);
-	}
-	
-	public UserActivity()
-	{
-		
+		context.startActivity(intent);		
 	}
 	
 	@Override

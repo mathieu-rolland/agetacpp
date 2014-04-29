@@ -1,4 +1,4 @@
-package com.istic.agetac.activities;
+package com.istic.agetac.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ import com.istic.agetac.view.item.MessageItem;
 import com.istic.sit.framework.application.FrameworkApplication;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
-public class MessageActivity extends Fragment implements Observer {
+public class MessageFragment extends Fragment implements Observer {
 
 	private ItemListAdapter<IMessage> messageAdapter;
 	private ListView messagesList;
@@ -63,7 +63,7 @@ public class MessageActivity extends Fragment implements Observer {
 	private boolean isMessageModify;
 
 	public static Fragment newInstance() {
-		MessageActivity fragment = new MessageActivity();
+		MessageFragment fragment = new MessageFragment();
 		return fragment;
 	}
 	
@@ -81,7 +81,7 @@ public class MessageActivity extends Fragment implements Observer {
 		
 		message = (EditText) view.findViewById(R.id.fragment_messages_list_message_text);
 
-		//Récupération des boutons :
+		//Rï¿½cupï¿½ration des boutons :
 		buttonCancel = (Button) view.findViewById(R.id.fragment_messages_list_message_cancel);
 		buttonNext = (Button) view.findViewById(R.id.fragment_messages_list_message_next);
 		buttonValidate = (Button) view.findViewById(R.id.fragment_messages_list_message_validate);
@@ -116,7 +116,7 @@ public class MessageActivity extends Fragment implements Observer {
 
 		String text;
 		
-		//On est passé Ã  l'étape suivante :
+		//On est passï¿½ Ã  l'ï¿½tape suivante :
 		if( newCurrent != currentPart ){
 			
 			//Test que le text n'est pas vide :
@@ -132,7 +132,7 @@ public class MessageActivity extends Fragment implements Observer {
 		
 		if( MessageWorkflow.isLastState(newCurrent) ){
 			Toast.makeText(getActivity().getApplicationContext(), 
-					"Aucune étape suivant " + 
+					"Aucune ï¿½tape suivant " + 
 				    MessageWorkflow.getWording(getActivity().getApplicationContext(), currentPart),
 					Toast.LENGTH_LONG).show();
 		}
@@ -211,7 +211,7 @@ public class MessageActivity extends Fragment implements Observer {
 	
 	private void initWithMessage( IMessage message ){
 		
-		//Réinitialisation de la vue :
+		//Rï¿½initialisation de la vue :
 		hideInWorkflow(IMessage.Message_part.JE_VOIS);
 		hideInWorkflow(IMessage.Message_part.JE_PREVOIS);
 		hideInWorkflow(IMessage.Message_part.JE_FAIS);
@@ -221,7 +221,7 @@ public class MessageActivity extends Fragment implements Observer {
 		IMessage.Message_part previousPart = MessageWorkflow.messagePrevious(currentPart);
 		IMessage.Message_part nextPart = MessageWorkflow.messageNext(currentPart);
 		
-		//Initialisation des valeurs stoquées :
+		//Initialisation des valeurs stoquï¿½es :
 		currentMessage = message;
 		this.message.setText( message.getText(currentPart) );
 		
@@ -322,7 +322,7 @@ public class MessageActivity extends Fragment implements Observer {
 			}
 		}
 		
-		//Ajout des message non trouvé :
+		//Ajout des message non trouvï¿½ :
 		for( IMessage msg : waitingMessage ){
 			ItemView<IMessage> view = new MessageItem(msg, this);
 			messageAdapter.addLast(view);

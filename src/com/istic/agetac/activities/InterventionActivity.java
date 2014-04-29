@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import com.istic.agetac.R;
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
+import com.istic.agetac.fragments.MessageFragment;
 import com.istic.agetac.fragments.TableauMoyenFragment;
 
 public class InterventionActivity extends FragmentActivity{
@@ -43,7 +44,7 @@ public class InterventionActivity extends FragmentActivity{
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if(mFragment != null) {
-        	ft.replace(R.id.activity_intervention_frame_tableau, new MessageActivity());
+        	ft.replace(R.id.activity_intervention_frame_tableau, new MessageFragment());
         	ft.addToBackStack(null);
         	mCurrentFragment = CurrentFragment.tableau;
         }

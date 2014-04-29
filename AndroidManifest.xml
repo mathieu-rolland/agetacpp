@@ -52,7 +52,7 @@
             android:name="com.istic.agetac.activities.InterventionActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name="com.istic.agetac.activities.MessageActivity" />
+        <activity android:name="com.istic.agetac.fragments.MessageFragment" />
         <service android:name="com.istic.agetac.sync.MessageServiceSynchronisation" />
         <service android:name="com.istic.sit.framework.sync.ASynchronisationService"/>        
     </application>

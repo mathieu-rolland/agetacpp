@@ -3,13 +3,13 @@ package com.istic.agetac.controllers.messages;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.istic.agetac.activities.MessageActivity;
+import com.istic.agetac.fragments.MessageFragment;
 
 public class OnPreviousMessagePart implements OnClickListener {
 
-	private MessageActivity activity;
+	private MessageFragment activity;
 	
-	public OnPreviousMessagePart( MessageActivity activity )
+	public OnPreviousMessagePart( MessageFragment activity )
 	{
 		this.activity = activity;
 	}

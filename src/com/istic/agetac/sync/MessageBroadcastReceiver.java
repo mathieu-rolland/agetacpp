@@ -6,15 +6,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.istic.agetac.activities.MessageActivity;
+import com.istic.agetac.fragments.MessageFragment;
 import com.istic.sit.framework.sync.ASyncReceiver;
 import com.istic.sit.framework.sync.ASynchornisationService;
 
 public class MessageBroadcastReceiver extends ASyncReceiver{
 
-	private MessageActivity messageActivity;
+	private MessageFragment messageActivity;
 	
-	public MessageBroadcastReceiver(MessageActivity msgActivity){
+	public MessageBroadcastReceiver(MessageFragment msgActivity){
 		this.messageActivity = msgActivity;
 	}
 	

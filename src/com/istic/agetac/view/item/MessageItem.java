@@ -9,20 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
-import com.istic.agetac.activities.MessageActivity;
 import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.view.ItemView;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.messages.OnModifyMessage;
 import com.istic.agetac.controllers.messages.OnValidateMessage;
+import com.istic.agetac.fragments.MessageFragment;
 
 public class MessageItem implements ItemView<IMessage> {
 
 	private IMessage message;
-	private MessageActivity activity;
+	private MessageFragment activity;
 	
-	public MessageItem( IMessage message , MessageActivity activity )
+	public MessageItem( IMessage message , MessageFragment activity )
 	{
 		this.message = message;
 		this.activity = activity;

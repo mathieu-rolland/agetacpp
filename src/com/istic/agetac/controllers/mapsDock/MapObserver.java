@@ -8,13 +8,13 @@ import com.istic.sit.framework.view.MapFragment;
 
 public class MapObserver implements Observer {
 	
-	
-	
 	@Override
 	public void update(Subject subject) {
 		MapFragment map = (MapFragment) subject;
-		EntityDockFragment edf = EntityDockFragment.newInstance( map );
-		map.displayFragement(edf);
+		if( map.getSelectedEntity() != null ){
+			EntityDockFragment edf = EntityDockFragment.newInstance( map );
+			map.displayFragement(edf);
+		}
 	}
 
 

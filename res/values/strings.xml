@@ -41,6 +41,11 @@
      <string name ="list_moyen_button_free"> Libérer </string>
       <string name ="list_moyen_button_secteur"> Secteur </string>
      
+     
+      
+    <!-- Layout : ajout user -->
+    <string name ="fragment_add_user_add"> &lt;</string>
+    <string name ="fragment_add_user_remove"> &gt; </string>
     
 	<!-- Boite de dialogue : Tableau des moyen engagement -->
 	<string name ="dialog_tableau_moyen_engage_name">Entrer le nom du véhicule à engager</string>

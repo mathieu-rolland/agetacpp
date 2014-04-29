@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#171f21"
+    android:orientation="horizontal"
+    tools:ignore="DisableBaselineAlignment" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <TextView
+            android:id="@+id/fragment_add_user_label_dispo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="@string/demande_de_moyen_TextView_GridViewTitle"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+
+        <ListView
+            android:id="@+id/fragment_add_user_list_user_dispo"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1" >
+        </ListView>
+
+    </LinearLayout>
+
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp" >
+
+         <Button
+             android:id="@+id/fragment_add_user_button_add"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/button_style_grey"
+             android:text="@string/fragment_add_user_add" />
+
+         <Button
+             android:id="@+id/fragment_add_user_button_remove"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/button_style_red"
+             android:text="@string/fragment_add_user_remove" />
+        
+         </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp" >
+
+        <TextView
+            android:id="@+id/fragment_add_user_label_to_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="7dp"
+            android:paddingTop="5dp"
+            android:text="@string/demande_de_moyen_TextView_ListViewTitle"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+
+        <ListView
+            android:id="@+id/fragment_add_user_list_to_add"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1" >
+        </ListView>
+
+        <Button
+            android:id="@+id/fragment_add_user_button_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/button_style_grey"
+            android:text="@string/demande_de_moyen_ButtonText_SendList"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
+    </LinearLayout>
+
+</LinearLayout>

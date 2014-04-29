@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#171f21"
+    android:weightSum="100"
+    android:orientation="vertical" >
+
+    <LinearLayout 
+	    android:layout_width="match_parent"
+	    android:baselineAligned="false"
+	    android:layout_height="0dip"
+	    android:background="#171f21"
+	    android:weightSum="100"
+	    android:layout_weight="20"
+	    android:orientation="horizontal">
+    
+	<LinearLayout 
+	    android:layout_width="0dip"
+	    android:layout_height="wrap_content"
+	    android:background="#171f21"
+	    android:layout_weight="80"
+	    android:layout_marginLeft="10dip"
+	    android:layout_marginRight="10dip"
+	    android:layout_marginBottom="20dip"
+	    android:orientation="vertical">
+	    
+	    <EditText
+	        android:id="@+id/activity_intervention_nameIntervention"
+	        android:layout_width="978dp"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:hint="@string/textIntervention"
+	        android:inputType="text"
+	        android:textColor="#efefef" />
+	
+	    <EditText
+	        android:id="@+id/activity_intervention_codeIntervention"
+	        android:layout_width="978dp"
+	        android:layout_height="wrap_content"
+	        android:ems="10"
+	        android:hint="@string/textCode"
+	        android:inputType="text"
+	        android:textColor="#efefef" />
+	</LinearLayout>
+
+	<LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="match_parent"
+	     android:layout_weight="20"
+	    android:orientation="vertical" >
+
+		<Button
+		    android:id="@+id/activity_intervention_buttonValid"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/button_style_red"
+		    android:text="@string/validIntervention" />
+
+		<Button
+		    android:id="@+id/activity_intervention_buttonSwitch"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/button_style_red"
+		    android:text="@string/switchFragment" />
+
+	</LinearLayout>
+
+	</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/activity_intervention_frame_tableau"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="80" >
+    </FrameLayout>
+
+</LinearLayout>

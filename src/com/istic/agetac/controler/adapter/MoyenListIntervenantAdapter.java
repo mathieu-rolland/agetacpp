@@ -30,7 +30,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 		
         if(convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.list_moyen, null);
+            convertView = mInflater.inflate(R.layout.item_moyen, null);
             
             holder.logo =(ImageView) convertView.findViewById( R.id.list_moyen_logo );
             holder.hourDemand =(TextView) convertView.findViewById( R.id.list_moyen_hour_demand );

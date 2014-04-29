@@ -42,7 +42,7 @@ public class ContainerActivity extends FragmentActivity implements MapMenuListen
 		setContentView(R.layout.activity_container);
 		
 
-		//getActionBar().setDisplayHomeAsUpEnabled(true);
+		//getActionBar().setDisplayHomeAsUpEnabled(false);
 		getActionBar().setHomeButtonEnabled(true);
 
 		Bundle extras = getIntent().getExtras();

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
@@ -30,32 +31,53 @@ public class SitacFragment extends MainFragment {
 	}
 
 	List<Moyen> listMoyens;
-	
+	MoyensDao menuMoyenUpdate;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
-		//DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/sitac/";
+
+		// DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/sitac/";
 		initializeBackground(TypeBackgroundEnum.Map, savedInstanceState);
-		
+
 		listMoyens = new ArrayList<Moyen>();
 		MapFragment mapFragment = (MapFragment) super.getFragment();
-		mapFragment.registerObserver( new MapObserver() );
-		
-		return super.onCreateView(inflater,container, savedInstanceState);
+		mapFragment.registerObserver(new MapObserver());
+
+		menuMoyenUpdate = new MoyensDao(new IViewReceiver<Moyen>() {
+
+			@Override
+			public void notifyResponseSuccess(List<Moyen> objects) {
+				listMoyens = objects;
+				menuUpdate(objects);
+			}
+
+			@Override
+			public void notifyResponseFail(VolleyError error) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d("TOTO","onResume");
 		loadEntities();
 		startServiceSynchronisation();
 	}
 
 	@Override
 	public void onItemMenuClicked(int position, View view) {
+		IEntity entity = (IEntity) this.entityAdapter.getItem(position);
 
+		Toast.makeText(getActivity().getBaseContext(), "Click on Item",
+				Toast.LENGTH_SHORT).show();
+
+		// TO DO : centrer sur entity
+		// TO DO : affichage infos
 	}
 
 	@Override
@@ -64,17 +86,16 @@ public class SitacFragment extends MainFragment {
 		moyen.setLibelle("Moyens");
 		moyen.setId("#moyen");
 		moyen.setRepresentationOK(new Representation(R.drawable.ic_camion));
-		
 		IEntity environment = new Entity();
 		environment.setLibelle("Environnement");
 		environment.setId("#environment");
 		environment.setRepresentationOK(new Representation(R.drawable.ic_water));
 
-		Log.d("TOTO","onCreateSlideMenu");
+		Log.d("TOTO", "onCreateSlideMenu");
 		IEntity entityDynamic = new Entity();
 		entityDynamic.setLibelle("Camion");
-		entityDynamic
-				.setRepresentationOK(new Representation(R.drawable.ic_launcher));
+		entityDynamic.setRepresentationOK(new Representation(
+				R.drawable.ic_launcher));
 
 		IEntity entityVirtuel = new Entity();
 		entityVirtuel.setLibelle("Bouche incendie");
@@ -93,54 +114,88 @@ public class SitacFragment extends MainFragment {
 		this.addItemMenu(entityStatic);
 		
 		new MoyensDao(new IViewReceiver<Moyen>() {
-			
+
 			@Override
 			public void notifyResponseSuccess(List<Moyen> objects) {
 				listMoyens = objects;
-				for (IEntity moyenToadd : objects){
+				for (IEntity moyenToadd : objects) {
 					addItemMenu(moyenToadd);
 				}
 			}
-			
+
 			@Override
 			public void notifyResponseFail(VolleyError error) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		}).findAll();
+	}
+
+	public void menuUpdate(List<Moyen> moyens) {
+		boolean exist;
+		for (Moyen newMoyen : moyens) {
+			exist = false;
+			for (int i = 0; i < itemsMenu.size(); i++) {
+				Entity oldentity = (Entity) itemsMenu.get(i);
+				if (newMoyen.getId().equals(oldentity.getId())) {
+					exist = true;
+					// Mise a jour boolean
+					if (newMoyen.isOk() && oldentity.isOk())
+						oldentity.setOk(newMoyen.isOk());
+					if (newMoyen.isOnMap() && oldentity.isOnMap())
+						oldentity.setOnMap(newMoyen.isOnMap());
+					
+					entityAdapter.notifyDataSetChanged();
+				}
+			}
+			if (!exist) {
+				addItemMenu(newMoyen);
+			}
+		}
 	}
 
 	@Override
 	public void onItemMenuLongClicked(int position, View view) {
 		IEntity entity = (IEntity) this.entityAdapter.getItem(position);
 
-		DragShadowBuilder entityShadow = new DragShadowBuilder(view);
+		if (!entity.isOnMap()) {
+			DragShadowBuilder entityShadow = new DragShadowBuilder(view);
 
-		view.startDrag(null, // ClipData
-				entityShadow, // View.DragShadowBuilder
-				entity, // Object myLocalState
-				0);
-//		this.mDrawerLayout.closeDrawer(listMenu);
+			view.startDrag(null, // ClipData
+					entityShadow, // View.DragShadowBuilder
+					entity, // Object myLocalState
+					0);
+		}
 	}
 
-//	@Override
-//	public void onCreateMapMenu(GridView menu) {
-//		IEntity environment_water = new Entity();
-//		environment_water.setLibelle("Point d'eau");
-//		environment_water.setRepresentation(new Representation(R.drawable.environment_water));
-//		
-//		this.addItemEntityGridMenu(environment_water);
-//		this.addItemEntityGridMenu(environment_water);
-//		
-//		EnvironmentButton environment_water = new EnvironmentButton("Point d'eau", view.getContext(), R.drawable.environment_water);
-//		
-//		
-//	}
+	@Override
+	public void updateEntities(List<Entity> synchronizedEntities) {
+		((MapFragment) getFragment()).updateEntities(synchronizedEntities);
 
-//	@Override
-//	public void onInitializeMapMenu(GridView menu) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+		menuMoyenUpdate.findAll();
+	}
+
+	// @Override
+	// public void onCreateMapMenu(GridView menu) {
+	// IEntity environment_water = new Entity();
+	// environment_water.setLibelle("Point d'eau");
+	// environment_water.setRepresentation(new
+	// Representation(R.drawable.environment_water));
+	//
+	// this.addItemEntityGridMenu(environment_water);
+	// this.addItemEntityGridMenu(environment_water);
+	//
+	// EnvironmentButton environment_water = new
+	// EnvironmentButton("Point d'eau", view.getContext(),
+	// R.drawable.environment_water);
+	//
+	//
+	// }
+
+	// @Override
+	// public void onInitializeMapMenu(GridView menu) {
+	// // TODO Auto-generated method stub
+	//
+	// }
 
 }

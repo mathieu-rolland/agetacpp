@@ -28,6 +28,7 @@ public class CreationBase {
 		m1.setPosition(pos1);
 		m1.setLibelle("VSAV1");
 		m1.setRepresentationOK(new Representation(R.drawable.vsav));
+		m1.setRepresentationOK(new Representation(R.drawable.ic_launcher));
 		m1.setSecteur("S.L.L");
 		
 		m1.save();

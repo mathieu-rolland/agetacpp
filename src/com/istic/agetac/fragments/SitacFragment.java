@@ -69,7 +69,7 @@ public class SitacFragment extends MainFragment {
 		IEntity environment = new Entity();
 		environment.setLibelle("Environnement");
 		environment.setId("#environment");
-		environment.setRepresentationOK(new Representation(R.drawable.environment_water));
+		environment.setRepresentationOK(new Representation(R.drawable.ic_water));
 
 		Log.d("TOTO","onCreateSlideMenu");
 		IEntity entityDynamic = new Entity();

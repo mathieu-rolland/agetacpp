@@ -21,7 +21,7 @@ import com.istic.sit.framework.model.Property;
  */
 public class Moyen extends Entity {
 	
-	SimpleDateFormat  formater = new SimpleDateFormat("ddMM '-' hhmm"); //("ddMM '-' hhmm");
+	private static final SimpleDateFormat  formater = new SimpleDateFormat("ddMM '-' hhmm"); //("ddMM '-' hhmm");
 	
 	/** Constante string which defines name of property of type of moyen */
 	private static final String NAME_PROPERTY_TYPE 				= "moyen_type";

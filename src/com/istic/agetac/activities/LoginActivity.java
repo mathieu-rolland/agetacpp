@@ -24,9 +24,13 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
+import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.User;
+import com.istic.sit.framework.api.model.IPosition.AXIS;
+import com.istic.sit.framework.model.CoordonateGPS;
 
 public class LoginActivity extends Activity {
 

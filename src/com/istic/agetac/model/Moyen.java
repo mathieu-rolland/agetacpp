@@ -109,8 +109,8 @@ public class Moyen extends Entity {
 		return super.getProperty(NAME_PROPERTY_SECTEUR).getValeur();
 	} // method
 	
-	public void setType (Date valeur) {
-		super.getProperty(NAME_PROPERTY_TYPE).setValeur(formater.format(valeur));
+	public void setType (String valeur) {
+		super.getProperty(NAME_PROPERTY_TYPE).setValeur(valeur);
 	} // method
 
 	public void setHDemande (Date valeur) {

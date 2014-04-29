@@ -1,6 +1,7 @@
 package com.istic.agetac.fragments;
 
 import java.util.Date;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.istic.agetac.R;
 import com.istic.agetac.model.Moyen;
 import com.istic.sit.framework.api.model.IPosition.AXIS;
+import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.model.Property;
 import com.istic.sit.framework.view.AbstractEntityInformationFragment;
 import com.istic.sit.framework.view.MapFragment;
@@ -55,12 +57,26 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 			modify.setOnClickListener(new OnDeleteButton(fragment));
 			
 			Button arrived = (Button) view.findViewById(R.id.fragment_entity_button_arrived);
-			arrived.setOnClickListener(new OnArrivedButton(fragment));
 			
-		}else{
-			Log.d("Panel","Add ko");
+			List<IProperty> properties = entity.getProprietes();
+			boolean dateArrivedIsSet = false;
+			for (IProperty iProperty : properties) {
+				Log.d("Log",  iProperty.getNom() + " has attribute " + iProperty.getValeur() );
+				if( iProperty.getNom().equals( Moyen.NAME_PROPERTY_HOUR_ARRIVAL )
+						&& iProperty.getValeur() != null 
+						&& !iProperty.getValeur().isEmpty() ){
+					dateArrivedIsSet = true;
+					break;
+				}
+			}
+			//Masquer le bouton "Arriver" si le moyen est deja arrivé.
+			if( dateArrivedIsSet ){
+				arrived.setVisibility(View.INVISIBLE);
+			}else{
+				arrived.setVisibility(View.VISIBLE);
+				arrived.setOnClickListener(new OnArrivedButton());
+			}
 		}
-		
 		return view;
 	}
 	
@@ -108,12 +124,6 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 	}
 	
 	private class OnArrivedButton implements OnClickListener{
-
-		private MapFragment map;
-		
-		public OnArrivedButton( MapFragment  map ){
-			this.map = map;
-		}
 		
 		@Override
 		public void onClick(View arg0) {

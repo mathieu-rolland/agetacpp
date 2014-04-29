@@ -1,13 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#b6b6b6"
+    android:weightSum="100" >
     
-    <ImageView 
-        android:id="@+id/fragment_entity_image_display"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="vertical" 
+        android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"/>
-
+        android:layout_weight="60" 
+        android:weightSum="100"
+        android:layout_marginRight="5dip">
+    
+	    <ImageView 
+	        android:id="@+id/fragment_entity_image_display"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
+	        android:contentDescription="@string/app_name"
+	        android:src="@drawable/fpt_3_inc"
+	        android:layout_weight="80"/>
+		
+    	<TextView 
+    	    android:id="@+id/fragment_entity_label"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="0dip"
+    	    android:text="libelle test"
+    	    android:layout_weight="20"
+    	    android:layout_gravity="center"
+    	    android:gravity="center"/>
+    	
+	</LinearLayout>
+	
+    <LinearLayout 
+        android:orientation="vertical"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="25">
+        
+        <LinearLayout 
+            android:orientation="horizontal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical" >
+	        
+             <TextView 
+	            android:id="@+id/fragment_activity_position_lat_label"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/fragment_entity_label_lat"
+	            />
+	        <TextView 
+	            android:id="@+id/fragment_activity_position_lat_value"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text=""
+	            />
+        </LinearLayout>
+        
+         <LinearLayout 
+            android:orientation="horizontal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_vertical" >
+	        
+             <TextView 
+	            android:id="@+id/fragment_activity_position_lng_label"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/fragment_entity_label_lng"
+	            />
+	        <TextView 
+	            android:id="@+id/fragment_activity_position_lng_value"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text=""
+	            />
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    <Button 
+        android:id="@+id/fragment_entity_button_supprimer"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_entity_button_supprimer"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="15" />
+    <!-- Supprimer , position 
+    Choix du secteur depuis la carte
+    Supprimer -> affectation dans le tableau des moyens.
+    -->
+    
 </LinearLayout>

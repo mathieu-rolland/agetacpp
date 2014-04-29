@@ -78,4 +78,10 @@
 	<string name="fragment_messages_list_alert_modification_no">Non</string>
 	<string name="fragment_messages_list_image_validate">Validé</string>
 	<string name="fragment_messages_list_image_not_validate">En attente de validation</string>
+	
+	<!-- Dock entity -->
+	<string name="fragment_entity_label_lat">Latitude :</string>
+	<string name="fragment_entity_label_lng">Longitude :</string>
+	<string name="fragment_entity_button_supprimer">Supprimer</string>
+	
 </resources>

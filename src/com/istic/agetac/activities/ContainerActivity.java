@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.fragments.PagerFragment;

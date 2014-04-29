@@ -1,13 +1,21 @@
 package com.istic.agetac.fragments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
+import com.android.volley.VolleyError;
 import com.istic.agetac.R;
+import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.controllers.dao.MoyensDao;
+import com.istic.agetac.model.Moyen;
 import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
@@ -20,6 +28,8 @@ public class SitacFragment extends MainFragment {
 		return fragment;
 	}
 
+	List<Moyen> listMoyens;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -27,12 +37,15 @@ public class SitacFragment extends MainFragment {
 		//DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/sitac/";
 		initializeBackground(TypeBackgroundEnum.Map, savedInstanceState);
 		
+		listMoyens = new ArrayList<Moyen>();
+		
 		return super.onCreateView(inflater,container, savedInstanceState);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		Log.d("TOTO","onResume");
 		loadEntities();
 		startServiceSynchronisation();
 	}
@@ -47,26 +60,27 @@ public class SitacFragment extends MainFragment {
 		IEntity moyen = new Entity();
 		moyen.setLibelle("Moyens");
 		moyen.setId("#moyen");
-		moyen.setRepresentation(new Representation(R.drawable.camion));
+		moyen.setRepresentationOK(new Representation(R.drawable.camion));
 		
 		IEntity environment = new Entity();
 		environment.setLibelle("Environnement");
 		environment.setId("#environment");
-		environment.setRepresentation(new Representation(R.drawable.environment_water));
-		
+		environment.setRepresentationOK(new Representation(R.drawable.environment_water));
+
+		Log.d("TOTO","onCreateSlideMenu");
 		IEntity entityDynamic = new Entity();
 		entityDynamic.setLibelle("Camion");
 		entityDynamic
-				.setRepresentation(new Representation(R.drawable.ic_launcher));
+				.setRepresentationOK(new Representation(R.drawable.ic_launcher));
 
 		IEntity entityVirtuel = new Entity();
 		entityVirtuel.setLibelle("Bouche incendie");
-		entityVirtuel.setRepresentation(new Representation(
+		entityVirtuel.setRepresentationOK(new Representation(
 				R.drawable.ic_launcher));
 
 		IEntity entityStatic = new Entity();
 		entityStatic.setLibelle("Agetac power");
-		entityStatic.setRepresentation(new Representation(
+		entityStatic.setRepresentationOK(new Representation(
 				R.drawable.ic_launcher));
 
 		this.addItemMenu(moyen);
@@ -75,9 +89,26 @@ public class SitacFragment extends MainFragment {
 		this.addItemMenu(entityVirtuel);
 		this.addItemMenu(entityStatic);
 		
-		/*for (IEntity moyen : listMoyen){
-			this.addItemMenu(moyen);
-		}*/
+		
+		new MoyensDao(new IViewReceiver<Moyen>() {
+			
+			@Override
+			public void notifyResponseSuccess(List<Moyen> objects) {
+				listMoyens = objects;
+			}
+			
+			@Override
+			public void notifyResponseFail(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		}).findAll();
+		
+		if (listMoyens != null){
+			for (IEntity moyenToadd : listMoyens){
+				this.addItemMenu(moyenToadd);
+			}
+		}
 	}
 
 	@Override

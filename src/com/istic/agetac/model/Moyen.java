@@ -225,13 +225,23 @@ public class Moyen extends Entity {
 	}
 
 	@Override
-	public IRepresentation getRepresentation() {
-		return super.getRepresentation();
+	public IRepresentation getRepresentationOK() {
+		return super.getRepresentationOK();
 	}
 
 	@Override
-	public void setRepresentation(IRepresentation representation) {
-		setRepresentation(representation);
+	public void setRepresentationOK(IRepresentation representation) {
+		super.setRepresentationOK(representation);
+	}
+	
+	@Override
+	public IRepresentation getRepresentationKO() {
+		return super.getRepresentationKO();
+	}
+
+	@Override
+	public void setRepresentationKO(IRepresentation representation) {
+		super.setRepresentationKO(representation);
 	}
 
 	@Override
@@ -249,6 +259,26 @@ public class Moyen extends Entity {
 		return super.isFrozen();
 	}
 
+	@Override
+	public boolean isOnMap() {
+		return super.isOnMap();
+	}
+
+	@Override
+	public void setOnMap(boolean onMap) {
+		super.setOnMap(onMap);
+	}
+
+	@Override
+	public boolean isDraggable() {
+		return super.isDraggable();
+	}
+
+	@Override
+	public void setDraggable(boolean draggable) {
+		super.setDraggable(draggable);
+	}
+	
 	@Override
 	public void setFrozen(boolean frozen) {
 		super.setFrozen(frozen);

@@ -9,7 +9,8 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.exceptions.AddInterventionException;
-import com.istic.agetac.model.serializer.AgetacSerializer;
+import com.istic.agetac.pattern.observer.Observer;
+import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.api.model.IPosition.AXIS;
 import com.istic.sit.framework.couch.AObjectRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
@@ -70,7 +71,14 @@ public class CreationBase {
 			@Override
 			public void onResponse(Codis objet) {
 				// TODO Auto-generated method stub
-				objet.getUsername();
+				objet.getInterventions().get(0).getIntervenants(new Observer() {
+					
+					@Override
+					public void update(Subject subject) {
+						// TODO Auto-generated method stub
+						((Intervention)subject).getIntervenants();
+					}
+				});
 			}
 		});
 	}

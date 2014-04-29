@@ -24,6 +24,8 @@ public class Codis extends User {
 	 */
 	public void setInterventions(List<Intervention> interventions) {
 		this.interventions = interventions;
+		for(Intervention intervention : interventions){
+		}
 	}
 	
 	public void addIntervention(Intervention intervention){

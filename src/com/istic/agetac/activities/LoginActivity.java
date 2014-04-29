@@ -18,22 +18,15 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.dao.UserDao;
-import com.istic.agetac.exceptions.AddInterventionException;
 import com.istic.agetac.fragments.PagerFragment.MODE;
-import com.istic.agetac.model.CreationBase;
-import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.User;
-import com.istic.sit.framework.api.model.IPosition.AXIS;
-import com.istic.sit.framework.model.CoordonateGPS;
 
 public class LoginActivity extends Activity {
 
@@ -59,16 +52,6 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
-		
-//		try {
-//			CreationBase.createUser();
-//		} catch (AddInterventionException e) {
-//			// TODO Auto-generated catch block
-//			Toast t = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
-//			t.show();
-//		}
-//		
-//		CreationBase.testRecupUser();
 		
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);

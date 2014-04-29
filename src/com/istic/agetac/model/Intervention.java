@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,10 +12,13 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IIntervention;
+import com.istic.agetac.pattern.observer.Observer;
+import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.couch.DataBaseCommunication;
+import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class Intervention implements IIntervention {
+public class Intervention implements IIntervention, Subject {
 
 	private String _id;
 	private String _rev;
@@ -23,6 +27,7 @@ public class Intervention implements IIntervention {
 	private List<Moyen> moyens;
 	private transient List<Intervenant> intervenants;
 	private transient Codis codis;
+	private transient List<Observer> observers;
 	
 	public Intervention(){
 		this._id = UUID.randomUUID().toString();
@@ -31,6 +36,7 @@ public class Intervention implements IIntervention {
 		this.codeSinistre = "";
 		this.moyens = new ArrayList<Moyen>();
 		this.intervenants = new ArrayList<Intervenant>();
+		this.observers = new ArrayList<Observer>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre){
@@ -40,6 +46,7 @@ public class Intervention implements IIntervention {
 		this.codeSinistre = codeSinistre;
 		this.moyens = new ArrayList<Moyen>();
 		this.intervenants = new ArrayList<Intervenant>();
+		this.observers = new ArrayList<Observer>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens){
@@ -49,6 +56,7 @@ public class Intervention implements IIntervention {
 		this.codeSinistre = "";
 		this.moyens = moyens;
 		this.intervenants = new ArrayList<Intervenant>();
+		this.observers = new ArrayList<Observer>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
@@ -58,6 +66,7 @@ public class Intervention implements IIntervention {
 		this.codeSinistre = "";
 		this.moyens = moyens;
 		this.intervenants = users;
+		this.observers = new ArrayList<Observer>();
 	}
 
 	/**
@@ -112,7 +121,86 @@ public class Intervention implements IIntervention {
 	 * @return the users
 	 */
 	@Override
-	public List<Intervenant> getIntervenants() {
+	public void getIntervenants(final Observer o) {
+		DataBaseCommunication.sendGet(new IPersistant() {
+			
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// TODO Auto-generated method stub
+				if(error.getMessage() != null) {
+					Log.e("Intervention", error.getMessage());
+				}
+				else{
+					Log.e("Intervention", error.toString());
+				};
+			}
+			
+			@Override
+			public void onResponse(JSONObject json) {
+				try {
+					JSONArray a = (JSONArray) json.get("rows");
+					for(int i=0; i<a.length(); i++){
+						JSONObject o = a.getJSONObject(i);
+						o = (JSONObject) o.get("value");
+						o.remove("type");
+						Intervention.this.intervenants.add((Intervenant) JsonSerializer.deserialize(Intervenant.class, o));
+					}
+					notifyObserver(o);
+				}
+				catch(JSONException e){
+					Log.e("Intervention", e.getMessage());
+				}
+			}
+			
+			@Override
+			public void update() {
+				
+			}
+			
+			@Override
+			public void setRev(String rev) {
+				
+			}
+			
+			@Override
+			public void setId(String id) {
+				
+			}
+			
+			@Override
+			public void save() {
+				
+			}
+			
+			@Override
+			public String getUrl(int method) {
+				return DataBaseCommunication.BASE_URL + "_design/agetacpp/_view/get_intervenants?key=\"" + Intervention.this._id + "\"";
+			}
+			
+			@Override
+			public String getRev() {
+				return null;
+			}
+			
+			@Override
+			public String getId() {
+				return null;
+			}
+			
+			@Override
+			public JSONObject getData() {
+				return null;
+			}
+			
+			@Override
+			public void delete() {
+				
+			}
+		});
+		
+	}
+	
+	public List<Intervenant> getIntervenants(){
 		return intervenants;
 	}
 
@@ -223,5 +311,27 @@ public class Intervention implements IIntervention {
 	@Override
 	public void setRev(String rev) {
 		this._rev = rev;
+	}
+
+	@Override
+	public void registerObserver(Observer observer) {
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void unregisterObserver(Observer observer) {
+		this.observers.remove(observer);
+	}
+
+	@Override
+	public void notifyObserver(Observer observer) {
+		observer.update(this);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for(Observer observer : this.observers){
+			observer.update(this);
+		}
 	}
 }

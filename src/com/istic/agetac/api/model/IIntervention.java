@@ -5,6 +5,7 @@ import java.util.List;
 import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.pattern.observer.Observer;
 import com.istic.sit.framework.couch.IPersistant;
 
 public interface IIntervention extends IPersistant{
@@ -19,6 +20,7 @@ public interface IIntervention extends IPersistant{
 	public void setCodeSinistre(String CodeSinistre);
 	public List<Moyen> getMoyens();
 	public void setMoyens(List<Moyen> moyens);
+	void getIntervenants(Observer o);
 	List<Intervenant> getIntervenants();
 	void setIntervenants(List<Intervenant> intervenants);
 	void addIntervenant(Intervenant intervenant);

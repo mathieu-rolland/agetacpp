@@ -26,7 +26,7 @@ import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.dao.SecteurDao;
-import com.istic.agetac.controllers.listeners.demandeDeMoyens.SwitchSector;
+import com.istic.agetac.controllers.listeners.tableauMoyen.SwitchSector;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;

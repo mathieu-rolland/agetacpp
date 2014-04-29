@@ -50,11 +50,11 @@ public class AgetacSerializer {
 		public User deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
-			if(json.getAsJsonObject().has("intervention")){
-				return gson.fromJson(json, Intervenant.class);
+			if(json.getAsJsonObject().get("role").getAsString().equals("codis")){
+				return gson.fromJson(json, Codis.class);
 			}
 			else{
-				return gson.fromJson(json, Codis.class);
+				return gson.fromJson(json, Intervenant.class);
 			}
 		}
 	}

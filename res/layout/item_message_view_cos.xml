@@ -134,31 +134,29 @@
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_weight="15"
-        android:orientation="horizontal" 
-        android:weightSum="100">
+        android:orientation="horizontal"
+        android:weightSum="100" >
 
-            <ImageView
-                android:id="@+id/item_message_list_image_validated"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="25"
-                android:contentDescription="@string/fragment_messages_list_image_validate"
-                android:src="@drawable/validated"
-                android:visibility="visible" />
+        <ImageView
+            android:id="@+id/item_message_list_image_validated"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="25"
+            android:contentDescription="@string/fragment_messages_list_image_validate"
+            android:src="@drawable/validated"
+            android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/item_message_list_label_validated"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:layout_weight="66"
-                android:text="@string/fragment_messages_list_image_validate"
-                android:paddingLeft="10dp"
-                android:textColor="#efefef"
-                android:textSize="@dimen/text_size" />
-        
+        <TextView
+            android:id="@+id/item_message_list_label_validated"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="66"
+            android:paddingLeft="10dp"
+            android:text="@string/fragment_messages_list_image_validate"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
 </LinearLayout>

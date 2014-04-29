@@ -128,7 +128,7 @@
     <EditText
         android:id="@+id/fragment_messages_list_message_text"
         android:layout_width="match_parent"
-        android:layout_height="30dip"
+        android:layout_height="50dip"
         android:paddingLeft="10dip"
         android:paddingRight="10dip"
         android:background="#b6b6b6"
@@ -180,7 +180,7 @@
             android:layout_marginLeft="5dip"
             android:text="@string/fragment_messages_list_cos_message_button_cancle"
             android:textSize="@dimen/text_size" />
-        
+
         <Button
             android:id="@+id/fragment_messages_list_message_next"
             android:layout_width="wrap_content"
@@ -191,13 +191,13 @@
             android:text="@string/fragment_message_list_button_next"
             android:textColor="#efefef"
             android:textSize="@dimen/text_size" />
+
     </LinearLayout>
 
     <ListView
         android:id="@+id/fragment_messages_list_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#cccccc"
-        android:layout_weight="20" />
+        android:background="#171f21"/>
 
 </LinearLayout>

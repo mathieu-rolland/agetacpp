@@ -81,7 +81,7 @@ public class MessageActivity extends Fragment implements Observer {
 		
 		message = (EditText) view.findViewById(R.id.fragment_messages_list_message_text);
 
-		//RÃ©cupÃ©ration des boutons :
+		//Récupération des boutons :
 		buttonCancel = (Button) view.findViewById(R.id.fragment_messages_list_message_cancel);
 		buttonNext = (Button) view.findViewById(R.id.fragment_messages_list_message_next);
 		buttonValidate = (Button) view.findViewById(R.id.fragment_messages_list_message_validate);
@@ -116,7 +116,7 @@ public class MessageActivity extends Fragment implements Observer {
 
 		String text;
 		
-		//On est passÃ© Ã  l'Ã©tape suivante :
+		//On est passé Ã  l'étape suivante :
 		if( newCurrent != currentPart ){
 			
 			//Test que le text n'est pas vide :
@@ -132,7 +132,7 @@ public class MessageActivity extends Fragment implements Observer {
 		
 		if( MessageWorkflow.isLastState(newCurrent) ){
 			Toast.makeText(getActivity().getApplicationContext(), 
-					"Aucune Ã©tape suivant " + 
+					"Aucune étape suivant " + 
 				    MessageWorkflow.getWording(getActivity().getApplicationContext(), currentPart),
 					Toast.LENGTH_LONG).show();
 		}
@@ -211,7 +211,7 @@ public class MessageActivity extends Fragment implements Observer {
 	
 	private void initWithMessage( IMessage message ){
 		
-		//RÃ©initialisation de la vue :
+		//Réinitialisation de la vue :
 		hideInWorkflow(IMessage.Message_part.JE_VOIS);
 		hideInWorkflow(IMessage.Message_part.JE_PREVOIS);
 		hideInWorkflow(IMessage.Message_part.JE_FAIS);
@@ -221,7 +221,7 @@ public class MessageActivity extends Fragment implements Observer {
 		IMessage.Message_part previousPart = MessageWorkflow.messagePrevious(currentPart);
 		IMessage.Message_part nextPart = MessageWorkflow.messageNext(currentPart);
 		
-		//Initialisation des valeurs stoquÃ©es :
+		//Initialisation des valeurs stoquées :
 		currentMessage = message;
 		this.message.setText( message.getText(currentPart) );
 		
@@ -322,7 +322,7 @@ public class MessageActivity extends Fragment implements Observer {
 			}
 		}
 		
-		//Ajout des message non trouvÃ© :
+		//Ajout des message non trouvé :
 		for( IMessage msg : waitingMessage ){
 			ItemView<IMessage> view = new MessageItem(msg, this);
 			messageAdapter.addLast(view);
@@ -366,8 +366,9 @@ public class MessageActivity extends Fragment implements Observer {
 	public void setCurrentMessage(final IMessage message){
 		
 		if( currentMessage.isLock()  ){
-			Toast.makeText(getActivity(), "Un message est actuellement en cours de sauvegarde. Veuillez patienter"
-					, Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), 
+					"Un message est actuellement en cours de sauvegarde. Veuillez patienter", 
+					Toast.LENGTH_LONG).show();
 			return;
 		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

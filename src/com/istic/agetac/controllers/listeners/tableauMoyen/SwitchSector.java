@@ -1,14 +1,14 @@
 package com.istic.agetac.controllers.listeners.tableauMoyen;
 
 import android.graphics.Color;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
-import android.widget.TextView;
+import android.widget.Spinner;
 
-import com.istic.agetac.fragments.TableauMoyenFragment;
+import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
 import com.istic.agetac.model.Secteur;
 
 /**
@@ -19,16 +19,17 @@ import com.istic.agetac.model.Secteur;
 public class SwitchSector implements AdapterView.OnItemSelectedListener, OnValueChangeListener {
 		
 	/** Instance de l'activity principale */
-	private TableauMoyenFragment tableauMoyenFragment;
+	private MoyenListIntervenantAdapter moyenListIntervenantAdapter;
+	private Spinner spinnerSelected;
 	
 	/**
 	 * Constructeur SwitchSector
-	 * @param a TableauMoyenFragment
+	 * @param moyenListIntervenantAdapter MoyenListIntervenantAdapter
 	 */
-	public SwitchSector (TableauMoyenFragment a) {
+	public SwitchSector (MoyenListIntervenantAdapter moyenListIntervenantAdapter, Spinner spinner) {
 		
-		this.tableauMoyenFragment = a;
-	
+		this.setMoyenListIntervenantAdapter(moyenListIntervenantAdapter);
+		this.spinnerSelected = spinner;
 	}
 	
 	/**
@@ -39,9 +40,8 @@ public class SwitchSector implements AdapterView.OnItemSelectedListener, OnValue
 	 * @param id long
 	 */
 	public void onItemSelected(AdapterView<?> parent, View vue, int position, long id) {
-		
-		
-		
+		Secteur selectedSecteur = ((Secteur)this.spinnerSelected.getSelectedItem());
+		this.spinnerSelected.getChildAt(0).setBackgroundColor(Color.parseColor(selectedSecteur.getColor()));
 	}// Méthode onItemSelected
 
 	/**
@@ -60,6 +60,21 @@ public class SwitchSector implements AdapterView.OnItemSelectedListener, OnValue
 	 */
 	public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 		
+	}
+
+	/**
+	 * @return the moyenListIntervenantAdapter
+	 */
+	public MoyenListIntervenantAdapter getMoyenListIntervenantAdapter() {
+		return moyenListIntervenantAdapter;
+	}
+
+	/**
+	 * @param moyenListIntervenantAdapter the moyenListIntervenantAdapter to set
+	 */
+	public void setMoyenListIntervenantAdapter(
+			MoyenListIntervenantAdapter moyenListIntervenantAdapter) {
+		this.moyenListIntervenantAdapter = moyenListIntervenantAdapter;
 	}
 	
 }// Classe SwitchSector

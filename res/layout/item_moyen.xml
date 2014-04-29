@@ -8,7 +8,7 @@
 
     <!-- Name and type -->
 
-   <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -16,7 +16,7 @@
 
         <RelativeLayout
             android:layout_width="0dip"
-            android:layout_height="50dip"
+            android:layout_height="70dip"
             android:layout_weight="30"
             android:orientation="horizontal"
             android:paddingLeft="5dip"
@@ -30,8 +30,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dip"
-                android:contentDescription="@string/list_moyen_description"
-                android:src="@drawable/fpt_3_alim" />
+                android:contentDescription="@string/list_moyen_description" />
 
             <TextView
                 android:id="@+id/list_moyen_name"
@@ -41,7 +40,6 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/list_moyen_logo"
                 android:gravity="center"
-                android:text="FPT 1"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
@@ -66,7 +64,7 @@
 
         <RelativeLayout
             android:layout_width="0dip"
-            android:layout_height="50dip"
+            android:layout_height="70dip"
             android:layout_weight="14"
             android:paddingLeft="5dip"
             android:paddingRight="5dip" >
@@ -74,9 +72,10 @@
             <Button
                 android:id="@+id/list_moyen_button_engage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:background="@drawable/button_style_red"
+                android:layout_margin="5dip"
+                android:background="@drawable/button_style_grey_white"
                 android:text="@string/list_moyen_button_engage"
                 android:textSize="@dimen/text_size" />
 
@@ -84,16 +83,12 @@
                 android:id="@+id/list_moyen_hour_engage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/list_moyen_button_engage"
-                android:layout_gravity="center"
+                android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="1205"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/text_size"
                 android:visibility="gone" />
         </RelativeLayout>
-
 
         <!-- Hour arrived on site -->
 
@@ -112,7 +107,7 @@
 
         <RelativeLayout
             android:layout_width="0dip"
-            android:layout_height="50dip"
+            android:layout_height="70dip"
             android:layout_weight="14"
             android:paddingLeft="5dip"
             android:paddingRight="5dip" >
@@ -120,9 +115,10 @@
             <Button
                 android:id="@+id/list_moyen_button_free"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:background="@drawable/button_style_red"
+                android:layout_margin="5dip"
+                android:background="@drawable/button_style_grey_white"
                 android:text="@string/list_moyen_button_free"
                 android:textSize="@dimen/text_size" />
 
@@ -131,19 +127,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/list_moyen_button_free"
-                android:layout_gravity="center"
+                android:layout_centerInParent="true"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
         <!-- Hour sector -->
 
         <RelativeLayout
             android:layout_width="0dip"
-            android:layout_height="50dip"
+            android:layout_height="70dip"
             android:layout_weight="14"
             android:paddingLeft="5dip"
             android:paddingRight="5dip" >
@@ -153,13 +149,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_margin="5dip"
-                android:background="@drawable/button_style_grey"
+                android:layout_marginTop="5dip"
                 android:text="@string/list_moyen_button_secteur"
                 android:textSize="@dimen/text_size" />
-
         </RelativeLayout>
-
     </LinearLayout>
 
 </LinearLayout>

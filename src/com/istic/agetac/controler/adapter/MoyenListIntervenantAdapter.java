@@ -44,13 +44,11 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 
 	private List<Spinner> spinners;
 
-	public MoyenListIntervenantAdapter(Context context, List<Moyen> moyens,
-			SwitchSector cSecteur) {
+	public MoyenListIntervenantAdapter(Context context, List<Moyen> moyens) {
 		super(context, moyens);
 		this.spinners = new ArrayList<Spinner>();
 		this.datasListMoyen = moyens;
 		this.datasListSecteur = new ArrayList<Secteur>();
-		this.cSecteur = cSecteur;
 		this.context = context;
 		this.mSecteur = new SecteurDao(new SecteurViewReceiver());
 		this.mSecteur.findAll();
@@ -62,7 +60,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 			
 		for(Spinner spinner : this.spinners) {
 			this.setAdapterSecteurs(new ArrayAdapter<Secteur>(context,
-					android.R.layout.simple_spinner_item, this.datasListSecteur));
+					R.layout.item_secteur_tableau_moyen, this.datasListSecteur));
 			spinner.setAdapter(getAdapterSecteurs());
 		}
 		
@@ -102,37 +100,45 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 				.findViewById(R.id.list_moyen_hour_free);
 		holder.buttonFree = (Button) convertView
 				.findViewById(R.id.list_moyen_button_free);
-		holder.buttonFree.setOnClickListener(new ListenerFree(current, this));
+		
 		holder.spinnerChoixSecteurs = (Spinner) convertView
 				.findViewById(R.id.list_moyen_button_sector);
 		holder.buttonDemand = (Button) convertView
 				.findViewById(R.id.list_moyen_button_engage);
 		holder.name = (TextView) convertView.findViewById(R.id.list_moyen_name);
+		
 		holder.buttonFree.setVisibility(Button.GONE);
 		holder.buttonDemand.setVisibility(Button.GONE);
-		holder.logo.setImageResource(R.drawable.fpt_1_alim);
-
+		holder.name.setText("");
+		
 		if (current != null) {
-			if (current.getHDemande() != null) {
+			
+			holder.logo.setImageResource(current.getRepresentationOK().getDrawable());
+			holder.buttonFree.setOnClickListener(new ListenerFree(current, this));
+			
+			if (!AMoyenListAdapter.isNullOrBlank(current.getHDemande())) {
 				holder.hourDemand.setText(current.getHDemande());
 				if (current.getHEngagement() == null) {
 					holder.hourEngage.setText("En attente du codis");
-					holder.hourEngage.setVisibility(TextView.VISIBLE);
+					holder.hourEngage.setVisibility(View.VISIBLE);
 				}
 			}
 
-			if (current.getHEngagement() != null) {
+			if (!AMoyenListAdapter.isNullOrBlank(current.getHEngagement())) {
 				holder.hourEngage.setText(current.getHEngagement());
-				holder.hourEngage.setVisibility(TextView.VISIBLE);
+				holder.hourEngage.setVisibility(View.VISIBLE);
 				holder.name.setText(current.getLibelle());
+				holder.buttonDemand.setVisibility(View.GONE);
+				holder.buttonFree.setVisibility(View.VISIBLE);
 			}
 
-			if (current.getHArrival() != null) {
+			if (!AMoyenListAdapter.isNullOrBlank(current.getHArrival())) {
 				holder.hourArrived.setText(current.getHArrival());
-				holder.hourArrived.setVisibility(TextView.VISIBLE);
+				holder.hourArrived.setVisibility(View.VISIBLE);
+				holder.buttonFree.setVisibility(View.GONE);
 			}
 
-			if (current.getHFree() != null) {
+			if (!AMoyenListAdapter.isNullOrBlank(current.getHFree())) {
 				holder.hourFree.setVisibility(View.VISIBLE);
 				holder.buttonFree.setVisibility(View.GONE);
 				holder.hourFree.setText(current.getHFree());
@@ -142,6 +148,8 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 		
 		if (!this.spinners.contains(holder.spinnerChoixSecteurs)) {
 			this.spinners.add(holder.spinnerChoixSecteurs);
+			this.cSecteur = new SwitchSector(this,holder.spinnerChoixSecteurs);
+			holder.spinnerChoixSecteurs.setOnItemSelectedListener(cSecteur);
 		}
 		
 		this.updateDatasSpinners(this.spinners);
@@ -165,7 +173,6 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 	public class SecteurViewReceiver implements IViewReceiver<Secteur> {
 		@Override
 		public void notifyResponseSuccess(List<Secteur> secteurs) {
-			// datasSecteur = secteurs;
 			Log.d("Antho", String.valueOf(secteurs.size()));
 			datasListSecteur = secteurs;
 			getAdapterSecteurs().notifyDataSetChanged();
@@ -261,6 +268,25 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 	 */
 	public void setDatasListSecteur(List<Secteur> datasListSecteur) {
 		this.datasListSecteur = datasListSecteur;
+	}
+
+	/**
+	 * @return the spinners
+	 */
+	public List<Spinner> getSpinners() {
+		return spinners;
+	}
+
+	/**
+	 * @param spinners the spinners to set
+	 */
+	public void setSpinners(List<Spinner> spinners) {
+		this.spinners = spinners;
+	}
+
+	public void notifySecteurChanged(Spinner spinner, int position) {
+		Log.d("Antho", "notifySecteurChanged");
+		Secteur secteurSelected = (Secteur) spinner.getSelectedItem();
 	}
 
 }

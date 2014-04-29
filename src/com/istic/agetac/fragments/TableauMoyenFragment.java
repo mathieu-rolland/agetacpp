@@ -1,7 +1,6 @@
 package com.istic.agetac.fragments;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.app.AlarmManager;
@@ -25,8 +24,8 @@ import com.istic.agetac.controler.adapter.AMoyenListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
 import com.istic.agetac.controllers.dao.MoyensDao;
-import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.tableauMoyen.SwitchSector;
+import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
@@ -34,26 +33,21 @@ import com.istic.sit.framework.sync.PoolSynchronisation;
 
 public class TableauMoyenFragment extends Fragment {
 
-	/* Instances des modï¿½les ï¿½ utiliser */
-	private MoyensDao mMoyen; // Modï¿½le Moyen
+	/* Instances des modèles è utiliser */
+	private MoyensDao mMoyen; // Modèle Moyen
 
-	/* Donnï¿½es rï¿½cupï¿½rï¿½es */
-	private List<Moyen> datasMoyen; // Datas moyens rï¿½cupï¿½rï¿½s
+	/* Donnèes rècupèrèes */
+	private List<Moyen> datasMoyen; // Datas moyens rècupèrès
 
-	/* ï¿½lï¿½ments graphiques */
+	/* èlèments graphiques */
 	private ListView listViewMoyen; // ListView des moyens
 	private AMoyenListAdapter adapterMoyens; // Adapter des moyens
 
 	/* Controlers */
 	private SwitchSector cSecteur;
 
-	/** Instances des modÃ¨les Ã  utiliser */
-	private SecteurDao mSecteur;
-	private ListView mListViewMoyen;
-	private List<Moyen> mListMoyen;
-	private AMoyenListAdapter mAdapterMoyen;
 	private TableauDesMoyensReceiver receiver;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -61,44 +55,15 @@ public class TableauMoyenFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_tableau_moyen,
 				container, false);
 
+		//CreationBase.createSecteur();
+
 		listViewMoyen = (ListView) view
 				.findViewById(R.id.fragment_tableau_moyen_list_view);
 
-		/* Instanciations des modï¿½les */
-		// mMoyen = new MoyensDao(new MoyenViewReceiver());
-
-		/* Rï¿½cupï¿½rations des donnï¿½es via les modï¿½les */
+		/* Rècupèrations des donnèes via les modèles */
 		datasMoyen = new ArrayList<Moyen>();
-		// mMoyen.findAll();
-
-		/* Instanciations des contrï¿½lers */
-		this.cSecteur = new SwitchSector(this);
-
-		Moyen m1 = new Moyen("essai");
-		datasMoyen.add(m1);
-		Moyen m2 = new Moyen("essai2");
-		m2.setHDemande(new Date());
-		m2.setHEngagement(new Date());
-		m2.setLibelle("ambulance");
-		datasMoyen.add(m2);
-		Moyen m3 = new Moyen("essai3");
-		m3.setHDemande(new Date(2014, 06, 06));
-		m3.setHEngagement(new Date(2014, 07, 07));
-		m3.setSecteur("secteur");
-		m3.setHArrival(new Date(2014, 8, 8));
-		m3.setHFree(new Date());
-		m3.setLibelle("camion rouge");
-		datasMoyen.add(m3);
-
-		if (AgetacppApplication.getUser().getRole() == Role.codis) {
-			adapterMoyens = new MoyenListCodisAdapter(this.getActivity(),
-					datasMoyen, null, this.cSecteur);
-		} else {
-			adapterMoyens = new MoyenListIntervenantAdapter(this.getActivity(),
-					datasMoyen, this.cSecteur);
-		}
-
-		listViewMoyen.setAdapter(adapterMoyens);
+		mMoyen = new MoyensDao(new MoyenViewReceiver());
+		mMoyen.findAll();
 
 		return view;
 	}
@@ -121,12 +86,20 @@ public class TableauMoyenFragment extends Fragment {
 		@Override
 		public void notifyResponseSuccess(List<Moyen> moyens) {
 			datasMoyen = moyens;
+			if (AgetacppApplication.getUser().getRole() == Role.codis) {
+				adapterMoyens = new MoyenListCodisAdapter(getActivity(),
+						datasMoyen);
+			} else {
+				adapterMoyens = new MoyenListIntervenantAdapter(getActivity(),
+						datasMoyen);
+			}
 			adapterMoyens.notifyDataSetChanged();
+			listViewMoyen.setAdapter(adapterMoyens);
 		}
 
 		@Override
 		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de rÃ©cupÃ©rer les moyens",
+			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -146,25 +119,26 @@ public class TableauMoyenFragment extends Fragment {
 		this.mMoyen = mMoyen;
 	}
 
-	public void updateTableauDesMoyen( List<Moyen> moyens )
-	{
-		//TODO implÃ©menter la rÃ©ception de la synchro.
-		Log.d("Synch"," Recieve sync for tableau des moyens : " +
-				moyens == null ? "Moyen is null" : "Size : " + moyens.size());
+	public void updateTableauDesMoyen(List<Moyen> moyens) {
+		// TODO implémenter la réception de la synchro.
+		Log.d("Synch",
+				" Recieve sync for tableau des moyens : " + moyens == null ? "Moyen is null"
+						: "Size : " + moyens.size());
 	}
 
-	private void stopSynchronisation(){
-		AlarmManager alarm = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
+	private void stopSynchronisation() {
+		AlarmManager alarm = (AlarmManager) getActivity().getSystemService(
+				Context.ALARM_SERVICE);
 		PendingIntent pi = receiver.getPendingIntent();
 		alarm.cancel(pi);
 	}
-	
+
 	@Override
 	public void onStop() {
 		stopSynchronisation();
 		super.onStop();
 	}
-	
+
 	@Override
 	public void onResume() {
 
@@ -172,10 +146,10 @@ public class TableauMoyenFragment extends Fragment {
 
 		receiver = new TableauDesMoyensReceiver(this);
 		TableauDesMoyensSync sync = new TableauDesMoyensSync();
-		
-		pool.registerServiceSync( 
-				TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER , sync, receiver);
+
+		pool.registerServiceSync(TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER,
+				sync, receiver);
 		super.onResume();
 	}
-	
+
 }

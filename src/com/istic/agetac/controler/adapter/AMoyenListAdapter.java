@@ -19,7 +19,6 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 
 	protected List<Moyen> mList;
 	protected LayoutInflater mInflater;
-	protected final static SimpleDateFormat  mFormater = new SimpleDateFormat("ddMM '-' hhmm");
 	
 	public AMoyenListAdapter(Context context,List<Moyen> moyens) {
 		this.mInflater= (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -54,5 +53,16 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
         Button buttonFree;
         Spinner spinnerChoixSecteurs;
         TextView name;
+    }
+	
+	public static boolean isNullOrBlank(String param) {
+        if (isNull(param) || param.trim().length() == 0) {
+            return true;
+        }
+        return false;
+    }
+	
+	public static boolean isNull(String str) {
+        return str == null ? true : false;
     }
 }

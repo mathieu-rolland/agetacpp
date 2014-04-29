@@ -2,6 +2,7 @@ package com.istic.agetac.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,44 +12,58 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.sit.framework.couch.DataBaseCommunication;
-import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class Intervention implements IIntervention, IPersistant {
+public class Intervention implements IIntervention {
 
 	private String _id;
 	private String _rev;
 	private String adresse;
 	private String codeSinistre;
 	private List<Moyen> moyens;
+	private transient List<Intervenant> intervenants;
+	private transient Codis codis;
 	
 	public Intervention(){
-		this._id = "";
+		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.adresse = "";
 		this.codeSinistre = "";
 		this.moyens = new ArrayList<Moyen>();
+		this.intervenants = new ArrayList<Intervenant>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre){
-		this._id = "";
+		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.adresse = adresse;
 		this.codeSinistre = codeSinistre;
 		this.moyens = new ArrayList<Moyen>();
+		this.intervenants = new ArrayList<Intervenant>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens){
-		this._id = "";
+		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.adresse = "";
 		this.codeSinistre = "";
 		this.moyens = moyens;
+		this.intervenants = new ArrayList<Intervenant>();
+	}
+	
+	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
+		this._id = UUID.randomUUID().toString();
+		this._rev = "";
+		this.adresse = "";
+		this.codeSinistre = "";
+		this.moyens = moyens;
+		this.intervenants = users;
 	}
 
 	/**
 	 * @return the adresse
 	 */
+	@Override
 	public String getAdresse() {
 		return adresse;
 	}
@@ -56,6 +71,7 @@ public class Intervention implements IIntervention, IPersistant {
 	/**
 	 * @param adresse the adresse to set
 	 */
+	@Override
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
@@ -63,6 +79,7 @@ public class Intervention implements IIntervention, IPersistant {
 	/**
 	 * @return the codeSinistre
 	 */
+	@Override
 	public String getCodeSinistre() {
 		return codeSinistre;
 	}
@@ -70,6 +87,7 @@ public class Intervention implements IIntervention, IPersistant {
 	/**
 	 * @param codeSinistre the codeSinistre to set
 	 */
+	@Override
 	public void setCodeSinistre(String codeSinistre) {
 		this.codeSinistre = codeSinistre;
 	}
@@ -77,6 +95,7 @@ public class Intervention implements IIntervention, IPersistant {
 	/**
 	 * @return the moyens
 	 */
+	@Override
 	public List<Moyen> getMoyens() {
 		return moyens;
 	}
@@ -84,8 +103,44 @@ public class Intervention implements IIntervention, IPersistant {
 	/**
 	 * @param moyens the moyens to set
 	 */
+	@Override
 	public void setMoyens(List<Moyen> moyens) {
 		this.moyens = moyens;
+	}
+
+	/**
+	 * @return the users
+	 */
+	@Override
+	public List<Intervenant> getIntervenants() {
+		return intervenants;
+	}
+
+	/**
+	 * @param users the users to set
+	 */
+	@Override
+	public void setIntervenants(List<Intervenant> intervenants) {
+		this.intervenants = intervenants;
+	}
+	
+	@Override
+	public void addIntervenant(Intervenant intervenant) {
+		this.intervenants.add(intervenant);
+	}
+
+	/**
+	 * @return the codis
+	 */
+	public Codis getCodis() {
+		return codis;
+	}
+
+	/**
+	 * @param codis the codis to set
+	 */
+	public void setCodis(Codis codis) {
+		this.codis = codis;
 	}
 
 	@Override

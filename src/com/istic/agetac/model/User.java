@@ -3,6 +3,8 @@
  */
 package com.istic.agetac.model;
 
+import java.util.UUID;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,14 +13,13 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IUser;
 import com.istic.sit.framework.couch.DataBaseCommunication;
-import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
 /**
  * @author Christophe
  *
  */
-public class User implements IUser, IPersistant {
+public abstract class User implements IUser {
 
 	private String _id;
 	private String _rev;
@@ -28,7 +29,7 @@ public class User implements IUser, IPersistant {
 	private Role role;
 	
 	public User(String name, String username, Role role){
-		this._id = "";
+		this._id = UUID.randomUUID().toString();
 		this._rev  = "";
 		this.name = name;
 		this.username = username;
@@ -148,10 +149,10 @@ public class User implements IUser, IPersistant {
 
 	@Override
 	public void save() {
-		if(this.getId().isEmpty()){
-			DataBaseCommunication.sendPost(this);
+		if(this.getId().isEmpty()) {
+			Log.e("User", "_id ne doit pas être vide !");
 		}
-		else{
+		else {
 			DataBaseCommunication.sendPut(this);
 		}
 	}

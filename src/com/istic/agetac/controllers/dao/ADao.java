@@ -6,7 +6,6 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.sit.framework.couch.APersitantRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
-import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.IPersistant;
 
 /**

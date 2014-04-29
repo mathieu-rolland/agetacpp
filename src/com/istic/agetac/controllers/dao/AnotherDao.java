@@ -6,7 +6,6 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.sit.framework.couch.AEntityRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
-import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.model.Entity;
 
 public abstract class AnotherDao<T extends Entity> {

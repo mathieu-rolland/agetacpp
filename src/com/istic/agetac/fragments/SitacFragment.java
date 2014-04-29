@@ -144,10 +144,8 @@ public class SitacFragment extends MainFragment {
 				if (newMoyen.getId().equals(oldentity.getId())) {
 					exist = true;
 					// Mise a jour boolean
-					if (newMoyen.isOk() && oldentity.isOk())
-						oldentity.setOk(newMoyen.isOk());
-					if (newMoyen.isOnMap() && oldentity.isOnMap())
-						oldentity.setOnMap(newMoyen.isOnMap());
+					oldentity.setOk(newMoyen.isOk());
+					oldentity.setOnMap(newMoyen.isOnMap());
 
 					entityAdapter.notifyDataSetChanged();
 				}
@@ -180,19 +178,19 @@ public class SitacFragment extends MainFragment {
 		menuMoyenUpdate.findAll();
 	}
 
-	
-	private void stopSynchronisation(){
-		AlarmManager alarm = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
+	private void stopSynchronisation() {
+		AlarmManager alarm = (AlarmManager) getActivity().getSystemService(
+				Context.ALARM_SERVICE);
 		PendingIntent pi = ser.getPendingIntent();
 		alarm.cancel(pi);
 	}
-	
+
 	@Override
 	public void onStop() {
 		stopSynchronisation();
 		super.onStop();
 	}
-	
+
 	// @Override
 	// public void onCreateMapMenu(GridView menu) {
 	// IEntity environment_water = new Entity();

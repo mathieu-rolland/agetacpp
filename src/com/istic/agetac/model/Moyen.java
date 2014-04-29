@@ -120,6 +120,7 @@ public class Moyen extends Entity {
 
 	public void setHArrival (Date valeur) {
 		super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).setValeur(FORMATER.format(valeur));
+		super.setOk(true);
 	} // method
 
 	public void setHEngagement (Date dateEngage) {

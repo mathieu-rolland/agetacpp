@@ -9,17 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.view.MainFragment;
+import com.istic.sit.framework.view.MapFragment;
 
 public class SitacFragment extends MainFragment {
 
@@ -38,6 +39,8 @@ public class SitacFragment extends MainFragment {
 		initializeBackground(TypeBackgroundEnum.Map, savedInstanceState);
 		
 		listMoyens = new ArrayList<Moyen>();
+		MapFragment mapFragment = (MapFragment) super.getFragment();
+		mapFragment.registerObserver( new MapObserver() );
 		
 		return super.onCreateView(inflater,container, savedInstanceState);
 	}

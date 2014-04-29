@@ -15,7 +15,7 @@ public class CreationBase {
 		pos1.set(AXIS.LNG, -1.64665337651968);
 		m1.setPosition(pos1);
 		m1.setLibelle("VSAV1");
-		m1.setRepresentation(new Representation(R.drawable.vsav));
+		m1.setRepresentationOK(new Representation(R.drawable.vsav));
 		m1.setSecteur("S.L.L");
 	}
 }

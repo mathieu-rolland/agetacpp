@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
@@ -21,6 +22,7 @@ import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.agetac.model.Moyen;
 import com.istic.sit.framework.api.model.IEntity;
+import com.istic.sit.framework.api.view.IBackground;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.view.MainFragment;
@@ -176,6 +178,21 @@ public class SitacFragment extends MainFragment {
 		stopSynchronisation();
 		super.onStop();
 	}
+
+//	@Override
+//	protected boolean onActionDropFromMenu(Entity typeEntity, DragEvent event) {
+//		if(typeEntity.getId().equals("#environment") || typeEntity.getId().equals("#moyen")){
+//			// Affichage du gridview de choix de moyens
+//			MapFragment mapFragment = (MapFragment) fragment;
+//			mapFragment.showEntityGridMenu(typeEntity, event.getX(), event.getY());
+//		}
+//		else{
+//			//Create entity to set on map
+//			((IBackground) fragment).addEntity(typeEntity, event.getX(), event.getY());
+//		}
+//		
+//		return true;
+//	}
 
 	// @Override
 	// public void onCreateMapMenu(GridView menu) {

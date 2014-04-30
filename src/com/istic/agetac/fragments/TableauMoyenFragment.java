@@ -179,6 +179,25 @@ public class TableauMoyenFragment extends Fragment {
 		Log.d("Synch",
 				" Recieve sync for tableau des moyens : " + moyens == null ? "Moyen is null"
 						: "Size : " + moyens.size());
+		List<Moyen> moyensWaiting = new ArrayList<Moyen>();
+		for( Moyen moyenServer : moyens ){
+			
+			boolean found = false;
+			for( Moyen localMoyen : mListMoyen ){
+				if( localMoyen.getId().equals( moyenServer.getId() ) ){
+					found = true;
+					localMoyen = moyenServer;
+					break;
+				}
+			}
+			if( !found ){
+				moyensWaiting.add(moyenServer);
+			}
+		}
+		for( Moyen moyen : moyensWaiting ){
+			mListMoyen.add(moyen);
+		}
+		this.mAdapterMoyens.notifyDataSetChanged();
 	}
 
 	private void stopSynchronisation() {

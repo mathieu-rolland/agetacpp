@@ -27,7 +27,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Agetac" >
+        android:theme="@style/Theme.Agetac"
+        android:screenOrientation="landscape" >
         
         <!-- Meta data necessaire pour Google maps -->
         <meta-data
@@ -37,7 +38,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         
-        <activity android:name="com.istic.agetac.activities.LoginActivity" >
+        <activity android:name="com.istic.agetac.activities.LoginActivity" 
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,24 +48,29 @@
         </activity>
          <activity
             android:name="com.istic.agetac.activities.ContainerActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name="com.istic.agetac.activities.CreateInterventionActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape" >
         </activity>
         
         <activity
             android:name="com.istic.agetac.activities.CodisActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape" >
         </activity>
         
         <activity
             android:name="com.istic.agetac.activities.UserActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape" >
         </activity>
         
-        <activity android:name="com.istic.agetac.fragments.MessageFragment" />
+        <activity android:name="com.istic.agetac.fragments.MessageFragment"
+            android:screenOrientation="landscape"  />
 
         <service android:name="com.istic.agetac.sync.message.MessageServiceSynchronisation" />
         <service android:name="com.istic.sit.framework.sync.ASynchronisationService"/> 

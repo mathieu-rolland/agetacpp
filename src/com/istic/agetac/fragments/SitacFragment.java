@@ -79,7 +79,8 @@ public class SitacFragment extends MainFragment {
 		Toast.makeText(getActivity().getBaseContext(), "Click on Item",
 				Toast.LENGTH_SHORT).show();
 
-		// TO DO : centrer sur entity
+		//centrer sur entity
+		((MapFragment) getFragment()).gotoMyLocation(entity.getPosition());
 		// TO DO : affichage infos
 	}
 
@@ -89,33 +90,17 @@ public class SitacFragment extends MainFragment {
 		moyen.setLibelle("[+] Moyens");
 		moyen.setId("#moyen");
 		moyen.setRepresentationOK(new Representation(R.drawable.ic_camion));
+		moyen.setRepresentationKO(new Representation(R.drawable.ic_camion));
 		IEntity environment = new Entity();
 		environment.setLibelle("[+] Environnement");
 		environment.setId("#environment");
-		environment
-				.setRepresentationOK(new Representation(R.drawable.ic_water));
+		environment.setRepresentationOK(new Representation(R.drawable.ic_water));
+		environment.setRepresentationKO(new Representation(R.drawable.ic_water));
 
 		Log.d("TOTO", "onCreateSlideMenu");
-		IEntity entityDynamic = new Entity();
-		entityDynamic.setLibelle("Camion");
-		entityDynamic.setRepresentationOK(new Representation(
-				R.drawable.ic_launcher));
 
-		IEntity entityVirtuel = new Entity();
-		entityVirtuel.setLibelle("Bouche incendie");
-		entityVirtuel.setRepresentationOK(new Representation(
-				R.drawable.ic_launcher));
-
-		IEntity entityStatic = new Entity();
-		entityStatic.setLibelle("Agetac power");
-		entityStatic.setRepresentationOK(new Representation(
-				R.drawable.ic_launcher));
-
-		this.addItemMenu(moyen);
-		this.addItemMenu(environment);
-		this.addItemMenu(entityDynamic);
-		this.addItemMenu(entityVirtuel);
-		this.addItemMenu(entityStatic);
+		this.addItemMenuDefault(moyen);
+		this.addItemMenuDefault(environment);
 
 		new MoyensDao(new IViewReceiver<Moyen>() {
 

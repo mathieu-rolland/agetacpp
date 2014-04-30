@@ -80,7 +80,8 @@ public class SitacFragment extends MainFragment {
 				Toast.LENGTH_SHORT).show();
 
 		//centrer sur entity
-		((MapFragment) getFragment()).gotoMyLocation(entity.getPosition());
+		if (entity.getPosition() != null && entity.isOnMap())
+			((MapFragment) getFragment()).gotoMyLocation(entity.getPosition());
 		// TO DO : affichage infos
 	}
 

@@ -115,6 +115,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 		
 		holder.buttonFree.setVisibility(Button.GONE);
 		holder.buttonDemand.setVisibility(Button.GONE);
+		holder.spinnerChoixSecteurs.setVisibility(Button.GONE);
 		holder.name.setText("");
 		
 		if (current != null) {
@@ -136,6 +137,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 				holder.name.setText(current.getLibelle());
 				holder.buttonDemand.setVisibility(View.GONE);
 				holder.buttonFree.setVisibility(View.VISIBLE);
+				holder.spinnerChoixSecteurs.setVisibility(Button.VISIBLE);
 			}
 
 			if (!AMoyenListAdapter.isNullOrBlank(current.getHArrival())) {

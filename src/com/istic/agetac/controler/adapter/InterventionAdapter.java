@@ -89,6 +89,14 @@ public class InterventionAdapter extends BaseAdapter{
         return convertView;
 	}
 	
+	public void add(Intervention intervention) {
+		mList.add(intervention);
+	}
+
+	public void clear() {
+		mList.clear();
+	}
+	
 	public class ViewHolder {		
 		TextView address;
 		TextView code;

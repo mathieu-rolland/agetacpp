@@ -73,6 +73,21 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 		users.findAll();
 	}
 	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		if(mAdapter!=null)
+		{
+			mAdapter.clear();
+		}
+		else
+		{
+			mAdapter = new InterventionAdapter(getApplicationContext());
+		}
+		Log.e("Vincent", "onStart du codisactivity " +  ((Codis)AgetacppApplication.getUser()).getInterventions().size());
+		mAdapter.addAll(((Codis)AgetacppApplication.getUser()).getInterventions());
+	};
+	
 	 @Override
      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intervention intervention =  (Intervention) mListIntervention.getItemAtPosition(position);

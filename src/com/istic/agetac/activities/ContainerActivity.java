@@ -19,13 +19,12 @@ import android.widget.FrameLayout;
 import com.istic.agetac.R;
 import com.istic.agetac.fragments.PagerFragment;
 import com.istic.agetac.fragments.PagerFragment.MODE;
-import com.istic.sit.framework.view.MapFragment.MapMenuListener;
 
 /**
  * @author Christophe
  * 
  */
-public class ContainerActivity extends FragmentActivity implements MapMenuListener{
+public class ContainerActivity extends FragmentActivity {
 
 	public static final String MODE_EXTRA = "MODE_EXTRA";
 	

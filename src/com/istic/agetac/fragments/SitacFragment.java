@@ -292,8 +292,8 @@ public class SitacFragment extends MainFragment {
 
 				IEntity vsav_inc = new Entity();
 				vsav_inc.setLibelle("VSAV INC");
-				vsav_inc.setRepresentationOK(new Representation(R.drawable.vsav_inc));
-				vsav_inc.setRepresentationKO(new Representation(R.drawable.vsav_inc));
+				vsav_inc.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
+				vsav_inc.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 
 				IEntity vsav_sap = new Entity();
 				vsav_sap.setLibelle("VSAV SAP");

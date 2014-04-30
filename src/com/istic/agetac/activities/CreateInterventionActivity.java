@@ -58,8 +58,8 @@ public class CreateInterventionActivity extends FragmentActivity{
 		mAddress = (EditText) findViewById(R.id.activity_intervention_nameIntervention);
 		mCode = (EditText) findViewById(R.id.activity_intervention_codeIntervention);		
 		
-		mFragmentDemandeMoyens = new DemandeDeMoyensFragment();
-		mFragmentTableauDesMoyens = new TableauMoyenFragment();
+		mFragmentDemandeMoyens = DemandeDeMoyensFragment.newInstance();
+		mFragmentTableauDesMoyens = TableauMoyenFragment.newInstance(true);
 		mInterventionCurrent = new Intervention();
 		
 		
@@ -110,14 +110,13 @@ public class CreateInterventionActivity extends FragmentActivity{
 			return;
 		}		
 
-		Intervention inter = new Intervention(mAddress.getText().toString(),mCode.getText().toString());
-		//List<Moyen> moyens = mFragmentTableauDesMoyens.getAllMoyen();
-		
+		mInterventionCurrent.setAdresse(mAddress.getText().toString());
+		mInterventionCurrent.setCodeSinistre(mCode.getText().toString());		
 		Codis codis = (Codis)AgetacppApplication.getUser();
-		inter.setCodis(codis);
-		codis.addIntervention(inter);
-		inter.save();
-		codis.save();		
+		mInterventionCurrent.setCodis(codis);
+		codis.addIntervention(mInterventionCurrent);
+		mInterventionCurrent.save();
+		codis.save();
 		
 		finish();
 	}

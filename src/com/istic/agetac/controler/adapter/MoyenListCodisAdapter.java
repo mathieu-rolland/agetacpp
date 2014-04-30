@@ -36,8 +36,10 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 	private ArrayAdapter<Secteur> adapterSecteurs; // Adapter des secteurs
 
 	private List<Spinner> spinners;
+	
+	private boolean mIsCreating;
 
-	public MoyenListCodisAdapter(Context context) {
+	public MoyenListCodisAdapter(Context context, boolean isCreating) {
 		super(context);
 		this.spinners = new ArrayList<Spinner>();
 		this.context = context;
@@ -45,6 +47,8 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 		this.mSecteur.findAll();
 		this.setAdapterSecteurs(new ArrayAdapter<Secteur>(context,
 				android.R.layout.simple_spinner_item, this.datasListSecteur));
+		
+		this.mIsCreating = isCreating;
 	}
 
 	public void secteurDataChanged(){
@@ -152,6 +156,11 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 		{
 			this.spinners.add(holder.spinnerChoixSecteurs);
 			updateDataSpinner(holder.spinnerChoixSecteurs);
+		}
+		
+		if(mIsCreating)
+		{
+			holder.buttonDemand.setVisibility(Button.GONE);
 		}
 		
 //		this.updateDatasSpinners(this.spinners);

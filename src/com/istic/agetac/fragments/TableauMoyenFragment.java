@@ -34,8 +34,9 @@ import com.istic.sit.framework.sync.PoolSynchronisation;
 
 public class TableauMoyenFragment extends Fragment {
 
-	public static TableauMoyenFragment newInstance() {
+	public static TableauMoyenFragment newInstance(boolean isCreating) {
 		TableauMoyenFragment fragment = new TableauMoyenFragment();
+		fragment.setmIsCreating(isCreating);
 		return fragment;
 	}
 	
@@ -53,6 +54,9 @@ public class TableauMoyenFragment extends Fragment {
 
 	private TableauDesMoyensReceiver receiver;
 
+	private boolean mIsCreating;
+		
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -66,11 +70,15 @@ public class TableauMoyenFragment extends Fragment {
 				.findViewById(R.id.fragment_tableau_moyen_list_view);
 
 		/* R�cup�rations des donn�es via les mod�les */
-		mMoyen = new MoyensDao(new MoyenViewReceiver());
-		mMoyen.findAll();
+		
+		if(!mIsCreating)
+		{
+			mMoyen = new MoyensDao(new MoyenViewReceiver());
+			mMoyen.findAll();
+		}
 		
 		if (AgetacppApplication.getUser().getRole() == Role.codis) {
-			mAdapterMoyens = new MoyenListCodisAdapter(getActivity());
+			mAdapterMoyens = new MoyenListCodisAdapter(getActivity(),mIsCreating);
 		} else {
 			mAdapterMoyens = new MoyenListIntervenantAdapter(getActivity());
 		}
@@ -199,6 +207,13 @@ public class TableauMoyenFragment extends Fragment {
 		super.onResume();
 	}
 
+	public boolean ismIsCreating() {
+		return mIsCreating;
+	}
 	
+
+	public void setmIsCreating(boolean mIsCreating) {
+		this.mIsCreating = mIsCreating;
+	}
 
 }

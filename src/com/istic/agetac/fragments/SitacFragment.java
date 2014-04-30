@@ -86,11 +86,11 @@ public class SitacFragment extends MainFragment {
 	@Override
 	public void onCreateSlideMenu() {
 		IEntity moyen = new Entity();
-		moyen.setLibelle("Moyens");
+		moyen.setLibelle("[+] Moyens");
 		moyen.setId("#moyen");
 		moyen.setRepresentationOK(new Representation(R.drawable.ic_camion));
 		IEntity environment = new Entity();
-		environment.setLibelle("Environnement");
+		environment.setLibelle("[+] Environnement");
 		environment.setId("#environment");
 		environment
 				.setRepresentationOK(new Representation(R.drawable.ic_water));

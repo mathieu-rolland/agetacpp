@@ -40,8 +40,11 @@ public class SwitchSector implements AdapterView.OnItemSelectedListener, OnValue
 	 * @param id long
 	 */
 	public void onItemSelected(AdapterView<?> parent, View vue, int position, long id) {
-		Secteur selectedSecteur = ((Secteur)this.spinnerSelected.getSelectedItem());
-		this.spinnerSelected.getChildAt(0).setBackgroundColor(Color.parseColor(selectedSecteur.getColor()));
+		try {
+			Secteur selectedSecteur = ((Secteur)this.spinnerSelected.getItemAtPosition(position));
+			this.spinnerSelected.getChildAt(0).setBackgroundColor(Color.parseColor(selectedSecteur.getColor()));
+		} catch (Exception e) {
+		}
 	}// Méthode onItemSelected
 
 	/**

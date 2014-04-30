@@ -2,10 +2,10 @@ package com.istic.agetac.controllers.listeners.demandeDeMoyens;
 
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
+import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.view.item.DemandeDeMoyensItem;
 
 /**
@@ -51,12 +51,13 @@ public class AddToList implements OnClickListener {
 		 */
 		if (this.demandeDeMoyens.getTextViewAutresMoyens().getText() != null
 				&& !(this.demandeDeMoyens.getTextViewAutresMoyens().getText()
-						.toString().equals(""))) {
+						.toString().equals("")) && this.demandeDeMoyens.getSelectedTypeMoyen() == null) {
 
+			
+			
 			// On créer l'élément
 			DemandeDeMoyensItem nomElementSelectionne = new DemandeDeMoyensItem(
-					this.demandeDeMoyens.getTextViewAutresMoyens().getText()
-							+ "",
+					this.demandeDeMoyens.getSelectedTypeMoyen(),
 					Integer.parseInt(this.demandeDeMoyens
 							.getEditTextNombreMoyens().getText() + ""));
 
@@ -83,17 +84,15 @@ public class AddToList implements OnClickListener {
 
 			Toast.makeText(
 					v.getContext().getApplicationContext(),
-					nomElementSelectionne.getNom()+ " ajouté...", Toast.LENGTH_SHORT).show();
+					nomElementSelectionne.getType() + " ajouté...", Toast.LENGTH_SHORT).show();
 
 		}
 		// Sinon si j'ai sélectionné un moyen dans la grille
 		else if (indiceMoyensSelected >= 0) {
-
+			
 			// On créer l'élément
 			DemandeDeMoyensItem nomElementSelectionne = new DemandeDeMoyensItem(
-					(String) ((Button) this.demandeDeMoyens
-							.getGridViewMoyens().getChildAt(
-									indiceMoyensSelected)).getText(),
+					(TypeMoyen) this.demandeDeMoyens.getDonneesNomsUsestMoyens()[indiceMoyensSelected],
 					Integer.parseInt(this.demandeDeMoyens
 							.getEditTextNombreMoyens().getText() + ""));
 
@@ -120,7 +119,7 @@ public class AddToList implements OnClickListener {
 
 			Toast.makeText(
 					v.getContext().getApplicationContext(),
-					nomElementSelectionne.getNom() + " ajouté...", Toast.LENGTH_SHORT).show();
+					nomElementSelectionne.getType() + " ajouté...", Toast.LENGTH_SHORT).show();
 
 		}
 		// dans tous les autres cas
@@ -149,7 +148,7 @@ public class AddToList implements OnClickListener {
 		else
 		{
 			for (DemandeDeMoyensItem item : this.demandeDeMoyens.getAllMoyenAddedToList()) {
-				if(item.getNom().equals(elementSelectionne.getNom())) {
+				if(item.getType().equals(elementSelectionne.getType())) {
 					return item;
 				}
 			}

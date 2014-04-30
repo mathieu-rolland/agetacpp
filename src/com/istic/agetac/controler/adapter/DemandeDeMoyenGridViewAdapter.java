@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.DisplayItemIntoGridView;
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
+import com.istic.agetac.model.TypeMoyen;
 
 /**
 * Classe DemandeDeMoyenGridViewAdapter pour DemandeDeMoyensFragment : affiche la fenêtre de demande des moyens et permet de créer une liste de demandes de moyens
@@ -22,14 +23,14 @@ public class DemandeDeMoyenGridViewAdapter extends BaseAdapter {
 	private DemandeDeMoyensFragment fragment;
 	
 	/** Aller chercher dans la BDD et crééer un tableau (moyens.values est un tableau) */
-	private String[] moyens;
+	private TypeMoyen[] moyens;
 	
 	/**
 	 * Constructeur DemandeDeMoyenGridViewAdapter
 	 * @param DemandeDeMoyensFragment Fragment
 	 * @param moyens String[] tableau des éléments à afficher
 	 */
-	public DemandeDeMoyenGridViewAdapter (DemandeDeMoyensFragment demandeDeMoyensFragment, String[] moyens) {
+	public DemandeDeMoyenGridViewAdapter (DemandeDeMoyensFragment demandeDeMoyensFragment, TypeMoyen[] moyens) {
 		
 		this.fragment = demandeDeMoyensFragment;
 		this.moyens = moyens;
@@ -65,10 +66,10 @@ public class DemandeDeMoyenGridViewAdapter extends BaseAdapter {
 		}
 		
 		// Création du boutton qui fera fois d'item dans la gridView
-		btn.setText((String)(moyens[position]));
+		btn.setText(moyens[position].toString());
 		btn.setTextSize(25);
 		btn.setGravity(Gravity.CENTER);
-		btn.setBackgroundColor(Color.parseColor("#293133"));
+		btn.setBackgroundColor(Color.parseColor("#777777"));
 		btn.setPadding(0, 18, 0, 18);
 		btn.setId(position);
 		btn.setClickable(true);

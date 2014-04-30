@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
@@ -76,18 +80,15 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	private DemandeMoyensSavedInstanceState sauvegarde = DemandeMoyensSavedInstanceState.getInstance(); // LastSave
 	
 	/** Données (récupérées via les modèles) à afficher dans la vue */
-	private String[]							namesOfAllMoyens;			// Liste des noms des moyens que l'on chargera dans la vue
-	private String[] 							namesOfUsestMoyens;			// Liste (limitée au plus utilisés) des noms des moyens que l'on chargera dans la vue
+	private TypeMoyen[]							namesOfAllMoyens;			// Liste des noms des moyens que l'on chargera dans la vue
+	private TypeMoyen[]							namesOfUsestMoyens;			// Liste (limitée au plus utilisés) des noms des moyens que l'on chargera dans la vue
 	private ArrayList<DemandeDeMoyensItem>		allMoyenAddedToList;   		// Liste des moyens ajoutés à la liste de demande de moyens
 	private DemandeDeMoyenListAdapter 			adapterListToSend;			// Liste des moyens de la liste de demande de moyens
+	private TypeMoyen selectedTypeMoyen;
 	
+	private ArrayList<TypeMoyen> mTypeMoyen;
 	
 	private List<Moyen> mListMoyen;
-	
-	public DemandeDeMoyensFragment()
-	{
-		mListMoyen = new ArrayList<Moyen>();
-	}
 	
 	/**
 	 * Méthode qui affiche un toast suite à la réception d'un message
@@ -105,7 +106,6 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		CreationBase.createMoyen();
 		
 	}
 	
@@ -123,13 +123,15 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		
 		/** Instanciations des modèles */
 		this.mMoyens 			= new MoyensDao(this);
+		this.mTypeMoyen = new ArrayList<TypeMoyen>();
+		this.mTypeMoyen.add(TypeMoyen.VSAV);
 		
 		/** Récupérations des données via les modèles */
 		this.mMoyens.findAll();
 		
 		/** Chargements des données dans les attributs correspondants */
-		this.namesOfAllMoyens 			= new String[]{"FPT","VSAV","TGD", "RPI","ESPA","POI","RGH"};
-		this.namesOfUsestMoyens 		= new String[]{"FPT","VSAV", "TGD", "RPI","ESPA","POI"};
+		this.namesOfAllMoyens 			= toArray(this.mTypeMoyen);
+		this.namesOfUsestMoyens 		= toArray(this.mTypeMoyen);
 		this.allMoyenAddedToList		= new ArrayList<DemandeDeMoyensItem>();
 		this.adapterListToSend 			= new DemandeDeMoyenListAdapter(this, android.R.layout.simple_list_item_1, this.allMoyenAddedToList);		
 		
@@ -140,6 +142,14 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		
 	}
 	
+	private TypeMoyen[] toArray(ArrayList<TypeMoyen> mTypeMoyen) {
+		TypeMoyen[] typeMoyenArray = new TypeMoyen[mTypeMoyen.size()];
+		for (TypeMoyen typeMoyen : mTypeMoyen) {
+			typeMoyenArray[mTypeMoyen.indexOf(typeMoyen)] = typeMoyen;
+		}
+		return typeMoyenArray;
+	}
+
 	/** Méthode onActivityCreated */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -162,6 +172,13 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		gridViewMoyens 			= (GridView) getActivity().findViewById(R.id.demande_de_moyen_GridView);
 		listViewMoyensToSend	= (ListView) getActivity().findViewById(R.id.demande_de_moyen_ListView);
 		
+		this.getTextViewAutresMoyens().setOnItemClickListener(new OnItemClickListener() {
+		    public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
+		    	TypeMoyen selection = (TypeMoyen)parent.getItemAtPosition(position);
+		    	setSelectedTypeMoyen(selection);
+		    }
+		});
+		
 		// Ajout listener sur le boutton d'ajout à la liste des moyens
 		buttonAddToList.setOnClickListener(this.cAddToList);
 		
@@ -177,7 +194,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		
 		// Création du champs d'auto-complétion pour la recherche de d'autres moyens
 	    getTextViewAutresMoyens().addTextChangedListener(cAutresMoyens);
-	    getTextViewAutresMoyens().setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, this.namesOfAllMoyens));
+	    getTextViewAutresMoyens().setAdapter(new ArrayAdapter<TypeMoyen>(getActivity(), android.R.layout.simple_dropdown_item_1line, this.namesOfAllMoyens));
 	    getTextViewAutresMoyens().setOnItemClickListener(cAutresMoyens);
 	    
 	    /*
@@ -394,28 +411,28 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	/**
 	 * @return the namesOfAllMoyens
 	 */
-	public String[] getDonneesNomsAllMoyens() {
+	public TypeMoyen[] getDonneesNomsAllMoyens() {
 		return namesOfAllMoyens;
 	}
 
 	/**
 	 * @param namesOfAllMoyens the namesOfAllMoyens to set
 	 */
-	public void setDonneesNomsAllMoyens(String[] donneesNomsAllMoyens) {
+	public void setDonneesNomsAllMoyens(TypeMoyen[] donneesNomsAllMoyens) {
 		this.namesOfAllMoyens = donneesNomsAllMoyens;
 	}
 
 	/**
 	 * @return the namesOfUsestMoyens
 	 */
-	public String[] getDonneesNomsUsestMoyens() {
+	public TypeMoyen[] getDonneesNomsUsestMoyens() {
 		return namesOfUsestMoyens;
 	}
 
 	/**
 	 * @param namesOfUsestMoyens the namesOfUsestMoyens to set
 	 */
-	public void setDonneesNomsUsestMoyens(String[] donneesNomsUsestMoyens) {
+	public void setDonneesNomsUsestMoyens(TypeMoyen[] donneesNomsUsestMoyens) {
 		this.namesOfUsestMoyens = donneesNomsUsestMoyens;
 	}
 
@@ -468,10 +485,10 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 
 	@Override
 	public void notifyResponseSuccess(List<Moyen> objects) {
-		this.namesOfAllMoyens 	= new String[]{"FPT","VSAV"};
-		this.namesOfUsestMoyens = new String[]{"FPT"};
-		((DemandeDeMoyenGridViewAdapter)getGridViewMoyens().getAdapter()).notifyDataSetChanged();
-		((ArrayAdapter)getTextViewAutresMoyens().getAdapter()).notifyDataSetChanged();
+		//this.namesOfAllMoyens 	= new String[]{"FPT","VSAV"};
+		//this.namesOfUsestMoyens = new String[]{"FPT"};
+		//((DemandeDeMoyenGridViewAdapter)getGridViewMoyens().getAdapter()).notifyDataSetChanged();
+		//((ArrayAdapter)getTextViewAutresMoyens().getAdapter()).notifyDataSetChanged();
 		onMessageReveive("Récupération des données MOYEN réussie !"); 
 	}
 
@@ -480,6 +497,20 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		Log.e("Antho",  "FAIL to get datas MOYEN - " + error.toString());
 		Log.e("Antho", error.getMessage());
 		onMessageReveive("Impossible de récupérer les données MOYEN !");
+	}
+
+	/**
+	 * @return the selectedTypeMoyen
+	 */
+	public TypeMoyen getSelectedTypeMoyen() {
+		return selectedTypeMoyen;
+	}
+
+	/**
+	 * @param selectedTypeMoyen the selectedTypeMoyen to set
+	 */
+	public void setSelectedTypeMoyen(TypeMoyen selectedTypeMoyen) {
+		this.selectedTypeMoyen = selectedTypeMoyen;
 	}
 
 }// Class DemandeDeMoyensFragment

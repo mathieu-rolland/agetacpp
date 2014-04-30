@@ -39,15 +39,14 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 	}
 	
 	public abstract void secteurDataChanged( );
-	
+
 	@Override
 	public int getCount() {
 		return mList.size();
 	}
-	
-	public void addAll(List<Moyen> moyens)
-	{
-		
+
+	public void addAll(List<Moyen> moyens) {
+
 		for (Moyen moyen : moyens) {
 			if(!mList.contains(moyen))
 			{
@@ -61,9 +60,8 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 		Log.e("Vincent", "AmoyenlistAdapter notify" );
 		notifyDataSetChanged();
 	}
-	
-	public List<Moyen> getAll()
-	{
+
+	public List<Moyen> getAll() {
 		return mList;
 	}
 
@@ -78,28 +76,29 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public abstract View getView(int position, View convertView, ViewGroup parent);
-	
+	public abstract View getView(int position, View convertView,
+			ViewGroup parent);
+
 	protected class ViewHolder {
 		ImageView logo;
 		TextView hourDemand;
 		Button buttonDemand;
-        TextView hourEngage;
-        TextView hourArrived;
-        TextView hourFree;
-        Button buttonFree;
-        Spinner spinnerChoixSecteurs;
-        TextView name;
-    }
-	
+		TextView hourEngage;
+		TextView hourArrived;
+		TextView hourFree;
+		Button buttonFree;
+		Spinner spinnerChoixSecteurs;
+		TextView name;
+	}
+
 	public static boolean isNullOrBlank(String param) {
-        if (isNull(param) || param.trim().length() == 0) {
-            return true;
-        }
-        return false;
-    }
-	
+		if (isNull(param) || param.trim().length() == 0) {
+			return true;
+		}
+		return false;
+	}
+
 	public static boolean isNull(String str) {
-        return str == null ? true : false;
-    }
+		return str == null ? true : false;
+	}
 }

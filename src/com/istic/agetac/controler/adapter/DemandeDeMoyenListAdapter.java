@@ -62,7 +62,7 @@ public class DemandeDeMoyenListAdapter extends ArrayAdapter<DemandeDeMoyensItem>
 		DemandeDeMoyensItem itemMoyen = listItems.get(position);
 		  
 		// Si on à bien récupéré les infos
-		if (itemMoyen != null) {
+		if (itemMoyen != null && itemMoyen.getType() != null) {
 	            
 			// Alors on charge chacunes d'elles à leur place dans le layout
 			TextView nameMoyen 			= (TextView) v.findViewById(R.id.demande_de_moyen_item_TextView_name);
@@ -71,7 +71,7 @@ public class DemandeDeMoyenListAdapter extends ArrayAdapter<DemandeDeMoyensItem>
 	        Button buttonDeleteItem 	= (Button) v.findViewById(R.id.demande_de_moyen_item_Button_Delete_icon);
 	        
 	        // chargement du nom du moyen
-	        nameMoyen.setText(itemMoyen.getNom());
+	        nameMoyen.setText(itemMoyen.getType().toString());
 	        
 	        // chargement du nombre de moyen de ce type voulu
 	        quantityMoyen.setText("" + String.valueOf(itemMoyen.getNombre()) + "");

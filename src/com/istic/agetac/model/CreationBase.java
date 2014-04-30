@@ -32,22 +32,73 @@ public class CreationBase {
 		m1.setLibelle("VSAV1");
 		m1.setRepresentationOK(new Representation(R.drawable.vsav));
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
-		m1.setSecteur("S.L.L");
+		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
+		
+		m1.save();
+		
+		m1 = new Moyen(TypeMoyen.VSAV);
+		pos1 = new CoordonateGPS();
+		pos1.set(AXIS.LAT, 49.11943311944856);
+		pos1.set(AXIS.LNG, -1.64665337651968);
+		m1.setPosition(pos1);
+		m1.setLibelle("VSAV2");
+		m1.setRepresentationOK(new Representation(R.drawable.vsav));
+		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
+		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
+		
+		m1.save();
+		
+		m1 = new Moyen(TypeMoyen.VSAV);
+		pos1 = new CoordonateGPS();
+		pos1.set(AXIS.LAT, 50.11943311944856);
+		pos1.set(AXIS.LNG, -1.64665337651968);
+		m1.setPosition(pos1);
+		m1.setLibelle("VSAV3");
+		m1.setRepresentationOK(new Representation(R.drawable.vsav));
+		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
+		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
 		
 		m1.save();
 	}
 	
+	public static void createSecteur(){
+		Secteur s1 = new Secteur();
+		s1.setColor("#f8f8f8");
+		s1.setName("SLL");
+		s1.save();
+		
+		Secteur s2 = new Secteur();
+		s2.setColor("#ce8bec");
+		s2.setName("SAP");
+		s2.save();
+		
+		Secteur s3 = new Secteur();
+		s3.setColor("#85ba8e");
+		s3.setName("ALIM");
+		s3.save();
+		
+		Secteur s4 = new Secteur();
+		s4.setColor("#992f2f");
+		s4.setName("INC");
+		s4.save();
+		
+		Secteur s5 = new Secteur();
+		s5.setColor("#ce8bec");
+		s5.setName("CRM");
+		s5.save();
+	}
+	
 	public static void createUser() throws AddInterventionException{
 		// User tata
-		Intervenant tata = new Intervenant("tata", "tata");
-		tata.setPassword("tata");
+		Intervenant tata = new Intervenant("TUYAUX", "toto");
+		tata.setPassword("toto");
 		
 		// User codis2
-		Codis codis2 = new Codis("codis2", "codis2");
-		codis2.setPassword("codis2");
+		Codis codis2 = new Codis("CODIS", "codis");
+		codis2.setPassword("codis");
 		
 		// Intervention i1
-		Intervention i1 = new Intervention("263, avenue du Gï¿½nï¿½ral Leclerc, 35042, Rennes", "FEU DANS ERP");
+		Intervention i1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "FEU DANS ERP");
 		i1.addIntervenant(tata);
 		i1.setCodis(codis2);
 		tata.setIntervention(i1);
@@ -91,7 +142,7 @@ public class CreationBase {
 //					}
 //				});
 				Intervention inter = new Intervention();
-				inter.setAdresse("5 rue de la piquetiï¿½re");
+				inter.setAdresse("5 rue de la piquetière");
 				inter.setCodeSinistre("feu de cigarette");
 				inter.setCodis(objet);
 			
@@ -138,11 +189,11 @@ public class CreationBase {
 				// TODO Auto-generated method stub
 				Message m1 = new Message();
 				m1.setDateEmission(new Date());
-				m1.setText(Message_part.JE_DEMANDE, "ta mï¿½re");
-				m1.setText(Message_part.JE_FAIS, "de la merde");
-				m1.setText(Message_part.JE_PREVOIS, "de coder");
-				m1.setText(Message_part.JE_SUIS, "bourrï¿½");
-				m1.setText(Message_part.JE_VOIS, "une belle blonde");
+				m1.setText(Message_part.JE_DEMANDE, "1 FPT et 2 VSAV");
+				m1.setText(Message_part.JE_FAIS, "Une coupure de l'alimentation du bâtiment et la mise en sécurité du personnel.");
+				m1.setText(Message_part.JE_PREVOIS, "De stopper la propagation du feu aux étages supérieurs");
+				m1.setText(Message_part.JE_SUIS, "CDG TUYAUX");
+				m1.setText(Message_part.JE_VOIS, "Un feu violent dans le bâtiment 12D");
 				m1.setIntervention(objet);
 				objet.save();
 				m1.save();

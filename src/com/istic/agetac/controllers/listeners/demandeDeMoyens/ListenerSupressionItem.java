@@ -50,7 +50,7 @@ public class ListenerSupressionItem implements OnClickListener{
 		final TextView tv = ((TextView)alert.findViewById(R.id.demande_de_moyen_dialog_TextView_Quantity));
 		
 		// On set la valeur du titre de la boite de Dialog
-		((TextView)alert.findViewById(R.id.demande_de_moyen_dialog_TextView_Title)).setText("Choisissez le nombre de " + item.getNom() + " à supprimer dans ce secteur");
+		((TextView)alert.findViewById(R.id.demande_de_moyen_dialog_TextView_Title)).setText("Choisissez le nombre de " + item.getType() + " à supprimer dans ce secteur");
 		
 		// On set la valeur par défaut du champs "nombre item to delete"
 		tv.setText(String.valueOf(this.getItemMoyen().getNombre())); //

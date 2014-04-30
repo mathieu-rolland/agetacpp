@@ -2,6 +2,8 @@ package com.istic.agetac.view.item;
 
 import java.io.Serializable;
 
+import com.istic.agetac.model.TypeMoyen;
+
 /**
  * Class DemandeDeMoyensItem : Modèle de représentation des items 
  * de la listView de la vue DemandeDeMoyens - sérializable afin 
@@ -13,17 +15,17 @@ public class DemandeDeMoyensItem implements Serializable{
 
 	/** Attributs */
 	private static final long serialVersionUID = 1L;
-	private String nameOfMoyen;			// type du moyen ajouté
-	private int quantityOfMoyen;		// quantityOfMoyen de moyen de ce type voulu
+	private TypeMoyen typeOfMoyen;	// type du moyen ajouté
+	private int quantityOfMoyen;							// quantityOfMoyen de moyen de ce type voulu
 	
 	/**
 	 * Constructeur DemandeDeMoyensItem
 	 * @param name String - type du moyen ajouté
 	 * @param quantity int - nombre de moyen de ce type voulu
 	 */
-	public DemandeDeMoyensItem (String name, int quantity) {
+	public DemandeDeMoyensItem (TypeMoyen type, int quantity) {
 	
-		this.nameOfMoyen = name;
+		this.typeOfMoyen = type;
 		this.quantityOfMoyen = quantity;
 		
 	}// méthode
@@ -33,17 +35,17 @@ public class DemandeDeMoyensItem implements Serializable{
 	 ****************************************************************/
 
 	/**
-	 * @param nameOfMoyen the nameOfMoyen to set
+	 * @param typeOfMoyen the typeOfMoyen to set
 	 */
-	public void setNom(String nom) {
-		this.nameOfMoyen = nom;
+	public void setType(TypeMoyen type) {
+		this.typeOfMoyen = type;
 	}
 
 	/**
-	 * @return the nameOfMoyen
+	 * @return the typeOfMoyen
 	 */
-	public String getNom() {
-		return nameOfMoyen;
+	public TypeMoyen getType() {
+		return typeOfMoyen;
 	}
 
 	/**

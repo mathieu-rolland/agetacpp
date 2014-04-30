@@ -66,6 +66,8 @@ public class DisplayItemIntoGridView implements OnClickListener {
 
 			// On désélectionne le champs autre moyens
 			this.demandeDeMoyens.getTextViewAutresMoyens().setSelected(false);
+			
+			this.demandeDeMoyens.setSelectedTypeMoyen(null);
 
 		} else {
 			if (v != null) {
@@ -87,6 +89,7 @@ public class DisplayItemIntoGridView implements OnClickListener {
 							((Button) this.demandeDeMoyens.getGridViewMoyens()
 									.getChildAt(i)).setBackgroundColor(Color
 									.parseColor(new String("#efefef")));
+														
 							// On met à vide le champs autre moyen - ordre
 							// important !!
 							this.demandeDeMoyens.getTextViewAutresMoyens()
@@ -94,6 +97,8 @@ public class DisplayItemIntoGridView implements OnClickListener {
 							// Et ensuite on set l'indice
 							this.demandeDeMoyens.getSauvegarde()
 									.setIndiceMoyen(i);
+							
+							this.demandeDeMoyens.setSelectedTypeMoyen(null);
 
 						}
 					} catch (Exception e) {

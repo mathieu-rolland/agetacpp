@@ -23,6 +23,7 @@ import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.TypeMoyen;
 import com.istic.sit.framework.adapter.EntityAdapter;
 import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.api.view.IBackground;
@@ -183,7 +184,8 @@ public class SitacFragment extends MainFragment {
 		stopSynchronisation();
 		super.onStop();
 	}
-
+	
+	@Override
 	protected boolean onActionDropFromMenu(Entity typeEntity, DragEvent event) {
 		if(typeEntity.getId().equals("#environment") || typeEntity.getId().equals("#moyen")){
 			// Affichage du gridview de choix de moyens
@@ -326,7 +328,7 @@ public class SitacFragment extends MainFragment {
 			EntityAdapter entityAdapter = (EntityAdapter) parent.getAdapter();
 			IEntity gridEntity = (IEntity) entityAdapter.getItem(position);
 			// Create entity to set on map
-			Moyen moyen = new Moyen(gridEntity.getLibelle());
+			Moyen moyen = new Moyen(TypeMoyen.VSAV);
 			moyen.setRepresentationOK(gridEntity.getRepresentation());
 			moyen.setRepresentationKO(gridEntity.getRepresentation());
 			moyen.setLibelle(gridEntity.getLibelle());

@@ -60,20 +60,23 @@ public class MessageItem implements ItemView<IMessage> {
 			modifyButton.setOnClickListener(new OnModifyMessage(message, activity));
 		}
 		
-		//Si le message est valide, on ne peut pas le revalider :
+		//Si le message est valide,
+		//on ne peut pas le revalider :
 		if( modifyButton != null 
 				&& validateButton != null
 				&& message.isValidate() ){
 			modifyButton.setVisibility( View.GONE );
 			validateButton.setVisibility( View.GONE );
 		}else{
-			imgValidate.setVisibility(View.GONE);
-			modifyButton.setVisibility( View.VISIBLE );
-			validateButton.setVisibility( View.VISIBLE );
-			labelValidate.setText(R.string.fragment_messages_list_image_not_validate);
+			if( AgetacppApplication.getUser().getRole() == IUser.Role.intervenant ){
+				imgValidate.setVisibility(View.GONE);
+				modifyButton.setVisibility( View.VISIBLE );
+				validateButton.setVisibility( View.VISIBLE );
+				labelValidate.setText(R.string.fragment_messages_list_image_not_validate);
+			}
 		}
 		
-		if( message.isValidate() ){
+		if( message.isValidate() && AgetacppApplication.getUser().getRole() == IUser.Role.intervenant){
 			imgValidate.setVisibility(View.VISIBLE);
 			validateButton.setVisibility( View.GONE );
 			labelValidate.setText(R.string.fragment_messages_list_image_validate);

@@ -29,6 +29,7 @@ import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
+import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.User;
 
@@ -55,6 +56,8 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		CreationBase.recupIntervention("b3bf73f3-99cf-40df-b6ca-110beb97d190");
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);
 

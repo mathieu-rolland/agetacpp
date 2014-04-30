@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -41,7 +39,7 @@ public class Intervention implements IIntervention, Subject {
 		this.moyens = new ArrayList<Moyen>();
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
-		messages = new ArrayList<IMessage>();
+		this.messages = new ArrayList<IMessage>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre){
@@ -52,7 +50,7 @@ public class Intervention implements IIntervention, Subject {
 		this.moyens = new ArrayList<Moyen>();
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
-		messages = new ArrayList<IMessage>();
+		this.messages = new ArrayList<IMessage>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens){
@@ -63,7 +61,7 @@ public class Intervention implements IIntervention, Subject {
 		this.moyens = moyens;
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
-		messages = new ArrayList<IMessage>();
+		this.messages = new ArrayList<IMessage>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
@@ -74,7 +72,7 @@ public class Intervention implements IIntervention, Subject {
 		this.moyens = moyens;
 		this.intervenants = users;
 		this.observers = new ArrayList<Observer>();
-		messages = new ArrayList<IMessage>();
+		this.messages = new ArrayList<IMessage>();
 	}
 
 	/**
@@ -123,6 +121,10 @@ public class Intervention implements IIntervention, Subject {
 	@Override
 	public void setMoyens(List<Moyen> moyens) {
 		this.moyens = moyens;
+	}
+	
+	public void addMoyen(Moyen moyen) {
+		this.moyens.add(moyen);
 	}
 
 	/**

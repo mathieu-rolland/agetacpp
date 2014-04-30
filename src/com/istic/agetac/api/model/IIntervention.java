@@ -20,6 +20,7 @@ public interface IIntervention extends IPersistant{
 	public void setCodeSinistre(String CodeSinistre);
 	public List<Moyen> getMoyens();
 	public void setMoyens(List<Moyen> moyens);
+	public void addMoyen(Moyen moyen);
 	void getIntervenants(Observer o);
 	List<Intervenant> getIntervenants();
 	void setIntervenants(List<Intervenant> intervenants);

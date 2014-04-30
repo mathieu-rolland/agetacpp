@@ -10,7 +10,9 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IMessage.Message_part;
 import com.istic.agetac.controllers.dao.ADao;
+import com.istic.agetac.controllers.dao.InterventionDao;
 import com.istic.agetac.controllers.dao.MoyensDao;
+import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.exceptions.AddInterventionException;
 import com.istic.sit.framework.api.model.IPosition.AXIS;
 import com.istic.sit.framework.couch.AObjectRecuperator;
@@ -189,6 +191,11 @@ public class CreationBase {
 		msg2.setText(Message_part.JE_SUIS, "Mathieu, COS");
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
+		//moyens
+		Moyen mo1 = new Moyen("VSAV");
+		mo1.setLibelle("Connard");
+		inter1.addMoyen(mo1);
+		
 		// sauvegarde en base
 		inter1.save();
 		msg1.save();
@@ -200,13 +207,81 @@ public class CreationBase {
 		christophe.save();
 		mathieu.save();
 		antho.save();
-		
-		new ADao<Codis>(new IViewReceiver<Codis>() {
+		mo1.save();
+	}
+	
+	public static void recupIntervention(String id){
+		CouchDBUtils.getObjectById(new AObjectRecuperator<Intervention>(Intervention.class, id) {
 
 			@Override
-			public void notifyResponseSuccess(List<Codis> objects) {
+			public void onErrorResponse(VolleyError arg0) {
 				// TODO Auto-generated method stub
 				
+			}
+
+			@Override
+			public void onResponse(Intervention objet) {
+				// TODO Auto-generated method stub
+				objet.getCodeSinistre();
+			}
+		});
+	}
+	
+	public static void viderBase(){
+		new UserDao(new IViewReceiver<User>() {
+			
+			@Override
+			public void notifyResponseSuccess(List<User> objects) {
+				for (User user : objects) {
+					user.delete();
+				}
+			}
+			
+			@Override
+			public void notifyResponseFail(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		}).findAll();
+		new InterventionDao(new IViewReceiver<Intervention>() {
+			
+			@Override
+			public void notifyResponseSuccess(List<Intervention> objects) {
+				for (Intervention intervention : objects) {
+					intervention.delete();
+				}
+			}
+			
+			@Override
+			public void notifyResponseFail(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		}).findAll();
+		
+		new MoyensDao(new IViewReceiver<Moyen>() {
+			
+			@Override
+			public void notifyResponseSuccess(List<Moyen> objects) {
+				for (Moyen moyen : objects) {
+					moyen.delete();
+				}
+			}
+			
+			@Override
+			public void notifyResponseFail(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		}).findAll();
+		new ADao<Message>(new IViewReceiver<Message>() {
+
+			@Override
+			public void notifyResponseSuccess(List<Message> objects) {
+				// TODO Auto-generated method stub
+				for (Message message : objects) {
+					message.delete();
+				}
 			}
 
 			@Override
@@ -214,6 +289,6 @@ public class CreationBase {
 				// TODO Auto-generated method stub
 				
 			}
-		});
+		}).executeFindAll(Message.class);
 	}
 }

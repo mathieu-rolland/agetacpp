@@ -45,7 +45,7 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 		
 		if( entity != null ){
 			ImageView img = (ImageView) view.findViewById(R.id.fragment_entity_image_display);
-			img.setImageResource( entity.getRepresentationOK().getDrawable() );
+			img.setImageResource( entity.getRepresentation().getDrawable() );
 			
 			TextView lat = (TextView) view.findViewById(R.id.fragment_activity_position_lat_value);
 			lat.setText( String.valueOf(entity.getPosition().get(AXIS.LAT)) );

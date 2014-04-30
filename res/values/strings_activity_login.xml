@@ -12,4 +12,8 @@
     <string name="activity_login_validate">Se connecter</string>
     <string name="activity_login_welcome">Bienvenue sur Agetac++</string>
 
+    <string name="activity_login_intervenant_message">Vous n\'avez pas d\'intervention !</string>
+    <string name="activity_login_intervenant_titre">Erreur</string>
+    <string name="activity_login_intervenant_button">OK</string>
+
 </resources>

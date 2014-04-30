@@ -6,7 +6,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -26,7 +29,7 @@ import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
-import com.istic.agetac.model.CreationBase;
+import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.User;
 
 public class LoginActivity extends Activity {
@@ -205,7 +208,28 @@ public class LoginActivity extends Activity {
 							CodisActivity.launchActivity(LoginActivity.this);
 						}
 						else if(user.getRole().equals(Role.intervenant)){
-							ContainerActivity.launchActivity(MODE.INTERVENANT, LoginActivity.this);
+							Intervenant intervenant = (Intervenant)user;
+							if(intervenant.getIntervention() == null){
+								ImageView imageView = new ImageView(LoginActivity.this);
+								imageView.setImageResource(R.drawable.vacances);
+								AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+								builder.setMessage(R.string.activity_login_intervenant_message);
+								builder.setTitle(R.string.activity_login_intervenant_titre);
+								builder.setCancelable(false);
+								builder.setView(imageView);
+								builder.setPositiveButton(R.string.activity_login_intervenant_button, new DialogInterface.OnClickListener() {
+									
+									@Override
+									public void onClick(DialogInterface dialog, int which) {
+										dialog.cancel();
+									}
+								});
+								AlertDialog alert = builder.create();
+								alert.show();
+							}
+							else{
+								ContainerActivity.launchActivity(MODE.INTERVENANT, LoginActivity.this);
+							}
 						}
 					}
 					else{

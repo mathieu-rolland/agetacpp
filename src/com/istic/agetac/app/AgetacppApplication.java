@@ -18,7 +18,7 @@ public class AgetacppApplication extends FrameworkApplication {
 	public void onCreate() {
 		super.onCreate();
 		AgetacSerializer.init();
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/maxime_renou/";
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/demo/";
 	}
 
 	/**

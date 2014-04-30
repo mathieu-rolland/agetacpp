@@ -81,7 +81,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 //		}
 		
 		current = mList.get(position);
-
+		
 		ViewHolder holder;
 
 		if (convertView == null) {

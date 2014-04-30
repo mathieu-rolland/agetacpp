@@ -1,5 +1,6 @@
 package com.istic.agetac.fragments;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlarmManager;
@@ -38,6 +39,8 @@ public class TableauMoyenFragment extends Fragment {
 		return fragment;
 	}
 	
+	private List<Moyen> mListMoyen;
+	
 	/* Instances des mod�les � utiliser */
 	private MoyensDao mMoyen; // Mod�le Moyen
 
@@ -72,6 +75,19 @@ public class TableauMoyenFragment extends Fragment {
 			mAdapterMoyens = new MoyenListIntervenantAdapter(getActivity());
 		}
 		
+		mAdapterMoyens.notifyDataSetChanged();
+		Log.e("Vincent", "Tableau des moyen set adapteur " + mAdapterMoyens.hashCode());
+		mListViewMoyen.setAdapter(mAdapterMoyens);
+		
+		if(mListMoyen==null)
+		{
+			mListMoyen = new ArrayList<Moyen>();
+		}
+		else
+		{
+			mAdapterMoyens.addAll(mListMoyen);
+		}
+		
 		SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
 		sdao.findAll();
 		
@@ -99,6 +115,17 @@ public class TableauMoyenFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 
+	public void AddAllMoyen(List<Moyen> list)
+	{	
+		mListMoyen = list;
+		
+		if(mAdapterMoyens !=null)
+		{
+			mAdapterMoyens.addAll(list);
+		}
+		
+	}
+	
 	public List<Moyen> getAllMoyen()
 	{
 		return mAdapterMoyens.getAll();
@@ -112,7 +139,7 @@ public class TableauMoyenFragment extends Fragment {
 		@Override
 		public void notifyResponseSuccess(List<Moyen> moyens) {
 			mAdapterMoyens.addAll(moyens);
-			
+			Log.e("Vincent", "Moyen recu de la bdd");
 			mAdapterMoyens.notifyDataSetChanged();
 			mListViewMoyen.setAdapter(mAdapterMoyens);
 		}
@@ -171,5 +198,7 @@ public class TableauMoyenFragment extends Fragment {
 				sync, receiver);
 		super.onResume();
 	}
+
+	
 
 }

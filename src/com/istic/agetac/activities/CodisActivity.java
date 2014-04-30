@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,7 +20,6 @@ import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.InterventionAdapter;
-import com.istic.agetac.controllers.dao.InterventionDao;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.Codis;
@@ -84,7 +82,6 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 		{
 			mAdapter = new InterventionAdapter(getApplicationContext());
 		}
-		Log.e("Vincent", "onStart du codisactivity " +  ((Codis)AgetacppApplication.getUser()).getInterventions().size());
 		mAdapter.addAll(((Codis)AgetacppApplication.getUser()).getInterventions());
 	};
 	

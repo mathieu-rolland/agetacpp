@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,18 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 	
 	public void addAll(List<Moyen> moyens)
 	{
+		
 		for (Moyen moyen : moyens) {
-			mList.add(moyen);
+			if(!mList.contains(moyen))
+			{
+				mList.add(moyen);
+			}
+			else
+			{
+				Log.e("Vincent", "moyen PAS ajouté a ladapteur" );
+			}
 		}
+		Log.e("Vincent", "AmoyenlistAdapter notify" );
 		notifyDataSetChanged();
 	}
 	

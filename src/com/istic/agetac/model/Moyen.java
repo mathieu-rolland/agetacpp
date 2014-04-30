@@ -41,9 +41,9 @@ public class Moyen extends Entity {
 	 * Constructeur de la classe Moyen
 	 * @param typeValue : Type of moyen
 	 */
-	public Moyen (String typeValue) {
+	public Moyen (TypeMoyen typeValue) {
 		super();
-		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue);
+		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue.toString());
 		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, FORMATER.format(new Date()));
 		IProperty hEngagementProperty 	= creatProperty(NAME_PROPERTY_HOUR_ENGAGEMENT, null);
 		IProperty hArrivalProperty 		= creatProperty(NAME_PROPERTY_HOUR_ARRIVAL, null);
@@ -62,9 +62,9 @@ public class Moyen extends Entity {
 	 * @param typeValue : Type of moyen
 	 * @param position : position of moyen
 	 */
-	public Moyen (String typeValue, IPosition position) {
+	public Moyen (TypeMoyen typeValue, IPosition position) {
 		super(position);
-		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue);
+		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue.toString());
 		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, FORMATER.format(new Date()));
 		IProperty hEngagementProperty 	= creatProperty(NAME_PROPERTY_HOUR_ENGAGEMENT, null);
 		IProperty hArrivalProperty 		= creatProperty(NAME_PROPERTY_HOUR_ARRIVAL, null);
@@ -290,5 +290,5 @@ public class Moyen extends Entity {
 	public void setFrozen(boolean frozen) {
 		super.setFrozen(frozen);
 	}
-
+	
 }

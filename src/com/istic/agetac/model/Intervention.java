@@ -441,4 +441,11 @@ public class Intervention implements IIntervention, Subject {
 		}
 	}
 
+	public void addMoyens(List<Moyen> listMoyen) {
+		Log.e("Vincent", "Ajout " + listMoyen.size() +" a l'intervention " + this.moyens.size());
+		for (Moyen moyen : listMoyen) {
+			this.moyens.add(moyen);
+		}
+	}
+
 }

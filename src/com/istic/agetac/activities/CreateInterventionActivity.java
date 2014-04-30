@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.istic.agetac.R;
 import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.controler.adapter.AMoyenListAdapter;
+import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
 import com.istic.agetac.fragments.MessageFragment;
 import com.istic.agetac.fragments.TableauMoyenFragment;
@@ -45,6 +47,8 @@ public class CreateInterventionActivity extends FragmentActivity{
 	private DemandeDeMoyensFragment mFragmentDemandeMoyens;
 	private CurrentFragment mCurrentFragment;
 	
+	private Intervention mInterventionCurrent; 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,11 +56,12 @@ public class CreateInterventionActivity extends FragmentActivity{
 		mValidButton= (Button) findViewById(R.id.activity_intervention_buttonValid);
 		mSwitchButton = (Button) findViewById(R.id.activity_intervention_buttonSwitch);
 		mAddress = (EditText) findViewById(R.id.activity_intervention_nameIntervention);
-		mCode = (EditText) findViewById(R.id.activity_intervention_codeIntervention);
-		
+		mCode = (EditText) findViewById(R.id.activity_intervention_codeIntervention);		
 		
 		mFragmentDemandeMoyens = new DemandeDeMoyensFragment();
 		mFragmentTableauDesMoyens = new TableauMoyenFragment();
+		mInterventionCurrent = new Intervention();
+		
 		
 		mFragment = (FrameLayout) findViewById(R.id.activity_intervention_frame_tableau);
         
@@ -84,6 +89,12 @@ public class CreateInterventionActivity extends FragmentActivity{
 		    }
 		});
 	}	
+	
+	public void updateMoyenIntervention(List<Moyen> listMoyen)
+	{
+		mInterventionCurrent.addMoyens(listMoyen);		
+		mFragmentTableauDesMoyens.AddAllMoyen(listMoyen);
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

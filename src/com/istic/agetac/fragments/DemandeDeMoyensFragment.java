@@ -1,6 +1,7 @@
 package com.istic.agetac.fragments;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -20,7 +22,10 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
+import com.istic.agetac.activities.CreateInterventionActivity;
 import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IUser.Role;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenGridViewAdapter;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenListAdapter;
 import com.istic.agetac.controllers.dao.MoyensDao;
@@ -30,8 +35,10 @@ import com.istic.agetac.controllers.listeners.demandeDeMoyens.SpinnerVariation;
 import com.istic.agetac.filters.FilterInputNumber;
 import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.saveInstanceState.DemandeMoyensSavedInstanceState;
 import com.istic.agetac.view.item.DemandeDeMoyensItem;
+import com.istic.sit.framework.model.Representation;
 
 /**
 * Classe DemandeDeMoyensFragment : affiche la fenêtre de demande des moyens et permet de créer une liste de demandes de moyens
@@ -60,7 +67,8 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	private AutoCompleteTextView 	textViewAutresMoyens; 		// Champs d'auto-complétion pour la recherche d'un autre moyen 
 	private Button 					buttonAddToList; 			// Boutton d'ajout du moyen à la liste 
 	private Button 					buttonQuantityMore; 		// Augmente le nombre de moyens à ajouter 
-	private Button 					buttonQuantityLess; 		// Diminue le nombre de moyens à ajouter 
+	private Button 					buttonQuantityLess; 		// Diminue le nombre de moyens à ajoute
+	private Button					buttonSend;
 	private EditText 				editTextQuantity; 			// Nombre de ce moyen à ajouter à la liste 
 	private ListView 				listViewMoyensToSend; 		// Liste des éléments ajouté et que l'on va envoyer au serveur 
 	
@@ -72,6 +80,14 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	private String[] 							namesOfUsestMoyens;			// Liste (limitée au plus utilisés) des noms des moyens que l'on chargera dans la vue
 	private ArrayList<DemandeDeMoyensItem>		allMoyenAddedToList;   		// Liste des moyens ajoutés à la liste de demande de moyens
 	private DemandeDeMoyenListAdapter 			adapterListToSend;			// Liste des moyens de la liste de demande de moyens
+	
+	
+	private List<Moyen> mListMoyen;
+	
+	public DemandeDeMoyensFragment()
+	{
+		mListMoyen = new ArrayList<Moyen>();
+	}
 	
 	/**
 	 * Méthode qui affiche un toast suite à la réception d'un message
@@ -140,6 +156,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		buttonAddToList 		= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_AddToList);
 		buttonQuantityMore 		= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_OneMore);
 		buttonQuantityLess 		= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_OneLess);
+		buttonSend				= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_SendList);
 		textViewAutresMoyens 	= (AutoCompleteTextView) getActivity().findViewById(R.id.demande_de_moyen_AutoCompleteTextView_TextField);
 		editTextQuantity 		= (EditText) getActivity().findViewById(R.id.demande_de_moyen_EditText_DefaultQuantity);
 		gridViewMoyens 			= (GridView) getActivity().findViewById(R.id.demande_de_moyen_GridView);
@@ -176,6 +193,31 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	 	// Création du ListView de la liste de moyens demandés	 
 	    getListViewMoyensToSend().setAdapter(this.adapterListToSend);
 	    
+	    
+	    buttonSend.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				send();
+			}			
+		});
+	}
+	
+	private void send() {
+		if(AgetacppApplication.getUser().getRole()==Role.codis)
+		{
+			mListMoyen = new ArrayList<Moyen>();
+			Moyen m =new Moyen(TypeMoyen.VSAV);
+			m.setRepresentationOK(new Representation(R.drawable.fpt_1_alim));
+			m.setHDemande(new Date());
+			mListMoyen.add(m);
+			Moyen m2 =new Moyen(TypeMoyen.VSAV);
+			m2.setRepresentationOK(new Representation(R.drawable.fpt_2_inc));
+			m2.setHDemande(new Date(2014,01,01));
+			mListMoyen.add(m2);
+			CreateInterventionActivity activityParent = (CreateInterventionActivity)getActivity();
+			activityParent.updateMoyenIntervention(mListMoyen);
+		}
 	}
 	
 	/** Méthode onSaveInstanceState */

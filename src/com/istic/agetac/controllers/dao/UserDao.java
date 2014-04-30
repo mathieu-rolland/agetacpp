@@ -12,5 +12,5 @@ public class UserDao extends ADao<User> {
 
 	public void findAll() {
 		super.executeFindAll(User.class);
-	} 
+	}
 }

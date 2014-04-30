@@ -8,7 +8,7 @@ import com.istic.sit.framework.couch.AEntityRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.model.Entity;
 
-public abstract class AnotherDao<T extends Entity> {
+public class AnotherDao<T extends Entity> {
 	
 	private IViewReceiver<T> iViewReceiver;
 	

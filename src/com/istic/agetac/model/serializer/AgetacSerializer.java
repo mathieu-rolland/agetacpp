@@ -8,16 +8,17 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.istic.agetac.api.model.IIntervention;
+import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
+import com.istic.agetac.model.Message;
 import com.istic.agetac.model.User;
 import com.istic.sit.framework.couch.JsonSerializer;
 
@@ -27,21 +28,30 @@ public class AgetacSerializer {
 	
 	public static void init(){
 		JsonSerializer.registerDeserializer(User.class, new UserDeserializer());
+		JsonSerializer.registerDeserializer(IMessage.class, new IMessageDeserializer());
+		JsonSerializer.registerDeserializer(IIntervention.class, new IInterventionDeserializer());
 	}
-
-	private static class InterventionDeserializer implements JsonDeserializer<IIntervention> {
+	
+	private static class IInterventionDeserializer implements JsonDeserializer<IIntervention> {
 
 		@Override
-		public Intervention deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+		public IIntervention deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 			GsonBuilder builder = new GsonBuilder();
 			Gson gson = builder.create();
-			Intervention intervention = gson.fromJson(json, Intervention.class);
-			JsonArray jsonUsers = json.getAsJsonObject().get("users").getAsJsonArray();
-			for(JsonElement elmt : jsonUsers){
-//				intervention.addUser(gson.fromJson(elmt, User.class));
-			}
-			return intervention;
+			return gson.fromJson(json, Intervention.class);
 		}
+		
+	}
+	
+	private static class IMessageDeserializer implements JsonDeserializer<IMessage> {
+
+		@Override
+		public IMessage deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+			GsonBuilder builder = new GsonBuilder();
+			Gson gson = builder.create();
+			return gson.fromJson(json, Message.class);
+		}
+		
 	}
 	
 	private static class UserDeserializer implements JsonDeserializer<User> {

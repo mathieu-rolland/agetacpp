@@ -26,4 +26,8 @@ public interface IIntervention extends IPersistant{
 	void addIntervenant(Intervenant intervenant);
 	Codis getCodis();
 	void setCodis(Codis codis);
+	List<IMessage> getMessages();
+	void getMessages(Observer o);
+	void setMessages(List<IMessage> messages);
+	void addMessage(IMessage message);
 }

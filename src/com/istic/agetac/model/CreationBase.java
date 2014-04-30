@@ -1,5 +1,6 @@
 package com.istic.agetac.model;
 
+import java.util.Date;
 import java.util.List;
 
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IMessage.Message_part;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.exceptions.AddInterventionException;
 import com.istic.agetac.pattern.observer.Observer;
@@ -115,5 +117,35 @@ public class CreationBase {
 				
 			}
 		}).findAll();
+	}
+	
+	public static void createMessage(){
+		CouchDBUtils.getObjectById(new AObjectRecuperator<Intervention>(Intervention.class, "42e5cfbd-3d32-4e96-abbf-ef5de3034b4e") {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if(error.getMessage() != null){
+					Log.e("CreationBase", error.getMessage());
+				}
+				else{
+					Log.e("CreationBase", error.toString());
+				}
+			}
+
+			@Override
+			public void onResponse(Intervention objet) {
+				// TODO Auto-generated method stub
+				Message m1 = new Message();
+				m1.setDateEmission(new Date());
+				m1.setText(Message_part.JE_DEMANDE, "ta mère");
+				m1.setText(Message_part.JE_FAIS, "de la merde");
+				m1.setText(Message_part.JE_PREVOIS, "de coder");
+				m1.setText(Message_part.JE_SUIS, "bourré");
+				m1.setText(Message_part.JE_VOIS, "une belle blonde");
+				m1.setIntervention(objet);
+				objet.save();
+				m1.save();
+			}
+		});
 	}
 }

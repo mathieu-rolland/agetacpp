@@ -26,5 +26,7 @@ public interface IMessage extends Subject{
 	public boolean isComplet();
 	public void setDateEmission( Date date );
 	public Date getDateEmission();
+	public IIntervention getIntervention();
+	public void setIntervention(IIntervention intervention);
 	
 }

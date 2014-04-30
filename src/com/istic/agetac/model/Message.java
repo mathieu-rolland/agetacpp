@@ -13,6 +13,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.pattern.observer.Observer;
 import com.istic.agetac.pattern.observer.Subject;
@@ -28,6 +29,7 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	private boolean validate;
 	private Date dateEmission;
 	private HashMap<Message_part, String> messages;
+	private IIntervention intervention;
 	
 	private transient List<Observer> observers;
 	
@@ -248,5 +250,15 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	@Override
 	public Date getDateEmission() {
 		return dateEmission;
+	}
+
+	@Override
+	public IIntervention getIntervention() {
+		return intervention;
+	}
+
+	@Override
+	public void setIntervention(IIntervention intervention) {
+		this.intervention = intervention;
 	}
 }

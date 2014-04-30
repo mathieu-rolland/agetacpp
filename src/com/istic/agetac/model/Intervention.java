@@ -14,6 +14,7 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IIntervention;
+import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.pattern.observer.Observer;
 import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.couch.DataBaseCommunication;
@@ -30,6 +31,7 @@ public class Intervention implements IIntervention, Subject {
 	private transient List<Intervenant> intervenants;
 	private transient Codis codis;
 	private transient List<Observer> observers;
+	private transient List<IMessage> messages;
 	
 	public Intervention(){
 		this._id = UUID.randomUUID().toString();
@@ -128,7 +130,6 @@ public class Intervention implements IIntervention, Subject {
 			
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				// TODO Auto-generated method stub
 				if(error.getMessage() != null) {
 					Log.e("Intervention", error.getMessage());
 				}
@@ -214,6 +215,105 @@ public class Intervention implements IIntervention, Subject {
 		this.intervenants = intervenants;
 	}
 	
+	/**
+	 * @return the messages
+	 */
+	@Override
+	public List<IMessage> getMessages() {
+		return messages;
+	}
+	
+	@Override
+	public void getMessages(final Observer o){
+		DataBaseCommunication.sendGet(new IPersistant() {
+			
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if(error.getMessage() != null) {
+					Log.e("Intervention", error.getMessage());
+				}
+				else{
+					Log.e("Intervention", error.toString());
+				};
+			}
+			
+			@Override
+			public void onResponse(JSONObject json) {
+				try {
+					JSONArray a = (JSONArray) json.get("rows");
+					for(int i=0; i<a.length(); i++){
+						JSONObject o = a.getJSONObject(i);
+						o = (JSONObject) o.get("value");
+						o.remove("type");
+						Intervention.this.messages.add((IMessage) JsonSerializer.deserialize(IMessage.class, o));
+					}
+					notifyObserver(o);
+				}
+				catch(JSONException e){
+					Log.e("Intervention", e.getMessage());
+				}
+			}
+			
+			@Override
+			public void update() {
+				
+			}
+			
+			@Override
+			public void setRev(String rev) {
+				
+			}
+			
+			@Override
+			public void setId(String id) {
+				
+			}
+			
+			@Override
+			public void save() {
+				
+			}
+			
+			@Override
+			public String getUrl(int method) {
+				return DataBaseCommunication.BASE_URL + "_design/agetacpp/_view/get_messages?key=\"" + Intervention.this._id + "\"";
+			}
+			
+			@Override
+			public String getRev() {
+				return null;
+			}
+			
+			@Override
+			public String getId() {
+				return null;
+			}
+			
+			@Override
+			public JSONObject getData() {
+				return null;
+			}
+			
+			@Override
+			public void delete() {
+				
+			}
+		});
+	}
+
+	/**
+	 * @param messages the messages to set
+	 */
+	@Override
+	public void setMessages(List<IMessage> messages) {
+		this.messages = messages;
+	}
+	
+	@Override
+	public void addMessage(IMessage message){
+		this.messages.add(message);
+	}
+
 	@Override
 	public void addIntervenant(Intervenant intervenant) {
 		this.intervenants.add(intervenant);

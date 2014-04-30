@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.provider.ContactsContract.CommonDataKinds.Note;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -70,7 +70,7 @@ public class InterventionAdapter extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.item_intervention, null);  
             holder.address = (TextView) convertView.findViewById( R.id.item_intervention_address );
             holder.code = (TextView) convertView.findViewById( R.id.item_intervention_code );
-            holder.button = (ImageButton) convertView.findViewById(R.id.item_intervention_image_button);
+            holder.button = (Button) convertView.findViewById(R.id.item_intervention_image_button);
             
             holder.address.setText(mList.get(position).getAdresse());
             holder.code.setText(mList.get(position).getCodeSinistre());
@@ -92,7 +92,7 @@ public class InterventionAdapter extends BaseAdapter{
 	public class ViewHolder {		
 		TextView address;
 		TextView code;
-		ImageButton button;
+		Button button;
     }
 	
 	public void showDialogUser(Intervention intervention)

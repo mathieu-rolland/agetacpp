@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="#171f21"
     android:orientation="vertical"
-    android:weightSum="100" >
+    android:weightSum="100" 
+    >
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -21,6 +22,7 @@
     </RelativeLayout>
 
     <ListView
+        android:descendantFocusability="blocksDescendants"
         android:id="@+id/activity_codis_list_intervention"
         android:layout_width="match_parent"
         android:layout_weight="90"

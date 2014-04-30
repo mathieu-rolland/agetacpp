@@ -1,6 +1,5 @@
 package com.istic.agetac.activities;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,13 +75,35 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 	
 	 @Override
      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-     	Intervention intervention =  (Intervention) mListIntervention.getItemAtPosition(position);
-     	ContainerActivity.launchActivity(MODE.CODIS, getApplicationContext());
+		Intervention intervention =  (Intervention) mListIntervention.getItemAtPosition(position);
+     	ContainerActivity.launchActivity(MODE.CODIS, this);
      }
 	
 	public void CreateIntervention() {
 		CreateInterventionActivity.launchActivity(this);
 	}		
+
+	public class InterventionViewReceiver implements IViewReceiver<Intervention> {
+		
+		public InterventionViewReceiver(CodisActivity activity)
+		{
+		}
+		
+		@Override
+		public void notifyResponseSuccess(List<Intervention> interventions) {
+			
+			mAdapter.addAll(interventions);
+			mAdapter.notifyDataSetChanged();
+			
+			UserDao users = new UserDao(new UsersViewReceiver());
+			users.findAll();
+		}
+
+		@Override
+		public void notifyResponseFail(VolleyError error) {
+			Toast.makeText(getApplicationContext(), "Impossible de r�cup�rer les interventions",	Toast.LENGTH_SHORT).show();
+		}		
+	}
 	
 	public class UsersViewReceiver implements IViewReceiver<User> {
 

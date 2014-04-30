@@ -86,4 +86,8 @@
 	<string name="fragment_entity_button_supprimer">Libérer</string>
 	<string name="fragment_entity_button_arrived">Arriver</string>
 	<string name="fragment_entity_alert_libererRessource">Vous êtes sur le point de libérer la ressource %s. Voulez-vous continuer?</string>
+
+	<!-- Vue CODIS : Voir une intervention -->
+	<string name="item_intervention_voir_intervention">Voir intervention</string>
+	
 </resources>

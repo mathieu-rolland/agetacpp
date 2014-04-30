@@ -13,7 +13,7 @@ import com.istic.sit.framework.couch.IPersistant;
 * 
 * @author Anthony LE MEE - 10003134
 */
-public abstract class ADao<T extends IPersistant> {
+public class ADao<T extends IPersistant> {
 
 	private IViewReceiver<T> iViewReceiver;
 	

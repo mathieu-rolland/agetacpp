@@ -18,13 +18,12 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
-import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.controler.adapter.UserAdapter;
-import com.istic.agetac.controllers.dao.UserDao;
+import com.istic.agetac.controllers.dao.ADao;
 import com.istic.agetac.controllers.listeners.users.ListenerUser;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
-import com.istic.agetac.model.User;
+
 import de.greenrobot.event.EventBus;
 
 public class AddUserFragment extends Fragment implements OnDragListener{
@@ -81,24 +80,20 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 			}
 		});
 				
-		UserDao userdao= new UserDao(new UserViewReceiver());
-		userdao.findAll();
+		ADao<Intervenant> intervenantdao = new ADao<Intervenant>(new IntervenantViewReceiver());
+		intervenantdao.executeFindAll(Intervenant.class);
 		
 		return view;
 	}	
 	
-	public class UserViewReceiver implements IViewReceiver<User>
+	public class IntervenantViewReceiver implements IViewReceiver<Intervenant>
 	{
 		@Override
-		public void notifyResponseSuccess(List<User> users) {
-			for (User user : users) {
-				if(user.getRole()!=Role.codis)
+		public void notifyResponseSuccess(List<Intervenant> intervenants) {
+			for (Intervenant intervenant : intervenants) {
+				if(intervenant.getIntervention()==null)
 				{
-					Intervenant intervenant=(Intervenant)user;
-					if(intervenant.getIntervention()==null)
-					{
-						mAdapterDispo.add(intervenant);			
-					}
+					mAdapterDispo.add(intervenant);			
 				}
 			}
 			mAdapterDispo.notifyDataSetChanged();

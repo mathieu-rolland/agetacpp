@@ -9,11 +9,9 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IMessage.Message_part;
-import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.controllers.dao.ADao;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.exceptions.AddInterventionException;
-import com.istic.agetac.pattern.observer.Observer;
-import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.api.model.IPosition.AXIS;
 import com.istic.sit.framework.couch.AObjectRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
@@ -146,6 +144,75 @@ public class CreationBase {
 				m1.setIntervention(objet);
 				objet.save();
 				m1.save();
+			}
+		});
+	}
+	
+	public static void createCleanBase(){
+		// Users
+		Codis vincent = new Codis("Vincent", "vincent");
+		vincent.setPassword("vincent");
+		Codis marion = new Codis("Marion", "marion");
+		marion.setPassword("marion");
+		Intervenant antho = new Intervenant("Anthony", "antho");
+		antho.setPassword("antho");	
+		Intervenant maxime = new Intervenant("Maxime", "maxime");
+		maxime.setPassword("maxime");
+		Intervenant mathieu = new Intervenant("Mathieu", "mathieu");
+		mathieu.setPassword("mathieu");
+		Intervenant christophe = new Intervenant("Christophe", "christophe");
+		christophe.setPassword("christophe");
+		Intervenant thomas = new Intervenant("Thomas", "thomas");
+		thomas.setPassword("thomas");
+		
+		// Interventions
+		Intervention inter1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "FEU DANS ERP");
+		inter1.setCodis(vincent);
+		vincent.addIntervention(inter1);
+		inter1.addIntervenant(thomas);
+		thomas.setIntervention(inter1);
+		
+		// Messages
+		Message msg1 = new Message(inter1);
+		msg1.setDateEmission(new Date());
+		msg1.setText(Message_part.JE_DEMANDE, "un VSAV, 2 FPT");
+		msg1.setText(Message_part.JE_FAIS, "ma prise de COS");
+		msg1.setText(Message_part.JE_PREVOIS, "une intervention longue et difficile");
+		msg1.setText(Message_part.JE_SUIS, "Mathieu, COS");
+		msg1.setText(Message_part.JE_VOIS, "un blessé à la cuisse dans l'aile droite du batiment");
+		
+		Message msg2 = new Message(inter1);
+		msg2.setDateEmission(new Date());
+		msg2.setText(Message_part.JE_DEMANDE, "Rien");
+		msg2.setText(Message_part.JE_FAIS, "Mise en sécurité");
+		msg2.setText(Message_part.JE_PREVOIS, "une propagation généralisé");
+		msg2.setText(Message_part.JE_SUIS, "Mathieu, COS");
+		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
+		
+		// sauvegarde en base
+		inter1.save();
+		msg1.save();
+		msg2.save();
+		vincent.save();
+		marion.save();
+		thomas.save();
+		maxime.save();
+		christophe.save();
+		mathieu.save();
+		antho.save();
+		
+		new ADao<Codis>(new IViewReceiver<Codis>() {
+
+			@Override
+			public void notifyResponseSuccess(List<Codis> objects) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void notifyResponseFail(VolleyError error) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	}

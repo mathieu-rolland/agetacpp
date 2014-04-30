@@ -14,6 +14,7 @@ import com.istic.agetac.controllers.dao.InterventionDao;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.exceptions.AddInterventionException;
+import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IPosition.AXIS;
 import com.istic.sit.framework.couch.AObjectRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
@@ -244,8 +245,32 @@ public class CreationBase {
 		
 		//moyens
 		Moyen mo1 = new Moyen(TypeMoyen.VSAV);
-		mo1.setLibelle("Connard");
-		inter1.addMoyen(mo1);
+		mo1.setLibelle("VSAV1");
+		IPosition c = new CoordonateGPS();
+		c.set(AXIS.LAT, 48.115339);
+		c.set(AXIS.LNG, -1.638580);
+		mo1.setPosition(c);
+		
+		//Secteurs
+		Secteur s1 = new Secteur();
+		s1.setColor("#f8f8f8");
+		s1.setName("SLL");
+		
+		Secteur s2 = new Secteur();
+		s2.setColor("#ce8bec");
+		s2.setName("SAP");
+		
+		Secteur s3 = new Secteur();
+		s3.setColor("#85ba8e");
+		s3.setName("ALIM");
+		
+		Secteur s4 = new Secteur();
+		s4.setColor("#992f2f");
+		s4.setName("INC");
+		
+		Secteur s5 = new Secteur();
+		s5.setColor("#ce8bec");
+		s5.setName("CRM");
 		
 		// sauvegarde en base
 		inter1.save();
@@ -259,6 +284,11 @@ public class CreationBase {
 		mathieu.save();
 		antho.save();
 		mo1.save();
+		s1.save();
+		s2.save();
+		s3.save();
+		s4.save();
+		s5.save();
 	}
 	
 	public static void recupIntervention(String id){
@@ -341,5 +371,32 @@ public class CreationBase {
 				
 			}
 		}).executeFindAll(Message.class);
+	}
+	
+	public static void createSecteur(){
+		Secteur s1 = new Secteur();
+		s1.setColor("#f8f8f8");
+		s1.setName("SLL");
+		s1.save();
+		
+		Secteur s2 = new Secteur();
+		s2.setColor("#ce8bec");
+		s2.setName("SAP");
+		s2.save();
+		
+		Secteur s3 = new Secteur();
+		s3.setColor("#85ba8e");
+		s3.setName("ALIM");
+		s3.save();
+		
+		Secteur s4 = new Secteur();
+		s4.setColor("#992f2f");
+		s4.setName("INC");
+		s4.save();
+		
+		Secteur s5 = new Secteur();
+		s5.setColor("#ce8bec");
+		s5.setName("CRM");
+		s5.save();
 	}
 }

@@ -8,6 +8,7 @@ import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.serializer.AgetacSerializer;
 import com.istic.sit.framework.application.FrameworkApplication;
 import com.istic.sit.framework.couch.DataBaseCommunication;
+import com.istic.sit.framework.couch.JsonSerializer;
 
 public class AgetacppApplication extends FrameworkApplication {
 
@@ -17,6 +18,8 @@ public class AgetacppApplication extends FrameworkApplication {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		JsonSerializer.initSerializer();
+		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
 		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/demo/";
 	}

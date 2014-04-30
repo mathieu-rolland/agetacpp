@@ -48,6 +48,7 @@ public class AgetacSerializer {
 		@Override
 		public IMessage deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 			GsonBuilder builder = new GsonBuilder();
+			builder.registerTypeHierarchyAdapter(IIntervention.class, new IInterventionDeserializer());
 			Gson gson = builder.create();
 			return gson.fromJson(json, Message.class);
 		}

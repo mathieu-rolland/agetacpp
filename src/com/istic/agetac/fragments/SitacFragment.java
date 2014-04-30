@@ -295,17 +295,17 @@ public class SitacFragment extends MainFragment {
 				vsav_inc.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
 				vsav_inc.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 
-				IEntity vsav_sap = new Entity();
-				vsav_sap.setLibelle("VSAV SAP");
-				vsav_sap.setRepresentationOK(new Representation(R.drawable.vsav_sap));
-				vsav_sap.setRepresentationKO(new Representation(R.drawable.vsav_sap));
+				Moyen vsav_sap = new Moyen(TypeMoyen.VSAV);
+				vsav_sap.setLibelle("VSAV INC");
+				vsav_sap.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
+				vsav_sap.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 
 				addItemEntityGridMenu(fpt_alim);
 				addItemEntityGridMenu(fpt_inc);
 				addItemEntityGridMenu(fpt_sap);
 				addItemEntityGridMenu(vsav_alim);
 				addItemEntityGridMenu(vsav_inc);
-				addItemEntityGridMenu(vsav_sap);
+				addItemEntityGridMenu((Entity)vsav_sap);
 				
 				gridMenuTitle.setText("Moyen a engager");
 			}
@@ -329,12 +329,12 @@ public class SitacFragment extends MainFragment {
 			EntityAdapter entityAdapter = (EntityAdapter) parent.getAdapter();
 			IEntity gridEntity = (IEntity) entityAdapter.getItem(position);
 			// Create entity to set on map
-			Moyen moyen = new Moyen(TypeMoyen.VSAV);
+			/*Moyen moyen = new Moyen(TypeMoyen.VSAV);
 			moyen.setRepresentationOK(gridEntity.getRepresentation());
 			moyen.setRepresentationKO(gridEntity.getRepresentation());
-			moyen.setLibelle(gridEntity.getLibelle());
+			moyen.setLibelle(gridEntity.getLibelle());*/
 
-			((IBackground) fragment).addEntity(moyen, currentX,
+			((IBackground) fragment).addEntity((Entity) gridEntity, currentX,
 					currentY);
 
 			hideEntityGridMenu();

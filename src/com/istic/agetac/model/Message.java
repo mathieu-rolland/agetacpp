@@ -29,7 +29,7 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	private boolean validate;
 	private Date dateEmission;
 	private HashMap<Message_part, String> messages;
-	private IIntervention intervention;
+	private Intervention intervention;
 	
 	private transient List<Observer> observers;
 	
@@ -37,6 +37,17 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	{
 		messages = new HashMap<IMessage.Message_part, String>();
 		observers = new ArrayList<Observer>();
+		validate = false;
+		lock = false;
+		_id = "";
+		_rev = "";
+	}
+	
+	public Message( Intervention intervention )
+	{
+		messages = new HashMap<IMessage.Message_part, String>();
+		observers = new ArrayList<Observer>();
+		this.intervention = intervention;
 		validate = false;
 		lock = false;
 		_id = "";
@@ -55,6 +66,7 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 			this.lock = message.lock;
 			this.messages = message.messages;
 			this.validate = message.validate;
+			this.intervention = message.intervention;
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -259,6 +271,6 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 
 	@Override
 	public void setIntervention(IIntervention intervention) {
-		this.intervention = intervention;
+		this.intervention = (Intervention)intervention;
 	}
 }

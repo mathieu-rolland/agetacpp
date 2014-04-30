@@ -30,6 +30,7 @@ import com.istic.agetac.controllers.messages.OnCancelMessage;
 import com.istic.agetac.controllers.messages.OnNextMessagePart;
 import com.istic.agetac.controllers.messages.OnPreviousMessagePart;
 import com.istic.agetac.controllers.messages.OnSendMessage;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Message;
 import com.istic.agetac.model.MessageWorkflow;
 import com.istic.agetac.pattern.observer.Observer;
@@ -61,7 +62,7 @@ public class MessageFragment extends Fragment implements Observer {
 	private boolean isWaitingForSave = false;
 	
 	private boolean isMessageModify;
-
+	
 	public static Fragment newInstance() {
 		MessageFragment fragment = new MessageFragment();
 		return fragment;
@@ -95,7 +96,7 @@ public class MessageFragment extends Fragment implements Observer {
 		
 		//Init message with new message :
 		isMessageModify = false;
-		initWithMessage( new Message() );
+		initWithMessage( new Message( AgetacppApplication.getIntervention() ) );
 		
 		
 		//Start sync :
@@ -206,7 +207,7 @@ public class MessageFragment extends Fragment implements Observer {
 	public void message_cancel( View v )
 	{
 		isMessageModify = false;
-		initWithMessage(new Message());
+		initWithMessage(new Message( AgetacppApplication.getIntervention() ));
 	}
 	
 	private void initWithMessage( IMessage message ){
@@ -359,7 +360,7 @@ public class MessageFragment extends Fragment implements Observer {
 				messagesList.setSelection( messageAdapter.getCount() );
 			}
 			isMessageModify = false;
-			initWithMessage(new Message());
+			initWithMessage(new Message( AgetacppApplication.getIntervention() ));
 		}
 	}
 	

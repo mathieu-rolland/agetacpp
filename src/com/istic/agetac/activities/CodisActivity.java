@@ -91,7 +91,8 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 	 @Override
      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intervention intervention =  (Intervention) mListIntervention.getItemAtPosition(position);
-     	ContainerActivity.launchActivity(MODE.CODIS, this);
+     	AgetacppApplication.setCurrentInterventionCodis(intervention);
+		ContainerActivity.launchActivity(MODE.CODIS, this);
      }
 	
 	public void CreateIntervention() {
@@ -145,7 +146,6 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 		@Override
 		public void notifyResponseFail(VolleyError error) {
 			// TODO Auto-generated method stub
-			
 		}
 	}
 

@@ -41,6 +41,7 @@ public class Intervention implements IIntervention, Subject {
 		this.moyens = new ArrayList<Moyen>();
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
+		messages = new ArrayList<IMessage>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre){
@@ -51,6 +52,7 @@ public class Intervention implements IIntervention, Subject {
 		this.moyens = new ArrayList<Moyen>();
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
+		messages = new ArrayList<IMessage>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens){
@@ -61,6 +63,7 @@ public class Intervention implements IIntervention, Subject {
 		this.moyens = moyens;
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
+		messages = new ArrayList<IMessage>();
 	}
 	
 	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
@@ -71,6 +74,7 @@ public class Intervention implements IIntervention, Subject {
 		this.moyens = moyens;
 		this.intervenants = users;
 		this.observers = new ArrayList<Observer>();
+		messages = new ArrayList<IMessage>();
 	}
 
 	/**

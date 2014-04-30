@@ -44,7 +44,7 @@ public class PagerFragment extends Fragment {
 	
 	private ViewPager mViewPager;
 	private PagerAdapter mPagerAdapter;
-	private final String[] titlesCodis = new String[]{"Creation Intervention"};
+	private final String[] titlesCodis = new String[]{"Creation Intervention", "Messages"};
 	private final String[] titlesIntervenant = new String[]{"Sitac", "Tableau des Moyens", "Messages"};
 	
 	String[] titles = new String[]{"init"};
@@ -88,6 +88,7 @@ public class PagerFragment extends Fragment {
 			if(modeStr.equals(MODE.CODIS.toString())) {
 				titles = titlesCodis;
 				tabFragments.add(TableauMoyenFragment.newInstance());
+				tabFragments.add(MessageFragment.newInstance());
 			} else if(modeStr.equals(MODE.INTERVENANT.toString())) {
 				titles = titlesIntervenant;
 				tabFragments.add(SitacFragment.newInstance());

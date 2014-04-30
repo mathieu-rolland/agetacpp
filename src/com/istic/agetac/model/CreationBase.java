@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IMessage.Message_part;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.exceptions.AddInterventionException;
 import com.istic.agetac.pattern.observer.Observer;
@@ -46,7 +47,7 @@ public class CreationBase {
 		codis2.setPassword("codis2");
 		
 		// Intervention i1
-		Intervention i1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "FEU DANS ERP");
+		Intervention i1 = new Intervention("263, avenue du Gï¿½nï¿½ral Leclerc, 35042, Rennes", "FEU DANS ERP");
 		i1.addIntervenant(tata);
 		i1.setCodis(codis2);
 		tata.setIntervention(i1);
@@ -90,7 +91,7 @@ public class CreationBase {
 //					}
 //				});
 				Intervention inter = new Intervention();
-				inter.setAdresse("5 rue de la piquetière");
+				inter.setAdresse("5 rue de la piquetiï¿½re");
 				inter.setCodeSinistre("feu de cigarette");
 				inter.setCodis(objet);
 			
@@ -137,10 +138,10 @@ public class CreationBase {
 				// TODO Auto-generated method stub
 				Message m1 = new Message();
 				m1.setDateEmission(new Date());
-				m1.setText(Message_part.JE_DEMANDE, "ta mère");
+				m1.setText(Message_part.JE_DEMANDE, "ta mï¿½re");
 				m1.setText(Message_part.JE_FAIS, "de la merde");
 				m1.setText(Message_part.JE_PREVOIS, "de coder");
-				m1.setText(Message_part.JE_SUIS, "bourré");
+				m1.setText(Message_part.JE_SUIS, "bourrï¿½");
 				m1.setText(Message_part.JE_VOIS, "une belle blonde");
 				m1.setIntervention(objet);
 				objet.save();

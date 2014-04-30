@@ -25,6 +25,8 @@ import com.istic.sit.framework.view.MapFragment;
 
 public class EntityDockFragment extends AbstractEntityInformationFragment {
 
+	private Button arrived;
+	
 	public static final EntityDockFragment newInstance( MapFragment map ){
 		EntityDockFragment edf = new EntityDockFragment();
 		edf.setEntity( map.getSelectedEntity() );
@@ -56,7 +58,7 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 			Button modify = (Button) view.findViewById(R.id.fragment_entity_button_supprimer);
 			modify.setOnClickListener(new OnDeleteButton(fragment));
 			
-			Button arrived = (Button) view.findViewById(R.id.fragment_entity_button_arrived);
+			arrived = (Button) view.findViewById(R.id.fragment_entity_button_arrived);
 			
 			List<IProperty> properties = entity.getProprietes();
 			boolean dateArrivedIsSet = false;
@@ -133,6 +135,7 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
         	   entity.addPropriete( property );
         	   entity.setOk(true);
         	   entity.save();
+        	   arrived.setVisibility(View.INVISIBLE);
 		}
 		
 	}

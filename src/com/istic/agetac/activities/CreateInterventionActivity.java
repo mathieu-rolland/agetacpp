@@ -28,6 +28,8 @@ public class CreateInterventionActivity extends FragmentActivity{
 	private Button mValidButton;
 	private Button mSwitchButton;
 	private FrameLayout mFragment;
+	private Fragment mFragmentTableauDesMoyens;
+	private Fragment mFragmentDemandeMoyens;
 	private CurrentFragment mCurrentFragment;
 	
 	@Override
@@ -37,12 +39,15 @@ public class CreateInterventionActivity extends FragmentActivity{
 		mValidButton= (Button) findViewById(R.id.activity_intervention_buttonValid);
 		mSwitchButton = (Button) findViewById(R.id.activity_intervention_buttonSwitch);
 		
+		mFragmentDemandeMoyens = new DemandeDeMoyensFragment();
+		mFragmentTableauDesMoyens = new TableauMoyenFragment();
+		
 		mFragment = (FrameLayout) findViewById(R.id.activity_intervention_frame_tableau);
         
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if(mFragment != null) {
-        	ft.replace(R.id.activity_intervention_frame_tableau, new TableauMoyenFragment());
+        	ft.replace(R.id.activity_intervention_frame_tableau, mFragmentTableauDesMoyens);
         	ft.addToBackStack(null);
         	mCurrentFragment = CurrentFragment.tableau;
         }
@@ -87,16 +92,15 @@ public class CreateInterventionActivity extends FragmentActivity{
 		
 		if(mCurrentFragment==CurrentFragment.tableau)
 		{
-			fragment = new DemandeDeMoyensFragment();
+			fragment = mFragmentDemandeMoyens;
 			mCurrentFragment = CurrentFragment.ajoutMoyen;
 		}
 		else
 		{
-			fragment = new TableauMoyenFragment();
+			fragment = mFragmentTableauDesMoyens;
 			mCurrentFragment = CurrentFragment.tableau;
 		}
-		
-		
+				
 		FragmentTransaction ft = fm.beginTransaction();
 		if (mFragment != null) {
 			ft.replace(R.id.activity_intervention_frame_tableau,fragment);

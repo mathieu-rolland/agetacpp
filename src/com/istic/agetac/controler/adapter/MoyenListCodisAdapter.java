@@ -30,7 +30,6 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 	private SecteurDao mSecteur; // Modèle Secteur
 
 	/* Données récupérées */
-	private List<Moyen> datasListMoyen;
 	private List<Secteur> datasListSecteur;
 
 	/* Context */
@@ -41,10 +40,9 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 
 	private List<Spinner> spinners;
 
-	public MoyenListCodisAdapter(Context context,List<Moyen> moyens) {
-		super(context, moyens);
+	public MoyenListCodisAdapter(Context context) {
+		super(context);
 		this.spinners = new ArrayList<Spinner>();
-		this.datasListMoyen = moyens;
 		this.datasListSecteur = new ArrayList<Secteur>();
 		this.context = context;
 		this.mSecteur = new SecteurDao(new SecteurViewReceiver());
@@ -70,11 +68,13 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 		
 		Moyen current;
 
-		if (datasListMoyen == null) {
-			current = null;
-		} else {
-			current = datasListMoyen.get(position);
-		}
+//		if (datasListMoyen == null) {
+//			current = null;
+//		} else {
+//			current = datasListMoyen.get(position);
+//		}
+		
+		current = mList.get(position);
 
 		ViewHolder holder;
 

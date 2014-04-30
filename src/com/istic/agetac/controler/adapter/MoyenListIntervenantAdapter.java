@@ -30,7 +30,6 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 	private SecteurDao mSecteur; // Modèle Secteur
 
 	/* Données récupérées */
-	private List<Moyen> datasListMoyen;
 	private List<Secteur> datasListSecteur;
 
 	/* Controlers */
@@ -44,10 +43,9 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 
 	private List<Spinner> spinners;
 
-	public MoyenListIntervenantAdapter(Context context, List<Moyen> moyens) {
-		super(context, moyens);
+	public MoyenListIntervenantAdapter(Context context) {
+		super(context);
 		this.spinners = new ArrayList<Spinner>();
-		this.datasListMoyen = moyens;
 		this.datasListSecteur = new ArrayList<Secteur>();
 		this.context = context;
 		this.mSecteur = new SecteurDao(new SecteurViewReceiver());
@@ -71,11 +69,12 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 
 		Moyen current;
 
-		if (datasListMoyen == null) {
-			current = null;
-		} else {
-			current = datasListMoyen.get(position);
-		}
+//		if (datasListMoyen == null) {
+//			current = null;
+//		} else {
+//			current = datasListMoyen.get(position);
+//		}
+		current = mList.get(position);
 
 		ViewHolder holder;
 
@@ -239,22 +238,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 	public void setcSecteur(SwitchSector cSecteur) {
 		this.cSecteur = cSecteur;
 	}
-
-	/**
-	 * @return the datasListMoyen
-	 */
-	public List<Moyen> getDatasListMoyen() {
-		return datasListMoyen;
-	}
-
-	/**
-	 * @param datasListMoyen
-	 *            the datasListMoyen to set
-	 */
-	public void setDatasListMoyen(List<Moyen> datasListMoyen) {
-		this.datasListMoyen = datasListMoyen;
-	}
-
+	
 	/**
 	 * @return the datasListSecteur
 	 */

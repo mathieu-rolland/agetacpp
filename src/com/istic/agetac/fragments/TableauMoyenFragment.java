@@ -33,15 +33,17 @@ import com.istic.sit.framework.sync.PoolSynchronisation;
 
 public class TableauMoyenFragment extends Fragment {
 
+	public static TableauMoyenFragment newInstance() {
+		TableauMoyenFragment fragment = new TableauMoyenFragment();
+		return fragment;
+	}
+	
 	/* Instances des modèles è utiliser */
 	private MoyensDao mMoyen; // Modèle Moyen
 
-	/* Donnèes rècupèrèes */
-	private List<Moyen> datasMoyen; // Datas moyens rècupèrès
-
 	/* èlèments graphiques */
-	private ListView listViewMoyen; // ListView des moyens
-	private AMoyenListAdapter adapterMoyens; // Adapter des moyens
+	private ListView mListViewMoyen; // ListView des moyens
+	private AMoyenListAdapter mAdapterMoyens; // Adapter des moyens
 
 	/* Controlers */
 	private SwitchSector cSecteur;
@@ -57,13 +59,19 @@ public class TableauMoyenFragment extends Fragment {
 
 		//CreationBase.createSecteur();
 
-		listViewMoyen = (ListView) view
+		mListViewMoyen = (ListView) view
 				.findViewById(R.id.fragment_tableau_moyen_list_view);
 
 		/* Rècupèrations des donnèes via les modèles */
-		datasMoyen = new ArrayList<Moyen>();
 		mMoyen = new MoyensDao(new MoyenViewReceiver());
 		mMoyen.findAll();
+		
+		if (AgetacppApplication.getUser().getRole() == Role.codis) {
+			mAdapterMoyens = new MoyenListCodisAdapter(getActivity());
+		} else {
+			mAdapterMoyens = new MoyenListIntervenantAdapter(getActivity());
+		}
+		
 
 		return view;
 	}
@@ -73,28 +81,22 @@ public class TableauMoyenFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 	}
 
-	public static TableauMoyenFragment newInstance() {
-		TableauMoyenFragment fragment = new TableauMoyenFragment();
-		return fragment;
+	public List<Moyen> getAllMoyen()
+	{
+		return mAdapterMoyens.getAll();
 	}
 
 	public AMoyenListAdapter getAdapter() {
-		return adapterMoyens;
+		return mAdapterMoyens;
 	}
 
 	public class MoyenViewReceiver implements IViewReceiver<Moyen> {
 		@Override
 		public void notifyResponseSuccess(List<Moyen> moyens) {
-			datasMoyen = moyens;
-			if (AgetacppApplication.getUser().getRole() == Role.codis) {
-				adapterMoyens = new MoyenListCodisAdapter(getActivity(),
-						datasMoyen);
-			} else {
-				adapterMoyens = new MoyenListIntervenantAdapter(getActivity(),
-						datasMoyen);
-			}
-			adapterMoyens.notifyDataSetChanged();
-			listViewMoyen.setAdapter(adapterMoyens);
+			mAdapterMoyens.addAll(moyens);
+			
+			mAdapterMoyens.notifyDataSetChanged();
+			mListViewMoyen.setAdapter(mAdapterMoyens);
 		}
 
 		@Override

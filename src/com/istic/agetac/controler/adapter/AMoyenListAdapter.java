@@ -1,6 +1,7 @@
 package com.istic.agetac.controler.adapter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -20,14 +21,27 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 	protected List<Moyen> mList;
 	protected LayoutInflater mInflater;
 	
-	public AMoyenListAdapter(Context context,List<Moyen> moyens) {
+	public AMoyenListAdapter(Context context) {
 		this.mInflater= (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        this.mList = moyens;
+        this.mList = new ArrayList<Moyen>();
     }
 	
 	@Override
 	public int getCount() {
 		return mList.size();
+	}
+	
+	public void addAll(List<Moyen> moyens)
+	{
+		for (Moyen moyen : moyens) {
+			mList.add(moyen);
+		}
+		notifyDataSetChanged();
+	}
+	
+	public List<Moyen> getAll()
+	{
+		return mList;
 	}
 
 	@Override

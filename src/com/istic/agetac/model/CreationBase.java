@@ -24,7 +24,7 @@ public class CreationBase {
 
 	public static void createMoyen(){
 		// Moyen m1
-		Moyen m1 = new Moyen("VSAV");
+		Moyen m1 = new Moyen(TypeMoyen.VSAV);
 		CoordonateGPS pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 48.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
@@ -192,7 +192,7 @@ public class CreationBase {
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
 		//moyens
-		Moyen mo1 = new Moyen("VSAV");
+		Moyen mo1 = new Moyen(TypeMoyen.VSAV);
 		mo1.setLibelle("Connard");
 		inter1.addMoyen(mo1);
 		

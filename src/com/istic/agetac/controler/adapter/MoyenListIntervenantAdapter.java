@@ -136,7 +136,6 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 				holder.hourEngage.setVisibility(View.VISIBLE);
 				holder.name.setText(current.getLibelle());
 				holder.buttonDemand.setVisibility(View.GONE);
-				holder.buttonFree.setVisibility(View.VISIBLE);
 				//FIXME
 				holder.spinnerChoixSecteurs.setVisibility(Button.GONE);
 			}
@@ -144,7 +143,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 			if (!AMoyenListAdapter.isNullOrBlank(current.getHArrival())) {
 				holder.hourArrived.setText(current.getHArrival());
 				holder.hourArrived.setVisibility(View.VISIBLE);
-				holder.buttonFree.setVisibility(View.GONE);
+				holder.buttonFree.setVisibility(View.VISIBLE);
 			}
 
 			if (!AMoyenListAdapter.isNullOrBlank(current.getHFree())) {

@@ -26,6 +26,7 @@ import com.istic.sit.framework.view.MapFragment;
 public class EntityDockFragment extends AbstractEntityInformationFragment {
 
 	private Button arrived;
+	private Button modify;
 	
 	public static final EntityDockFragment newInstance( MapFragment map ){
 		EntityDockFragment edf = new EntityDockFragment();
@@ -55,13 +56,14 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 			TextView lng = (TextView) view.findViewById(R.id.fragment_activity_position_lng_value);
 			lng.setText( String.valueOf(entity.getPosition().get(AXIS.LNG)) );
 			
-			Button modify = (Button) view.findViewById(R.id.fragment_entity_button_supprimer);
+			modify = (Button) view.findViewById(R.id.fragment_entity_button_supprimer);
 			modify.setOnClickListener(new OnDeleteButton(fragment));
 			
 			arrived = (Button) view.findViewById(R.id.fragment_entity_button_arrived);
 			
 			List<IProperty> properties = entity.getProprietes();
 			boolean dateArrivedIsSet = false;
+			boolean dateEngagementIsSet = false;
 			for (IProperty iProperty : properties) {
 				Log.d("Log",  iProperty.getNom() + " has attribute " + iProperty.getValeur() );
 				if( iProperty.getNom().equals( Moyen.NAME_PROPERTY_HOUR_ARRIVAL )
@@ -70,14 +72,26 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 					dateArrivedIsSet = true;
 					break;
 				}
+				if( iProperty.getNom().equals( Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT) 
+						&& iProperty.getValeur() != null 
+						&& !iProperty.getValeur().isEmpty()){
+					dateEngagementIsSet = true;
+				}
 			}
 			//Masquer le bouton "Arriver" si le moyen est deja arrivé.
 			if( dateArrivedIsSet ){
 				arrived.setVisibility(View.INVISIBLE);
 			}else{
+				modify.setVisibility( View.INVISIBLE );
 				arrived.setVisibility(View.VISIBLE);
 				arrived.setOnClickListener(new OnArrivedButton());
 			}
+			
+			if( !dateEngagementIsSet ){
+				arrived.setVisibility(View.INVISIBLE);
+				modify.setVisibility(View.INVISIBLE);
+			}
+			
 		}
 		return view;
 	}
@@ -136,6 +150,7 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
         	   entity.setOk(true);
         	   entity.save();
         	   arrived.setVisibility(View.INVISIBLE);
+        	   modify.setVisibility(View.VISIBLE);
 		}
 		
 	}

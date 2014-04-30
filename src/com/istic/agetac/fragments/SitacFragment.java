@@ -166,6 +166,7 @@ public class SitacFragment extends MainFragment {
 
 	@Override
 	public void updateEntities(List<Entity> synchronizedEntities) {
+		Log.d("SYNCHRO MAP", "SitacFragment - updateEntities");
 		if (synchronizedEntities != null)
 			((MapFragment) getFragment()).updateEntities(synchronizedEntities);
 

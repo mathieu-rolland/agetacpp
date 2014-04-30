@@ -1,6 +1,5 @@
 package com.istic.agetac.fragments;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlarmManager;
@@ -24,9 +23,10 @@ import com.istic.agetac.controler.adapter.AMoyenListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
 import com.istic.agetac.controllers.dao.MoyensDao;
+import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.tableauMoyen.SwitchSector;
-import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.Secteur;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
 import com.istic.sit.framework.sync.PoolSynchronisation;
@@ -38,10 +38,10 @@ public class TableauMoyenFragment extends Fragment {
 		return fragment;
 	}
 	
-	/* Instances des modèles è utiliser */
-	private MoyensDao mMoyen; // Modèle Moyen
+	/* Instances des modï¿½les ï¿½ utiliser */
+	private MoyensDao mMoyen; // Modï¿½le Moyen
 
-	/* èlèments graphiques */
+	/* ï¿½lï¿½ments graphiques */
 	private ListView mListViewMoyen; // ListView des moyens
 	private AMoyenListAdapter mAdapterMoyens; // Adapter des moyens
 
@@ -62,7 +62,7 @@ public class TableauMoyenFragment extends Fragment {
 		mListViewMoyen = (ListView) view
 				.findViewById(R.id.fragment_tableau_moyen_list_view);
 
-		/* Rècupèrations des donnèes via les modèles */
+		/* Rï¿½cupï¿½rations des donnï¿½es via les modï¿½les */
 		mMoyen = new MoyensDao(new MoyenViewReceiver());
 		mMoyen.findAll();
 		
@@ -72,10 +72,28 @@ public class TableauMoyenFragment extends Fragment {
 			mAdapterMoyens = new MoyenListIntervenantAdapter(getActivity());
 		}
 		
-
+		SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
+		sdao.findAll();
+		
 		return view;
 	}
 
+	//RÃ©cupÃ©ration des secteurs :
+	private class OnSecteurReceived implements IViewReceiver<Secteur>
+	{
+		@Override
+		public void notifyResponseSuccess(List<Secteur> objects) {
+			if( objects != null ){
+				TableauMoyenFragment.this.mAdapterMoyens.addAllSecteurs(objects);
+			}
+			mAdapterMoyens.notifyDataSetChanged();
+		}
+
+		@Override
+		public void notifyResponseFail(VolleyError error) {
+		}
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -101,7 +119,7 @@ public class TableauMoyenFragment extends Fragment {
 
 		@Override
 		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
+			Toast.makeText(getActivity(), "Impossible de rÃ©cupÃ©rer les moyens",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -122,7 +140,7 @@ public class TableauMoyenFragment extends Fragment {
 	}
 
 	public void updateTableauDesMoyen(List<Moyen> moyens) {
-		// TODO implémenter la réception de la synchro.
+		// TODO implï¿½menter la rï¿½ception de la synchro.
 		Log.d("Synch",
 				" Recieve sync for tableau des moyens : " + moyens == null ? "Moyen is null"
 						: "Size : " + moyens.size());

@@ -26,16 +26,13 @@ import com.istic.agetac.model.Secteur;
 
 public class MoyenListCodisAdapter extends AMoyenListAdapter {
 
-	/* Instances des modèles à utiliser */
-	private SecteurDao mSecteur; // Modèle Secteur
-
-	/* Données récupérées */
-	private List<Secteur> datasListSecteur;
+	/* Instances des modï¿½les ï¿½ utiliser */
+	private SecteurDao mSecteur; // Modï¿½le Secteur
 
 	/* Context */
 	private Context context;
 
-	/* Éléments graphiques / Adapter */
+	/* ï¿½lï¿½ments graphiques / Adapter */
 	private ArrayAdapter<Secteur> adapterSecteurs; // Adapter des secteurs
 
 	private List<Spinner> spinners;
@@ -43,7 +40,6 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 	public MoyenListCodisAdapter(Context context) {
 		super(context);
 		this.spinners = new ArrayList<Spinner>();
-		this.datasListSecteur = new ArrayList<Secteur>();
 		this.context = context;
 		this.mSecteur = new SecteurDao(new SecteurViewReceiver());
 		this.mSecteur.findAll();
@@ -51,6 +47,10 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 				android.R.layout.simple_spinner_item, this.datasListSecteur));
 	}
 
+	public void secteurDataChanged(){
+		this.updateDatasSpinners(this.spinners);
+	}
+	
 	public void updateDatasSpinners(List<Spinner> spinners) {
 		
 		for(Spinner spinner : this.spinners) {
@@ -61,6 +61,12 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 			// FIXME spinner.getChildAt(0).setBackgroundColor(Color.parseColor(((Secteur)spinner.getSelectedItem()).getColor()));
 		}
 		
+	}
+	
+	public void updateDataSpinner(Spinner spinner) {
+		this.setAdapterSecteurs(new ArrayAdapter<Secteur>(context,
+				R.layout.item_secteur_tableau_moyen, datasListSecteur));
+		spinner.setAdapter( getAdapterSecteurs() );
 	}
 	
 	@Override
@@ -145,16 +151,17 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 		if (!this.spinners.contains(holder.spinnerChoixSecteurs)) 
 		{
 			this.spinners.add(holder.spinnerChoixSecteurs);
+			updateDataSpinner(holder.spinnerChoixSecteurs);
 		}
 		
-		this.updateDatasSpinners(this.spinners);
+//		this.updateDatasSpinners(this.spinners);
 		convertView.setTag(holder);
         
         return convertView;
 	}
 	
 	/**
-	 * Méthode qui affiche un toast suite à la réception d'un message
+	 * Mï¿½thode qui affiche un toast suite ï¿½ la rï¿½ception d'un message
 	 * 
 	 * @param message
 	 */
@@ -176,7 +183,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 			Log.d("Antho", String.valueOf(secteurs.size()));
 			datasListSecteur = secteurs;
 			getAdapterSecteurs().notifyDataSetChanged();
-			onMessageReveive("Récupération réussie des secteurs");
+			onMessageReveive("Rï¿½cupï¿½ration rï¿½ussie des secteurs");
 			if (spinners != null) {
 				updateDatasSpinners(spinners);
 			}
@@ -185,7 +192,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 
 		@Override
 		public void notifyResponseFail(VolleyError error) {
-			onMessageReveive("Impossible de récupérer les secteurs");
+			onMessageReveive("Impossible de rï¿½cupï¿½rer les secteurs");
 		}
 
 	}

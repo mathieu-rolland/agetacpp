@@ -125,7 +125,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 			
 			if (!AMoyenListAdapter.isNullOrBlank(current.getHDemande())) {
 				holder.hourDemand.setText(current.getHDemande());
-				if (current.getHEngagement() == null) {
+				if (AMoyenListAdapter.isNullOrBlank(current.getHEngagement())) {
 					holder.hourEngage.setText("En attente du codis");
 					holder.hourEngage.setVisibility(View.VISIBLE);
 				}
@@ -137,7 +137,8 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 				holder.name.setText(current.getLibelle());
 				holder.buttonDemand.setVisibility(View.GONE);
 				holder.buttonFree.setVisibility(View.VISIBLE);
-				holder.spinnerChoixSecteurs.setVisibility(Button.VISIBLE);
+				//FIXME
+				holder.spinnerChoixSecteurs.setVisibility(Button.GONE);
 			}
 
 			if (!AMoyenListAdapter.isNullOrBlank(current.getHArrival())) {

@@ -14,8 +14,8 @@ import com.istic.agetac.model.Moyen;
 public class ListenerFree implements OnClickListener {
 	
 	/** Attributs */
-	private Moyen mItemMoyen; // Instance de l'item à traiter
-	private MoyenListIntervenantAdapter mAdapterMoyen; // Instance de la vue d'où est joué le listener
+	private Moyen mItemMoyen; // Instance de l'item ï¿½ traiter
+	private MoyenListIntervenantAdapter mAdapterMoyen; // Instance de la vue d'oï¿½ est jouï¿½ le listener
 
 	public ListenerFree(Moyen item, MoyenListIntervenantAdapter adapter)
 	{		
@@ -28,15 +28,16 @@ public class ListenerFree implements OnClickListener {
 	@Override
 	public void onClick(View v) {		    
         
-        //Création de l'AlertDialog
+        //Crï¿½ation de l'AlertDialog
         AlertDialog.Builder adb = new AlertDialog.Builder(v.getContext());
         
-        adb.setTitle("Confirmer la libération du véhicule");
+        adb.setTitle("Confirmer la libï¿½ration du vï¿½hicule");
         
-        //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
+        //On affecte un bouton "OK" ï¿½ notre AlertDialog et on lui affecte un ï¿½vï¿½nement
         adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {             	
-				mAdapterMoyen.setFree(mItemMoyen, new Date());			
+				mAdapterMoyen.setFree(mItemMoyen, new Date());
+				mItemMoyen.save();
 				dialog.cancel();
           } });
  

@@ -17,8 +17,8 @@ import com.istic.agetac.model.Moyen;
 public class ListenerEngage implements OnClickListener {
 
 	/** Attributs */
-	private Moyen mItemMoyen; // Instance de l'item à traiter
-	private MoyenListCodisAdapter mAdapterMoyen; // Instance de la vue d'où est joué le listener
+	private Moyen mItemMoyen; // Instance de l'item ï¿½ traiter
+	private MoyenListCodisAdapter mAdapterMoyen; // Instance de la vue d'oï¿½ est jouï¿½ le listener
 
 	public ListenerEngage(Moyen item, MoyenListCodisAdapter adapter)
 	{		
@@ -34,13 +34,13 @@ public class ListenerEngage implements OnClickListener {
         LayoutInflater factory = LayoutInflater.from(v.getContext());
         final View alertDialogView = factory.inflate(R.layout.dialog_tableau_moyen_engage, null);
  
-        //Création de l'AlertDialog
+        //Crï¿½ation de l'AlertDialog
         AlertDialog.Builder adb = new AlertDialog.Builder(v.getContext());
  
-        //On affecte la vue personnalisé que l'on a crée à notre AlertDialog
+        //On affecte la vue personnalisï¿½ que l'on a crï¿½e ï¿½ notre AlertDialog
         adb.setView(alertDialogView);
  
-        //On affecte un bouton "OK" à notre AlertDialog et on lui affecte un évènement
+        //On affecte un bouton "OK" ï¿½ notre AlertDialog et on lui affecte un ï¿½vï¿½nement
         adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) { 
             	String nom = ((EditText) alertDialogView.findViewById(R.id.dialog_tableau_moyen_name)).getText().toString();
@@ -48,7 +48,8 @@ public class ListenerEngage implements OnClickListener {
             		return;
             	
 				mItemMoyen.setLibelle(nom);
-				mAdapterMoyen.setEngage(mItemMoyen, new Date());		
+				mAdapterMoyen.setEngage(mItemMoyen, new Date());
+				mItemMoyen.save();
 				dialog.cancel();
           } });
  

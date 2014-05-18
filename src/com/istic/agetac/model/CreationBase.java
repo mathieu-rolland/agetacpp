@@ -62,33 +62,6 @@ public class CreationBase {
 		m1.save();
 	}
 	
-	public static void createSecteur(){
-		Secteur s1 = new Secteur();
-		s1.setColor("#f8f8f8");
-		s1.setName("SLL");
-		s1.save();
-		
-		Secteur s2 = new Secteur();
-		s2.setColor("#ce8bec");
-		s2.setName("SAP");
-		s2.save();
-		
-		Secteur s3 = new Secteur();
-		s3.setColor("#85ba8e");
-		s3.setName("ALIM");
-		s3.save();
-		
-		Secteur s4 = new Secteur();
-		s4.setColor("#992f2f");
-		s4.setName("INC");
-		s4.save();
-		
-		Secteur s5 = new Secteur();
-		s5.setColor("#ce8bec");
-		s5.setName("CRM");
-		s5.save();
-	}
-	
 	public static void createUser() throws AddInterventionException{
 		// User tata
 		Intervenant tata = new Intervenant("TUYAUX", "toto");
@@ -246,10 +219,13 @@ public class CreationBase {
 		//moyens
 		Moyen mo1 = new Moyen(TypeMoyen.VSAV);
 		mo1.setLibelle("VSAV1");
-		IPosition c = new CoordonateGPS();
-		c.set(AXIS.LAT, 48.115339);
-		c.set(AXIS.LNG, -1.638580);
-		mo1.setPosition(c);
+		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
+		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
+		
+		Moyen mo2 = new Moyen(TypeMoyen.VSAV);
+		mo2.setLibelle("VSAV2");
+		mo2.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
+		mo2.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
 		
 		//Secteurs
 		Secteur s1 = new Secteur();
@@ -284,6 +260,7 @@ public class CreationBase {
 		mathieu.save();
 		antho.save();
 		mo1.save();
+		mo2.save();
 		s1.save();
 		s2.save();
 		s3.save();

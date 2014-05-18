@@ -31,6 +31,8 @@ import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.User;
+import com.istic.sit.framework.couch.APersitantRecuperator;
+import com.istic.sit.framework.couch.CouchDBUtils;
 
 public class LoginActivity extends Activity {
 
@@ -142,8 +144,7 @@ public class LoginActivity extends Activity {
 			mLoginStatusMessageView
 					.setText(R.string.activity_login_progress_login_in);
 			showProgress(true);
-			mAuthTask = new UserDao(new UserViewReceiver());
-			mAuthTask.findAll();
+			CouchDBUtils.getFromCouch(new UserViewReceiver(User.class, "agetacpp", "connexion", mUser));
 		}
 	}
 
@@ -192,51 +193,60 @@ public class LoginActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserViewReceiver implements IViewReceiver<User> {
+	public class UserViewReceiver extends APersitantRecuperator<User> {
+
+		public UserViewReceiver(Class<User> type, String design, String view,
+				String username) {
+			super(type, design, view, username);
+		}
 
 		@Override
-		public void notifyResponseSuccess(List<User> objects) {
+		public void onErrorResponse(VolleyError error) {
+			showProgress(false);
+			Log.e("LoginActivity", error.getMessage() == null ? error.toString() : error.getMessage() );
+		}
+
+		@Override
+		public void onResponse(List<User> users) {
 			mUserView.setError(null);
 			mPasswordView.setError(null);
 			boolean find = false;
-			for(User user : objects){
-				if(user.getUsername().equals(mUser)){
-					find = true;
-					showProgress(false);
-					if(user.getPassword().equals(mPassword)){
-						AgetacppApplication.setUser(user);
-						if(user.getRole().equals(Role.codis)){
-							CodisActivity.launchActivity(LoginActivity.this);
+			for(User user : users){
+				find = true;
+				showProgress(false);
+				if(user.getPassword().equals(mPassword)){
+					AgetacppApplication.setUser(user);
+					if(user.getRole().equals(Role.codis)){
+						CodisActivity.launchActivity(LoginActivity.this);
+					}
+					else if(user.getRole().equals(Role.intervenant)){
+						Intervenant intervenant = (Intervenant)user;
+						if(intervenant.getIntervention() == null){
+							ImageView imageView = new ImageView(LoginActivity.this);
+							imageView.setImageResource(R.drawable.vacances);
+							AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+							builder.setMessage(R.string.activity_login_intervenant_message);
+							builder.setTitle(R.string.activity_login_intervenant_titre);
+							builder.setCancelable(false);
+							builder.setView(imageView);
+							builder.setPositiveButton(R.string.activity_login_intervenant_button, new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									dialog.cancel();
+								}
+							});
+							AlertDialog alert = builder.create();
+							alert.show();
 						}
-						else if(user.getRole().equals(Role.intervenant)){
-							Intervenant intervenant = (Intervenant)user;
-							if(intervenant.getIntervention() == null){
-								ImageView imageView = new ImageView(LoginActivity.this);
-								imageView.setImageResource(R.drawable.vacances);
-								AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-								builder.setMessage(R.string.activity_login_intervenant_message);
-								builder.setTitle(R.string.activity_login_intervenant_titre);
-								builder.setCancelable(false);
-								builder.setView(imageView);
-								builder.setPositiveButton(R.string.activity_login_intervenant_button, new DialogInterface.OnClickListener() {
-									
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										dialog.cancel();
-									}
-								});
-								AlertDialog alert = builder.create();
-								alert.show();
-							}
-							else{
-								ContainerActivity.launchActivity(MODE.INTERVENANT, LoginActivity.this);
-							}
+						else{
+							ContainerActivity.launchActivity(MODE.INTERVENANT, LoginActivity.this);
 						}
 					}
-					else{
-						mPasswordView.setError(getString(R.string.error_incorrect_password));
-						mPasswordView.requestFocus();
-					}
+				}
+				else{
+					mPasswordView.setError(getString(R.string.error_incorrect_password));
+					mPasswordView.requestFocus();
 				}
 			}
 			if(!find){
@@ -244,12 +254,6 @@ public class LoginActivity extends Activity {
 				mUserView.setError(getString(R.string.error_incorrect_login));
 				mUserView.requestFocus();
 			}
-		}
-
-		@Override
-		public void notifyResponseFail(VolleyError error) {
-			showProgress(false);
-			Log.e("LoginActivity", error.getMessage() == null ? error.toString() : error.getMessage() );
 		}
 		
 	}

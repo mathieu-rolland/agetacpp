@@ -55,6 +55,7 @@ public class LoginActivity extends Activity {
 //		CreationBase.createCleanBase();
 		setContentView(R.layout.activity_login);
 		
+		CreationBase.createCleanBase();
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);
 

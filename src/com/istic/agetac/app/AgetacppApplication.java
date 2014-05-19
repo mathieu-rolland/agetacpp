@@ -2,7 +2,6 @@ package com.istic.agetac.app;
 
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.model.IUser.Role;
-import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.serializer.AgetacSerializer;
@@ -21,7 +20,7 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initSerializer();
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/demo/";
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/test/";
 	}
 
 	/**

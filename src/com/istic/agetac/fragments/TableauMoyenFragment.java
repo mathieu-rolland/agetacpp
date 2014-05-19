@@ -23,13 +23,14 @@ import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.AMoyenListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
-import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.tableauMoyen.SwitchSector;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
+import com.istic.sit.framework.couch.APersitantRecuperator;
+import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
 public class TableauMoyenFragment extends Fragment {
@@ -43,7 +44,6 @@ public class TableauMoyenFragment extends Fragment {
 	private List<Moyen> mListMoyen;
 	
 	/* Instances des mod�les � utiliser */
-	private MoyensDao mMoyen; // Mod�le Moyen
 
 	/* �l�ments graphiques */
 	private ListView mListViewMoyen; // ListView des moyens
@@ -73,8 +73,7 @@ public class TableauMoyenFragment extends Fragment {
 		
 		if(!mIsCreating)
 		{
-			mMoyen = new MoyensDao(new MoyenViewReceiver());
-			mMoyen.findAll();
+			CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication.getIntervention().getId()));
 		}
 		
 		if (AgetacppApplication.getUser().getRole() == Role.codis) {
@@ -143,35 +142,26 @@ public class TableauMoyenFragment extends Fragment {
 		return mAdapterMoyens;
 	}
 
-	public class MoyenViewReceiver implements IViewReceiver<Moyen> {
+	public class MoyenRecuperator extends APersitantRecuperator<Moyen> {
+		
+		public MoyenRecuperator(String idIntervention) {
+			super(Moyen.class, "agetacpp", "get_moyens_by_intervention", idIntervention);
+		}
+
+
 		@Override
-		public void notifyResponseSuccess(List<Moyen> moyens) {
+		public void onErrorResponse(VolleyError error) {
+			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
+					Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onResponse(List<Moyen> moyens) {
 			mAdapterMoyens.addAll(moyens);
 			Log.e("Vincent", "Moyen recu de la bdd");
 			mAdapterMoyens.notifyDataSetChanged();
 			mListViewMoyen.setAdapter(mAdapterMoyens);
 		}
-
-		@Override
-		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
-					Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	/**
-	 * @return the mMoyen
-	 */
-	public MoyensDao getmMoyen() {
-		return mMoyen;
-	}
-
-	/**
-	 * @param mMoyen
-	 *            the mMoyen to set
-	 */
-	public void setmMoyen(MoyensDao mMoyen) {
-		this.mMoyen = mMoyen;
 	}
 
 	public void updateTableauDesMoyen(List<Moyen> moyens) {

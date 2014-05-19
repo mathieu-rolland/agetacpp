@@ -27,6 +27,7 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.fragments.PagerFragment.MODE;
+import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.User;
 import com.istic.sit.framework.couch.APersitantRecuperator;
@@ -51,7 +52,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		
+//		CreationBase.createCleanBase();
 		setContentView(R.layout.activity_login);
 		
 		// Set up the login form.

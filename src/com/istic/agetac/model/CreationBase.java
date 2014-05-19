@@ -220,6 +220,7 @@ public class CreationBase {
 		mo1.setLibelle("VSAV1");
 		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
 		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
+		inter1.addMoyen(mo1);
 		
 		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC);
 		mo2.setLibelle("VSAV2");

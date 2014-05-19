@@ -20,6 +20,9 @@ import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Message;
 import com.istic.agetac.model.User;
+import com.istic.sit.framework.api.model.IPosition;
+import com.istic.sit.framework.api.model.IProperty;
+import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.couch.JsonSerializer;
 
 
@@ -37,6 +40,9 @@ public class AgetacSerializer {
 		@Override
 		public IIntervention deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 			GsonBuilder builder = new GsonBuilder();
+			builder.registerTypeAdapter(IProperty.class, new JsonSerializer.IPropertyDeserializer());
+			builder.registerTypeAdapter(IRepresentation.class, new JsonSerializer.IRepresentationDeserializer());
+			builder.registerTypeAdapter(IPosition.class, new JsonSerializer.IPositionDeserializer());
 			Gson gson = builder.create();
 			return gson.fromJson(json, Intervention.class);
 		}
@@ -60,6 +66,7 @@ public class AgetacSerializer {
 		@Override
 		public User deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 			GsonBuilder builder = new GsonBuilder();
+			builder.registerTypeHierarchyAdapter(IIntervention.class, new IInterventionDeserializer());
 			Gson gson = builder.create();
 			if(json.getAsJsonObject().get("role").getAsString().equals("codis")){
 				return gson.fromJson(json, Codis.class);

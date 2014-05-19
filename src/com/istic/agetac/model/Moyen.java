@@ -9,6 +9,7 @@ import android.os.Parcel;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IProperty;
@@ -220,6 +221,8 @@ public class Moyen extends Entity {
 	@Override
 	public void onResponse(JSONObject response) {
 		super.onResponse(response);
+		AgetacppApplication.getIntervention().addMoyen(this);
+		AgetacppApplication.getIntervention().save();
 	}
 
 	@Override

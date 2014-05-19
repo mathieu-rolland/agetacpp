@@ -270,35 +270,23 @@ public class SitacFragment extends MainFragment {
 				gridMenuTitle.setText("Elements d'environnement a placer");
 			}
 			else if(typeEntity.getId().equals("#moyen")){
-				IEntity fpt_alim = new Entity();
+				Moyen fpt_alim = new Moyen(TypeMoyen.FPT_ALIM);
 				fpt_alim.setLibelle("FPT ALIM");
-				fpt_alim.setRepresentationOK(new Representation(R.drawable.fpt_alim));
-				fpt_alim.setRepresentationKO(new Representation(R.drawable.fpt_inc));
 
-				IEntity fpt_inc = new Entity();
+				Moyen fpt_inc = new Moyen(TypeMoyen.FPT_INC);
 				fpt_inc.setLibelle("FPT INC");
-				fpt_inc.setRepresentationOK(new Representation(R.drawable.fpt_inc));
-				fpt_inc.setRepresentationKO(new Representation(R.drawable.fpt_inc));
 
-				IEntity fpt_sap = new Entity();
+				Moyen fpt_sap = new Moyen(TypeMoyen.FPT_SAP);
 				fpt_sap.setLibelle("FPT SAP");
-				fpt_sap.setRepresentationOK(new Representation(R.drawable.fpt_sap));
-				fpt_sap.setRepresentationKO(new Representation(R.drawable.fpt_sap));
 				
-				IEntity vsav_alim = new Entity();
+				Moyen vsav_alim = new Moyen(TypeMoyen.VSAV_ALIM);
 				vsav_alim.setLibelle("VSAV ALIM");
-				vsav_alim.setRepresentationOK(new Representation(R.drawable.vsav_alim));
-				vsav_alim.setRepresentationKO(new Representation(R.drawable.vsav_alim));
 
-				IEntity vsav_inc = new Entity();
+				Moyen vsav_inc = new Moyen(TypeMoyen.VSAV_INC);
 				vsav_inc.setLibelle("VSAV INC");
-				vsav_inc.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
-				vsav_inc.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 
-				Moyen vsav_sap = new Moyen(TypeMoyen.VSAV);
-				vsav_sap.setLibelle("VSAV INC");
-				vsav_sap.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
-				vsav_sap.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
+				Moyen vsav_sap = new Moyen(TypeMoyen.VSAV_SAP);
+				vsav_sap.setLibelle("VSAV SAP");
 
 				addItemEntityGridMenu(fpt_alim);
 				addItemEntityGridMenu(fpt_inc);

@@ -124,7 +124,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		/** Instanciations des modèles */
 		this.mMoyens 			= new MoyensDao(this);
 		this.mTypeMoyen = new ArrayList<TypeMoyen>();
-		this.mTypeMoyen.add(TypeMoyen.VSAV);
+		this.mTypeMoyen.add(TypeMoyen.VSAV_INC);
 		
 		/** Récupérations des données via les modèles */
 		this.mMoyens.findAll();
@@ -224,11 +224,11 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		if(AgetacppApplication.getUser().getRole()==Role.codis)
 		{
 			mListMoyen = new ArrayList<Moyen>();
-			Moyen m =new Moyen(TypeMoyen.VSAV);
+			Moyen m =new Moyen(TypeMoyen.VSAV_INC);
 			m.setRepresentationOK(new Representation(R.drawable.fpt_1_alim));
 			m.setHDemande(new Date());
 			mListMoyen.add(m);
-			Moyen m2 =new Moyen(TypeMoyen.VSAV);
+			Moyen m2 =new Moyen(TypeMoyen.VSAV_INC);
 			m2.setRepresentationOK(new Representation(R.drawable.fpt_2_inc));
 			m2.setHDemande(new Date(2014,01,01));
 			mListMoyen.add(m2);

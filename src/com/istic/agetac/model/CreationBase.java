@@ -24,7 +24,7 @@ public class CreationBase {
 
 	public static void createMoyen(){
 		// Moyen m1
-		Moyen m1 = new Moyen(TypeMoyen.VSAV);
+		Moyen m1 = new Moyen(TypeMoyen.VSAV_INC);
 		CoordonateGPS pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 48.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
@@ -36,7 +36,7 @@ public class CreationBase {
 		
 		m1.save();
 		
-		m1 = new Moyen(TypeMoyen.VSAV);
+		m1 = new Moyen(TypeMoyen.VSAV_INC);
 		pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 49.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
@@ -48,7 +48,7 @@ public class CreationBase {
 		
 		m1.save();
 		
-		m1 = new Moyen(TypeMoyen.VSAV);
+		m1 = new Moyen(TypeMoyen.VSAV_INC);
 		pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 50.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
@@ -216,12 +216,12 @@ public class CreationBase {
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
 		//moyens
-		Moyen mo1 = new Moyen(TypeMoyen.VSAV);
+		Moyen mo1 = new Moyen(TypeMoyen.VSAV_INC);
 		mo1.setLibelle("VSAV1");
 		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
 		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		
-		Moyen mo2 = new Moyen(TypeMoyen.VSAV);
+		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC);
 		mo2.setLibelle("VSAV2");
 		mo2.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 		mo2.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));

@@ -6,6 +6,7 @@ import java.util.Date;
 import org.json.JSONObject;
 
 import android.os.Parcel;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.controllers.dao.SecteurDao;
@@ -21,34 +22,41 @@ import com.istic.sit.framework.model.Property;
  * @author Anthony LE MEE - 10003134
  */
 public class Moyen extends Entity {
-	
-	public static final SimpleDateFormat FORMATER = new SimpleDateFormat("ddMM '-' hhmm"); //("ddMM '-' hhmm");
-	
+
+	public static final SimpleDateFormat FORMATER = new SimpleDateFormat(
+			"ddMM '-' hhmm"); // ("ddMM '-' hhmm");
+
 	/** Constante string which defines name of property of type of moyen */
-	public static final String NAME_PROPERTY_TYPE 				= "moyen_type";
+	public static final String NAME_PROPERTY_TYPE = "moyen_type";
 	/** Constante string which defines name of property of moyen demand hour */
-	public static final String NAME_PROPERTY_HOUR_DEMAND 		= "moyen_hour_demand";
+	public static final String NAME_PROPERTY_HOUR_DEMAND = "moyen_hour_demand";
 	/** Constante string which defines name of property of moyen engagement hour */
-	public static final String NAME_PROPERTY_HOUR_ENGAGEMENT 	= "moyen_hour_engagement";
+	public static final String NAME_PROPERTY_HOUR_ENGAGEMENT = "moyen_hour_engagement";
 	/** Constante string which defines name of property of moyen arrival hour */
-	public static final String NAME_PROPERTY_HOUR_ARRIVAL 		= "moyen_hour_arrival";
+	public static final String NAME_PROPERTY_HOUR_ARRIVAL = "moyen_hour_arrival";
 	/** Constante string which defines name of property of moyen free hour */
-	public static final String NAME_PROPERTY_HOUR_FREE 		= "moyen_hour_free";
+	public static final String NAME_PROPERTY_HOUR_FREE = "moyen_hour_free";
 	/** Constante string which defines name of property of moyen secteur hour */
-	public static final String NAME_PROPERTY_SECTEUR 			= "moyen_secteur";
+	public static final String NAME_PROPERTY_SECTEUR = "moyen_secteur";
 
 	/**
 	 * Constructeur de la classe Moyen
-	 * @param typeValue : Type of moyen
+	 * 
+	 * @param typeValue
+	 *            : Type of moyen
 	 */
-	public Moyen (TypeMoyen typeValue) {
+	public Moyen(TypeMoyen typeValue) {
 		super();
-		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue.toString());
-		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, FORMATER.format(new Date()));
-		IProperty hEngagementProperty 	= creatProperty(NAME_PROPERTY_HOUR_ENGAGEMENT, null);
-		IProperty hArrivalProperty 		= creatProperty(NAME_PROPERTY_HOUR_ARRIVAL, null);
-		IProperty hFreeProperty 		= creatProperty(NAME_PROPERTY_HOUR_FREE, null);
-		IProperty secteurProperty 		= creatProperty(NAME_PROPERTY_SECTEUR, null);
+		IProperty typeProperty = creatProperty(NAME_PROPERTY_TYPE,
+				typeValue.toString());
+		IProperty hDemandProperty = creatProperty(NAME_PROPERTY_HOUR_DEMAND,
+				FORMATER.format(new Date()));
+		IProperty hEngagementProperty = creatProperty(
+				NAME_PROPERTY_HOUR_ENGAGEMENT, null);
+		IProperty hArrivalProperty = creatProperty(NAME_PROPERTY_HOUR_ARRIVAL,
+				null);
+		IProperty hFreeProperty = creatProperty(NAME_PROPERTY_HOUR_FREE, null);
+		IProperty secteurProperty = creatProperty(NAME_PROPERTY_SECTEUR, null);
 		super.addPropriete(typeProperty);
 		super.addPropriete(hDemandProperty);
 		super.addPropriete(hEngagementProperty);
@@ -56,20 +64,27 @@ public class Moyen extends Entity {
 		super.addPropriete(hFreeProperty);
 		super.addPropriete(secteurProperty);
 	}
-	
+
 	/**
 	 * Constructeur de la classe Moyen
-	 * @param typeValue : Type of moyen
-	 * @param position : position of moyen
+	 * 
+	 * @param typeValue
+	 *            : Type of moyen
+	 * @param position
+	 *            : position of moyen
 	 */
-	public Moyen (TypeMoyen typeValue, IPosition position) {
+	public Moyen(TypeMoyen typeValue, IPosition position) {
 		super(position);
-		IProperty typeProperty 			= creatProperty(NAME_PROPERTY_TYPE, typeValue.toString());
-		IProperty hDemandProperty 		= creatProperty(NAME_PROPERTY_HOUR_DEMAND, FORMATER.format(new Date()));
-		IProperty hEngagementProperty 	= creatProperty(NAME_PROPERTY_HOUR_ENGAGEMENT, null);
-		IProperty hArrivalProperty 		= creatProperty(NAME_PROPERTY_HOUR_ARRIVAL, null);
-		IProperty hFreeProperty 		= creatProperty(NAME_PROPERTY_HOUR_FREE, null);
-		IProperty secteurProperty 		= creatProperty(NAME_PROPERTY_SECTEUR, null);
+		IProperty typeProperty = creatProperty(NAME_PROPERTY_TYPE,
+				typeValue.toString());
+		IProperty hDemandProperty = creatProperty(NAME_PROPERTY_HOUR_DEMAND,
+				FORMATER.format(new Date()));
+		IProperty hEngagementProperty = creatProperty(
+				NAME_PROPERTY_HOUR_ENGAGEMENT, null);
+		IProperty hArrivalProperty = creatProperty(NAME_PROPERTY_HOUR_ARRIVAL,
+				null);
+		IProperty hFreeProperty = creatProperty(NAME_PROPERTY_HOUR_FREE, null);
+		IProperty secteurProperty = creatProperty(NAME_PROPERTY_SECTEUR, null);
 		super.addPropriete(typeProperty);
 		super.addPropriete(hDemandProperty);
 		super.addPropriete(hEngagementProperty);
@@ -77,75 +92,106 @@ public class Moyen extends Entity {
 		super.addPropriete(hFreeProperty);
 		super.addPropriete(secteurProperty);
 	}
-	
+
 	/**
 	 * Constructeur de la classe Moyen
-	 * @param source : moyen
+	 * 
+	 * @param source
+	 *            : moyen
 	 */
-	public Moyen (Parcel source) {
+	public Moyen(Parcel source) {
 		super(source);
 	}
 
-	public String getType () {
-		return super.getProperty(NAME_PROPERTY_TYPE).getValeur();
+	public TypeMoyen getType() {
+
+		if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
+				.equals(TypeMoyen.VSAV_INC.toString())) {
+			return TypeMoyen.VSAV_INC;
+		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
+				.equals(TypeMoyen.FPT_ALIM.toString())) {
+			return TypeMoyen.FPT_ALIM;
+		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
+				.equals(TypeMoyen.FPT_INC.toString())) {
+			return TypeMoyen.FPT_INC;
+		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
+				.equals(TypeMoyen.FPT_SAP.toString())) {
+			return TypeMoyen.FPT_SAP;
+		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
+				.equals(TypeMoyen.VSAV_ALIM.toString())) {
+			return TypeMoyen.VSAV_ALIM;
+		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
+				.equals(TypeMoyen.VSAV_SAP.toString())) {
+			return TypeMoyen.VSAV_SAP;
+		} else {
+			return null;
+		}
+
+		// throw NullPointerException;
+
 	} // method
 
-	public String getHDemande () {
+	public String getHDemande() {
 		return super.getProperty(NAME_PROPERTY_HOUR_DEMAND).getValeur();
 	} // method
 
-	public String getHArrival () {
+	public String getHArrival() {
 		return super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).getValeur();
 	} // method
-	
-	public String getHEngagement () {
+
+	public String getHEngagement() {
 		return super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).getValeur();
 	} // method
 
-	public String getHFree () {
+	public String getHFree() {
 		return super.getProperty(NAME_PROPERTY_HOUR_FREE).getValeur();
 	} // method
 
-	public String getSecteur () {
+	public String getSecteur() {
 		return super.getProperty(NAME_PROPERTY_SECTEUR).getValeur();
 	} // method
-	
-	public void setType (String valeur) {
+
+	public void setType(String valeur) {
 		super.getProperty(NAME_PROPERTY_TYPE).setValeur(valeur);
 	} // method
 
-	public void setHDemande (Date valeur) {
-		super.getProperty(NAME_PROPERTY_HOUR_DEMAND).setValeur(FORMATER.format(valeur));
+	public void setHDemande(Date valeur) {
+		super.getProperty(NAME_PROPERTY_HOUR_DEMAND).setValeur(
+				FORMATER.format(valeur));
 	} // method
 
-	public void setHArrival (Date valeur) {
-		super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).setValeur(FORMATER.format(valeur));
+	public void setHArrival(Date valeur) {
+		super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).setValeur(
+				FORMATER.format(valeur));
 		super.setOk(true);
 	} // method
 
-	public void setHEngagement (Date dateEngage) {
-		super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).setValeur(FORMATER.format(dateEngage));
+	public void setHEngagement(Date dateEngage) {
+		super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).setValeur(
+				FORMATER.format(dateEngage));
 	} // method
 
-	public void setHFree (Date valeur) {
-		super.getProperty(NAME_PROPERTY_HOUR_FREE).setValeur(FORMATER.format(valeur));
+	public void setHFree(Date valeur) {
+		super.getProperty(NAME_PROPERTY_HOUR_FREE).setValeur(
+				FORMATER.format(valeur));
 	} // method
-	
+
 	/**
 	 * Method which return secteur of moyen
+	 * 
 	 * @return String : secteur of moyen
 	 */
-	public void setSecteur (String valeur) {
+	public void setSecteur(String valeur) {
 		super.getProperty(NAME_PROPERTY_SECTEUR).setValeur(valeur);
 	} // method
-	
-	public IProperty creatProperty (String name, String value) {
+
+	public IProperty creatProperty(String name, String value) {
 		IProperty property = new Property();
 		property.setNom(name);
 		property.setValeur(value);
 		return property;
 	}
-	
+
 	@Override
 	public String getUrl(int method) {
 		return super.getUrl(method);
@@ -226,29 +272,33 @@ public class Moyen extends Entity {
 		super.addPropriete(property);
 	}
 
-	@Override
-	public IRepresentation getRepresentationOK() {
-		return super.getRepresentationOK();
-	}
+	// @Override
+	// public IRepresentation getRepresentationOK() {
+	// return super.getRepresentationOK();
+	// }
 
-	@Override
-	public void setRepresentationOK(IRepresentation representation) {
-		super.setRepresentationOK(representation);
-	}
-	
-	@Override
-	public IRepresentation getRepresentationKO() {
-		return super.getRepresentationKO();
-	}
+	// @Override
+	// public void setRepresentationOK(IRepresentation representation) {
+	// super.setRepresentationOK(representation);
+	// }
 
-	@Override
-	public void setRepresentationKO(IRepresentation representation) {
-		super.setRepresentationKO(representation);
-	}
-	
+	// @Override
+	// public IRepresentation getRepresentationKO() {
+	// return super.getRepresentationKO();
+	// }
+
+	// @Override
+	// public void setRepresentationKO(IRepresentation representation) {
+	// super.setRepresentationKO(representation);
+	// }
+
 	@Override
 	public IRepresentation getRepresentation() {
-		return super.getRepresentation();
+		if (this.getType() == null) {
+			return super.getRepresentation();
+		} else {
+			return this.getType().getRepresentation();
+		}
 	}
 
 	@Override
@@ -285,10 +335,10 @@ public class Moyen extends Entity {
 	public void setOk(boolean ok) {
 		super.setOk(ok);
 	}
-	
+
 	@Override
 	public void setFrozen(boolean frozen) {
 		super.setFrozen(frozen);
 	}
-	
+
 }

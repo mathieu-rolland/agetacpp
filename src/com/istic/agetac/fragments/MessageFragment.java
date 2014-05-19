@@ -133,7 +133,7 @@ public class MessageFragment extends Fragment implements Observer {
 		
 		if( MessageWorkflow.isLastState(newCurrent) ){
 			Toast.makeText(getActivity().getApplicationContext(), 
-					"Aucune �tape suivant " + 
+					"Aucune étape suivant " + 
 				    MessageWorkflow.getWording(getActivity().getApplicationContext(), currentPart),
 					Toast.LENGTH_LONG).show();
 		}
@@ -162,6 +162,7 @@ public class MessageFragment extends Fragment implements Observer {
 		
 		if( MessageWorkflow.isLastState(currentPart) ){
 			this.buttonNext.setEnabled(false);
+			this.buttonNext.setText( getString(R.string.fragment_message_list_no_next) );
 			buttonValidate.setEnabled(true);
 		}else{
 			if( !currentMessage.isComplet() ){

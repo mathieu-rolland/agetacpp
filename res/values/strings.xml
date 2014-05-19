@@ -69,6 +69,7 @@
     
     <string name="fragment_message_list_button_next">Suivant</string>
     <string name="fragment_message_list_button_previous">Précédent</string>
+    <string name="fragment_message_list_no_next">Aucun suivant</string>
     
     <string name="fragment_messages_list_message_validate_text">Envoyer</string>
     <string name="fragment_messages_list_cos_message_button_validate">Valider</string>

@@ -14,7 +14,6 @@ import com.istic.agetac.controllers.dao.InterventionDao;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.exceptions.AddInterventionException;
-import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IPosition.AXIS;
 import com.istic.sit.framework.couch.AObjectRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
@@ -72,7 +71,7 @@ public class CreationBase {
 		codis2.setPassword("codis");
 		
 		// Intervention i1
-		Intervention i1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "FEU DANS ERP");
+		Intervention i1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "Intervention 1", "FEU DANS ERP");
 		i1.addIntervenant(tata);
 		i1.setCodis(codis2);
 		tata.setIntervention(i1);
@@ -193,7 +192,7 @@ public class CreationBase {
 		thomas.setPassword("thomas");
 		
 		// Interventions
-		Intervention inter1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "FEU DANS ERP");
+		Intervention inter1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "Intervention 1", "FEU DANS ERP");
 		inter1.setCodis(vincent);
 		vincent.addIntervention(inter1);
 		inter1.addIntervenant(thomas);

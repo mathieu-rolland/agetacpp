@@ -24,10 +24,8 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.User;
@@ -37,10 +35,6 @@ import com.istic.sit.framework.couch.CouchDBUtils;
 public class LoginActivity extends Activity {
 
 	private static final int MIN_SIZE_PASSWORD = 4;
-	/**
-	 * Keep track of the login task to ensure we can cancel it if requested.
-	 */
-	private UserDao mAuthTask = null;
 
 	// Values for email and password at the time of the login attempt.
 	private String mUser;
@@ -55,7 +49,9 @@ public class LoginActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_login);
 		
 		// Set up the login form.

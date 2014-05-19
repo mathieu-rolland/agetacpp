@@ -24,6 +24,7 @@ public class Intervention implements IIntervention, Subject {
 	private String _id;
 	private String _rev;
 	private String adresse;
+	private String nom;
 	private String codeSinistre;
 	private List<Moyen> moyens;
 	private transient List<Intervenant> intervenants;
@@ -35,6 +36,7 @@ public class Intervention implements IIntervention, Subject {
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.adresse = "";
+		this.nom = "";
 		this.codeSinistre = "";
 		this.moyens = new ArrayList<Moyen>();
 		this.intervenants = new ArrayList<Intervenant>();
@@ -42,10 +44,11 @@ public class Intervention implements IIntervention, Subject {
 		this.messages = new ArrayList<IMessage>();
 	}
 	
-	public Intervention(String adresse, String codeSinistre){
+	public Intervention(String adresse, String nom, String codeSinistre){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.adresse = adresse;
+		this.nom = nom;
 		this.codeSinistre = codeSinistre;
 		this.moyens = new ArrayList<Moyen>();
 		this.intervenants = new ArrayList<Intervenant>();
@@ -53,22 +56,24 @@ public class Intervention implements IIntervention, Subject {
 		this.messages = new ArrayList<IMessage>();
 	}
 	
-	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens){
+	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
-		this.adresse = "";
-		this.codeSinistre = "";
+		this.adresse = adresse;
+		this.nom = nom;
+		this.codeSinistre = codeSinistre;
 		this.moyens = moyens;
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
 	}
 	
-	public Intervention(String adresse, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
+	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
-		this.adresse = "";
-		this.codeSinistre = "";
+		this.adresse = adresse;
+		this.nom = nom;
+		this.codeSinistre = codeSinistre;
 		this.moyens = moyens;
 		this.intervenants = users;
 		this.observers = new ArrayList<Observer>();
@@ -89,6 +94,22 @@ public class Intervention implements IIntervention, Subject {
 	@Override
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
+	}
+	
+	/**
+	 * @return the nom
+	 */
+	@Override
+	public String getNom() {
+		return nom;
+	}
+
+	/**
+	 * @param nom the nom to set
+	 */
+	@Override
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	/**

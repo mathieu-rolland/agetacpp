@@ -14,6 +14,8 @@ public interface IIntervention extends IPersistant{
 	public void setId(String id);
 	public String getRev();
 	public void setRev(String rev);
+	public String getNom();
+	public void setNom(String nom);
 	public String getAdresse();
 	public void setAdresse(String Adresse);
 	public String getCodeSinistre();

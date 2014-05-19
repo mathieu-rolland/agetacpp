@@ -299,10 +299,10 @@ public class Moyen extends Entity {
 
 	@Override
 	public IRepresentation getRepresentation() {
-		if (this.getType() == null) {
-			return super.getRepresentation();
+		if (isOk()) {
+			return this.getType().getRepresentationOK();
 		} else {
-			return this.getType().getRepresentation();
+			return this.getType().getRepresentationKO();
 		}
 	}
 

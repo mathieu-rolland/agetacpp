@@ -18,6 +18,7 @@ import com.istic.sit.framework.api.model.IPosition.AXIS;
 import com.istic.sit.framework.couch.AObjectRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.model.CoordonateGPS;
+import com.istic.sit.framework.model.Property;
 import com.istic.sit.framework.model.Representation;
 
 public class CreationBase {
@@ -71,7 +72,7 @@ public class CreationBase {
 		codis2.setPassword("codis");
 		
 		// Intervention i1
-		Intervention i1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "Intervention 1", "FEU DANS ERP");
+		Intervention i1 = new Intervention("263, avenue du Gï¿½nï¿½ral Leclerc, 35042, Rennes", "Intervention 1", "FEU DANS ERP");
 		i1.addIntervenant(tata);
 		i1.setCodis(codis2);
 		tata.setIntervention(i1);
@@ -115,7 +116,7 @@ public class CreationBase {
 //					}
 //				});
 				Intervention inter = new Intervention();
-				inter.setAdresse("5 rue de la piquetière");
+				inter.setAdresse("5 rue de la piquetiï¿½re");
 				inter.setCodeSinistre("feu de cigarette");
 				inter.setCodis(objet);
 			
@@ -163,10 +164,10 @@ public class CreationBase {
 				Message m1 = new Message();
 				m1.setDateEmission(new Date());
 				m1.setText(Message_part.JE_DEMANDE, "1 FPT et 2 VSAV");
-				m1.setText(Message_part.JE_FAIS, "Une coupure de l'alimentation du bâtiment et la mise en sécurité du personnel.");
-				m1.setText(Message_part.JE_PREVOIS, "De stopper la propagation du feu aux étages supérieurs");
+				m1.setText(Message_part.JE_FAIS, "Une coupure de l'alimentation du bï¿½timent et la mise en sï¿½curitï¿½ du personnel.");
+				m1.setText(Message_part.JE_PREVOIS, "De stopper la propagation du feu aux ï¿½tages supï¿½rieurs");
 				m1.setText(Message_part.JE_SUIS, "CDG TUYAUX");
-				m1.setText(Message_part.JE_VOIS, "Un feu violent dans le bâtiment 12D");
+				m1.setText(Message_part.JE_VOIS, "Un feu violent dans le bï¿½timent 12D");
 				m1.setIntervention(objet);
 				objet.save();
 				m1.save();
@@ -192,7 +193,7 @@ public class CreationBase {
 		thomas.setPassword("thomas");
 		
 		// Interventions
-		Intervention inter1 = new Intervention("263, avenue du Général Leclerc, 35042, Rennes", "Intervention 1", "FEU DANS ERP");
+		Intervention inter1 = new Intervention("263, avenue du Gï¿½nï¿½ral Leclerc, 35042, Rennes", "Intervention 1", "FEU DANS ERP");
 		inter1.setCodis(vincent);
 		vincent.addIntervention(inter1);
 		inter1.addIntervenant(thomas);
@@ -205,13 +206,13 @@ public class CreationBase {
 		msg1.setText(Message_part.JE_FAIS, "ma prise de COS");
 		msg1.setText(Message_part.JE_PREVOIS, "une intervention longue et difficile");
 		msg1.setText(Message_part.JE_SUIS, "Mathieu, COS");
-		msg1.setText(Message_part.JE_VOIS, "un blessé à la cuisse dans l'aile droite du batiment");
+		msg1.setText(Message_part.JE_VOIS, "un blessï¿½ ï¿½ la cuisse dans l'aile droite du batiment");
 		
 		Message msg2 = new Message(inter1);
 		msg2.setDateEmission(new Date());
 		msg2.setText(Message_part.JE_DEMANDE, "Rien");
-		msg2.setText(Message_part.JE_FAIS, "Mise en sécurité");
-		msg2.setText(Message_part.JE_PREVOIS, "une propagation généralisé");
+		msg2.setText(Message_part.JE_FAIS, "Mise en sï¿½curitï¿½");
+		msg2.setText(Message_part.JE_PREVOIS, "une propagation gï¿½nï¿½ralisï¿½");
 		msg2.setText(Message_part.JE_SUIS, "Mathieu, COS");
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
@@ -220,12 +221,25 @@ public class CreationBase {
 		mo1.setLibelle("VSAV1");
 		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
 		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
+		
+		Property property1 = new Property();
+		property1.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property1.setValeur(Moyen.FORMATER.format(new Date()));
+		mo1.addPropriete(property1);
+		
 		inter1.addMoyen(mo1);
 		
 		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC);
 		mo2.setLibelle("VSAV2");
 		mo2.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 		mo2.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
+		
+		Property property2 = new Property();
+		property2.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property2.setValeur(Moyen.FORMATER.format(new Date()));
+		mo2.addPropriete(property2);
+		
+		inter1.addMoyen(mo2);
 		
 		//Secteurs
 		Secteur s1 = new Secteur();

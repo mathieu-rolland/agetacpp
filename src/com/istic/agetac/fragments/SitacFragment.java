@@ -1,11 +1,14 @@
 package com.istic.agetac.fragments;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
@@ -18,8 +21,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.google.android.gms.maps.model.LatLng;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.agetac.model.Moyen;
@@ -53,6 +58,19 @@ public class SitacFragment extends MainFragment {
 		MapFragment mapFragment = (MapFragment) super.getFragment();
 		mapFragment.registerObserver(new MapObserver());
 
+		Geocoder coder = new Geocoder(getActivity());
+		Log.d("ADDRESSES", AgetacppApplication.getIntervention()
+							.getAdresse());
+		try {
+			ArrayList<Address> adresses = (ArrayList<Address>) coder
+					.getFromLocationName(AgetacppApplication.getIntervention()
+							.getAdresse(), 1);
+			mapFragment.INITPOSITION = new LatLng(adresses.get(0).getLatitude(), adresses.get(0)
+					.getLongitude());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		menuMoyenUpdate = new MoyensDao(new IViewReceiver<Moyen>() {
 
 			@Override
@@ -69,7 +87,7 @@ public class SitacFragment extends MainFragment {
 		});
 
 		onClickGridMenuListener = new onClickGridMenuListener();
-		
+
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
@@ -87,7 +105,7 @@ public class SitacFragment extends MainFragment {
 		Toast.makeText(getActivity().getBaseContext(), "Click on Item",
 				Toast.LENGTH_SHORT).show();
 
-		//centrer sur entity
+		// centrer sur entity
 		if (entity.getPosition() != null && entity.isOnMap())
 			((MapFragment) getFragment()).gotoMyLocation(entity.getPosition());
 		// TO DO : affichage infos
@@ -103,8 +121,10 @@ public class SitacFragment extends MainFragment {
 		IEntity environment = new Entity();
 		environment.setLibelle("[+] Environnement");
 		environment.setId("#environment");
-		environment.setRepresentationOK(new Representation(R.drawable.ic_water));
-		environment.setRepresentationKO(new Representation(R.drawable.ic_water));
+		environment
+				.setRepresentationOK(new Representation(R.drawable.ic_water));
+		environment
+				.setRepresentationKO(new Representation(R.drawable.ic_water));
 
 		Log.d("TOTO", "onCreateSlideMenu");
 
@@ -144,7 +164,9 @@ public class SitacFragment extends MainFragment {
 					entityAdapter.notifyDataSetChanged();
 				}
 			}
-			if (!exist) {
+			if (!exist
+					&& (newMoyen.getHFree() == null || newMoyen.getHFree()
+							.isEmpty())) {
 				addItemMenu(newMoyen);
 			}
 		}
@@ -185,91 +207,117 @@ public class SitacFragment extends MainFragment {
 		stopSynchronisation();
 		super.onStop();
 	}
-	
+
 	@Override
 	protected boolean onActionDropFromMenu(Entity typeEntity, DragEvent event) {
-		if(typeEntity.getId().equals("#environment") || typeEntity.getId().equals("#moyen")){
+		if (typeEntity.getId().equals("#environment")
+				|| typeEntity.getId().equals("#moyen")) {
 			// Affichage du gridview de choix de moyens
-//			MapFragment mapFragment = (MapFragment) fragment;
+			// MapFragment mapFragment = (MapFragment) fragment;
 			showEntityGridMenu(typeEntity, event.getX(), event.getY());
-			
+
 			clearItemEntityGridMenu();
-			if(typeEntity.getId().equals("#environment")){
-				//Danger
+			if (typeEntity.getId().equals("#environment")) {
+				// Danger
 				IEntity danger_black = new Entity();
 				danger_black.setLibelle("Cheminements");
-				danger_black.setRepresentationOK(new Representation(R.drawable.ic_danger_black));
-				danger_black.setRepresentationKO(new Representation(R.drawable.ic_danger_black));
+				danger_black.setRepresentationOK(new Representation(
+						R.drawable.ic_danger_black));
+				danger_black.setRepresentationKO(new Representation(
+						R.drawable.ic_danger_black));
 				IEntity danger_blue = new Entity();
 				danger_blue.setLibelle("Eau");
-				danger_blue.setRepresentationOK(new Representation(R.drawable.ic_danger_blue));
-				danger_blue.setRepresentationKO(new Representation(R.drawable.ic_danger_blue));
+				danger_blue.setRepresentationOK(new Representation(
+						R.drawable.ic_danger_blue));
+				danger_blue.setRepresentationKO(new Representation(
+						R.drawable.ic_danger_blue));
 				IEntity danger_green = new Entity();
 				danger_green.setLibelle("Personnes");
-				danger_green.setRepresentationOK(new Representation(R.drawable.ic_danger_green));
-				danger_green.setRepresentationKO(new Representation(R.drawable.ic_danger_green));
+				danger_green.setRepresentationOK(new Representation(
+						R.drawable.ic_danger_green));
+				danger_green.setRepresentationKO(new Representation(
+						R.drawable.ic_danger_green));
 				IEntity danger_orange = new Entity();
 				danger_orange.setLibelle("Particuliers");
-				danger_orange.setRepresentationOK(new Representation(R.drawable.ic_danger_orange));
-				danger_orange.setRepresentationKO(new Representation(R.drawable.ic_danger_orange));
+				danger_orange.setRepresentationOK(new Representation(
+						R.drawable.ic_danger_orange));
+				danger_orange.setRepresentationKO(new Representation(
+						R.drawable.ic_danger_orange));
 				IEntity danger_purple = new Entity();
 				danger_purple.setLibelle("Commandements");
-				danger_purple.setRepresentationOK(new Representation(R.drawable.ic_danger_purple));
-				danger_purple.setRepresentationKO(new Representation(R.drawable.ic_danger_purple));
+				danger_purple.setRepresentationOK(new Representation(
+						R.drawable.ic_danger_purple));
+				danger_purple.setRepresentationKO(new Representation(
+						R.drawable.ic_danger_purple));
 				IEntity danger_red = new Entity();
 				danger_red.setLibelle("Eau");
-				danger_red.setRepresentationOK(new Representation(R.drawable.ic_danger_red));
-				danger_red.setRepresentationKO(new Representation(R.drawable.ic_danger_red));
+				danger_red.setRepresentationOK(new Representation(
+						R.drawable.ic_danger_red));
+				danger_red.setRepresentationKO(new Representation(
+						R.drawable.ic_danger_red));
 
 				addItemEntityGridMenu(danger_black);
 				addItemEntityGridMenu(danger_blue);
 				addItemEntityGridMenu(danger_green);
-				addItemEntityGridMenu(danger_orange);	
+				addItemEntityGridMenu(danger_orange);
 				addItemEntityGridMenu(danger_purple);
 				addItemEntityGridMenu(danger_red);
 
-				//Risk
+				// Risk
 				IEntity risk_black = new Entity();
 				risk_black.setLibelle("Cheminements");
-				risk_black.setRepresentationOK(new Representation(R.drawable.ic_risk_black));
-				risk_black.setRepresentationKO(new Representation(R.drawable.ic_risk_black));
+				risk_black.setRepresentationOK(new Representation(
+						R.drawable.ic_risk_black));
+				risk_black.setRepresentationKO(new Representation(
+						R.drawable.ic_risk_black));
 				IEntity risk_blue = new Entity();
 				risk_blue.setLibelle("Eau");
-				risk_blue.setRepresentationOK(new Representation(R.drawable.ic_risk_blue));
-				risk_blue.setRepresentationKO(new Representation(R.drawable.ic_risk_blue));
+				risk_blue.setRepresentationOK(new Representation(
+						R.drawable.ic_risk_blue));
+				risk_blue.setRepresentationKO(new Representation(
+						R.drawable.ic_risk_blue));
 				IEntity risk_green = new Entity();
 				risk_green.setLibelle("Personnes");
-				risk_green.setRepresentationOK(new Representation(R.drawable.ic_risk_green));
-				risk_green.setRepresentationKO(new Representation(R.drawable.ic_risk_green));
+				risk_green.setRepresentationOK(new Representation(
+						R.drawable.ic_risk_green));
+				risk_green.setRepresentationKO(new Representation(
+						R.drawable.ic_risk_green));
 				IEntity risk_orange = new Entity();
 				risk_orange.setLibelle("Particuliers");
-				risk_orange.setRepresentationOK(new Representation(R.drawable.ic_risk_orange));
-				risk_orange.setRepresentationKO(new Representation(R.drawable.ic_risk_orange));
+				risk_orange.setRepresentationOK(new Representation(
+						R.drawable.ic_risk_orange));
+				risk_orange.setRepresentationKO(new Representation(
+						R.drawable.ic_risk_orange));
 				IEntity risk_purple = new Entity();
 				risk_purple.setLibelle("Commandements");
-				risk_purple.setRepresentationOK(new Representation(R.drawable.ic_risk_purple));
-				risk_purple.setRepresentationKO(new Representation(R.drawable.ic_risk_purple));
+				risk_purple.setRepresentationOK(new Representation(
+						R.drawable.ic_risk_purple));
+				risk_purple.setRepresentationKO(new Representation(
+						R.drawable.ic_risk_purple));
 				IEntity risk_red = new Entity();
 				risk_red.setLibelle("Eau");
-				risk_red.setRepresentationOK(new Representation(R.drawable.ic_risk_red));
-				risk_red.setRepresentationKO(new Representation(R.drawable.ic_risk_red));
-				
+				risk_red.setRepresentationOK(new Representation(
+						R.drawable.ic_risk_red));
+				risk_red.setRepresentationKO(new Representation(
+						R.drawable.ic_risk_red));
+
 				addItemEntityGridMenu(risk_black);
 				addItemEntityGridMenu(risk_blue);
 				addItemEntityGridMenu(risk_green);
-				addItemEntityGridMenu(risk_orange);	
+				addItemEntityGridMenu(risk_orange);
 				addItemEntityGridMenu(risk_purple);
 
-				//Water
+				// Water
 				IEntity water = new Entity();
 				water.setLibelle("Point d'eau");
-				water.setRepresentationOK(new Representation(R.drawable.ic_water));
-				water.setRepresentationKO(new Representation(R.drawable.ic_water));
+				water.setRepresentationOK(new Representation(
+						R.drawable.ic_water));
+				water.setRepresentationKO(new Representation(
+						R.drawable.ic_water));
 				addItemEntityGridMenu(water);
-				
+
 				gridMenuTitle.setText("Elements d'environnement a placer");
-			}
-			else if(typeEntity.getId().equals("#moyen")){
+			} else if (typeEntity.getId().equals("#moyen")) {
 				Moyen fpt_alim = new Moyen(TypeMoyen.FPT_ALIM);
 				fpt_alim.setLibelle("FPT ALIM");
 
@@ -278,7 +326,7 @@ public class SitacFragment extends MainFragment {
 
 				Moyen fpt_sap = new Moyen(TypeMoyen.FPT_SAP);
 				fpt_sap.setLibelle("FPT SAP");
-				
+
 				Moyen vsav_alim = new Moyen(TypeMoyen.VSAV_ALIM);
 				vsav_alim.setLibelle("VSAV ALIM");
 
@@ -293,21 +341,20 @@ public class SitacFragment extends MainFragment {
 				addItemEntityGridMenu(fpt_sap);
 				addItemEntityGridMenu(vsav_alim);
 				addItemEntityGridMenu(vsav_inc);
-				addItemEntityGridMenu((Entity)vsav_sap);
-				
+				addItemEntityGridMenu((Entity) vsav_sap);
+
 				gridMenuTitle.setText("Moyen a engager");
 			}
 			currentX = event.getX();
 			currentY = event.getY();
+		} else {
+			// Create entity to set on map
+			((IBackground) fragment).addEntity(typeEntity, event.getX(),
+					event.getY());
 		}
-		else{
-			//Create entity to set on map
-			((IBackground) fragment).addEntity(typeEntity, event.getX(), event.getY());
-		}
-		
+
 		return true;
 	}
-
 
 	public class onClickGridMenuListener implements OnItemClickListener {
 		@Override
@@ -317,10 +364,12 @@ public class SitacFragment extends MainFragment {
 			EntityAdapter entityAdapter = (EntityAdapter) parent.getAdapter();
 			IEntity gridEntity = (IEntity) entityAdapter.getItem(position);
 			// Create entity to set on map
-			/*Moyen moyen = new Moyen(TypeMoyen.VSAV);
-			moyen.setRepresentationOK(gridEntity.getRepresentation());
-			moyen.setRepresentationKO(gridEntity.getRepresentation());
-			moyen.setLibelle(gridEntity.getLibelle());*/
+			/*
+			 * Moyen moyen = new Moyen(TypeMoyen.VSAV);
+			 * moyen.setRepresentationOK(gridEntity.getRepresentation());
+			 * moyen.setRepresentationKO(gridEntity.getRepresentation());
+			 * moyen.setLibelle(gridEntity.getLibelle());
+			 */
 
 			((IBackground) fragment).addEntity((Entity) gridEntity, currentX,
 					currentY);

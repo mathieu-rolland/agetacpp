@@ -5,26 +5,30 @@ import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.model.Representation;
 
 public enum TypeMoyen {
-	VSAV_INC("VSAV_INC", new Representation(R.drawable.vsav_ok), new Representation(R.drawable.vsav_ko)),
-	VSAV_ALIM("VSAV_ALIM", new Representation(R.drawable.vsav_ok), new Representation(R.drawable.vsav_ko)),
-	VSAV_SAP("VSAV_SAP", new Representation(R.drawable.vsav_ok), new Representation(R.drawable.vsav_ko)),
-	FPT_SAP("FPT_SAP", new Representation(R.drawable.fpt_sap), new Representation(R.drawable.fpt_sap)),
-	FPT_INC("FPT_INC", new Representation(R.drawable.fpt_inc), new Representation(R.drawable.fpt_inc)),
-	FPT_ALIM("FPT_ALIM", new Representation(R.drawable.fpt_alim), new Representation(R.drawable.fpt_alim));
-	
+	VSAV_INC("VSAV_INC", new Representation(R.drawable.vsav_ok),
+			new Representation(R.drawable.vsav_ko)), VSAV_ALIM("VSAV_ALIM",
+			new Representation(R.drawable.vsav_ok), new Representation(
+					R.drawable.vsav_ko)), VSAV_SAP("VSAV_SAP",
+			new Representation(R.drawable.vsav_ok), new Representation(
+					R.drawable.vsav_ko)), FPT_SAP("FPT_SAP",
+			new Representation(R.drawable.fpt_sap), new Representation(
+					R.drawable.fpt_sap)), FPT_INC("FPT_INC",
+			new Representation(R.drawable.fpt_inc), new Representation(
+					R.drawable.fpt_inc)), FPT_ALIM("FPT_ALIM",
+			new Representation(R.drawable.fpt_alim), new Representation(
+					R.drawable.fpt_alim));
 
 	private String mType;
 	private IRepresentation representationOK;
 	private IRepresentation representationKO;
-	private boolean ok;
 
-	TypeMoyen(String type, IRepresentation representationOK, IRepresentation representationKO) {
+	TypeMoyen(String type, IRepresentation representationOK,
+			IRepresentation representationKO) {
 		this.mType = type;
-		ok = false;
 		this.representationOK = representationOK;
 		this.representationKO = representationKO;
 	}
-	
+
 	public String getType() {
 		return this.mType;
 	}
@@ -33,18 +37,12 @@ public enum TypeMoyen {
 	public String toString() {
 		return mType;
 	}
-	
-	public IRepresentation getRepresentation(){
-		if (isOk())
-			return this.representationOK;
-		else
-			return this.representationKO;
+
+	public IRepresentation getRepresentationOK() {
+		return this.representationOK;
 	}
-	
-	/**
-	 * @return the ok
-	 */
-	public boolean isOk() {
-		return ok;
+
+	public IRepresentation getRepresentationKO() {
+		return this.representationKO;
 	}
 }

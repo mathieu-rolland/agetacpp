@@ -10,13 +10,15 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/dialog_tableau_moyen_engage_name"
-    android:paddingBottom="10dip" />
+    android:paddingBottom="10dip" 
+    android:textColor="@android:color/white"/>
  
   <EditText 
     android:id="@+id/dialog_tableau_moyen_name"
     android:inputType="text"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/dialog_tableau_moyen_label"  />
+    android:layout_below="@id/dialog_tableau_moyen_label"
+    android:textColor="@android:color/white"  />
  
 </RelativeLayout>

@@ -150,7 +150,7 @@ public abstract class User implements IUser {
 	@Override
 	public void save() {
 		if(this.getId().isEmpty()) {
-			Log.e("User", "_id ne doit pas être vide !");
+			Log.e("User", "_id ne doit pas ï¿½tre vide !");
 		}
 		else {
 			DataBaseCommunication.sendPut(this);
@@ -164,6 +164,6 @@ public abstract class User implements IUser {
 
 	@Override
 	public void delete() {
-			DataBaseCommunication.sendDelete(this);
+		DataBaseCommunication.sendDelete(this);
 	}
 }

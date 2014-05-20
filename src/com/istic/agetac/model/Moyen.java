@@ -221,7 +221,7 @@ public class Moyen extends Entity {
 	@Override
 	public void onResponse(JSONObject response) {
 		super.onResponse(response);
-		if(!AgetacppApplication.getIntervention().getMoyens().contains(this)){
+		if(AgetacppApplication.getIntervention() != null && !AgetacppApplication.getIntervention().getMoyens().contains(this)){
 			AgetacppApplication.getIntervention().addMoyen(this);
 			AgetacppApplication.getIntervention().save();
 		}

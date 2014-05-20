@@ -1,5 +1,8 @@
 package com.istic.agetac.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,7 +17,7 @@ import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
 /**
- * Classe Secteur : Modèle qui représente un secteur (i.e. SAP/INC/ALIM/...)
+ * Classe Secteur : Modï¿½le qui reprï¿½sente un secteur (i.e. SAP/INC/ALIM/...)
  * 
  * @author Anthony LE MEE - 10003134
  */
@@ -26,7 +29,9 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 	private boolean lock;
 	private String libelle;
 	private String color;
-		
+	private List<Moyen> moyens;
+	private List<Groupe> groupes;
+	
 	public Secteur()
 	{
 		color = "";
@@ -34,6 +39,8 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 		lock = false;
 		_id = "";
 		_rev = "";
+		moyens = new ArrayList<Moyen>();
+		groupes = new ArrayList<Groupe>();
 	}
 	
 	public Secteur(Parcel source) {
@@ -47,6 +54,8 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 			this.lock = secteur.lock;
 			this.libelle = secteur.libelle;
 			this.color = secteur.color;
+			moyens = new ArrayList<Moyen>();
+			groupes = new ArrayList<Groupe>();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

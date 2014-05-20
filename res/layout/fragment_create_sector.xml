@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="100" >
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="50" >
+    
+        <LinearLayout 
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+		    <TextView 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/fragment_create_sector_label_display"/>
+		    
+		    <EditText 
+		        android:id="@+id/fragment_create_sector_libelle"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:inputType="text"
+		        />
+	    </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+	    
+		    <TextView 
+	        	android:id="@+id/fragment_create_sector_color_label"
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:text="@string/fragment_create_sector_label_color"/>
+		    
+		    <LinearLayout
+		        android:orientation="vertical"
+		        android:id="@+id/fragment_create_sector_color_edit"
+		        android:layout_width="50dp"
+		        android:layout_height="30dp"
+		        android:background="@android:color/white"
+		    	/>
+	     </LinearLayout>
+	    
+	    <LinearLayout 
+	        android:orientation="horizontal"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" 
+	        android:weightSum="100">
+	        
+	        <Button
+	            android:id="@+id/fragment_create_sector_validate"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="50"
+	            android:width="0dp" 
+	            android:text="@string/fragment_create_sector_btn_validate"/>
+	        
+	        <Button
+	            android:id="@+id/fragment_create_sector_cancel"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="50"
+	            android:width="0dp"
+	            android:text="@string/fragment_create_sector_btn_cancel" />
+	        
+	    </LinearLayout>
+	    
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dip" 
+        android:layout_height="wrap_content"
+        android:layout_weight="50"
+        android:weightSum="100">
+        
+        <ImageButton
+            android:id="@+id/fragment_create_sector_sector_delete"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:background="@android:color/white"
+            android:src="@drawable/trashbtn" />
+        
+        <ListView 
+            android:id="@+id/fragment_create_sector_created"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
+        
+    </LinearLayout>
+    
+</LinearLayout>

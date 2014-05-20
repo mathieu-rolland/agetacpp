@@ -97,4 +97,11 @@
 	<string name="constitution_group_crm_button_assignToGroup_text">+</string>
 	<string name="constitution_group_crm_assign">Assigner</string>
 	
+	<!-- Vue de création des secteurs -->
+	<string name="fragment_create_sector_label_display">Libellé :</string>
+	<string name="fragment_create_sector_label_color">Couleur :</string>
+	<string name="fragment_create_sector_btn_validate">Créer</string>
+	<string name="fragment_create_sector_btn_cancel">Annuler</string>
+	
+	
 </resources>

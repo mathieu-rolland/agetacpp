@@ -239,8 +239,6 @@ public class CreationBase {
 		property2.setValeur(Moyen.FORMATER.format(new Date()));
 		mo2.addPropriete(property2);
 		
-		inter1.addMoyen(mo2);
-		
 		//Secteurs
 		Secteur s1 = new Secteur();
 		s1.setColor("#f8f8f8");

@@ -11,10 +11,11 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IGroupe;
+import com.istic.agetac.view.item.ConstitutionGroupCrmItemGroup;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class Groupe implements IGroupe {
+public class Groupe implements IGroupe, ConstitutionGroupCrmItemGroup {
 
 	private String _id;
 	private String _rev;
@@ -150,6 +151,11 @@ public class Groupe implements IGroupe {
 	@Override
 	public void addMoyens(List<Moyen> moyens) {
 		this.moyens.addAll(moyens);
+	}
+
+	@Override
+	public boolean isGroup() {
+		return true;
 	}
 
 }

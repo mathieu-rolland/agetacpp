@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.istic.agetac.R;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.ListenerSupressionItem;
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
-import com.istic.agetac.view.item.DemandeDeMoyensItem;
+import com.istic.agetac.view.item.DemandeDeMoyenItem;
 
 /**
  * class DemandeDeMoyenListAdapter : Adapter permettant de charger le layout d'un item dans la liste de demande de 
@@ -23,10 +23,10 @@ import com.istic.agetac.view.item.DemandeDeMoyensItem;
  * 
  * @author Anthony LE MEE - 10003134
 */
-public class DemandeDeMoyenListAdapter extends ArrayAdapter<DemandeDeMoyensItem> {
+public class DemandeDeMoyenListAdapter extends ArrayAdapter<DemandeDeMoyenItem> {
 	    
 	/** Attributs */
-	private ArrayList<DemandeDeMoyensItem> listItems; // Liste de demande de moyens
+	private ArrayList<DemandeDeMoyenItem> listItems; // Liste de demande de moyens
 	private DemandeDeMoyensFragment demandeDeMoyens;    
 	
 	/**
@@ -35,7 +35,7 @@ public class DemandeDeMoyenListAdapter extends ArrayAdapter<DemandeDeMoyensItem>
 	 * @param textViewResourceId - ressource item
 	 * @param listItems - liste des item à afficher
 	 */
-	public DemandeDeMoyenListAdapter(Fragment f, int textViewResourceId, ArrayList<DemandeDeMoyensItem> listItems) {
+	public DemandeDeMoyenListAdapter(Fragment f, int textViewResourceId, ArrayList<DemandeDeMoyenItem> listItems) {
 	
 		super(f.getActivity().getApplicationContext(), textViewResourceId, listItems);
 		this.listItems = listItems;
@@ -59,7 +59,7 @@ public class DemandeDeMoyenListAdapter extends ArrayAdapter<DemandeDeMoyensItem>
 		}
 			
 		// On récupère les infos que l'on souhaite afficher
-		DemandeDeMoyensItem itemMoyen = listItems.get(position);
+		DemandeDeMoyenItem itemMoyen = listItems.get(position);
 		  
 		// Si on à bien récupéré les infos
 		if (itemMoyen != null && itemMoyen.getType() != null) {

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
-import com.istic.agetac.view.item.DemandeDeMoyensItem;
+import com.istic.agetac.view.item.DemandeDeMoyenItem;
 
 /**
 * Classe AddToList : Listener déclenché lors de l'appuie sur la corbeille d'un item
@@ -17,7 +17,7 @@ import com.istic.agetac.view.item.DemandeDeMoyensItem;
 public class ListenerSupressionItem implements OnClickListener{
 
 	/** Attributs */
-	private DemandeDeMoyensItem itemMoyen; 	// Instance de l'item à traiter
+	private DemandeDeMoyenItem itemMoyen; 	// Instance de l'item à traiter
 	private DemandeDeMoyensFragment vue; 			// Instance de la vue d'où est joué le listener
 	
 	/**
@@ -25,7 +25,7 @@ public class ListenerSupressionItem implements OnClickListener{
 	 * @param user 
 	 * @param demandeDeMoyens 
 	 */
-	public ListenerSupressionItem(DemandeDeMoyensItem user, DemandeDeMoyensFragment demandeDeMoyens) {
+	public ListenerSupressionItem(DemandeDeMoyenItem user, DemandeDeMoyensFragment demandeDeMoyens) {
 		
 		this.itemMoyen = user;
 		this.vue = demandeDeMoyens;
@@ -46,7 +46,7 @@ public class ListenerSupressionItem implements OnClickListener{
 		
 		// Récupération des données pour les listener internes
 		final DemandeDeMoyensFragment vueDemandeMoyen = this.vue;
-		final DemandeDeMoyensItem item = this.getItemMoyen();
+		final DemandeDeMoyenItem item = this.getItemMoyen();
 		final TextView tv = ((TextView)alert.findViewById(R.id.demande_de_moyen_dialog_TextView_Quantity));
 		
 		// On set la valeur du titre de la boite de Dialog
@@ -132,14 +132,14 @@ public class ListenerSupressionItem implements OnClickListener{
 	/**
 	 * @param itemMoyen the itemMoyen to set
 	 */
-	public void setItemMoyen(DemandeDeMoyensItem itemMoyen) {
+	public void setItemMoyen(DemandeDeMoyenItem itemMoyen) {
 		this.itemMoyen = itemMoyen;
 	}
 
 	/**
 	 * @return the itemMoyen
 	 */
-	public DemandeDeMoyensItem getItemMoyen() {
+	public DemandeDeMoyenItem getItemMoyen() {
 		return itemMoyen;
 	}
 

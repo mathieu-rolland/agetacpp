@@ -1,5 +1,6 @@
 package com.istic.agetac.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -218,9 +219,9 @@ public class CreationBase {
 		
 		//moyens
 		Moyen mo1 = new Moyen(TypeMoyen.VSAV_INC);
-		mo1.setLibelle("VSAV1");
-		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
-		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
+		mo1.setLibelle("VSAV 1");
+		mo1.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
+		mo1.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
 		
 		Property property1 = new Property();
 		property1.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
@@ -229,8 +230,20 @@ public class CreationBase {
 		
 		inter1.addMoyen(mo1);
 		
+		Moyen mo1bis = new Moyen(TypeMoyen.VSAV_INC);
+		mo1bis.setLibelle("VSAV 3");
+		mo1bis.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
+		mo1bis.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
+		
+		Property property1Bis = new Property();
+		property1Bis.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property1Bis.setValeur(Moyen.FORMATER.format(new Date()));
+		mo1bis.addPropriete(property1Bis);
+		
+		inter1.addMoyen(mo1bis);
+		
 		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC);
-		mo2.setLibelle("VSAV2");
+		mo2.setLibelle("VSAV 2");
 		mo2.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 		mo2.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
 		
@@ -260,6 +273,13 @@ public class CreationBase {
 		s5.setColor("#ce8bec");
 		s5.setName("CRM");
 		
+		List<Moyen> listMoyen = new ArrayList<Moyen>();
+		listMoyen.add(mo1);
+		listMoyen.add(mo2);
+		Groupe g1 = new Groupe("Groupe 1 - Rennes", listMoyen);
+		Groupe g2 = new Groupe("Groupe 2 - Rennes", new ArrayList<Moyen>());
+		Groupe g3 = new Groupe("Groupe 3 - Rennes", new ArrayList<Moyen>());
+		
 		// sauvegarde en base
 		inter1.save();
 		msg1.save();
@@ -272,12 +292,16 @@ public class CreationBase {
 		mathieu.save();
 		antho.save();
 		mo1.save();
+		mo1bis.save();
 		mo2.save();
 		s1.save();
 		s2.save();
 		s3.save();
 		s4.save();
 		s5.save();
+		g1.save();
+		g2.save();
+		g3.save();
 	}
 	
 	public static void recupIntervention(String id){

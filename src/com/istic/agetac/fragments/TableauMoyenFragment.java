@@ -43,9 +43,9 @@ public class TableauMoyenFragment extends Fragment {
 	
 	private List<Moyen> mListMoyen;
 	
-	/* Instances des mod�les � utiliser */
+	/* Instances des modèles à utiliser */
 
-	/* �l�ments graphiques */
+	/* éléments graphiques */
 	private ListView mListViewMoyen; // ListView des moyens
 	private AMoyenListAdapter mAdapterMoyens; // Adapter des moyens
 

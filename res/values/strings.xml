@@ -91,4 +91,8 @@
 	<!-- Vue CODIS : Voir une intervention -->
 	<string name="item_intervention_voir_user">Voir utilisateurs</string>
 	
+	<!-- Constitution des group au CRM -->
+	<string name="constitution_group_crm_button_assignToGroup_text">+</string>
+	<string name="constitution_group_crm_assign">Assigner</string>
+	
 </resources>

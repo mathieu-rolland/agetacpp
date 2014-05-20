@@ -4,19 +4,30 @@ import com.istic.agetac.R;
 import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.model.Representation;
 
+/**
+ * Concept métier représentant le type d'un véhicule dans son secteur attribué
+ * @author Anthony LE MÉE - 10003134
+ */
 public enum TypeMoyen {
-	VSAV_INC("VSAV_INC", new Representation(R.drawable.vsav_ok),
-			new Representation(R.drawable.vsav_ko)), VSAV_ALIM("VSAV_ALIM",
-			new Representation(R.drawable.vsav_ok), new Representation(
-					R.drawable.vsav_ko)), VSAV_SAP("VSAV_SAP",
-			new Representation(R.drawable.vsav_ok), new Representation(
-					R.drawable.vsav_ko)), FPT_SAP("FPT_SAP",
-			new Representation(R.drawable.fpt_sap), new Representation(
-					R.drawable.fpt_sap)), FPT_INC("FPT_INC",
-			new Representation(R.drawable.fpt_inc), new Representation(
-					R.drawable.fpt_inc)), FPT_ALIM("FPT_ALIM",
-			new Representation(R.drawable.fpt_alim), new Representation(
-					R.drawable.fpt_alim));
+	
+	VSAV_INC("VSAV_INC", 
+			new Representation(R.drawable.vsav_ok),
+			new Representation(R.drawable.vsav_ko)), 
+	VSAV_ALIM("VSAV_ALIM",
+			new Representation(R.drawable.vsav_ok), 
+			new Representation(R.drawable.vsav_ko)), 
+	VSAV_SAP("VSAV_SAP",
+			new Representation(R.drawable.vsav_ok), 
+			new Representation(R.drawable.vsav_ko)), 
+	FPT_SAP("FPT_SAP",
+			new Representation(R.drawable.fpt_sap), 
+			new Representation(R.drawable.fpt_sap)), 
+	FPT_INC("FPT_INC",
+			new Representation(R.drawable.fpt_inc), 
+			new Representation(R.drawable.fpt_inc)), 
+	FPT_ALIM("FPT_ALIM",
+			new Representation(R.drawable.fpt_alim), 
+			new Representation(R.drawable.fpt_alim));
 
 	private String mType;
 	private IRepresentation representationOK;

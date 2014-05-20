@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
 import com.istic.agetac.model.TypeMoyen;
-import com.istic.agetac.view.item.DemandeDeMoyensItem;
+import com.istic.agetac.view.item.DemandeDeMoyenItem;
 
 /**
  * Classe AddToList : Listener déclenché lors de la demande d'ajout
@@ -56,14 +56,14 @@ public class AddToList implements OnClickListener {
 			
 			
 			// On créer l'élément
-			DemandeDeMoyensItem nomElementSelectionne = new DemandeDeMoyensItem(
+			DemandeDeMoyenItem nomElementSelectionne = new DemandeDeMoyenItem(
 					this.demandeDeMoyens.getSelectedTypeMoyen(),
 					Integer.parseInt(this.demandeDeMoyens
 							.getEditTextNombreMoyens().getText() + ""));
 
 			// Si j'ai déjà ajouté ce type de moyen pour ce secteur, alors
 			// j'augmente seulement sont nombre de +1
-			DemandeDeMoyensItem searchSameElement = this.searchSameMoyenAddedPreviously(nomElementSelectionne);
+			DemandeDeMoyenItem searchSameElement = this.searchSameMoyenAddedPreviously(nomElementSelectionne);
 			
 			if (searchSameElement != null) {
 				searchSameElement.setNombre(searchSameElement.getNombre()
@@ -91,14 +91,14 @@ public class AddToList implements OnClickListener {
 		else if (indiceMoyensSelected >= 0) {
 			
 			// On créer l'élément
-			DemandeDeMoyensItem nomElementSelectionne = new DemandeDeMoyensItem(
+			DemandeDeMoyenItem nomElementSelectionne = new DemandeDeMoyenItem(
 					(TypeMoyen) this.demandeDeMoyens.getDonneesNomsUsestMoyens()[indiceMoyensSelected],
 					Integer.parseInt(this.demandeDeMoyens
 							.getEditTextNombreMoyens().getText() + ""));
 
 			// Si j'ai déjà ajouté ce type de moyen pour ce secteur, alors
 			// j'augmente seulement sont nombre de +1
-			DemandeDeMoyensItem searchSameElement = this.searchSameMoyenAddedPreviously(nomElementSelectionne);
+			DemandeDeMoyenItem searchSameElement = this.searchSameMoyenAddedPreviously(nomElementSelectionne);
 	
 			if (searchSameElement != null) {
 				searchSameElement.setNombre(searchSameElement.getNombre()
@@ -138,16 +138,16 @@ public class AddToList implements OnClickListener {
 	/**
 	 * Méthode qui dit si un moyen du même nom à déjà été ajouté.
 	 * @param nomElementSelectionne
-	 * @return DemandeDeMoyensItem trouvé
+	 * @return DemandeDeMoyenItem trouvé
 	 */
-	private DemandeDeMoyensItem searchSameMoyenAddedPreviously(
-			DemandeDeMoyensItem elementSelectionne) {
+	private DemandeDeMoyenItem searchSameMoyenAddedPreviously(
+			DemandeDeMoyenItem elementSelectionne) {
 		if (this.demandeDeMoyens.getAllMoyenAddedToList().size() <= 0) {
 			return null;
 		}
 		else
 		{
-			for (DemandeDeMoyensItem item : this.demandeDeMoyens.getAllMoyenAddedToList()) {
+			for (DemandeDeMoyenItem item : this.demandeDeMoyens.getAllMoyenAddedToList()) {
 				if(item.getType().equals(elementSelectionne.getType())) {
 					return item;
 				}

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#363636"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/constitution_group_crm_dialog_TextView_Title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/button_style_grey"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#efefef"
+        android:textSize="@dimen/text_size"
+        android:textStyle="normal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/constitution_group_crm_dialog_Button_OneLess"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/button_style_blue"
+            android:gravity="center"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" >
+        </Button>
+
+        <Spinner
+            android:id="@+id/constitution_group_crm_spinner_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dip"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/demande_de_moyen_Dialog_Button_OneMore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@drawable/button_style_blue"
+            android:gravity="center"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" >
+        </Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/demande_de_moyen_Dialog_Button_Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_style_grey"
+            android:gravity="center"
+            android:text="@string/demande_de_moyen_Dialog_ButtonText_Cancel"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/demande_de_moyen_Dialog_Button_Delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_style_grey"
+            android:gravity="center"
+            android:text="@string/constitution_group_crm_assign"
+            android:textColor="#efefef"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

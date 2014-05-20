@@ -5,13 +5,13 @@ import java.io.Serializable;
 import com.istic.agetac.model.TypeMoyen;
 
 /**
- * Class DemandeDeMoyensItem : Modèle de représentation des items 
+ * Class DemandeDeMoyenItem : Modèle de représentation des items 
  * de la listView de la vue DemandeDeMoyens - sérializable afin 
  * de permettre la sauvegarde.
  * 
  * @author Anthony LE MEE - 10003134
 */
-public class DemandeDeMoyensItem implements Serializable{
+public class DemandeDeMoyenItem implements Serializable{
 
 	/** Attributs */
 	private static final long serialVersionUID = 1L;
@@ -19,11 +19,11 @@ public class DemandeDeMoyensItem implements Serializable{
 	private int quantityOfMoyen;							// quantityOfMoyen de moyen de ce type voulu
 	
 	/**
-	 * Constructeur DemandeDeMoyensItem
+	 * Constructeur DemandeDeMoyenItem
 	 * @param name String - type du moyen ajouté
 	 * @param quantity int - nombre de moyen de ce type voulu
 	 */
-	public DemandeDeMoyensItem (TypeMoyen type, int quantity) {
+	public DemandeDeMoyenItem (TypeMoyen type, int quantity) {
 	
 		this.typeOfMoyen = type;
 		this.quantityOfMoyen = quantity;

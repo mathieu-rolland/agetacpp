@@ -6,11 +6,10 @@ import java.util.Date;
 import org.json.JSONObject;
 
 import android.os.Parcel;
-import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.dao.SecteurDao;
+import com.istic.agetac.view.item.ConstitutionGroupCrmItemGroup;
 import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
@@ -18,27 +17,27 @@ import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Property;
 
 /**
- * Classe Moyen : Mod�le qui repr�sente un moyen (i.e. V�hicule)
+ * Classe Moyen : Modéle qui représente un moyen (i.e. Véhicule)
  * 
  * @author Anthony LE MEE - 10003134
  */
-public class Moyen extends Entity {
+public class Moyen extends Entity implements ConstitutionGroupCrmItemGroup {
 
 	public static final SimpleDateFormat FORMATER = new SimpleDateFormat(
 			"ddMM '-' hhmm"); // ("ddMM '-' hhmm");
 
 	/** Constante string which defines name of property of type of moyen */
-	public static final String NAME_PROPERTY_TYPE = "moyen_type";
+	public static final String NAME_PROPERTY_TYPE 				= "moyen_type";
 	/** Constante string which defines name of property of moyen demand hour */
-	public static final String NAME_PROPERTY_HOUR_DEMAND = "moyen_hour_demand";
+	public static final String NAME_PROPERTY_HOUR_DEMAND 		= "moyen_hour_demand";
 	/** Constante string which defines name of property of moyen engagement hour */
-	public static final String NAME_PROPERTY_HOUR_ENGAGEMENT = "moyen_hour_engagement";
+	public static final String NAME_PROPERTY_HOUR_ENGAGEMENT 	= "moyen_hour_engagement";
 	/** Constante string which defines name of property of moyen arrival hour */
-	public static final String NAME_PROPERTY_HOUR_ARRIVAL = "moyen_hour_arrival";
+	public static final String NAME_PROPERTY_HOUR_ARRIVAL 		= "moyen_hour_arrival";
 	/** Constante string which defines name of property of moyen free hour */
-	public static final String NAME_PROPERTY_HOUR_FREE = "moyen_hour_free";
+	public static final String NAME_PROPERTY_HOUR_FREE 			= "moyen_hour_free";
 	/** Constante string which defines name of property of moyen secteur hour */
-	public static final String NAME_PROPERTY_SECTEUR = "moyen_secteur";
+	public static final String NAME_PROPERTY_SECTEUR 			= "moyen_secteur";
 
 	/**
 	 * Constructeur de la classe Moyen
@@ -75,7 +74,9 @@ public class Moyen extends Entity {
 	 *            : position of moyen
 	 */
 	public Moyen(TypeMoyen typeValue, IPosition position) {
+		
 		super(position);
+		
 		IProperty typeProperty = creatProperty(NAME_PROPERTY_TYPE,
 				typeValue.toString());
 		IProperty hDemandProperty = creatProperty(NAME_PROPERTY_HOUR_DEMAND,
@@ -86,6 +87,7 @@ public class Moyen extends Entity {
 				null);
 		IProperty hFreeProperty = creatProperty(NAME_PROPERTY_HOUR_FREE, null);
 		IProperty secteurProperty = creatProperty(NAME_PROPERTY_SECTEUR, null);
+		
 		super.addPropriete(typeProperty);
 		super.addPropriete(hDemandProperty);
 		super.addPropriete(hEngagementProperty);
@@ -125,10 +127,10 @@ public class Moyen extends Entity {
 				.equals(TypeMoyen.VSAV_SAP.toString())) {
 			return TypeMoyen.VSAV_SAP;
 		} else {
-			return null;
+			return null; // FIXME add throw WARNING  
 		}
 
-		// throw NullPointerException;
+		
 
 	} // method
 
@@ -344,6 +346,11 @@ public class Moyen extends Entity {
 	@Override
 	public void setFrozen(boolean frozen) {
 		super.setFrozen(frozen);
+	}
+
+	@Override
+	public boolean isGroup() {
+		return false;
 	}
 
 }

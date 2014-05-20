@@ -3,7 +3,7 @@ package com.istic.agetac.saveInstanceState;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.istic.agetac.view.item.DemandeDeMoyensItem;
+import com.istic.agetac.view.item.DemandeDeMoyenItem;
 
 /**
 * Classe DemandeMoyensSavedInstanceState de VueDemandeDeMoyens : Object que l'on va créer afin d'assurer la sauvegarde
@@ -25,7 +25,7 @@ public class DemandeMoyensSavedInstanceState implements Serializable {
 	private String otherMoyenAutoCompleteField;
 	
 	/** Liste des moyens ajoutés à la liste de demande de moyens */
-	private ArrayList<DemandeDeMoyensItem> moyensAddedToList;
+	private ArrayList<DemandeDeMoyenItem> moyensAddedToList;
 		
 	/** instance courante : Pattern SINGLETON */
 	private static DemandeMoyensSavedInstanceState currentInstance;
@@ -37,7 +37,7 @@ public class DemandeMoyensSavedInstanceState implements Serializable {
 		
 		this.indexSelectedMoyen 			= -1;
 		this.quantityMoyen 					= 1;
-		this.moyensAddedToList				= new ArrayList<DemandeDeMoyensItem>();
+		this.moyensAddedToList				= new ArrayList<DemandeDeMoyenItem>();
 		this.otherMoyenAutoCompleteField 	= "";
 		
 	}
@@ -113,14 +113,14 @@ public class DemandeMoyensSavedInstanceState implements Serializable {
 	/**
 	 * @param arrayList the moyensAddedToList to set
 	 */
-	public void setDonneesMoyensAddedToList(ArrayList<DemandeDeMoyensItem> arrayList) {
+	public void setDonneesMoyensAddedToList(ArrayList<DemandeDeMoyenItem> arrayList) {
 		this.moyensAddedToList = arrayList;
 	}
 
 	/**
 	 * @return the moyensAddedToList
 	 */
-	public ArrayList<DemandeDeMoyensItem> getDonneesMoyensAddedToList() {
+	public ArrayList<DemandeDeMoyenItem> getDonneesMoyensAddedToList() {
 		return moyensAddedToList;
 	}
 

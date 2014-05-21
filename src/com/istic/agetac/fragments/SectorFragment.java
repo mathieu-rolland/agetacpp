@@ -1,5 +1,6 @@
 package com.istic.agetac.fragments;
 
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,8 @@ import android.widget.ListView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.controler.adapter.SecteurAdapter;
-import com.istic.agetac.controllers.listeners.secteurs.ListenerSecteur;
+import com.istic.agetac.controllers.listeners.secteurs.ListenerAddSecteur;
+import com.istic.agetac.controllers.listeners.secteurs.ListenerDragSecteur;
 import com.istic.agetac.model.Secteur;
 
 public class SectorFragment extends Fragment implements OnDragListener {
@@ -56,29 +58,18 @@ public class SectorFragment extends Fragment implements OnDragListener {
 		
 		loadSecteurs();
 		
-		createSector.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Secteur s = new Secteur();
-				s.setName( libelleEdit.getText().toString() );
-				int color = ((ColorDrawable)colorEdit.getBackground()).getColor();
-				String strColor = String.format("#%06X", 0xFFFFFF & color);
-				s.setColor(strColor);
-				adapter.addSecteur(s);
-				adapter.notifyDataSetChanged();
-			}
-		});
+		createSector.setOnClickListener(new ListenerAddSecteur(adapter, getActivity(), libelleEdit, colorEdit));
 		
 		cancelSector.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				libelleEdit.setText("");
-				colorEdit.setBackgroundColor( 0x000000 );
+				colorEdit.setBackgroundColor( Color.WHITE );
 			}
 		});
 		
 		secteurList.setOnDragListener( this );
-		secteurList.setOnItemLongClickListener(new ListenerSecteur(adapter, getActivity()));
+		secteurList.setOnItemLongClickListener(new ListenerDragSecteur(adapter, getActivity()));
 		deleteSecteur.setOnDragListener(this);
 		
 		return rootView;
@@ -124,17 +115,24 @@ public class SectorFragment extends Fragment implements OnDragListener {
 		case DragEvent.ACTION_DRAG_STARTED:
 			return true;
 		case DragEvent.ACTION_DRAG_ENTERED:
+			if( view == deleteSecteur ){
+				view.setBackgroundColor( Color.RED );
+				view.setAlpha(60);
+			}
 			return true;
 		case DragEvent.ACTION_DRAG_LOCATION:
 			return true;
 		case DragEvent.ACTION_DRAG_EXITED:
+			if( view == deleteSecteur ){
+				view.setBackgroundColor( Color.WHITE );
+				view.setAlpha(100);
+			}
 			return true;
 		case DragEvent.ACTION_DROP:
 			{
-				Secteur s = (Secteur) event.getLocalState();
-				Log.d("Drag", "Drag : ACTION-DROP " + view.getId());
+				view.setBackgroundColor( Color.WHITE );
+				view.setAlpha(100);
 				if( view.equals(deleteSecteur) ){
-					Log.d("Drag", "Drag : Return TRUE GROS TOTO");
 					return true;
 				}else{
 					return false;
@@ -148,14 +146,6 @@ public class SectorFragment extends Fragment implements OnDragListener {
 					adapter.notifyDataSetChanged();
 					return true;
 				}
-//				Secteur s = (Secteur) event.getLocalState();
-//				Log.d("Drag", "Drag : ACTION_DRAG_ENDED "  + view.getId() );
-//				if( view == deleteSecteur ){
-//					return true;
-//				}else{
-//					adapter.addSecteur(s);
-//					adapter.notifyDataSetChanged();
-//				}
 				break;
 			}
 		default:

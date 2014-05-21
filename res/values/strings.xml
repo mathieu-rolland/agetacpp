@@ -99,6 +99,7 @@
 	
 	<!-- Vue de création des secteurs -->
 	<string name="fragment_create_sector_label_display">Libellé :</string>
+	<string name="fragment_create_sector_label_edit_hint">ALIM, etc ...</string>
 	<string name="fragment_create_sector_label_color">Couleur :</string>
 	<string name="fragment_create_sector_btn_validate">Créer</string>
 	<string name="fragment_create_sector_btn_cancel">Annuler</string>

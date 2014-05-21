@@ -17,15 +17,19 @@
             android:layout_height="wrap_content">
             
 		    <TextView 
-		        android:layout_width="match_parent"
+		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/fragment_create_sector_label_display"/>
+		        android:text="@string/fragment_create_sector_label_display"
+		        android:textColor="@android:color/white"
+		        />
 		    
 		    <EditText 
 		        android:id="@+id/fragment_create_sector_libelle"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:inputType="text"
+		        android:textColor="@android:color/white"
+		        android:hint="@string/fragment_create_sector_label_edit_hint"
 		        />
 	    </LinearLayout>
 	    
@@ -38,6 +42,8 @@
 	        	android:id="@+id/fragment_create_sector_color_label"
 	        	android:layout_width="wrap_content"
 	        	android:layout_height="wrap_content"
+	        	android:textColor="@android:color/white"
+	        	android:layout_gravity="center_vertical"
 	        	android:text="@string/fragment_create_sector_label_color"/>
 		    
 		    <LinearLayout

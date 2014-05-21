@@ -1,5 +1,7 @@
 package com.istic.agetac.model;
 
+import java.util.Date;
+
 import com.istic.sit.framework.api.model.IRepresentation;
 
 public interface IMoyen
@@ -8,18 +10,18 @@ public interface IMoyen
     
     IRepresentation getRepresentationOK();
     String getLibelle();
-    String getHDemande();
-    String getHEngagement();
-    String getHArrival();
-    String getHFree();
-    String getSecteur();
+    Date getHDemande();
+    Date getHEngagement();
+    Date getHArrival();
+    Date getHFree();
+    Date getSecteur();
     
     void setRepresentationOK(IRepresentation representation);
     void setLibelle(String libelle);
-    void setHDemande(String hourDemande);
-    void setHEngagement(String hourEngagement);
-    void setHArrival(String HourArrived);
-    void setHFree(String HourFree);
-    void setSecteur(String secteur); 
+    void setHDemande(Date hourDemande);
+    void setHEngagement(Date hourEngagement);
+    void setHArrival(Date HourArrived);
+    void setHFree(Date HourFree);
+    void setSecteur(Date secteur); 
    
 }

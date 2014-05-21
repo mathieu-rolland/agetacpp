@@ -9,7 +9,9 @@
         android:orientation="vertical"
         android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:layout_weight="50" >
+        android:layout_weight="50"
+        android:paddingLeft="10dp" 
+        android:paddingRight="5dp">
     
         <LinearLayout 
             android:orientation="horizontal"
@@ -21,6 +23,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="@string/fragment_create_sector_label_display"
 		        android:textColor="@android:color/white"
+		        android:paddingRight="5dp"
 		        />
 		    
 		    <EditText 
@@ -36,7 +39,8 @@
 	    <LinearLayout 
 	        android:orientation="horizontal"
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content">
+	        android:layout_height="wrap_content"
+	        android:paddingBottom="5dp">
 	    
 		    <TextView 
 	        	android:id="@+id/fragment_create_sector_color_label"
@@ -49,8 +53,9 @@
 		    <LinearLayout
 		        android:orientation="vertical"
 		        android:id="@+id/fragment_create_sector_color_edit"
-		        android:layout_width="50dp"
-		        android:layout_height="30dp"
+		        android:layout_width="40dp"
+		        android:layout_height="25dp"
+		        android:padding="5dp"
 		        android:background="@android:color/white"
 		    	/>
 	     </LinearLayout>
@@ -59,13 +64,14 @@
 	        android:orientation="horizontal"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content" 
-	        android:weightSum="100">
+	        android:weightSum="100" >
 	        
 	        <Button
 	            android:id="@+id/fragment_create_sector_validate"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="50"
+	            android:padding="5dp"
 	            android:width="0dp" 
 	            android:text="@string/fragment_create_sector_btn_validate"/>
 	        
@@ -75,6 +81,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="50"
 	            android:width="0dp"
+	            android:padding="5dp"
 	            android:text="@string/fragment_create_sector_btn_cancel" />
 	        
 	    </LinearLayout>
@@ -86,7 +93,8 @@
         android:layout_width="0dip" 
         android:layout_height="wrap_content"
         android:layout_weight="50"
-        android:weightSum="100">
+        android:weightSum="100"
+        android:padding="5dp">
         
         <ImageButton
             android:id="@+id/fragment_create_sector_sector_delete"

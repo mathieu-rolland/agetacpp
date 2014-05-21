@@ -42,6 +42,7 @@ public class CreateInterventionActivity extends FragmentActivity{
 	private FrameLayout mFragment;
 	private EditText mAddress;
 	private EditText mCode;
+	private EditText mName;
 	
 	private TableauMoyenFragment mFragmentTableauDesMoyens;
 	private DemandeDeMoyensFragment mFragmentDemandeMoyens;
@@ -57,6 +58,7 @@ public class CreateInterventionActivity extends FragmentActivity{
 		mSwitchButton = (Button) findViewById(R.id.activity_intervention_buttonSwitch);
 		mAddress = (EditText) findViewById(R.id.activity_intervention_adresseIntervention);
 		mCode = (EditText) findViewById(R.id.activity_intervention_codeIntervention);		
+		mName = (EditText) findViewById( R.id.activity_intervention_nom );
 		
 		mFragmentDemandeMoyens = DemandeDeMoyensFragment.newInstance();
 		mFragmentTableauDesMoyens = TableauMoyenFragment.newInstance(true);
@@ -104,14 +106,15 @@ public class CreateInterventionActivity extends FragmentActivity{
 	
 	private void ValidNewIntervention()
 	{
-		if(mCode.getText().toString().equals("") || mAddress.getText().toString().equals(""))
+		if(mCode.getText().toString().equals("") || mAddress.getText().toString().equals("") || mName.getText().toString().equals(""))
 		{
 			Toast.makeText(getApplicationContext(), "Remplissez les champs obligatoires", Toast.LENGTH_SHORT).show();
 			return;
 		}		
 
 		mInterventionCurrent.setAdresse(mAddress.getText().toString());
-		mInterventionCurrent.setCodeSinistre(mCode.getText().toString());		
+		mInterventionCurrent.setCodeSinistre(mCode.getText().toString());
+		mInterventionCurrent.setNom( mName.getText().toString() );
 		Codis codis = (Codis)AgetacppApplication.getUser();
 		mInterventionCurrent.setCodis(codis);
 		codis.addIntervention(mInterventionCurrent);

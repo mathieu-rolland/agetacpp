@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <string name="app_name">Agetac++</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    
+
     <!-- General -->
     <string name="general_empty_string"></string>
-    
+
     <!-- Layout : Demande de moyens -->
     <string name="demande_de_moyen_TextView_layoutTitle">AGETAC++ - Demande de moyens</string>
     <string name="demande_de_moyen_TextView_GridViewTitle">Choisissez un moyen (Véhicule ou sapeur-pompier)</string>
@@ -21,39 +21,40 @@
     <string name="demande_de_moyen_TextView_ListViewTitle">Liste des moyens demandés : </string>
     <string name="demande_de_moyen_Dialog_ButtonText_Cancel">Annuler</string>
     <string name="demande_de_moyen_Dialog_ButtonText_Delete">Supprimer</string>
-    
-    
-    <!--  Layout intervention -->
+
+    <!-- Layout intervention -->
     <string name="textIntervention">Entrer un nom d\'intervention</string>
     <string name="textCode">Entrer un code sinistre</string>
     <string name="switchFragment">Ajouter un moyen</string>
-    <string name="validIntervention">Valider</string>   
-    <string name="labelCode">Code sinistre :</string>    
-    <string name="labelAdresse">Adresse de l\'intervention :</string>              
-    
+    <string name="validIntervention">Valider</string>
+    <string name="labelCode">Code sinistre :</string>
+    <string name="labelAdresse">Adresse de l\'intervention :</string>
+    <string name="labelNom">Nom de l\'intervention : </string>
+    <string name="textNom">Entrer le nom de l\'intervention</string>
+
     <!-- Layout : tableau des moyens -->
-    <string name ="fragment_tableau_nameAndType">Nom et type</string>
-    <string name ="fragment_tableau_demand">Heure demande</string>
-    <string name ="fragment_tableau_engage">Heure engagement</string>
-    <string name ="fragment_tableau_arrive">Heure arrivée</string>
-    <string name ="fragment_tableau_free">Heure libération</string>
-    <string name ="fragment_tableau_sector">Secteur</string>
-    <string name ="list_moyen_description"> image du moyen</string>
-    <string name ="list_moyen_button_engage"> Engager </string>
-     <string name ="list_moyen_button_free"> Libérer </string>
-      <string name ="list_moyen_button_secteur"> Secteur </string>
-     
-     <!-- Layout : home codis -->
-     <string name = "codis_activity_create">Créer une nouvelle intervention</string>
-      
+    <string name="fragment_tableau_nameAndType">Nom et type</string>
+    <string name="fragment_tableau_demand">Heure demande</string>
+    <string name="fragment_tableau_engage">Heure engagement</string>
+    <string name="fragment_tableau_arrive">Heure arrivée</string>
+    <string name="fragment_tableau_free">Heure libération</string>
+    <string name="fragment_tableau_sector">Secteur</string>
+    <string name="list_moyen_description"> image du moyen</string>
+    <string name="list_moyen_button_engage"> Engager </string>
+    <string name="list_moyen_button_free"> Libérer </string>
+    <string name="list_moyen_button_secteur"> Secteur </string>
+
+    <!-- Layout : home codis -->
+    <string name="codis_activity_create">Créer une nouvelle intervention</string>
+
     <!-- Layout : ajout user -->
-    <string name ="fragment_add_user_dispo">Utilisateur(s) disponible(s)</string>
-    <string name ="fragment_add_user_added">Utilisateur(s) ajouté(s) à l\'intervention</string>
-    <string name ="fragment_add_user_empty_list">La liste est vide</string>
-    
-	<!-- Boite de dialogue : Tableau des moyen engagement -->
-	<string name ="dialog_tableau_moyen_engage_name">Entrer le nom du véhicule à engager</string>
-    
+    <string name="fragment_add_user_dispo">Utilisateur(s) disponible(s)</string>
+    <string name="fragment_add_user_added">Utilisateur(s) ajouté(s) à l\'intervention</string>
+    <string name="fragment_add_user_empty_list">La liste est vide</string>
+
+    <!-- Boite de dialogue : Tableau des moyen engagement -->
+    <string name="dialog_tableau_moyen_engage_name">Entrer le nom du véhicule à engager</string>
+
     <!-- Messages : Possibilité de prefix -->
     <string-array name="prefixes_rendre_compte">
         <item name="je_suis">Je suis </item>
@@ -62,47 +63,44 @@
         <item name="je_fais">Je fais </item>
         <item name="je_demande">Je demande </item>
     </string-array>
-    
+
     <string name="prefixes_rendre_compte_je_suis">Je suis </string>
     <string name="prefixes_rendre_compte_je_vois">Je vois</string>
     <string name="prefixes_rendre_compte_je_prevois">Je prevois </string>
     <string name="prefixes_rendre_compte_je_fais">Je fais </string>
     <string name="prefixes_rendre_compte_je_demande">Je demande </string>
-    
     <string name="fragment_message_list_button_next">Suivant</string>
     <string name="fragment_message_list_button_previous">Précédent</string>
     <string name="fragment_message_list_no_next">Aucun suivant</string>
-    
     <string name="fragment_messages_list_message_validate_text">Envoyer</string>
     <string name="fragment_messages_list_cos_message_button_validate">Valider</string>
     <string name="fragment_messages_list_cos_message_button_cancle">Annuler</string>
     <string name="fragment_messages_list_cos_message_button_modify">Modifier</string>
     <string name="fragment_messages_list_alert_modification">Modifier ce message va supprimer le message en cours d\'édition. Voulez-vous continuer?</string>
-	<string name="fragment_messages_list_alert_modification_yes">Oui</string>
-	<string name="fragment_messages_list_alert_modification_no">Non</string>
-	<string name="fragment_messages_list_image_validate">Validé</string>
-	<string name="fragment_messages_list_image_not_validate">En attente de validation</string>
-	
-	<!-- Dock entity -->
-	<string name="fragment_entity_label_lat">Latitude :</string>
-	<string name="fragment_entity_label_lng">Longitude :</string>
-	<string name="fragment_entity_button_supprimer">Libérer</string>
-	<string name="fragment_entity_button_arrived">Arriver</string>
-	<string name="fragment_entity_alert_libererRessource">Vous êtes sur le point de libérer la ressource %s. Voulez-vous continuer?</string>
+    <string name="fragment_messages_list_alert_modification_yes">Oui</string>
+    <string name="fragment_messages_list_alert_modification_no">Non</string>
+    <string name="fragment_messages_list_image_validate">Validé</string>
+    <string name="fragment_messages_list_image_not_validate">En attente de validation</string>
 
-	<!-- Vue CODIS : Voir une intervention -->
-	<string name="item_intervention_voir_user">Voir utilisateurs</string>
-	
-	<!-- Constitution des group au CRM -->
-	<string name="constitution_group_crm_button_assignToGroup_text">+</string>
-	<string name="constitution_group_crm_assign">Assigner</string>
-	
-	<!-- Vue de création des secteurs -->
-	<string name="fragment_create_sector_label_display">Libellé :</string>
-	<string name="fragment_create_sector_label_edit_hint">ALIM, etc ...</string>
-	<string name="fragment_create_sector_label_color">Couleur :</string>
-	<string name="fragment_create_sector_btn_validate">Créer</string>
-	<string name="fragment_create_sector_btn_cancel">Annuler</string>
-	
-	
+    <!-- Dock entity -->
+    <string name="fragment_entity_label_lat">Latitude :</string>
+    <string name="fragment_entity_label_lng">Longitude :</string>
+    <string name="fragment_entity_button_supprimer">Libérer</string>
+    <string name="fragment_entity_button_arrived">Arriver</string>
+    <string name="fragment_entity_alert_libererRessource">Vous êtes sur le point de libérer la ressource %s. Voulez-vous continuer?</string>
+
+    <!-- Vue CODIS : Voir une intervention -->
+    <string name="item_intervention_voir_user">Voir utilisateurs</string>
+
+    <!-- Constitution des group au CRM -->
+    <string name="constitution_group_crm_button_assignToGroup_text">+</string>
+    <string name="constitution_group_crm_assign">Assigner</string>
+
+    <!-- Vue de création des secteurs -->
+    <string name="fragment_create_sector_label_display">Libellé :</string>
+    <string name="fragment_create_sector_label_edit_hint">ALIM, etc ...</string>
+    <string name="fragment_create_sector_label_color">Couleur :</string>
+    <string name="fragment_create_sector_btn_validate">Créer</string>
+    <string name="fragment_create_sector_btn_cancel">Annuler</string>
+
 </resources>

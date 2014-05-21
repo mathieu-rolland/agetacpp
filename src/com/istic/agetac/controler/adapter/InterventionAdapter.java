@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
@@ -68,12 +67,15 @@ public class InterventionAdapter extends BaseAdapter{
         if(convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item_intervention, null);  
+            holder.nom = (TextView) convertView.findViewById( R.id.item_intervention_nom );
             holder.address = (TextView) convertView.findViewById( R.id.item_intervention_address );
             holder.code = (TextView) convertView.findViewById( R.id.item_intervention_code );
             holder.button = (Button) convertView.findViewById(R.id.item_intervention_image_button);
-            
+                        
+            holder.nom.setText( mList.get(position).getNom() );
             holder.address.setText(mList.get(position).getAdresse());
             holder.code.setText(mList.get(position).getCodeSinistre());
+            
             holder.button.setOnClickListener(new OnClickListener() {				
 				@Override
 				public void onClick(View v) {
@@ -100,6 +102,7 @@ public class InterventionAdapter extends BaseAdapter{
 	public class ViewHolder {		
 		TextView address;
 		TextView code;
+		TextView nom;
 		Button button;
     }
 	

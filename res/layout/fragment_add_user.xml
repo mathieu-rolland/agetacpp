@@ -87,10 +87,9 @@
         <Button
             android:id="@+id/fragment_add_user_button_send"
             android:layout_width="match_parent"
-            android:layout_height="40dip"
+            android:layout_height="60dip"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="5dip"
             android:background="@drawable/button_style_grey"
             android:text="@string/demande_de_moyen_ButtonText_SendList"
             android:textColor="#efefef"

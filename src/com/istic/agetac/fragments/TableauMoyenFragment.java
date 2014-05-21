@@ -30,6 +30,7 @@ import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
 import com.istic.sit.framework.couch.APersitantRecuperator;
+import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
@@ -69,9 +70,7 @@ public class TableauMoyenFragment extends Fragment
         if ( !mIsCreating )
         {
 //            CouchDBUtils.getFromCouch( new MoyenRecuperator( AgetacppApplication.getIntervention().getId() ) );
-//            CouchDBUtils.getFromCouch( new SectorRecuperator( AgetacppApplication.getIntervention().getId() ) );
-            
-            
+            CouchDBUtils.getFromCouch( new SectorRecuperator( AgetacppApplication.getIntervention().getId() ) );             
         }
 
         if ( AgetacppApplication.getUser().getRole() == Role.codis )
@@ -134,28 +133,6 @@ public class TableauMoyenFragment extends Fragment
         AddAllMoyen( moyens );
         mListViewMoyen.setAdapter( mAdapterMoyens );
         
-        List<Secteur> list = new ArrayList<Secteur>();
-        Secteur s = new Secteur(); 
-        s.setColor( "#FFFF00" );
-        s.setName( "CRM" );
-        list.add( s);
-        
-        Secteur s2 = new Secteur(); 
-        s2.setColor( "#0000CC" );
-        s2.setName( "SLL" );
-        list.add( s2);
-        
-        Secteur s3 = new Secteur(); 
-        s3.setColor( "#ff0000" );
-        s3.setName( "ALIM" );
-        list.add( s3);
-        
-        Secteur s4 = new Secteur(); 
-        s4.setColor( "#00FF00" );
-        s4.setName( "SAP" );
-        list.add( s4);
-        
-        mAdapterMoyens.setSectorAvailable( list );
         mAdapterMoyens.notifyDataSetChanged();
         
         //CreationBase.createMoyen();

@@ -15,10 +15,11 @@ import com.istic.agetac.R;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerFree;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerSpinner;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
 
 public class MoyenListIntervenantAdapter extends AMoyenListAdapter
-{  
+{
     /* Context */
     private Context context;
 
@@ -55,29 +56,29 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
         holder.sector = (TextView) convertView.findViewById( R.id.list_moyen_sector );
         holder.buttonDemand = (Button) convertView.findViewById( R.id.list_moyen_button_engage );
         holder.name = (TextView) convertView.findViewById( R.id.list_moyen_name );
-        
+
         holder.buttonFree.setVisibility( Button.GONE );
         holder.buttonDemand.setVisibility( Button.GONE );
-        holder.name.setText( "" );        
-        
+        holder.name.setText( "" );
+
         if ( mSector.size() > 0 )
         {
-            SpinnerSectorAdapter dataAdapter = new SpinnerSectorAdapter (convertView.getContext(), R.layout.item_secteur_tableau_moyen, mSector, super.mInflater);
+            SpinnerSectorAdapter dataAdapter = new SpinnerSectorAdapter( convertView.getContext(), R.layout.item_secteur_tableau_moyen, mSector, super.mInflater );
             dataAdapter.setDropDownViewResource( R.layout.item_secteur_tableau_moyen );
             holder.spinner.setAdapter( dataAdapter );
 
-            holder.spinner.setOnItemSelectedListener( new ListenerSpinner( this,dataAdapter, mSector, current ) );
+            holder.spinner.setOnItemSelectedListener( new ListenerSpinner( this, dataAdapter, mSector, current ) );
             int positionSpinner = dataAdapter.getPosition( current.getSecteur() );
-           
+
             if ( positionSpinner >= 0 )
             {
                 if ( current.getSecteur() != "" )
                 {
-                    holder.spinner.setSelection( positionSpinner );                   
+                    holder.spinner.setSelection( positionSpinner );
                 }
             }
         }
-        
+
         if ( current != null )
         {
             holder.logo.setImageResource( current.getRepresentationOK().getDrawable() );
@@ -98,7 +99,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
                 holder.hourEngage.setText( current.getHEngagement() );
                 holder.hourEngage.setVisibility( View.VISIBLE );
                 holder.name.setText( current.getLibelle() );
-                holder.buttonDemand.setVisibility( View.GONE );     
+                holder.buttonDemand.setVisibility( View.GONE );
                 holder.spinner.setVisibility( View.VISIBLE );
             }
 
@@ -117,13 +118,18 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
                 holder.spinner.setVisibility( View.INVISIBLE );
                 holder.sector.setVisibility( View.VISIBLE );
                 holder.sector.setText( current.getSecteur() );
-                String color = mSector.get( current.getSecteur() ).getColor();
-                holder.sector.setTextColor( Color.parseColor( color ) );
-                
-                
+
+                Secteur sector = mSector.get( current.getSecteur() );
+
+                if ( sector != null )
+                {
+                    String color = mSector.get( current.getSecteur() ).getColor();
+                    holder.sector.setTextColor( Color.parseColor( color ) );
+                }
+               
             }
         }
-        
+
         // this.updateDatasSpinners(this.spinners);
         convertView.setTag( holder );
 
@@ -150,5 +156,5 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
     {
         mItemMoyen.setHFree( date );
         this.notifyDataSetChanged();
-    }   
+    }
 }

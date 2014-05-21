@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.istic.agetac.R;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
 
 public class MoyenListCodisAdapter extends AMoyenListAdapter
@@ -107,9 +108,15 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter
         {
             holder.sector.setVisibility( View.VISIBLE );
             holder.sector.setText( current.getSecteur() );
-            String color = mSector.get( current.getSecteur() ).getColor();
-            holder.sector.setTextColor( Color.parseColor( color ) );
             holder.hourArrived.setText( current.getHArrival() );
+            
+            Secteur sector = mSector.get( current.getSecteur() );
+
+            if ( sector != null )
+            {
+                String color = mSector.get( current.getSecteur() ).getColor();
+                holder.sector.setTextColor( Color.parseColor( color ) );
+            }
         }
 
         if ( mIsCreating )

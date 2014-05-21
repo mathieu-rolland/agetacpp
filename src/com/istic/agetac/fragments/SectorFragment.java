@@ -186,8 +186,9 @@ public class SectorFragment extends Fragment implements OnDragListener {
 			return true;
 		case DragEvent.ACTION_DROP:
 		{
-			view.setBackgroundColor( Color.WHITE );
-			view.setAlpha(100);
+			
+			deleteSecteur.setBackgroundColor( Color.WHITE );
+			
 			Secteur dragged = (Secteur) event.getLocalState();
 			if( view.equals(deleteSecteur) ){
 				dragged.delete();

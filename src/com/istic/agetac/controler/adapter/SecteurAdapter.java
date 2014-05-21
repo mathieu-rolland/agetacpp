@@ -29,6 +29,10 @@ public class SecteurAdapter extends BaseAdapter {
 		secteurs.add(secteur);
 	}
 	
+	public void addAll( List<Secteur> secteurs ){
+		this.secteurs.addAll(secteurs);
+	}
+	
 	public void remove( Secteur secteur ){
 		secteurs.remove(secteur);
 	}

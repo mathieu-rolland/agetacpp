@@ -10,6 +10,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.ISecteur;
 import com.istic.sit.framework.couch.DataBaseCommunication;
@@ -105,6 +106,9 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 
 	@Override
 	public String getUrl(int method) {
+		if( method ==  Request.Method.DELETE ){
+			return DataBaseCommunication.BASE_URL + _id + "?rev="+_rev;
+		}
 		return DataBaseCommunication.BASE_URL + _id;
 	}
 
@@ -200,6 +204,16 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 	
 	public String toString() {
 		return this.libelle;
+	}
+
+	@Override
+	public void addMoyen(Moyen moyen) {
+		this.moyens.add(moyen);
+	}
+
+	@Override
+	public List<Moyen> getMoyens() {
+		return moyens;
 	}
 	
 }

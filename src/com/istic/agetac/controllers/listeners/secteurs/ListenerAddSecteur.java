@@ -1,9 +1,11 @@
 package com.istic.agetac.controllers.listeners.secteurs;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -34,6 +36,10 @@ public class ListenerAddSecteur implements OnClickListener {
 		int color = ((ColorDrawable)colorEdit.getBackground()).getColor();
 		String strColor = String.format("#%06X", 0xFFFFFF & color);
 		
+		if( label.trim().equals("") ){
+			return;
+		}
+		
 		for( int i = 0 ; i < adapter.getCount() ; i++ ){
 			Secteur storedSecteur = (Secteur) adapter.getItem(i);
 			if( storedSecteur.getName().equals( label ) ){
@@ -47,6 +53,16 @@ public class ListenerAddSecteur implements OnClickListener {
 		created.setColor(strColor);
 		adapter.addSecteur(created);
 		adapter.notifyDataSetChanged();
+		created.save();
+		
+		this.name.setText("");
+		this.colorEdit.setBackgroundColor( Color.WHITE );
+		 
+		//Masquer le clavier :
+		InputMethodManager imm = (InputMethodManager) context.getSystemService(
+			      Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow( this.name.getWindowToken(), 0);
+		
 	}
 
 }

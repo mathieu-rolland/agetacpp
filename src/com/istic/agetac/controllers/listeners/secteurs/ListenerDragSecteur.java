@@ -1,13 +1,13 @@
 package com.istic.agetac.controllers.listeners.secteurs;
 
+import java.util.Locale;
+
 import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.widget.AdapterView;
@@ -33,7 +33,7 @@ public class ListenerDragSecteur implements OnItemLongClickListener {
 
 		Secteur selectedSecteur = (Secteur) secteurs.getItem(position);
 
-		if( selectedSecteur.getName().equals("SLL") ){
+		if( selectedSecteur.getName().toUpperCase(Locale.FRENCH).equals("SLL") ){
 			Toast.makeText(context, "Le secteur SLL ne peut pas être supprimé."
 					, Toast.LENGTH_LONG).show();
 			return false;

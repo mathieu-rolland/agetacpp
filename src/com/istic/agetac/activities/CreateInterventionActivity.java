@@ -55,7 +55,7 @@ public class CreateInterventionActivity extends FragmentActivity{
 		setContentView(R.layout.activity_create_intervention);
 		mValidButton= (Button) findViewById(R.id.activity_intervention_buttonValid);
 		mSwitchButton = (Button) findViewById(R.id.activity_intervention_buttonSwitch);
-		mAddress = (EditText) findViewById(R.id.activity_intervention_nameIntervention);
+		mAddress = (EditText) findViewById(R.id.activity_intervention_adresseIntervention);
 		mCode = (EditText) findViewById(R.id.activity_intervention_codeIntervention);		
 		
 		mFragmentDemandeMoyens = DemandeDeMoyensFragment.newInstance();

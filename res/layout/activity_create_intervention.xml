@@ -3,70 +3,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#171f21"
-    android:weightSum="100"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:weightSum="100" >
 
-    <LinearLayout 
-	    android:layout_width="match_parent"
-	    android:baselineAligned="false"
-	    android:layout_height="0dip"
-	    android:background="#171f21"
-	    android:weightSum="100"
-	    android:layout_weight="20"
-	    android:orientation="horizontal">
-    
-	<LinearLayout 
-	    android:layout_width="0dip"
-	    android:layout_height="wrap_content"
-	    android:background="#171f21"
-	    android:layout_weight="80"
-	    android:layout_marginLeft="10dip"
-	    android:layout_marginRight="10dip"
-	    android:layout_marginBottom="20dip"
-	    android:orientation="vertical">
-	    
-	    <EditText
-	        android:id="@+id/activity_intervention_nameIntervention"
-	        android:layout_width="978dp"
-	        android:layout_height="wrap_content"
-	        android:ems="10"
-	        android:hint="@string/textIntervention"
-	        android:inputType="text"
-	        android:textColor="#efefef" />
-	
-	    <EditText
-	        android:id="@+id/activity_intervention_codeIntervention"
-	        android:layout_width="978dp"
-	        android:layout_height="wrap_content"
-	        android:ems="10"
-	        android:hint="@string/textCode"
-	        android:inputType="text"
-	        android:textColor="#efefef" />
-	</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="20"
+        android:background="#171f21"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="100" >
 
-	<LinearLayout
-	    android:layout_width="wrap_content"
-	    android:layout_height="match_parent"
-	     android:layout_weight="20"
-	    android:orientation="vertical" >
+        <RelativeLayout
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_weight="80"
+            android:background="#171f21"
+            android:orientation="vertical" >
 
-		<Button
-		    android:id="@+id/activity_intervention_buttonValid"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:background="@drawable/button_style_red"
-		    android:text="@string/validIntervention" />
+            <TextView
+                android:id="@+id/activity_intervention_labelAdresse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/labelAdresse"
+                android:textColor="#efefef"
+                android:textSize="@dimen/text_size" />
 
-		<Button
-		    android:id="@+id/activity_intervention_buttonSwitch"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:background="@drawable/button_style_red"
-		    android:text="@string/switchFragment" />
+            <EditText
+                android:id="@+id/activity_intervention_adresseIntervention"
+                android:layout_width="978dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/activity_intervention_labelAdresse"
+                android:ems="10"
+                android:hint="@string/textIntervention"
+                android:inputType="text"
+                android:textColor="#efefef" />
 
-	</LinearLayout>
+            <EditText
+                android:id="@+id/activity_intervention_codeIntervention"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/activity_intervention_labelCode"
+                android:layout_alignBottom="@+id/activity_intervention_labelCode"
+                android:layout_alignLeft="@+id/activity_intervention_adresseIntervention"
+                android:layout_marginTop="20dip"
+                android:ems="10"
+                android:hint="@string/textCode"
+                android:inputType="text"
+                android:textColor="#efefef" />
 
-	</LinearLayout>
+            <TextView
+                android:id="@+id/activity_intervention_labelCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/activity_intervention_labelAdresse"
+                android:layout_marginTop="20dip"
+                android:text="@string/labelCode"
+                android:textColor="#efefef"
+                android:textSize="@dimen/text_size" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/activity_intervention_buttonValid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_style_red"
+                android:text="@string/validIntervention" />
+
+            <Button
+                android:id="@+id/activity_intervention_buttonSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_style_red"
+                android:text="@string/switchFragment" />
+        </LinearLayout>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/activity_intervention_frame_tableau"

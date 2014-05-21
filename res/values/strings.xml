@@ -27,7 +27,9 @@
     <string name="textIntervention">Entrer un nom d\'intervention</string>
     <string name="textCode">Entrer un code sinistre</string>
     <string name="switchFragment">Ajouter un moyen</string>
-    <string name="validIntervention">Valider</string>              
+    <string name="validIntervention">Valider</string>   
+    <string name="labelCode">Code sinistre :</string>    
+    <string name="labelAdresse">Adresse de l\'intervention :</string>              
     
     <!-- Layout : tableau des moyens -->
     <string name ="fragment_tableau_nameAndType">Nom et type</string>

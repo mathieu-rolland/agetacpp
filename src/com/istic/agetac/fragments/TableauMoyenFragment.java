@@ -1,6 +1,7 @@
 package com.istic.agetac.fragments;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.AlarmManager;
@@ -17,212 +18,299 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.AMoyenListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
-import com.istic.agetac.controllers.dao.SecteurDao;
-import com.istic.agetac.controllers.listeners.tableauMoyen.SwitchSector;
+import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
+import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
 import com.istic.sit.framework.couch.APersitantRecuperator;
-import com.istic.sit.framework.couch.CouchDBUtils;
+import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
-public class TableauMoyenFragment extends Fragment {
+public class TableauMoyenFragment extends Fragment
+{
 
-	public static TableauMoyenFragment newInstance(boolean isCreating) {
-		TableauMoyenFragment fragment = new TableauMoyenFragment();
-		fragment.setmIsCreating(isCreating);
-		return fragment;
-	}
-	
-	private List<Moyen> mListMoyen;
-	
-	/* Instances des modèles à utiliser */
+    public static TableauMoyenFragment newInstance( boolean isCreating )
+    {
+        TableauMoyenFragment fragment = new TableauMoyenFragment();
+        fragment.setmIsCreating( isCreating );
+        return fragment;
+    }
 
-	/* éléments graphiques */
-	private ListView mListViewMoyen; // ListView des moyens
-	private AMoyenListAdapter mAdapterMoyens; // Adapter des moyens
+    private List<Moyen> mListMoyen;
 
-	/* Controlers */
-	private SwitchSector cSecteur;
+    /* Instances des modï¿½les ï¿½ utiliser */
+    private MoyensDao mMoyen; // Modï¿½le Moyen
 
-	private TableauDesMoyensReceiver receiver;
+    /* ï¿½lï¿½ments graphiques */
+    private ListView mListViewMoyen; // ListView des moyens
 
-	private boolean mIsCreating;
-		
+    private AMoyenListAdapter mAdapterMoyens; // Adapter des moyens
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    private TableauDesMoyensReceiver receiver;
 
-		View view = inflater.inflate(R.layout.fragment_tableau_moyen,
-				container, false);
+    private boolean mIsCreating;
 
-		//CreationBase.createSecteur();
+    @Override
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
+    {
+        View view = inflater.inflate( R.layout.fragment_tableau_moyen, container, false );
 
-		mListViewMoyen = (ListView) view
-				.findViewById(R.id.fragment_tableau_moyen_list_view);
+        mListViewMoyen = (ListView) view.findViewById( R.id.fragment_tableau_moyen_list_view );
 
-		/* R�cup�rations des donn�es via les mod�les */
-		
-		if(!mIsCreating)
-		{
-			CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication.getIntervention().getId()));
-		}
-		
-		if (AgetacppApplication.getUser().getRole() == Role.codis) {
-			mAdapterMoyens = new MoyenListCodisAdapter(getActivity(),mIsCreating);
-		} else {
-			mAdapterMoyens = new MoyenListIntervenantAdapter(getActivity());
-		}
-		
-		mAdapterMoyens.notifyDataSetChanged();
-		Log.e("Vincent", "Tableau des moyen set adapteur " + mAdapterMoyens.hashCode());
-		mListViewMoyen.setAdapter(mAdapterMoyens);
-		
-		if(mListMoyen==null)
-		{
-			mListMoyen = new ArrayList<Moyen>();
-		}
-		else
-		{
-			mAdapterMoyens.addAll(mListMoyen);
-		}
-		
-		SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
-		sdao.findAll();
-		
-		return view;
-	}
+        /* Rï¿½cupï¿½rations des donnï¿½es via les modï¿½les */
 
-	//Récupération des secteurs :
-	private class OnSecteurReceived implements IViewReceiver<Secteur>
-	{
-		@Override
-		public void notifyResponseSuccess(List<Secteur> objects) {
-			if( objects != null ){
-				TableauMoyenFragment.this.mAdapterMoyens.addAllSecteurs(objects);
-			}
-			mAdapterMoyens.notifyDataSetChanged();
-		}
+        if ( !mIsCreating )
+        {
+//            CouchDBUtils.getFromCouch( new MoyenRecuperator( AgetacppApplication.getIntervention().getId() ) );
+//            CouchDBUtils.getFromCouch( new SectorRecuperator( AgetacppApplication.getIntervention().getId() ) );
+            
+            
+        }
 
-		@Override
-		public void notifyResponseFail(VolleyError error) {
-		}
-	}
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	}
+        if ( AgetacppApplication.getUser().getRole() == Role.codis )
+        {
+            mAdapterMoyens = new MoyenListCodisAdapter( getActivity(), mIsCreating );
+        }
+        else
+        {
+            mAdapterMoyens = new MoyenListIntervenantAdapter( getActivity() );
+        }
 
-	public void AddAllMoyen(List<Moyen> list)
-	{	
-		mListMoyen = list;
-		
-		if(mAdapterMoyens !=null)
-		{
-			mAdapterMoyens.addAll(list);
-		}
-		
-	}
-	
-	public List<Moyen> getAllMoyen()
-	{
-		return mAdapterMoyens.getAll();
-	}
+        mListViewMoyen.setAdapter( mAdapterMoyens );
 
-	public AMoyenListAdapter getAdapter() {
-		return mAdapterMoyens;
-	}
+        if ( mListMoyen == null )
+        {
+            mListMoyen = new ArrayList<Moyen>();
+        }
+        else
+        {
+            mAdapterMoyens.addAll( mListMoyen );
+        }
 
-	public class MoyenRecuperator extends APersitantRecuperator<Moyen> {
-		
-		public MoyenRecuperator(String idIntervention) {
-			super(Moyen.class, "agetacpp", "get_moyens_by_intervention", idIntervention);
-		}
+        mAdapterMoyens.notifyDataSetChanged();
 
+        List<Moyen> moyens = new ArrayList<Moyen>();
+        Moyen m = new Moyen( TypeMoyen.VSAV_INC );
+        m.setHDemande( new Date( 2014, 01, 01,10,00 ) );
+        m.setRepresentationOK( new Representation(R.drawable.fpt_1_sap) );
+        m.setRepresentationKO( new Representation(R.drawable.fpt_1_sap) );
+        moyens.add(m);
+        Moyen m2 = new Moyen( TypeMoyen.VSAV_INC );
+        m2.setHDemande( new Date( 2014, 02, 02,10,00 ) );
+        m2.setHEngagement( new Date( 2014, 02, 02,10,30 ) );
+        m2.setLibelle( "moyen2" );
+        m2.setRepresentationOK( new Representation(R.drawable.fpt_1_alim) );
+        m2.setRepresentationKO( new Representation(R.drawable.fpt_1_alim) );
+        moyens.add(m2);
+        Moyen m3 = new Moyen( TypeMoyen.VSAV_INC );
+        m3.setHDemande( new Date( 2014, 02, 02,14,00 ) );
+        m3.setHEngagement( new Date( 2014, 02, 02,14,30 ) );
+        m3.setLibelle( "moyen2" );
+        m3.setSecteur( "CRM" );
+        m3.setHArrival( new Date( 2014, 02, 02,15,00 ) );
+        m3.setRepresentationOK( new Representation(R.drawable.fpt_1_alim) );
+        m3.setRepresentationKO( new Representation(R.drawable.fpt_1_alim) );
+        moyens.add(m3);
+        
+        Moyen m4 = new Moyen( TypeMoyen.VSAV_INC );
+        m4.setHDemande( new Date( 2014, 02, 02,14,00 ) );
+        m4.setHEngagement( new Date( 2014, 02, 02,14,30 ) );
+        m4.setLibelle( "moyen2" );
+        m4.setSecteur( "SLL" );
+        m4.setHArrival( new Date( 2014, 02, 02,15,00 ) );
+        m4.setHFree( new Date() );
+        m4.setRepresentationOK( new Representation(R.drawable.ic_fpt_alim) );
+        m4.setRepresentationKO( new Representation(R.drawable.ic_fpt_1_alim) );
+        moyens.add(m4);
+        
+        
+        AddAllMoyen( moyens );
+        mListViewMoyen.setAdapter( mAdapterMoyens );
+        
+        List<Secteur> list = new ArrayList<Secteur>();
+        Secteur s = new Secteur(); 
+        s.setColor( "#FFFF00" );
+        s.setName( "CRM" );
+        list.add( s);
+        
+        Secteur s2 = new Secteur(); 
+        s2.setColor( "#0000CC" );
+        s2.setName( "SLL" );
+        list.add( s2);
+        
+        Secteur s3 = new Secteur(); 
+        s3.setColor( "#ff0000" );
+        s3.setName( "ALIM" );
+        list.add( s3);
+        
+        Secteur s4 = new Secteur(); 
+        s4.setColor( "#00FF00" );
+        s4.setName( "SAP" );
+        list.add( s4);
+        
+        mAdapterMoyens.setSectorAvailable( list );
+        mAdapterMoyens.notifyDataSetChanged();
+        
+        //CreationBase.createMoyen();
+        
+        return view;
+    }
 
-		@Override
-		public void onErrorResponse(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
-					Toast.LENGTH_SHORT).show();
-		}
+    public void AddAllMoyen( List<Moyen> list )
+    {
+        mListMoyen = list;
 
-		@Override
-		public void onResponse(List<Moyen> moyens) {
-			mAdapterMoyens.addAll(moyens);
-			Log.e("Vincent", "Moyen recu de la bdd");
-			mAdapterMoyens.notifyDataSetChanged();
-			mListViewMoyen.setAdapter(mAdapterMoyens);
-		}
-	}
+        if ( mAdapterMoyens != null )
+        {
+            mAdapterMoyens.addAll( list );
+        }
+    }
 
-	public void updateTableauDesMoyen(List<Moyen> moyens) {
-		// TODO impl�menter la r�ception de la synchro.
-		Log.d("Synch",
-				" Recieve sync for tableau des moyens : " + moyens == null ? "Moyen is null"
-						: "Size : " + moyens.size());
-		List<Moyen> moyensWaiting = new ArrayList<Moyen>();
-		for( Moyen moyenServer : moyens ){
-			
-			boolean found = false;
-			for( Moyen localMoyen : mListMoyen ){
-				if( localMoyen.getId().equals( moyenServer.getId() ) ){
-					found = true;
-					localMoyen = moyenServer;
-					break;
-				}
-			}
-			if( !found ){
-				moyensWaiting.add(moyenServer);
-			}
-		}
-		for( Moyen moyen : moyensWaiting ){
-			mListMoyen.add(moyen);
-		}
-		this.mAdapterMoyens.notifyDataSetChanged();
-	}
+    public List<Moyen> getAllMoyen()
+    {
+        return mAdapterMoyens.getAll();
+    }
 
-	private void stopSynchronisation() {
-		AlarmManager alarm = (AlarmManager) getActivity().getSystemService(
-				Context.ALARM_SERVICE);
-		PendingIntent pi = receiver.getPendingIntent();
-		alarm.cancel(pi);
-	}
+    public AMoyenListAdapter getAdapter()
+    {
+        return mAdapterMoyens;
+    }
 
-	@Override
-	public void onStop() {
-		stopSynchronisation();
-		super.onStop();
-	}
+    /**
+     * @return the mMoyen
+     */
+    public MoyensDao getmMoyen()
+    {
+        return mMoyen;
+    }
 
-	@Override
-	public void onResume() {
+    /**
+     * @param mMoyen
+     * the mMoyen to set
+     */
+    public void setmMoyen( MoyensDao mMoyen )
+    {
+        this.mMoyen = mMoyen;
+    }
 
-		PoolSynchronisation pool = AgetacppApplication.getPoolSynchronisation();
+    public void updateTableauDesMoyen( List<Moyen> moyens )
+    {
+        // TODO implï¿½menter la rï¿½ception de la synchro.
+        Log.d( "Synch", " Recieve sync for tableau des moyens : " + moyens == null ? "Moyen is null" : "Size : " + moyens.size() );
+        List<Moyen> moyensWaiting = new ArrayList<Moyen>();
+        for ( Moyen moyenServer : moyens )
+        {
 
-		receiver = new TableauDesMoyensReceiver(this);
-		TableauDesMoyensSync sync = new TableauDesMoyensSync();
+            boolean found = false;
+            for ( Moyen localMoyen : mListMoyen )
+            {
+                if ( localMoyen.getId().equals( moyenServer.getId() ) )
+                {
+                    found = true;
+                    localMoyen = moyenServer;
+                    break;
+                }
+            }
+            if ( !found )
+            {
+                moyensWaiting.add( moyenServer );
+            }
+        }
+        for ( Moyen moyen : moyensWaiting )
+        {
+            mListMoyen.add( moyen );
+        }
+        this.mAdapterMoyens.notifyDataSetChanged();
+    }
 
-		pool.registerServiceSync(TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER,
-				sync, receiver);
-		super.onResume();
-	}
+    private void stopSynchronisation()
+    {
+        AlarmManager alarm = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
+        PendingIntent pi = receiver.getPendingIntent();
+        alarm.cancel( pi );
+    }
 
-	public boolean ismIsCreating() {
-		return mIsCreating;
-	}
-	
+    @Override
+    public void onStop()
+    {
+        stopSynchronisation();
+        super.onStop();
+    }
 
-	public void setmIsCreating(boolean mIsCreating) {
-		this.mIsCreating = mIsCreating;
-	}
+    @Override
+    public void onResume()
+    {
+
+        PoolSynchronisation pool = AgetacppApplication.getPoolSynchronisation();
+
+        receiver = new TableauDesMoyensReceiver( this );
+        TableauDesMoyensSync sync = new TableauDesMoyensSync();
+
+        pool.registerServiceSync( TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER, sync, receiver );
+        super.onResume();
+    }
+
+    public boolean ismIsCreating()
+    {
+        return mIsCreating;
+    }
+
+    public void setmIsCreating( boolean mIsCreating )
+    {
+        this.mIsCreating = mIsCreating;
+    }
+
+    public class MoyenRecuperator extends APersitantRecuperator<Moyen>
+    {
+
+        public MoyenRecuperator( String idIntervention )
+        {
+            super( Moyen.class, "agetacpp", "get_moyens_by_intervention", idIntervention );
+        }
+
+        @Override
+        public void onErrorResponse( VolleyError error )
+        {
+            Toast.makeText( getActivity(), "Impossible de rÃ©cupÃ©rer les moyens", Toast.LENGTH_SHORT ).show();
+        }
+
+        @Override
+        public void onResponse( List<Moyen> moyens )
+        {
+            mAdapterMoyens.addAll( moyens );
+            Log.e( "Vincent", "Moyen recu de la bdd" );
+            mAdapterMoyens.notifyDataSetChanged();
+            mListViewMoyen.setAdapter( mAdapterMoyens );
+        }
+    }
+
+    public class SectorRecuperator extends APersitantRecuperator<Secteur>
+    {
+
+        public SectorRecuperator( String idIntervention )
+        {
+            super( Secteur.class );
+        }
+
+        @Override
+        public void onErrorResponse( VolleyError error )
+        {
+            Toast.makeText( getActivity(), "Impossible de récupérer les moyens", Toast.LENGTH_SHORT ).show();
+        }
+
+        @Override
+        public void onResponse( List<Secteur> secteurs )
+        {
+            mAdapterMoyens.setSectorAvailable( secteurs );
+            mAdapterMoyens.notifyDataSetChanged();
+        }
+    }
 
 }

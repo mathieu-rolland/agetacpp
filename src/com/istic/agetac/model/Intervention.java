@@ -31,6 +31,7 @@ public class Intervention implements IIntervention, Subject {
 	private transient Codis codis;
 	private transient List<Observer> observers;
 	private transient List<IMessage> messages;
+	private List<Secteur> secteurs;
 	
 	public Intervention(){
 		this._id = UUID.randomUUID().toString();
@@ -42,6 +43,7 @@ public class Intervention implements IIntervention, Subject {
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre){
@@ -54,6 +56,7 @@ public class Intervention implements IIntervention, Subject {
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens){
@@ -66,6 +69,7 @@ public class Intervention implements IIntervention, Subject {
 		this.intervenants = new ArrayList<Intervenant>();
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
@@ -78,6 +82,7 @@ public class Intervention implements IIntervention, Subject {
 		this.intervenants = users;
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 
 	/**
@@ -471,4 +476,12 @@ public class Intervention implements IIntervention, Subject {
 		}
 	}
 
+	public List<Secteur> getSecteurs() {
+		return secteurs;
+	}
+
+	public void setSecteurs(List<Secteur> secteurs) {
+		this.secteurs = secteurs;
+	}
+	
 }

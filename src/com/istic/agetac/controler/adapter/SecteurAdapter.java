@@ -25,6 +25,11 @@ public class SecteurAdapter extends BaseAdapter {
 		this.inflater = LayoutInflater.from(context);
 	}
 	
+	public SecteurAdapter( Context context, List<Secteur> secteurs ){
+		this.secteurs = secteurs;
+		this.inflater = LayoutInflater.from(context);
+	}
+	
 	public void addSecteur( Secteur secteur ){
 		secteurs.add(secteur);
 	}

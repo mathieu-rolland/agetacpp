@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.ISecteur;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.SecteurAdapter;
 import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerAddSecteur;
@@ -61,7 +62,7 @@ public class SectorFragment extends Fragment implements OnDragListener {
 		secteurList = (ListView) rootView.findViewById(R.id.fragment_create_sector_created);
 		deleteSecteur = (ImageButton) rootView.findViewById(R.id.fragment_create_sector_sector_delete);
 
-		adapter = new SecteurAdapter( getActivity() );
+		adapter = new SecteurAdapter( getActivity(), AgetacppApplication.getIntervention().getSecteurs() );
 		secteurList.setAdapter(adapter);
 
 		libelleEdit = (EditText) rootView.findViewById(R.id.fragment_create_sector_libelle);

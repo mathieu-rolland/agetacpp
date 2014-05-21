@@ -14,7 +14,6 @@ public interface IMoyen
     Date getHEngagement();
     Date getHArrival();
     Date getHFree();
-    Date getSecteur();
     
     void setRepresentationOK(IRepresentation representation);
     void setLibelle(String libelle);
@@ -22,6 +21,5 @@ public interface IMoyen
     void setHEngagement(Date hourEngagement);
     void setHArrival(Date HourArrived);
     void setHFree(Date HourFree);
-    void setSecteur(Date secteur); 
    
 }

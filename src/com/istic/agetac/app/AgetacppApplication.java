@@ -17,7 +17,7 @@ public class AgetacppApplication extends FrameworkApplication {
 	private static Intervention currentIntervention;
 	private static List<Intervention> listIntervention;
 	private static Role role;
-	private static UserAvailable userPoubelle;
+	private static UserAvailable userAvailable;
 	
 	@Override
 	public void onCreate() {
@@ -73,12 +73,12 @@ public class AgetacppApplication extends FrameworkApplication {
 		}
 		listIntervention = interventions;
 	}
-	public static UserAvailable getUserPoubelle(){
-		return userPoubelle;
+	public static UserAvailable getUserAvailable(){
+		return userAvailable;
 	}
 	
-	public static void setUserPoubelle(UserAvailable userPoubelle){
-		AgetacppApplication.userPoubelle = userPoubelle;  
+	public static void setUserPoubelle(UserAvailable userAvailable){
+		AgetacppApplication.userAvailable = userAvailable;  
 	}
 	
 }

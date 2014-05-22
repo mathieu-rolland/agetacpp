@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.istic.agetac.api.model.IUser.Role;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
@@ -131,5 +132,15 @@ public class UserAvailable implements IPersistant {
 
 	public void setIntervention(Intervention intervention) {
 		this.intervention = intervention;
+	}
+	
+	public void removeIntervenants(){
+		List<User> intervenants = new ArrayList<User>();
+		for(User u : users){
+			if(u.getRole().equals(Role.intervenant)){
+				intervenants.add(u);
+			}
+		}
+		users.removeAll(intervenants);
 	}
 }

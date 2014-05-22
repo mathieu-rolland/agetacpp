@@ -65,7 +65,7 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 				Send();
 			}
 		});
-		for(User u : AgetacppApplication.getUserPoubelle().getUsers()){
+		for(User u : AgetacppApplication.getUserAvailable().getUsers()){
 			if(u.getRole().equals(Role.intervenant)){
 				mAdapterDispo.add((Intervenant) u);
 			}
@@ -79,16 +79,17 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 		
 		for (Intervenant item : mAdapterAdded.getAll()) {
 			item.setIntervention(mIntervention);
-			item.save();
 			mIntervention.addIntervenant(item);
 		}
 		
+		AgetacppApplication.getUserAvailable().removeIntervenants();		
 		for (Intervenant item : mAdapterDispo.getAll()) {
 			item.setIntervention(null);
-			item.save();
+			AgetacppApplication.getUserAvailable().addUser(item);
 		}
 		
 		mIntervention.save();
+		AgetacppApplication.getUserAvailable().save();
 		
 		this.getActivity().finish();
 	}

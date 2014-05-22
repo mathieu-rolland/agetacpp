@@ -55,10 +55,10 @@ public class AgetacppApplication extends FrameworkApplication {
 	}
 
 	public static void setIntervention(Intervention intervention) {
-		AgetacppApplication.currentIntervention = intervention;
 		if( intervention != null ){
 			intervention.updateDepandencies();
 		}
+		AgetacppApplication.currentIntervention = intervention;
 	}
 
 	public static List<Intervention> getListIntervention() {

@@ -40,8 +40,8 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter {
 
 	private List<Spinner> spinners;
 
-	public MoyenListIntervenantAdapter(Context context) {
-		super(context);
+	public MoyenListIntervenantAdapter(Context context, List<Moyen> moyens) {
+		super(context, moyens);
 		this.spinners = new ArrayList<Spinner>();
 		this.context = context;
 //		this.mSecteur = new SecteurDao(new SecteurViewReceiver());

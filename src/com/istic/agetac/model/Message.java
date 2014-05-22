@@ -92,13 +92,13 @@ public class Message implements IMessage, Parcelable {
 
 	@Override
 	public void save() {
+		if( !intervention.getMessages().contains(this) ) intervention.addMessage(this);
 		intervention.save();
 	}
 	
 	@Override
 	public void delete() {
-		intervention.getMessages().remove(this);
-		this.save();
+		intervention.delete(this);
 	}
 
 	public boolean isValidate() {

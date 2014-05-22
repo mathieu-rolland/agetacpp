@@ -3,14 +3,8 @@ package com.istic.agetac.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.json.JSONObject;
-
 import android.os.Parcel;
-import android.util.Log;
 
-import com.android.volley.VolleyError;
-import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
@@ -48,7 +42,7 @@ public class Moyen extends Entity {
 	 * @param typeValue
 	 *            : Type of moyen
 	 */
-	public Moyen(TypeMoyen typeValue) {
+	public Moyen(TypeMoyen typeValue, Intervention intervention) {
 		super();
 		IProperty typeProperty = creatProperty(NAME_PROPERTY_TYPE,
 				typeValue.toString());
@@ -66,6 +60,7 @@ public class Moyen extends Entity {
 		super.addPropriete(hArrivalProperty);
 		super.addPropriete(hFreeProperty);
 		super.addPropriete(secteurProperty);
+		this.intervention = intervention;
 	}
 
 	/**
@@ -197,13 +192,15 @@ public class Moyen extends Entity {
 
 	@Override
 	public void save() {
-		AgetacppApplication.getIntervention().save();
+		if( !intervention.getMoyens().contains(this) ){
+			intervention.addMoyen(this);
+		}
+		intervention.save();
 	}
 
 	@Override
 	public void delete() {
-		AgetacppApplication.getIntervention().getMoyens().remove(this);
-		this.save();
+		intervention.delete(this);
 	}
 
 	@Override

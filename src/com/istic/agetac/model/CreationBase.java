@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IMessage.Message_part;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.ADao;
 import com.istic.agetac.controllers.dao.InterventionDao;
 import com.istic.agetac.controllers.dao.MoyensDao;
@@ -25,7 +26,7 @@ public class CreationBase {
 
 	public static void createMoyen(){
 		// Moyen m1
-		Moyen m1 = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen m1 = new Moyen(TypeMoyen.VSAV_INC, AgetacppApplication.getIntervention());
 		CoordonateGPS pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 48.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
@@ -37,7 +38,7 @@ public class CreationBase {
 		
 		m1.save();
 		
-		m1 = new Moyen(TypeMoyen.VSAV_INC);
+		m1 = new Moyen(TypeMoyen.VSAV_INC, AgetacppApplication.getIntervention());
 		pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 49.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
@@ -49,7 +50,7 @@ public class CreationBase {
 		
 		m1.save();
 		
-		m1 = new Moyen(TypeMoyen.VSAV_INC);
+		m1 = new Moyen(TypeMoyen.VSAV_INC, AgetacppApplication.getIntervention());
 		pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 50.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
@@ -217,7 +218,7 @@ public class CreationBase {
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
 		//moyens
-		Moyen mo1 = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen mo1 = new Moyen(TypeMoyen.VSAV_INC, AgetacppApplication.getIntervention());
 		mo1.setLibelle("VSAV1");
 		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
 		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
@@ -229,7 +230,7 @@ public class CreationBase {
 		
 		inter1.addMoyen(mo1);
 		
-		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC, AgetacppApplication.getIntervention());
 		mo2.setLibelle("VSAV2");
 		mo2.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 		mo2.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
@@ -434,7 +435,7 @@ public class CreationBase {
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
 		//moyens
-		Moyen mo1 = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen mo1 = new Moyen(TypeMoyen.VSAV_INC, AgetacppApplication.getIntervention());
 		mo1.setLibelle("VSAV1");
 		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
 		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
@@ -444,7 +445,7 @@ public class CreationBase {
 		property1.setValeur(Moyen.FORMATER.format(new Date()));
 		mo1.addPropriete(property1);
 		
-		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC, AgetacppApplication.getIntervention());
 		mo2.setLibelle("VSAV2");
 		mo2.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
 		mo2.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
@@ -454,10 +455,10 @@ public class CreationBase {
 		property2.setValeur(Moyen.FORMATER.format(new Date()));
 		mo2.addPropriete(property2);
 		
-		Environnement ev1 = new Environnement();
+		Environnement ev1 = new Environnement( AgetacppApplication.getIntervention() );
 		ev1.setLibelle("Bouche incendie");
 		
-		Environnement ev2 = new Environnement();
+		Environnement ev2 = new Environnement( AgetacppApplication.getIntervention() );
 		ev2.setLibelle("Bouche à ta mère");
 		
 		inter1.addIntervenant(toto);

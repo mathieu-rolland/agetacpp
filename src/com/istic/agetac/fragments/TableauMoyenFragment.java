@@ -25,6 +25,7 @@ import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListIntervenantAdapter;
 import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.tableauMoyen.SwitchSector;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
@@ -56,14 +57,15 @@ public class TableauMoyenFragment extends Fragment {
 
 	private boolean mIsCreating;
 		
-
+	private Intervention intervention;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.fragment_tableau_moyen,
 				container, false);
-
+		intervention = AgetacppApplication.getIntervention();
 		//CreationBase.createSecteur();
 
 		mListViewMoyen = (ListView) view
@@ -71,15 +73,19 @@ public class TableauMoyenFragment extends Fragment {
 
 		/* R�cup�rations des donn�es via les mod�les */
 		
-		if(!mIsCreating)
-		{
-			CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication.getIntervention().getId()));
+		if (AgetacppApplication.getListIntervention() != null) {
+			mAdapterMoyens = new MoyenListCodisAdapter(getActivity(),mIsCreating , intervention.getMoyens());
+		} else {
+			mAdapterMoyens = new MoyenListIntervenantAdapter(getActivity(),  intervention.getMoyens());
 		}
 		
-		if (AgetacppApplication.getListIntervention() != null) {
-			mAdapterMoyens = new MoyenListCodisAdapter(getActivity(),mIsCreating);
-		} else {
-			mAdapterMoyens = new MoyenListIntervenantAdapter(getActivity());
+		if(!mIsCreating)
+		{
+//			CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication.getIntervention().getId()));
+			Intervention intervention = AgetacppApplication.getIntervention();
+			mAdapterMoyens.addAll(intervention.getMoyens());
+			mListViewMoyen.setAdapter(mAdapterMoyens);
+			mAdapterMoyens.notifyDataSetChanged();
 		}
 		
 		mAdapterMoyens.notifyDataSetChanged();
@@ -88,16 +94,16 @@ public class TableauMoyenFragment extends Fragment {
 		
 		if(mListMoyen==null)
 		{
-			mListMoyen = new ArrayList<Moyen>();
+			mListMoyen = AgetacppApplication.getIntervention().getMoyens();
 		}
 		else
 		{
 			mAdapterMoyens.addAll(mListMoyen);
 		}
 		
-		SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
-		sdao.findAll();
-		
+//		SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
+//		sdao.findAll();
+//		mAdapterMoyens.addAllSecteurs(  )
 		return view;
 	}
 
@@ -158,7 +164,7 @@ public class TableauMoyenFragment extends Fragment {
 		@Override
 		public void onResponse(List<Moyen> moyens) {
 			mAdapterMoyens.addAll(moyens);
-			Log.e("Vincent", "Moyen recu de la bdd");
+//			Log.e("Vincent", "Moyen recu de la bdd");
 			mAdapterMoyens.notifyDataSetChanged();
 			mListViewMoyen.setAdapter(mAdapterMoyens);
 		}

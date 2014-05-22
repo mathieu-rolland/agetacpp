@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,13 +21,11 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.activities.CreateInterventionActivity;
 import com.istic.agetac.api.communication.IViewReceiver;
-import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenGridViewAdapter;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenListAdapter;
@@ -37,7 +34,7 @@ import com.istic.agetac.controllers.listeners.demandeDeMoyens.AddToList;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.AutoCompleteField;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.SpinnerVariation;
 import com.istic.agetac.filters.FilterInputNumber;
-import com.istic.agetac.model.CreationBase;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.saveInstanceState.DemandeMoyensSavedInstanceState;
@@ -90,6 +87,8 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	
 	private List<Moyen> mListMoyen;
 	
+	private Intervention intervention;
+	
 	/**
 	 * M�thode qui affiche un toast suite � la r�ception d'un message
 	 * @param message
@@ -104,7 +103,6 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	/** M�thode onCreate */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
 		
 	}
@@ -115,6 +113,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		
 	   	/** Chargement du layout */
 		View view = inflater.inflate(R.layout.fragment_demande_de_moyens, container, false);
+		intervention = AgetacppApplication.getIntervention();
 		
 		/** Instanciations des contr�lers */
 		this.cAddToList 		= new AddToList(this);
@@ -127,7 +126,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		this.mTypeMoyen.add(TypeMoyen.VSAV_INC);
 		
 		/** R�cup�rations des donn�es via les mod�les */
-		this.mMoyens.findAll();
+//		this.mMoyens.findAll();
 		
 		/** Chargements des donn�es dans les attributs correspondants */
 		this.namesOfAllMoyens 			= toArray(this.mTypeMoyen);
@@ -224,11 +223,11 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		if(AgetacppApplication.getListIntervention() != null)
 		{
 			mListMoyen = new ArrayList<Moyen>();
-			Moyen m =new Moyen(TypeMoyen.VSAV_INC);
+			Moyen m =new Moyen(TypeMoyen.VSAV_INC, intervention);
 			m.setRepresentationOK(new Representation(R.drawable.fpt_1_alim));
 			m.setHDemande(new Date());
 			mListMoyen.add(m);
-			Moyen m2 =new Moyen(TypeMoyen.VSAV_INC);
+			Moyen m2 =new Moyen(TypeMoyen.VSAV_INC, intervention);
 			m2.setRepresentationOK(new Representation(R.drawable.fpt_2_inc));
 			m2.setHDemande(new Date(2014,01,01));
 			mListMoyen.add(m2);
@@ -495,7 +494,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	@Override
 	public void notifyResponseFail(VolleyError error) {
 		Log.e("Antho",  "FAIL to get datas MOYEN - " + error.toString());
-		Log.e("Antho", error.getMessage());
+		Log.e("Antho", error.getMessage() == null ? "null" : error.getMessage() );
 		onMessageReveive("Impossible de r�cup�rer les donn�es MOYEN !");
 	}
 

@@ -77,18 +77,22 @@ public class Groupe implements IGroupe {
 			Log.e("Groupe", "_id ne doit pas être vide !");
 		}
 		else {
-			DataBaseCommunication.sendPut(this);
+//			DataBaseCommunication.sendPut(this);
+			if( !intervention.getGroupes().contains( this ) ) intervention.getGroupes().add(this);
+			intervention.save();
 		}
 	}
 
 	@Override
 	public void update() {
-		DataBaseCommunication.sendPut(this);
+//		DataBaseCommunication.sendPut(this);
+		intervention.update();
 	}
 
 	@Override
 	public void delete() {
-		DataBaseCommunication.sendDelete(this);
+//		DataBaseCommunication.sendDelete(this);
+		intervention.delete(this);
 	}
 
 	@Override

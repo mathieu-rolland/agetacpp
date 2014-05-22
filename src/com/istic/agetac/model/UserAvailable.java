@@ -101,7 +101,7 @@ public class UserAvailable implements IPersistant {
 
 	@Override
 	public void delete() {
-		DataBaseCommunication.sendDelete(this);
+//		DataBaseCommunication.sendDelete(this);
 	}
 
 	/**

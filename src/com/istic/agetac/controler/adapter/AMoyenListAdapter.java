@@ -25,9 +25,9 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 	/* Donnï¿½es rï¿½cupï¿½rï¿½es */
 	protected List<Secteur> datasListSecteur;
 	
-	public AMoyenListAdapter(Context context) {
+	public AMoyenListAdapter(Context context, List<Moyen> moyens) {
 		this.mInflater= (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        this.mList = new ArrayList<Moyen>();
+        this.mList = moyens;
         this.datasListSecteur = new ArrayList<Secteur>();
     }
 	
@@ -54,7 +54,7 @@ public abstract class AMoyenListAdapter extends BaseAdapter {
 			}
 			else
 			{
-				Log.e("Vincent", "moyen PAS ajouté a ladapteur" );
+				Log.e("Vincent", "moyen PAS ajoutï¿½ a ladapteur" );
 			}
 		}
 		Log.e("Vincent", "AmoyenlistAdapter notify" );

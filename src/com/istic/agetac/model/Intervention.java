@@ -27,6 +27,9 @@ public class Intervention implements IIntervention {
 	private List<Intervenant> intervenants;
 	private Codis codis;
 	private List<IMessage> messages;
+	private List<Groupe> groupes;
+
+	private List<Secteur> secteurs;
 	
 	public Intervention(){
 		this._id = UUID.randomUUID().toString();
@@ -38,6 +41,8 @@ public class Intervention implements IIntervention {
 		this.environnements = new ArrayList<Environnement>();
 		this.intervenants = new ArrayList<Intervenant>();
 		this.messages = new ArrayList<IMessage>();
+		this.groupes = new ArrayList<Groupe>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre){
@@ -50,6 +55,8 @@ public class Intervention implements IIntervention {
 		this.environnements = new ArrayList<Environnement>();
 		this.intervenants = new ArrayList<Intervenant>();
 		this.messages = new ArrayList<IMessage>();
+		this.groupes = new ArrayList<Groupe>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens){
@@ -62,6 +69,8 @@ public class Intervention implements IIntervention {
 		this.environnements = new ArrayList<Environnement>();
 		this.intervenants = new ArrayList<Intervenant>();
 		this.messages = new ArrayList<IMessage>();
+		this.groupes = new ArrayList<Groupe>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
@@ -74,6 +83,8 @@ public class Intervention implements IIntervention {
 		this.environnements = new ArrayList<Environnement>();
 		this.intervenants = users;
 		this.messages = new ArrayList<IMessage>();
+		this.groupes = new ArrayList<Groupe>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 
 	/**
@@ -324,9 +335,15 @@ public class Intervention implements IIntervention {
 		}
 		
 		if( codis != null ) codis.setIntervention(this);
+		
 		for(IMessage message : messages ){
 			message.setIntervention(this);
 		}
+		
+		for(Groupe gr : groupes){
+			gr.setIntervention(this);
+		}
+		
 	}
 	
 	public String toString(){
@@ -345,4 +362,53 @@ public class Intervention implements IIntervention {
 		
 		return returned;
 	}
+	
+	public void delete( Environnement environnement ){
+		environnements.remove(environnement);
+		save();
+	}
+	
+	public void delete( Groupe groupe ){
+		groupes.remove(groupe);
+		save();
+	}
+	
+	public void delete( Message message ){
+		messages.remove(message);
+		save();
+	}
+	
+	public void delete( Moyen moyen ){
+		moyens.remove(moyen);
+		save();
+	}
+	
+	public void delete( Secteur secteur ){
+		this.secteurs.remove(secteur);
+		save();
+	}
+	
+	public void delete( TypeMoyen typeMoyen ){
+	}
+	
+	public void delete( UserPoubelle user ){
+	}
+	
+
+	public List<Groupe> getGroupes() {
+		return groupes;
+	}
+
+	public void setGroupes(List<Groupe> groupes) {
+		this.groupes = groupes;
+	}
+
+	public List<Secteur> getSecteurs() {
+		return secteurs;
+	}
+
+	public void setSecteurs(List<Secteur> secteurs) {
+		this.secteurs = secteurs;
+	}
+	
 }

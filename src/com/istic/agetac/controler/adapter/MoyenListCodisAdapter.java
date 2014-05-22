@@ -39,8 +39,8 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter {
 	
 	private boolean mIsCreating;
 
-	public MoyenListCodisAdapter(Context context, boolean isCreating) {
-		super(context);
+	public MoyenListCodisAdapter(Context context, boolean isCreating , List<Moyen> moyens) {
+		super(context, moyens);
 		this.spinners = new ArrayList<Spinner>();
 		this.context = context;
 		this.mSecteur = new SecteurDao(new SecteurViewReceiver());

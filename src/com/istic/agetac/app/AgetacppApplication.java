@@ -16,7 +16,7 @@ public class AgetacppApplication extends FrameworkApplication {
 	private static Intervention currentIntervention;
 	private static List<Intervention> listIntervention;
 	private static Role role;
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -32,11 +32,11 @@ public class AgetacppApplication extends FrameworkApplication {
 	public static IUser getUser() {
 		return user;
 	}
-	
+
 	public static Role getRole(){
 		return role;
 	}
-	
+
 	public static void setRole(Role role){
 		AgetacppApplication.role = role;
 	}
@@ -54,14 +54,21 @@ public class AgetacppApplication extends FrameworkApplication {
 
 	public static void setIntervention(Intervention intervention) {
 		AgetacppApplication.currentIntervention = intervention;
+		if( intervention != null ){
+			intervention.updateDepandencies();
+		}
 	}
-	
+
 	public static List<Intervention> getListIntervention() {
 		return listIntervention;
 	}
 
 	public static void setListIntervention(List<Intervention> interventions) {
+		if( interventions != null ){
+			for(Intervention intervention : interventions){
+				intervention.updateDepandencies();
+			}
+		}
 		listIntervention = interventions;
 	}
-	
 }

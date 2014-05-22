@@ -5,6 +5,8 @@ import com.istic.sit.framework.model.Entity;
 
 public class Environnement extends Entity {
 	
+	private transient Intervention intervention;
+	
 	@Override
 	public void delete() {
 		AgetacppApplication.getIntervention().getEnvironnements().remove(this);
@@ -14,6 +16,14 @@ public class Environnement extends Entity {
 	@Override
 	public void save() {
 		AgetacppApplication.getIntervention().save();
+	}
+
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 
 }

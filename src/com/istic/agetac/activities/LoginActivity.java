@@ -33,10 +33,10 @@ import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.CreationBase;
-import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.User;
 import com.istic.sit.framework.couch.APersitantRecuperator;
+import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.couch.JsonSerializer;
 
 public class LoginActivity extends Activity {
@@ -60,7 +60,6 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		CreationBase.CreateTest();
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);
 
@@ -147,7 +146,7 @@ public class LoginActivity extends Activity {
 			mLoginStatusMessageView
 					.setText(R.string.activity_login_progress_login_in);
 			showProgress(true);
-//			CouchDBUtils.getFromCouch(new UserViewReceiver(User.class, "agetacpp", "connexion", mUser));
+			CouchDBUtils.getFromCouch(new UserViewReceiver(mUser, mPassword));
 		}
 	}
 

@@ -40,6 +40,8 @@ public class Moyen extends Entity {
 	/** Constante string which defines name of property of moyen secteur hour */
 	public static final String NAME_PROPERTY_SECTEUR = "moyen_secteur";
 
+	private transient Intervention intervention;
+	
 	/**
 	 * Constructeur de la classe Moyen
 	 * 
@@ -306,6 +308,14 @@ public class Moyen extends Entity {
 	@Override
 	public void setFrozen(boolean frozen) {
 		super.setFrozen(frozen);
+	}
+
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 
 }

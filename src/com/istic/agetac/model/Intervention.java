@@ -308,4 +308,41 @@ public class Intervention implements IIntervention {
 	public void addEnvironnements(List<Environnement> environnements) {
 		this.environnements.addAll(environnements);
 	}
+	
+	public void updateDepandencies(){
+		
+		for(Moyen moyen : moyens){
+			moyen.setIntervention(this);
+		}
+		
+		for(Environnement environnement : environnements){
+			environnement.setIntervention(this);
+		}
+		
+		for(Intervenant intervenant : intervenants){
+			intervenant.setIntervention(this);
+		}
+		
+		if( codis != null ) codis.setIntervention(this);
+		for(IMessage message : messages ){
+			message.setIntervention(this);
+		}
+	}
+	
+	public String toString(){
+		String returned = "";
+		returned += "{\n \t_id : "+ this._id + ",\n";
+		returned += " \t_rev : "+ this._rev + ",\n";
+		returned += " \taddress : "+ this.adresse + ",\n";
+		returned += " \tcode sinistre : "+ this.codeSinistre + ",\n";
+		returned += " \tnom : "+ this.nom + ",\n";
+		returned += " \tCODIS : "+ this.codis == null ? "null" : codis.toString() + ",\n";
+		returned += " \tIntervents : [\n";
+			for( Intervenant intervenant : intervenants ){
+				returned += intervenant.toString() + ",\n";
+			}
+		returned += " \t],";
+		
+		return returned;
+	}
 }

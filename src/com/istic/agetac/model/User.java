@@ -18,6 +18,7 @@ public abstract class User implements IUser {
 	private String username;
 	private String password;
 	private Role role;
+	private transient Intervention intervention;
 	
 	public User(String name, String username, Role role){
 		this._id = UUID.randomUUID().toString();
@@ -85,5 +86,13 @@ public abstract class User implements IUser {
 
 
 	public abstract void save();
+
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
+	}
 
 }

@@ -20,6 +20,7 @@ public class UserPoubelle implements IPersistant {
 	private String _id;
 	private String _rev;
 	private List<User> users;
+	private transient Intervention intervention;
 	
 	public UserPoubelle(){
 		this._id = UUID.randomUUID().toString();
@@ -122,5 +123,13 @@ public class UserPoubelle implements IPersistant {
 	
 	public void removeUser(User user){
 		this.users.remove(user);
+	}
+
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 }

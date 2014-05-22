@@ -34,5 +34,14 @@ public class Intervenant extends User {
 		this.save();
 	}
 	
-
+	public String toString(){
+		String returned = "{\n";
+		
+		returned += "nom : "+ this.getName() +",\n";
+		returned += "username : "+ this.getUsername() +",\n";
+		returned += "password : "+ this.getPassword() +",\n";
+		
+		return returned+"}";
+	}
+	
 }

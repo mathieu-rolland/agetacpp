@@ -14,7 +14,7 @@ import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
 /**
- * Classe Secteur : Modèle qui représente un secteur (i.e. SAP/INC/ALIM/...)
+ * Classe Secteur : Modï¿½le qui reprï¿½sente un secteur (i.e. SAP/INC/ALIM/...)
  * 
  * @author Anthony LE MEE - 10003134
  */
@@ -26,7 +26,9 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 	private boolean lock;
 	private String libelle;
 	private String color;
-		
+
+	private transient Intervention intervention;
+	
 	public Secteur()
 	{
 		color = "";
@@ -191,6 +193,14 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 	
 	public String toString() {
 		return this.libelle;
+	}
+
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 	
 }

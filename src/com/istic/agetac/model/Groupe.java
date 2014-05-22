@@ -20,6 +20,7 @@ public class Groupe implements IGroupe {
 	private String _rev;
 	private String nom;
 	private List<Moyen> moyens;
+	private transient Intervention intervention;
 	
 	public Groupe(String nom){
 		this._id = UUID.randomUUID().toString();
@@ -150,6 +151,14 @@ public class Groupe implements IGroupe {
 	@Override
 	public void addMoyens(List<Moyen> moyens) {
 		this.moyens.addAll(moyens);
+	}
+
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 
 }

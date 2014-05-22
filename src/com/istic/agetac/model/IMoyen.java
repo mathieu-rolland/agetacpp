@@ -4,10 +4,15 @@ import java.util.Date;
 
 import com.istic.sit.framework.api.model.IRepresentation;
 
-public interface IMoyen
-{    
-    boolean isGroup();
-    
+/**
+ * Interface qui regroupe les moyen et les groupes de moyens sous un même type.
+ * @author Anthony LE MÉE - 1003134
+ *
+ */
+public interface IMoyen {
+
+	public boolean isGroup();
+	
     IRepresentation getRepresentationOK();
     IRepresentation getRepresentationKO();
     String getLibelle();
@@ -23,4 +28,4 @@ public interface IMoyen
     void setHArrival(Date HourArrived);
     void setHFree(Date HourFree);
    
-}
+} // interface

@@ -11,7 +11,6 @@ import android.text.format.Formatter;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.view.item.ConstitutionGroupCrmItemGroup;
 import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
@@ -23,7 +22,7 @@ import com.istic.sit.framework.model.Property;
  * 
  * @author Anthony LE MEE - 10003134
  */
-public class Moyen extends Entity implements ConstitutionGroupCrmItemGroup, IMoyen {
+public class Moyen extends Entity implements IMoyen {
 
 	public static final SimpleDateFormat FORMATER = new SimpleDateFormat(
 			"ddMM '-' hhmm"); // ("ddMM '-' hhmm");

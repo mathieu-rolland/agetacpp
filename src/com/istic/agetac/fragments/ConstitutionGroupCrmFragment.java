@@ -18,8 +18,9 @@ import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListAdapter;
 import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListGroupAdapter;
 import com.istic.agetac.model.Groupe;
+import com.istic.agetac.model.IMoyen;
 import com.istic.agetac.model.Moyen;
-import com.istic.agetac.view.item.ConstitutionGroupCrmItemGroup;
+import com.istic.agetac.utils.SauvegardeStateCrm;
 import com.istic.sit.framework.couch.APersitantRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
 
@@ -32,21 +33,23 @@ import com.istic.sit.framework.couch.CouchDBUtils;
 public class ConstitutionGroupCrmFragment extends Fragment {
 
 	/** Instances des modéles é utiliser */
-	private List<Moyen> mListMoyen;
-	private List<Groupe> mListGroup;
+	private List<Moyen> 	mListMoyen;
+	private List<Groupe> 	mListGroup;
 
 	/** Instances des modéles formattés */
-	private List<ConstitutionGroupCrmItemGroup> moyenListItemGroup;
+	private List<IMoyen> moyenListItemGroup;
 
-	private ListView listViewMoyensAtCrm;
-	private ListView listViewMoyensGroup;
+	private ListView 	listViewMoyensAtCrm;
+	private ListView 	listViewMoyensGroup;
 
-	private ConstitutionGroupCrmListAdapter adapterMoyen;
-	private ConstitutionGroupCrmListGroupAdapter adapterGroup;
+	private ConstitutionGroupCrmListAdapter 		adapterMoyen;
+	private ConstitutionGroupCrmListGroupAdapter 	adapterGroup;
 
+	private boolean isGroupRetreived = false;
+	private boolean isMoyenRetreived = false;
+	
 	/**
 	 * Méthode qui affiche un toast suite é la réception d'un message
-	 * 
 	 * @param message
 	 */
 	public void onMessageReveive(String message) {
@@ -91,15 +94,15 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 		this.setmListGroup(new ArrayList<Groupe>());
 
 		/** Initialisation des modéles formatés */
-		this.moyenListItemGroup = new ArrayList<ConstitutionGroupCrmItemGroup>();
+		this.moyenListItemGroup = new ArrayList<IMoyen>();
 
 		/** Instanciation des adapters */
 		this.setAdapterMoyen(new ConstitutionGroupCrmListAdapter(this,
 				android.R.layout.simple_dropdown_item_1line, this.mListMoyen));
 		
-		this.setAdapterGroup(new ConstitutionGroupCrmListGroupAdapter(this,
+		SauvegardeStateCrm.getInstance().setAdapterList(new ConstitutionGroupCrmListGroupAdapter(this,
 				android.R.layout.simple_dropdown_item_1line,
-				this.moyenListItemGroup));
+				SauvegardeStateCrm.getInstance().getMoyenListItemOriginal()));
 		
 		/** Récupérations des données via les modèles */
 		CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication
@@ -125,7 +128,7 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 		this.listViewMoyensAtCrm.setAdapter(this.adapterMoyen);
 		this.listViewMoyensGroup = (ListView) getActivity().findViewById(
 				R.id.consitution_group_crm_listGroup);
-		this.listViewMoyensGroup.setAdapter(this.adapterGroup);
+		this.listViewMoyensGroup.setAdapter(SauvegardeStateCrm.getInstance().getAdapterList());
 	}
 
 	/********************************************************************************************************/
@@ -148,6 +151,7 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 
 		@Override
 		public void onResponse(List<Moyen> moyens) {
+			setMoyenRetreived(true);
 			mListMoyen.addAll(moyens);
 			adapterMoyen.notifyDataSetChanged();
 			listViewMoyensAtCrm.setAdapter(adapterMoyen);
@@ -171,20 +175,22 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 		@Override
 		public void onResponse(List<Groupe> groupes) {
 			
-			moyenListItemGroup.clear();
+			setGroupRetreived(true);
+			setmListGroup(groupes);
 			
+			SauvegardeStateCrm.getInstance().getMoyenListItemOriginal().clear();
 			for(Groupe g : groupes) {
 				
-				moyenListItemGroup.add(g);
+				SauvegardeStateCrm.getInstance().getMoyenListItemOriginal().add(g);
 				List<Moyen> listMoyenOfGroup = g.getMoyens();
 				for (Moyen moyen : listMoyenOfGroup) {
-					moyenListItemGroup.add(moyen);
+					SauvegardeStateCrm.getInstance().getMoyenListItemOriginal().add(moyen);
 				}
 				
 			}
 			
-			adapterGroup.notifyDataSetChanged();
-			listViewMoyensGroup.setAdapter(adapterGroup);
+			SauvegardeStateCrm.getInstance().getAdapterList().notifyDataSetChanged();
+			listViewMoyensGroup.setAdapter(SauvegardeStateCrm.getInstance().getAdapterList());
 			onMessageReveive("Récupération des données GROUPE réussie !");
 			
 		}
@@ -253,6 +259,34 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 	 */
 	public void setmListMoyen(List<Moyen> mListMoyen) {
 		this.mListMoyen = mListMoyen;
+	}
+
+	/**
+	 * @return the isGroupRetreived
+	 */
+	public boolean isGroupRetreived() {
+		return isGroupRetreived;
+	}
+
+	/**
+	 * @param isGroupRetreived the isGroupRetreived to set
+	 */
+	public void setGroupRetreived(boolean isGroupRetreived) {
+		this.isGroupRetreived = isGroupRetreived;
+	}
+
+	/**
+	 * @return the isMoyenRetreived
+	 */
+	public boolean isMoyenRetreived() {
+		return isMoyenRetreived;
+	}
+
+	/**
+	 * @param isMoyenRetreived the isMoyenRetreived to set
+	 */
+	public void setMoyenRetreived(boolean isMoyenRetreived) {
+		this.isMoyenRetreived = isMoyenRetreived;
 	}
 
 }// Class DemandeDeMoyensFragment

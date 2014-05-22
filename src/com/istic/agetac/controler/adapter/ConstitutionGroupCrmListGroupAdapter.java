@@ -8,22 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.controllers.listeners.constitutionGroupCrm.ListenerCollapse;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
 import com.istic.agetac.model.Groupe;
+import com.istic.agetac.model.IMoyen;
 import com.istic.agetac.model.Moyen;
-import com.istic.agetac.view.item.ConstitutionGroupCrmItemGroup;
 
 /**
  * class ConstitutionGroupCrmListGroupAdapter : 
  * @author Anthony LE MEE - 10003134
 */
-public class ConstitutionGroupCrmListGroupAdapter extends ArrayAdapter<ConstitutionGroupCrmItemGroup> {
+public class ConstitutionGroupCrmListGroupAdapter extends ArrayAdapter<IMoyen> {
 	    
 	/** Attributs */
-	private List<ConstitutionGroupCrmItemGroup> listItems; // Liste des moyens au CRM regroupé
+	private List<IMoyen> listItems; // Liste des moyens au CRM regroupé
 	private ConstitutionGroupCrmFragment constitutionGroupCrm;    
 	
 	/**
@@ -32,22 +34,22 @@ public class ConstitutionGroupCrmListGroupAdapter extends ArrayAdapter<Constitut
 	 * @param textViewResourceId - ressource item
 	 * @param moyenListItem - liste des item à afficher
 	 */
-	public ConstitutionGroupCrmListGroupAdapter(ConstitutionGroupCrmFragment f, int textViewResourceId, List<ConstitutionGroupCrmItemGroup> moyenListItem) {
+	public ConstitutionGroupCrmListGroupAdapter(ConstitutionGroupCrmFragment f, int textViewResourceId, List<IMoyen> moyenListItem) {
 	
 		super(f.getActivity().getApplicationContext(), textViewResourceId, moyenListItem);
 		this.listItems 				= moyenListItem;
 		this.constitutionGroupCrm 	= f;
 	    
-	}// m�thode
+	}// méthode
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 	
-		// ON récupère la vue affich�e
+		// ON récupère la vue affichée
 		View v = convertView;
 	  
 		// On récupére les infos que l'on souhaite afficher
-				ConstitutionGroupCrmItemGroup itemMoyen = listItems.get(position);
+				IMoyen itemMoyen = listItems.get(position);
 		
 		// Si la vue n'existe pas 
 		if (v == null) {
@@ -78,7 +80,7 @@ public class ConstitutionGroupCrmListGroupAdapter extends ArrayAdapter<Constitut
 		        
 		        groupName.setText(((Groupe)itemMoyen).getNom());
 				// Ajout du listener de collapse du group au click
-		        // collapse.setOnClickListener();
+		        collapse.setOnClickListener(new ListenerCollapse(position, ((Groupe)itemMoyen).getMoyens().size(), (ListView)this.constitutionGroupCrm.getActivity().findViewById(R.id.consitution_group_crm_listGroup)));
 			}
 			else
 			{

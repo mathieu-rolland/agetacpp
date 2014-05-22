@@ -20,7 +20,7 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initSerializer();
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/thomas/";
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/antho/";
 		//CreationBase.createCleanBase();
 	}
 

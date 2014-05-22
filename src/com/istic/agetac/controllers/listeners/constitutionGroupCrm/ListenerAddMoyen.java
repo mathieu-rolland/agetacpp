@@ -1,8 +1,11 @@
 package com.istic.agetac.controllers.listeners.constitutionGroupCrm;
 
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,9 +22,10 @@ import com.istic.agetac.model.Moyen;
 public class ListenerAddMoyen implements OnClickListener{
 
 	/** Attributs */
-	private Moyen itemMoyen; 							// Instance de l'item é traiter
+	private Moyen itemMoyen; 							// Instance de l'item à traiter
 	private ConstitutionGroupCrmFragment vue; 			// Instance de la vue 
 	private Groupe groupSelected;
+	private List<Groupe> listGroupe;
 	
 	/**
 	 * Contructeur de ListenerAddMoyen
@@ -32,6 +36,8 @@ public class ListenerAddMoyen implements OnClickListener{
 		
 		this.itemMoyen = moyen;
 		this.vue = constitutionGroupCrm;
+		this.listGroupe = this.vue.getmListGroup();
+		
 		
 	} // méthode
 
@@ -54,6 +60,9 @@ public class ListenerAddMoyen implements OnClickListener{
 		
 		// On set la valeur du titre de la boite de Dialog
 		((TextView)alert.findViewById(R.id.constitution_group_crm_dialog_TextView_Title)).setText("Choisissez le groupe dans lequel ajouter " + item.getLibelle());
+		
+		ArrayAdapter<Groupe> adapter = new ArrayAdapter<Groupe>(this.vue.getActivity().getApplicationContext(), android.R.layout.simple_spinner_item,this.listGroupe);
+		tv.setAdapter(adapter);
 		
 		// On pose le listener d'annulation de suppression
 		alert.findViewById(R.id.demande_de_moyen_Dialog_Button_Cancel).setOnClickListener(new OnClickListener() {

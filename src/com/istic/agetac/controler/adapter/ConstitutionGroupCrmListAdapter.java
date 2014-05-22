@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.controllers.listeners.constitutionGroupCrm.ListenerAddMoyen;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
 import com.istic.agetac.model.Moyen;
 
@@ -73,9 +74,9 @@ public class ConstitutionGroupCrmListAdapter extends ArrayAdapter<Moyen> {
 	        // chargement du type de moyen pouvant être assigné
 	        typeMoyen.setImageDrawable(getContext().getResources().getDrawable(itemMoyen.getType().getRepresentationOK().getDrawable()));
 	        
-	        // Ajout du listener afin d'assigner le moyen à un group
-	        //buttonAssign.setOnClickListener(new ListenerAssignItemIntoGroup(itemMoyen, this.constitutionGroupCrm));
-	  
+	        // Ajout du listener afin d'assigner le moyen à un group	  
+	        buttonAssign.setOnClickListener(new ListenerAddMoyen(itemMoyen, this.constitutionGroupCrm));
+	        
 		}// if
 
 		return v;

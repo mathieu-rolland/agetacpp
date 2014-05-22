@@ -3,7 +3,7 @@
     android:id="@+id/demande_de_moyen_ListView_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="100dip"
-    android:background="@drawable/button_style_grey" >
+    android:background="@drawable/field_style_grey" >
 
     <TextView
         android:id="@+id/consitution_group_crm_item_listViewGroup_Moyen_TextView_nameMoyen"

@@ -32,6 +32,7 @@ public class Intervention implements IIntervention, Subject {
 	private transient List<Observer> observers;
 	private transient List<IMessage> messages;
 	private List<Secteur> secteurs;
+	private List<Action> historique;
 	
 	public Intervention(){
 		this._id = UUID.randomUUID().toString();
@@ -44,6 +45,7 @@ public class Intervention implements IIntervention, Subject {
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
+		this.historique = new ArrayList<Action>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre){
@@ -57,6 +59,7 @@ public class Intervention implements IIntervention, Subject {
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
+		this.historique = new ArrayList<Action>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens){
@@ -70,6 +73,7 @@ public class Intervention implements IIntervention, Subject {
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
+		this.historique = new ArrayList<Action>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
@@ -83,6 +87,15 @@ public class Intervention implements IIntervention, Subject {
 		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
+		this.historique = new ArrayList<Action>();
+	}
+
+	public List<Action> getHistorique() {
+		return historique;
+	}
+
+	public void setHistorique(List<Action> historique) {
+		this.historique = historique;
 	}
 
 	/**

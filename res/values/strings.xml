@@ -118,4 +118,8 @@
         <item>ALIM</item>
     </string-array>
     
+	<!-- Historique -->
+	<string name="Histo_user">Utilisateur</string>
+	<string name="Histo_heure">Heure</string>
+	<string name="Histo_action">Action réalisée</string>
 </resources>

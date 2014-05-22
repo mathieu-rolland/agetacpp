@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/ll_codis"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dip"
+        android:background="#363736"
+        android:orientation="horizontal"
+        android:weightSum="100" >
+
+        <TextView
+            android:id="@+id/tv_codis"
+            android:layout_width="0dip"
+            android:layout_height="40dp"
+            android:layout_weight="70"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="@string/codis"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/separator1"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.5"
+            android:background="@color/red_light"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/et_FreqCodis"
+            android:layout_width="0dip"
+            android:layout_height="40dp"
+            android:layout_weight="29.5"
+            android:background="@drawable/border"
+            android:enabled="true"
+            android:gravity="center"
+            android:hint="@string/frequenceOCT"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/separator2"
+        android:layout_width="1dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/red_light"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_cos"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#363736"
+        android:orientation="horizontal"
+        android:weightSum="100" >
+
+        <TextView
+            android:id="@+id/tv_cos"
+            android:layout_width="0dip"
+            android:layout_height="40dp"
+            android:layout_weight="70"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="@string/cos"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/separator3"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.5"
+            android:background="@color/red_light"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/ll_freqCos"
+            android:layout_width="0dip"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="29.5"
+            android:background="#363736"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/et_FreqCos"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@drawable/border"
+                android:enabled="true"
+                android:gravity="center"
+                android:hint="@string/frequenceOCT"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp" />
+
+            <View
+                android:id="@+id/separatorCos"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/red_light"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/et_FreqCos2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@drawable/border"
+                android:enabled="true"
+                android:gravity="center"
+                android:hint="@string/frequenceOCT"
+                android:inputType="number"
+                android:maxLength="2"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/separator4"
+        android:layout_width="1dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/red_light"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_LineHoriz"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="100" >
+
+        <View
+            android:id="@+id/separator51"
+            android:layout_width="0dip"
+            android:layout_height="1dp"
+            android:layout_weight="12.2"
+            android:visibility="invisible" />
+
+        <View
+            android:id="@+id/separator52"
+            android:layout_width="0dip"
+            android:layout_height="1dp"
+            android:layout_weight="75.4"
+            android:background="@color/red_light"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/separator53"
+            android:layout_width="0dip"
+            android:layout_height="1dp"
+            android:layout_weight="12.4"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_Lines"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100" >
+
+        <View
+            android:id="@+id/blank1"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="12.2"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/separator6"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="0.15"
+            android:background="@color/red_light"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/blank2"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="25"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/separator7"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="0.15"
+            android:background="@color/red_light"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/blank3"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="25"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/separator8"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="0.15"
+            android:background="@color/red_light"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/blank4"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="25"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/separator9"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="0.15"
+            android:background="@color/red_light"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/blank5"
+            android:layout_width="0dip"
+            android:layout_height="25dp"
+            android:layout_weight="12.2"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="100" >
+
+        <LinearLayout
+            android:id="@+id/ll_space1"
+            android:layout_width="0dip"
+            android:layout_height="40dp"
+            android:layout_weight="2.5"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_s1vertical"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ll_s1horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#363736"
+                android:orientation="horizontal"
+                android:weightSum="100" >
+
+                <Spinner
+                    android:id="@+id/spin_secteur1"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_weight="70"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+                <View
+                    android:id="@+id/separator10"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="@color/red_light"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_freqS1ascend"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="29"
+                    android:background="#363736"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/et_FreqS1ascend"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@drawable/border"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:hint="@string/frequenceOCT"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:id="@+id/separatorS1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/red_light"
+                        android:visibility="visible" />
+
+                    <EditText
+                        android:id="@+id/et_FreqS1descend"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@drawable/border"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:hint="@string/frequenceOCT"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_moyensSecteur1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#707978" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_space2"
+            android:layout_width="0dip"
+            android:layout_height="40dp"
+            android:layout_weight="5"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_s2vertical"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ll_s2horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#363736"
+                android:orientation="horizontal"
+                android:weightSum="100" >
+
+                <Spinner
+                    android:id="@+id/spin_secteur2"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_weight="70"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+                <View
+                    android:id="@+id/separator20"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="@color/red_light"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_freqS2"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="29"
+                    android:background="#363736"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/et_FreqS2ascend"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@drawable/border"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:hint="@string/frequenceOCT"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:id="@+id/separatorS2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/red_light"
+                        android:visibility="visible" />
+
+                    <EditText
+                        android:id="@+id/et_FreqS2descend"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@drawable/border"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:hint="@string/frequenceOCT"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_moyensSecteur2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#707978" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_space3"
+            android:layout_width="0dip"
+            android:layout_height="40dp"
+            android:layout_weight="5"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_s3vertical"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ll_s3horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#363736"
+                android:orientation="horizontal"
+                android:weightSum="100" >
+
+                <Spinner
+                    android:id="@+id/spin_secteur3"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_weight="70"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+                <View
+                    android:id="@+id/separator17"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="@color/red_light"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_freqS3"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="29"
+                    android:background="#363736"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/et_FreqS3ascend"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@drawable/border"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:hint="@string/frequenceOCT"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:id="@+id/separatorS3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/red_light"
+                        android:visibility="visible" />
+
+                    <EditText
+                        android:id="@+id/et_FreqS3descend"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@drawable/border"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:hint="@string/frequenceOCT"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_moyensSecteur3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#707978" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_space4"
+            android:layout_width="0dip"
+            android:layout_height="40dp"
+            android:layout_weight="5"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_s4vertical"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/ll_s4horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#363736"
+                android:orientation="horizontal"
+                android:weightSum="100" >
+
+                <Spinner
+                    android:id="@+id/spin_secteur4"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_weight="70"
+                    android:background="@drawable/border"
+                    android:gravity="center"
+                    android:textSize="20sp" />
+
+                <View
+                    android:id="@+id/separator18"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="@color/red_light"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/ll_freqS4"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="29"
+                    android:background="#363736"
+                    android:orientation="vertical" >
+
+                    <EditText
+                        android:id="@+id/et_FreqS4ascend"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@drawable/border"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:hint="@string/frequenceOCT"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:id="@+id/separatorS4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/red_light"
+                        android:visibility="visible" />
+
+                    <EditText
+                        android:id="@+id/et_FreqS4descend"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@drawable/border"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:hint="@string/frequenceOCT"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_space5"
+                    android:layout_width="0dip"
+                    android:layout_height="40dp"
+                    android:layout_weight="2.5"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_moyensSecteur4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#707978" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/fragment_OCT_button_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_style_grey"
+        android:text="@string/envoyerOCT"
+        android:textColor="#efefef"
+        android:textSize="@dimen/text_size" />
+
+</LinearLayout>

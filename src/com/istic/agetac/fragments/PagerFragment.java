@@ -45,7 +45,7 @@ public class PagerFragment extends Fragment {
 	private ViewPager mViewPager;
 	private PagerAdapter mPagerAdapter;
 	private final String[] titlesCodis = new String[]{"Creation Intervention", "Messages"};
-	private final String[] titlesIntervenant = new String[]{"Sitac", "Tableau des Moyens", "Messages","Demande de Moyens", "CRM" , "Secteurs"};
+	private final String[] titlesIntervenant = new String[]{"Sitac", "Tableau des Moyens", "Messages","Demande de Moyens", "CRM" , "Secteurs","OCT"};
 	
 	String[] titles = new String[]{"init"};
 	
@@ -97,6 +97,7 @@ public class PagerFragment extends Fragment {
 				tabFragments.add(DemandeDeMoyensFragment.newInstance());
 				tabFragments.add(ConstitutionGroupCrmFragment.newInstance());
 				tabFragments.add( SectorFragment.newInstance() );
+				tabFragments.add(OctFragment.newInstance());
 			} 
 		}
 		

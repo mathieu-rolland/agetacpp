@@ -1,6 +1,7 @@
 package com.istic.agetac.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,11 +12,11 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IGroupe;
-import com.istic.agetac.view.item.ConstitutionGroupCrmItemGroup;
+import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class Groupe implements IGroupe, ConstitutionGroupCrmItemGroup {
+public class Groupe implements IGroupe, IMoyen {
 
 	private String _id;
 	private String _rev;
@@ -156,6 +157,89 @@ public class Groupe implements IGroupe, ConstitutionGroupCrmItemGroup {
 	@Override
 	public boolean isGroup() {
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getNom();
+	}
+
+	@Override
+	public IRepresentation getRepresentationOK() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getLibelle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setRepresentationOK(IRepresentation representation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLibelle(String libelle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public IRepresentation getRepresentationKO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Date getHDemande() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Date getHEngagement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Date getHArrival() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Date getHFree() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setHDemande(Date hourDemande) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHEngagement(Date hourEngagement) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHArrival(Date HourArrived) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHFree(Date HourFree) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

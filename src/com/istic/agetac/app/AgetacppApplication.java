@@ -5,6 +5,7 @@ import java.util.List;
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.model.Intervention;
+import com.istic.agetac.model.UserPoubelle;
 import com.istic.agetac.model.serializer.AgetacSerializer;
 import com.istic.sit.framework.application.FrameworkApplication;
 import com.istic.sit.framework.couch.DataBaseCommunication;
@@ -16,7 +17,8 @@ public class AgetacppApplication extends FrameworkApplication {
 	private static Intervention currentIntervention;
 	private static List<Intervention> listIntervention;
 	private static Role role;
-
+	private static UserPoubelle userPoubelle;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -71,4 +73,12 @@ public class AgetacppApplication extends FrameworkApplication {
 		}
 		listIntervention = interventions;
 	}
+	public static UserPoubelle getUserPoubelle(){
+		return userPoubelle;
+	}
+	
+	public static void setUserPoubelle(UserPoubelle userPoubelle){
+		AgetacppApplication.userPoubelle = userPoubelle;  
+	}
+	
 }

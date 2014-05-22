@@ -31,12 +31,14 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.controllers.dao.UserPoubelleDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
-import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.User;
+import com.istic.agetac.model.UserPoubelle;
 import com.istic.sit.framework.couch.APersitantRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
+import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
 
 public class LoginActivity extends Activity {
@@ -60,6 +62,7 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+//		CreationBase.CreateTest();
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);
 
@@ -146,7 +149,7 @@ public class LoginActivity extends Activity {
 			mLoginStatusMessageView
 					.setText(R.string.activity_login_progress_login_in);
 			showProgress(true);
-			CouchDBUtils.getFromCouch(new UserViewReceiver(mUser, mPassword));
+			DataBaseCommunication.sendGet(new myAvailableUserDao());
 		}
 	}
 
@@ -195,7 +198,7 @@ public class LoginActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserViewReceiver extends APersitantRecuperator<Intervention> {
+	private class UserViewReceiver extends APersitantRecuperator<Intervention> {
 
 		public UserViewReceiver(String username, String password) {
 			super(Intervention.class, "agetacpp", "connexion", username+"|"+password);
@@ -219,7 +222,7 @@ public class LoginActivity extends Activity {
 					JSONObject o = a.getJSONObject(i);
 					o = o.getJSONObject("value");
 					String role = o.getString("role");
-					if(role == "codis"){
+					if(role.equals("codis")){
 						AgetacppApplication.setRole(Role.codis);
 					}
 					else{
@@ -243,8 +246,7 @@ public class LoginActivity extends Activity {
 				}
 				onResponse(interventions);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e("LoginActivity", e.toString());
 			}
 		}
 
@@ -298,5 +300,20 @@ public class LoginActivity extends Activity {
 				mUserView.requestFocus();
 			}
 		}
+	}
+	
+	private class myAvailableUserDao extends UserPoubelleDao {
+
+		@Override
+		public void onResponse(UserPoubelle users) {
+			AgetacppApplication.setUserPoubelle(users);
+			CouchDBUtils.getFromCouch(new UserViewReceiver(mUser, mPassword));
+		}
+
+		@Override
+		public void onErrorResponse(VolleyError error) {
+			Log.e("LoginActivity", error.toString());
+		}
+		
 	}
 }

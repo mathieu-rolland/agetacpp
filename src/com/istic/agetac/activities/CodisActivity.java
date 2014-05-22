@@ -1,9 +1,5 @@
 package com.istic.agetac.activities;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,20 +9,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.api.communication.IViewReceiver;
-import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.InterventionAdapter;
-import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
-import com.istic.agetac.model.Codis;
-import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
-import com.istic.agetac.model.User;
 
 public class CodisActivity extends FragmentActivity implements OnItemClickListener{
 
@@ -62,20 +50,9 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 		});
         
         mListIntervention.setOnItemClickListener(this);
-        
-        Codis codis;
-        if(AgetacppApplication.getListIntervention().isEmpty()){
-        	codis =  (Codis)(AgetacppApplication.getUser());
-        }
-        else{
-        	codis = AgetacppApplication.getListIntervention().get(0).getCodis();
-        }
-       
-        mAdapter.addAll(codis.getInterventions());
+        mAdapter.addAll(AgetacppApplication.getListIntervention());
 		mAdapter.notifyDataSetChanged();
 		
-		UserDao users = new UserDao(new UsersViewReceiver());
-		users.findAll();
 	}
 	
 	@Override
@@ -101,56 +78,5 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 	
 	public void CreateIntervention() {
 		CreateInterventionActivity.launchActivity(this);
-	}		
-
-	public class InterventionViewReceiver implements IViewReceiver<Intervention> {
-		
-		public InterventionViewReceiver(CodisActivity activity)
-		{
-		}
-		
-		@Override
-		public void notifyResponseSuccess(List<Intervention> interventions) {
-			
-			mAdapter.addAll(interventions);
-			mAdapter.notifyDataSetChanged();
-			
-			UserDao users = new UserDao(new UsersViewReceiver());
-			users.findAll();
-		}
-
-		@Override
-		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getApplicationContext(), "Impossible de r�cup�rer les interventions",	Toast.LENGTH_SHORT).show();
-		}		
 	}
-	
-	public class UsersViewReceiver implements IViewReceiver<User> {
-
-		@Override
-		public void notifyResponseSuccess(List<User> users) {
-			HashMap<String, Intervention> hashMap = new HashMap<String, Intervention>();
-			for (Intervention item : mAdapter.getAll()) {
-				hashMap.put(item.getId()+"", item);
-			}
-			
-			for (User user : users) {
-				if(user.getRole()!=Role.codis)
-				{
-					Intervenant intervenant = (Intervenant)user;
-					
-					if( intervenant.getIntervention() != null
-							&& hashMap.get(intervenant.getIntervention().getId()) != null ){
-						hashMap.get(intervenant.getIntervention().getId()).addIntervenant(intervenant);
-					}
-				}
-			}
-		}
-
-		@Override
-		public void notifyResponseFail(VolleyError error) {
-			// TODO Auto-generated method stub
-		}
-	}
-
 }

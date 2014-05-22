@@ -77,16 +77,25 @@
             android:text="@string/fragment_tableau_sector"
             android:textColor="#efefef"
             android:textSize="@dimen/text_size" />
-
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/fragment_tableau_moyen_list_view"
+    <!-- <ListView -->
+    <!-- android:id="@+id/fragment_tableau_moyen_list_view" -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="match_parent" -->
+    <!-- android:background="#171f21" -->
+    <!-- android:padding="10dp" -->
+    <!-- android:dividerHeight="0dp" -->
+    <!-- android:scrollbarStyle="outsideOverlay" /> -->
+
+    <ExpandableListView
+        android:id="@+id/fragment_tableau_moyen_expandable_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#171f21"
         android:padding="10dp"
-        android:dividerHeight="0dp"       
+        android:dividerHeight="0dp"
+        android:groupIndicator="@android:color/transparent"
         android:scrollbarStyle="outsideOverlay" />
 
 </LinearLayout>

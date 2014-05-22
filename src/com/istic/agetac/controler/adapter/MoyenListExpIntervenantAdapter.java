@@ -4,6 +4,7 @@ import java.util.Date;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,38 +15,74 @@ import android.widget.Toast;
 import com.istic.agetac.R;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerFree;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerSpinner;
+import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
 
-public class MoyenListIntervenantAdapter extends AMoyenListAdapter
+public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
 {
-    /* Context */
-    private Context context;
 
-    public MoyenListIntervenantAdapter( Context context )
+    public MoyenListExpIntervenantAdapter( Context context )
     {
         super( context );
-        this.context = context;
     }
 
     @Override
-    public View getView( int position, View convertView, ViewGroup parent )
+    protected View getChildVieww( int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent )
+    {
+        return getViewChildren( groupPosition, childPosition, isLastChild, convertView, parent );
+    }
+
+    /**
+     * M�thode qui affiche un toast suite � la r�ception d'un message
+     * 
+     * @param message
+     */
+    public void onMessageReveive( String message )
+    {
+        try
+        {
+            Toast.makeText( this.mContext, message, Toast.LENGTH_SHORT ).show();
+        }
+        catch ( Exception e )
+        {
+        }
+    }
+
+    public void setFree( Moyen mItemMoyen, Date date )
+    {
+        mItemMoyen.setHFree( date );
+        this.notifyDataSetChanged();
+    }
+   
+    public View getViewChildren( int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent )
     {
         Moyen current;
-        current = mList.get( position );
-        ViewHolder holder;
 
-        if ( convertView == null )
+        if ( childPosition == -1 )
         {
-            convertView = super.mInflater.inflate( R.layout.item_moyen, null );
+            current = ( (Moyen) mMoyens.get( groupPosition ) );           
         }
         else
         {
-            holder = (ViewHolder) convertView.getTag();
+            current = ( (Groupe) mMoyens.get( groupPosition ) ).getMoyens().get( childPosition );
         }
 
-        holder = new ViewHolder();
+        convertView = super.mInflater.inflate( R.layout.item_moyen, null ); // pas
+                                                                            // de
+                                                                            // if(convertView==null)
+                                                                            // car
+                                                                            // ils
+                                                                            // faut
+                                                                            // reconstruire
+                                                                            // la
+                                                                            // vue
+                                                                            // sinon
+                                                                            // bug
+                                                                            // ...
+        ViewHolder holder = new ViewHolder();
+
         holder.logo = (ImageView) convertView.findViewById( R.id.list_moyen_logo );
         holder.hourDemand = (TextView) convertView.findViewById( R.id.list_moyen_hour_demand );
         holder.hourEngage = (TextView) convertView.findViewById( R.id.list_moyen_hour_engage );
@@ -86,7 +123,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
 
             if ( current.getHDemande() != null )
             {
-                holder.hourDemand.setText(Moyen.FORMATER.format( current.getHDemande()) );
+                holder.hourDemand.setText( Moyen.FORMATER.format( current.getHDemande() ) );
                 if ( current.getHEngagement() == null )
                 {
                     holder.hourEngage.setText( "En attente du codis" );
@@ -96,7 +133,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
 
             if ( current.getHEngagement() != null )
             {
-                holder.hourEngage.setText( Moyen.FORMATER.format(current.getHEngagement()) );
+                holder.hourEngage.setText( Moyen.FORMATER.format( current.getHEngagement() ) );
                 holder.hourEngage.setVisibility( View.VISIBLE );
                 holder.name.setText( current.getLibelle() );
                 holder.buttonDemand.setVisibility( View.GONE );
@@ -105,7 +142,8 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
 
             if ( current.getHArrival() != null )
             {
-                holder.hourArrived.setText(Moyen.FORMATER.format( current.getHArrival() ));
+                Log.e( "VINCENT", "Heure d'arrivee : " + current.getHArrival() );
+                holder.hourArrived.setText( Moyen.FORMATER.format( current.getHArrival() ) );
                 holder.hourArrived.setVisibility( View.VISIBLE );
                 holder.buttonFree.setVisibility( View.VISIBLE );
             }
@@ -114,7 +152,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
             {
                 holder.hourFree.setVisibility( View.VISIBLE );
                 holder.buttonFree.setVisibility( View.GONE );
-                holder.hourFree.setText( Moyen.FORMATER.format(current.getHFree()) );
+                holder.hourFree.setText( Moyen.FORMATER.format( current.getHFree() ) );
                 holder.spinner.setVisibility( View.INVISIBLE );
                 holder.sector.setVisibility( View.VISIBLE );
                 holder.sector.setText( current.getSecteur() );
@@ -126,7 +164,7 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
                     String color = mSector.get( current.getSecteur() ).getColor();
                     holder.sector.setTextColor( Color.parseColor( color ) );
                 }
-               
+
             }
         }
 
@@ -136,25 +174,4 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
         return convertView;
     }
 
-    /**
-     * M�thode qui affiche un toast suite � la r�ception d'un message
-     * 
-     * @param message
-     */
-    public void onMessageReveive( String message )
-    {
-        try
-        {
-            Toast.makeText( this.context, message, Toast.LENGTH_SHORT ).show();
-        }
-        catch ( Exception e )
-        {
-        }
-    }
-
-    public void setFree( Moyen mItemMoyen, Date date )
-    {
-        mItemMoyen.setHFree( date );
-        this.notifyDataSetChanged();
-    }
 }

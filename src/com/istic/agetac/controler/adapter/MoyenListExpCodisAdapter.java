@@ -13,41 +13,67 @@ import android.widget.Toast;
 
 import com.istic.agetac.R;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
+import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
 
-public class MoyenListCodisAdapter extends AMoyenListAdapter
+public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
 {
-    /* Context */
-    private Context context;
     private boolean mIsCreating;
 
-    public MoyenListCodisAdapter( Context context, boolean isCreating )
+    public MoyenListExpCodisAdapter( Context context, boolean isCreating )
     {
         super( context );
-        this.context = context;
         this.mIsCreating = isCreating;
     }
 
     @Override
-    public View getView( int position, View convertView, ViewGroup parent )
+    protected View getChildVieww( int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent )
     {
-        StateMoyen state=StateMoyen.demand; 
+        return getViewChildren( groupPosition, childPosition, isLastChild, convertView, parent );
+    }
+
+    public void onMessageReveive( String message )
+    {
+        try
+        {
+            Toast.makeText( this.mContext, message, Toast.LENGTH_SHORT ).show();
+        }
+        catch ( Exception e )
+        {
+        }
+    }
+
+    public void setEngage( Moyen item, Date dateEngage )
+    {
+        item.setHEngagement( dateEngage );
+        this.notifyDataSetChanged();
+    }
+
+    public enum StateMoyen
+    {
+        demand, engage, arrived, free
+    }
+
+    @Override
+    protected View getViewChildren( int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent )
+    {
+        StateMoyen state = StateMoyen.demand;
+
         Moyen current;
 
-        current = mList.get( position );
-
-        ViewHolder holder;
-
-        if ( convertView == null )
+        if ( childPosition == -1 )
         {
-            convertView = super.mInflater.inflate( R.layout.item_moyen, null );
+            current = ( (Moyen) mMoyens.get( groupPosition ) );            
         }
         else
         {
-            holder = (ViewHolder) convertView.getTag();
+            current = ( (Groupe) mMoyens.get( groupPosition ) ).getMoyens().get( childPosition );
         }
+
+        convertView = super.mInflater.inflate( R.layout.item_moyen, null ); 
+        ViewHolder holder = new ViewHolder();
 
         holder = new ViewHolder();
         holder.logo = (ImageView) convertView.findViewById( R.id.list_moyen_logo );
@@ -69,47 +95,47 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter
 
         holder.spinner.setVisibility( View.INVISIBLE );
 
-        if ( !AMoyenListAdapter.isNullOrBlank( current.getLibelle() ) )
+        if ( !AMoyenExpListAdapter.isNullOrBlank( current.getLibelle() ) )
         {
             holder.name.setText( current.getLibelle() );
         }
 
-        if (current.getHDemande() != null )
+        if ( current.getHDemande() != null )
         {
-            holder.hourDemand.setText(Moyen.FORMATER.format( current.getHDemande() ));
+            holder.hourDemand.setText( Moyen.FORMATER.format( current.getHDemande() ) );
             holder.hourDemand.setVisibility( TextView.VISIBLE );
             holder.buttonDemand.setOnClickListener( new ListenerEngage( current, this ) );
             state = StateMoyen.demand;
         }
-        
-        if ( current.getHEngagement() != null)
+
+        if ( current.getHEngagement() != null )
         {
-            holder.hourEngage.setText( Moyen.FORMATER.format(current.getHEngagement() ));
+            holder.hourEngage.setText( Moyen.FORMATER.format( current.getHEngagement() ) );
             holder.hourEngage.setVisibility( TextView.VISIBLE );
             holder.buttonDemand.setVisibility( Button.GONE );
             holder.name.setText( current.getLibelle() );
             state = StateMoyen.engage;
         }
 
-        if (current.getHArrival() != null )
+        if ( current.getHArrival() != null )
         {
-            holder.hourArrived.setText( Moyen.FORMATER.format(current.getHArrival()));
+            holder.hourArrived.setText( Moyen.FORMATER.format( current.getHArrival() ) );
             state = StateMoyen.arrived;
         }
 
-        if ( current.getHFree()!= null )
+        if ( current.getHFree() != null )
         {
-            holder.hourFree.setText(Moyen.FORMATER.format( current.getHFree() ));
+            holder.hourFree.setText( Moyen.FORMATER.format( current.getHFree() ) );
             holder.hourFree.setVisibility( View.VISIBLE );
             state = StateMoyen.free;
         }
 
-        if ( !AMoyenListAdapter.isNullOrBlank( current.getSecteur() ) )
+        if ( !AMoyenExpListAdapter.isNullOrBlank( current.getSecteur() ) )
         {
             holder.sector.setVisibility( View.VISIBLE );
             holder.sector.setText( current.getSecteur() );
-            holder.hourArrived.setText(Moyen.FORMATER.format( current.getHArrival() ));
-            
+            holder.hourArrived.setText( Moyen.FORMATER.format( current.getHArrival() ) );
+
             Secteur sector = mSector.get( current.getSecteur() );
 
             if ( sector != null )
@@ -123,18 +149,18 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter
         {
             holder.buttonDemand.setVisibility( Button.GONE );
         }
-        
+
         switch ( state )
         {
-            case engage:
-                holder.sector.setVisibility( View.VISIBLE );
-                holder.sector.setText( mWaitingText );
-                break;
-            case arrived:
-                holder.hourFree.setVisibility( View.VISIBLE );
-                holder.hourFree.setText( mWaitingText );
-                break;
-                
+        case engage:
+            holder.sector.setVisibility( View.VISIBLE );
+            holder.sector.setText( mWaitingText );
+            break;
+        case arrived:
+            holder.hourFree.setVisibility( View.VISIBLE );
+            holder.hourFree.setText( mWaitingText );
+            break;
+
         default:
             break;
         }
@@ -142,31 +168,6 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter
         convertView.setTag( holder );
 
         return convertView;
-    }
-
-    public void onMessageReveive( String message )
-    {
-        try
-        {
-            Toast.makeText( this.context, message, Toast.LENGTH_SHORT ).show();
-        }
-        catch ( Exception e )
-        {
-        }
-    }
-
-    public void setEngage( Moyen item, Date dateEngage )
-    {
-        item.setHEngagement( dateEngage );
-        this.notifyDataSetChanged();
-    }
-    
-    public enum StateMoyen
-    {
-        demand,
-        engage,
-        arrived,
-        free
     }
 
 }

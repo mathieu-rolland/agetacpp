@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -19,9 +18,6 @@ import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Message;
 import com.istic.agetac.model.User;
-import com.istic.sit.framework.api.model.IPosition;
-import com.istic.sit.framework.api.model.IProperty;
-import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.couch.JsonSerializer;
 
 

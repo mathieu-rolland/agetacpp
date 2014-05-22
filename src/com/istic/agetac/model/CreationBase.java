@@ -410,7 +410,7 @@ public class CreationBase {
 		Codis codis2 = new Codis("Codis 2", "codis2");
 		codis2.setPassword("codis2");
 		
-		UserPoubelle userPoubelle = new UserPoubelle();
+		UserAvailable userPoubelle = new UserAvailable();
 		
 		Intervention inter1 = new Intervention("5 rue de la Piquetière", "Inter 1" , "CONNARD");
 		

@@ -15,14 +15,14 @@ import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class UserPoubelle implements IPersistant {
+public class UserAvailable implements IPersistant {
 	
 	private String _id;
 	private String _rev;
 	private List<User> users;
 	private transient Intervention intervention;
 	
-	public UserPoubelle(){
+	public UserAvailable(){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.users = new ArrayList<User>();

@@ -31,11 +31,11 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.dao.UserPoubelleDao;
+import com.istic.agetac.controllers.dao.UserAvailableDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.User;
-import com.istic.agetac.model.UserPoubelle;
+import com.istic.agetac.model.UserAvailable;
 import com.istic.sit.framework.couch.APersitantRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.couch.DataBaseCommunication;
@@ -302,10 +302,10 @@ public class LoginActivity extends Activity {
 		}
 	}
 	
-	private class myAvailableUserDao extends UserPoubelleDao {
+	private class myAvailableUserDao extends UserAvailableDao {
 
 		@Override
-		public void onResponse(UserPoubelle users) {
+		public void onResponse(UserAvailable users) {
 			AgetacppApplication.setUserPoubelle(users);
 			CouchDBUtils.getFromCouch(new UserViewReceiver(mUser, mPassword));
 		}

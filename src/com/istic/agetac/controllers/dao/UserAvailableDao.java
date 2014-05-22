@@ -7,12 +7,12 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.istic.agetac.model.UserPoubelle;
+import com.istic.agetac.model.UserAvailable;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public abstract class UserPoubelleDao implements IPersistant {
+public abstract class UserAvailableDao implements IPersistant {
 	
 	private static final String design = "agetacpp";
 	private static final String view = "get_user_poubelle";
@@ -21,20 +21,16 @@ public abstract class UserPoubelleDao implements IPersistant {
 	public void onResponse(JSONObject json){
 		try {
 			JSONArray rows = json.getJSONArray("rows");
-			JSONObject value = rows.optJSONObject(0);
-			if(value == null){
-				Log.e("UserPoubelleDao", "Pas de UserPoubelle");
-			}
-			else{
-				UserPoubelle userPoubelle = (UserPoubelle) JsonSerializer.deserialize(UserPoubelle.class, value);
-				onResponse(userPoubelle);
-			}
+			JSONObject value = rows.getJSONObject(0).getJSONObject("value");
+			value.remove("type");
+			UserAvailable userPoubelle = (UserAvailable) JsonSerializer.deserialize(UserAvailable.class, value);
+			onResponse(userPoubelle);
 		} catch (JSONException e) {
 			Log.e("UserPoubelleDao", e.toString());
 		}
 	}
 	
-	public abstract void onResponse(UserPoubelle users);
+	public abstract void onResponse(UserAvailable users);
 
 	@Override
 	public abstract void onErrorResponse(VolleyError error); 

@@ -57,8 +57,8 @@ public class HistoriqueFragment extends Fragment{
 		super.onCreate(savedInstanceState);			
 					
 		// Récupération des éléments 
-		lvHisto = (ListView)getActivity().findViewById(R.id.lv_Histo);
-	    listAction.add(new Action());
+//		lvHisto = (ListView)getActivity().findViewById(R.id.lv_Histo);
+//	    listAction.add(new Action());
 	}
 	
 	/** Méthode onSaveInstanceState */
@@ -70,7 +70,7 @@ public class HistoriqueFragment extends Fragment{
 //		
 //		/** Sauvegarde */
 //		savedInstanceState.putSerializable("sauvegarde", sauvegarde);
-//	    super.onSaveInstanceState(savedInstanceState);
+	    super.onSaveInstanceState(savedInstanceState);
 	}
 
 }

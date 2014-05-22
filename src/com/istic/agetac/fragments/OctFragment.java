@@ -150,6 +150,6 @@ public class OctFragment extends Fragment{
 //		
 //		/** Sauvegarde */
 //		savedInstanceState.putSerializable("sauvegarde", sauvegarde);
-//	    super.onSaveInstanceState(savedInstanceState);
+	    super.onSaveInstanceState(savedInstanceState);
 		}
 }

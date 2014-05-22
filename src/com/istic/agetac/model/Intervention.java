@@ -33,6 +33,7 @@ public class Intervention implements IIntervention, Subject {
 	private transient List<IMessage> messages;
 	private List<Secteur> secteurs;
 	private List<Action> historique;
+	private OCT oct;
 	
 	public Intervention(){
 		this._id = UUID.randomUUID().toString();
@@ -46,8 +47,17 @@ public class Intervention implements IIntervention, Subject {
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
 		this.historique = new ArrayList<Action>();
+		this.oct = new OCT();
 	}
 	
+	public OCT getOct() {
+		return oct;
+	}
+
+	public void setOct(OCT oct) {
+		this.oct = oct;
+	}
+
 	public Intervention(String adresse, String nom, String codeSinistre){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";

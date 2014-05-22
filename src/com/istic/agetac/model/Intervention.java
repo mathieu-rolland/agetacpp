@@ -391,7 +391,7 @@ public class Intervention implements IIntervention {
 	public void delete( TypeMoyen typeMoyen ){
 	}
 	
-	public void delete( UserPoubelle user ){
+	public void delete( UserAvailable user ){
 	}
 	
 

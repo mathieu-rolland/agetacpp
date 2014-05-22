@@ -119,18 +119,21 @@ public class SitacFragment extends MainFragment {
 		moyen.setId("#moyen");
 		moyen.setRepresentationOK(new Representation(R.drawable.ic_camion));
 		moyen.setRepresentationKO(new Representation(R.drawable.ic_camion));
-		IEntity environment = new Entity();
-		environment.setLibelle("[+] Environnement");
-		environment.setId("#environment");
-		environment
-		.setRepresentationOK(new Representation(R.drawable.ic_water));
-		environment
-		.setRepresentationKO(new Representation(R.drawable.ic_water));
-
-		Log.d("TOTO", "onCreateSlideMenu");
+		IEntity environmentDynamique = new Entity();
+		environmentDynamique.setLibelle("[+] Env. dynamique");
+		environmentDynamique.setId("#environmentDynamique");
+		environmentDynamique.setRepresentationOK(new Representation(R.drawable.ic_water));
+		environmentDynamique.setRepresentationKO(new Representation(R.drawable.ic_water));
+		
+		IEntity environmentStatique = new Entity();
+		environmentStatique.setLibelle("[+] Env. statique");
+		environmentStatique.setId("#environmentStatique");
+		environmentStatique.setRepresentationOK(new Representation(R.drawable.ic_water3));
+		environmentStatique.setRepresentationKO(new Representation(R.drawable.ic_water3));
 
 		this.addItemMenuDefault(moyen);
-		this.addItemMenuDefault(environment);
+		this.addItemMenuDefault(environmentDynamique);
+		this.addItemMenuDefault(environmentStatique);
 
 		new MoyensDao(new IViewReceiver<Moyen>() {
 
@@ -213,14 +216,13 @@ public class SitacFragment extends MainFragment {
 		listDataHeader = new ArrayList<String>();
 		listDataChild = new HashMap<String, List<IEntity>>();
 
-		if(typeEntity.getId().equals("#environment") || typeEntity.getId().equals("#moyen")){
+		if(typeEntity.getId().equals("#environmentDynamique") || typeEntity.getId().equals("#environmentStatique") || typeEntity.getId().equals("#moyen")){
 			// Affichage du gridview de choix de moyens
 			//			MapFragment mapFragment = (MapFragment) fragment;
 			showEntityGridMenu(typeEntity, event.getX(), event.getY());
 
 			clearExpMenu();
-			if(typeEntity.getId().equals("#environment")){
-				Log.v("DEBUG_MAX", "DEBUG_MAX envi");
+			if(typeEntity.getId().equals("#environmentDynamique")){
 				//Danger
 				listDataHeader.add("Sources de danger");
 				List<IEntity> danger = new ArrayList<IEntity>();
@@ -294,6 +296,56 @@ public class SitacFragment extends MainFragment {
 				eau.add(water2);
 				eau.add(water3);
 				listDataChild.put(listDataHeader.get(2), eau);
+
+				expMenuTitle.setText("Eléments d'environnement à placer");
+			}
+			else if(typeEntity.getId().equals("#environmentStatique")){
+				//Risk
+				listDataHeader.add("Points sensibles");
+				List<IEntity> risk = new ArrayList<IEntity>();
+
+				IEntity risk_blue = new Entity();
+				risk_blue.setLibelle("Ayant trait à l'eau");
+				risk_blue.setRepresentationOK(new Representation(R.drawable.ic_risk_blue));
+				risk_blue.setRepresentationKO(new Representation(R.drawable.ic_risk_blue));
+				IEntity risk_green = new Entity();
+				risk_green.setLibelle("Personnes");
+				risk_green.setRepresentationOK(new Representation(R.drawable.ic_risk_green));
+				risk_green.setRepresentationKO(new Representation(R.drawable.ic_risk_green));
+				IEntity risk_orange = new Entity();
+				risk_orange.setLibelle("Particuliers");
+				risk_orange.setRepresentationOK(new Representation(R.drawable.ic_risk_orange));
+				risk_orange.setRepresentationKO(new Representation(R.drawable.ic_risk_orange));
+				IEntity risk_red = new Entity();
+				risk_red.setLibelle("Incendie");
+				risk_red.setRepresentationOK(new Representation(R.drawable.ic_risk_red));
+				risk_red.setRepresentationKO(new Representation(R.drawable.ic_risk_red));
+
+				risk.add(risk_blue);
+				risk.add(risk_green);
+				risk.add(risk_orange);
+				risk.add(risk_red);
+				listDataChild.put(listDataHeader.get(0), risk);
+
+				//Water
+				listDataHeader.add("Prise d'eau");
+				List<IEntity> eau = new ArrayList<IEntity>();
+				IEntity water = new Entity();
+				water.setLibelle("Point d'eau pèrenne");
+				water.setRepresentationOK(new Representation(R.drawable.ic_water));
+				water.setRepresentationKO(new Representation(R.drawable.ic_water));
+				IEntity water2 = new Entity();
+				water2.setLibelle("Point d'eau non pèrenne");
+				water2.setRepresentationOK(new Representation(R.drawable.ic_water2));
+				water2.setRepresentationKO(new Representation(R.drawable.ic_water2));
+				IEntity water3 = new Entity();
+				water3.setLibelle("Point de ravitaillement");
+				water3.setRepresentationOK(new Representation(R.drawable.ic_water3));
+				water3.setRepresentationKO(new Representation(R.drawable.ic_water3));
+				eau.add(water);
+				eau.add(water2);
+				eau.add(water3);
+				listDataChild.put(listDataHeader.get(1), eau);
 
 				expMenuTitle.setText("Eléments d'environnement à placer");
 			}

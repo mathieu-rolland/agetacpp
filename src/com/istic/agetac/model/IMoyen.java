@@ -9,6 +9,7 @@ public interface IMoyen
     boolean isGroup();
     
     IRepresentation getRepresentationOK();
+    IRepresentation getRepresentationKO();
     String getLibelle();
     Date getHDemande();
     Date getHEngagement();

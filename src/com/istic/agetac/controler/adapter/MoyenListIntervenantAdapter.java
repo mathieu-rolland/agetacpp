@@ -84,37 +84,37 @@ public class MoyenListIntervenantAdapter extends AMoyenListAdapter
             holder.logo.setImageResource( current.getRepresentationOK().getDrawable() );
             holder.buttonFree.setOnClickListener( new ListenerFree( current, this ) );
 
-            if ( !AMoyenListAdapter.isNullOrBlank( current.getHDemande() ) )
+            if ( current.getHDemande() != null )
             {
-                holder.hourDemand.setText( current.getHDemande() );
-                if ( AMoyenListAdapter.isNullOrBlank( current.getHEngagement() ) )
+                holder.hourDemand.setText(Moyen.FORMATER.format( current.getHDemande()) );
+                if ( current.getHEngagement() == null )
                 {
                     holder.hourEngage.setText( "En attente du codis" );
                     holder.hourEngage.setVisibility( View.VISIBLE );
                 }
             }
 
-            if ( !AMoyenListAdapter.isNullOrBlank( current.getHEngagement() ) )
+            if ( current.getHEngagement() != null )
             {
-                holder.hourEngage.setText( current.getHEngagement() );
+                holder.hourEngage.setText( Moyen.FORMATER.format(current.getHEngagement()) );
                 holder.hourEngage.setVisibility( View.VISIBLE );
                 holder.name.setText( current.getLibelle() );
                 holder.buttonDemand.setVisibility( View.GONE );
                 holder.spinner.setVisibility( View.VISIBLE );
             }
 
-            if ( !AMoyenListAdapter.isNullOrBlank( current.getHArrival() ) )
+            if ( current.getHArrival() != null )
             {
-                holder.hourArrived.setText( current.getHArrival() );
+                holder.hourArrived.setText(Moyen.FORMATER.format( current.getHArrival() ));
                 holder.hourArrived.setVisibility( View.VISIBLE );
                 holder.buttonFree.setVisibility( View.VISIBLE );
             }
 
-            if ( !AMoyenListAdapter.isNullOrBlank( current.getHFree() ) )
+            if ( current.getHFree() != null )
             {
                 holder.hourFree.setVisibility( View.VISIBLE );
                 holder.buttonFree.setVisibility( View.GONE );
-                holder.hourFree.setText( current.getHFree() );
+                holder.hourFree.setText( Moyen.FORMATER.format(current.getHFree()) );
                 holder.spinner.setVisibility( View.INVISIBLE );
                 holder.sector.setVisibility( View.VISIBLE );
                 holder.sector.setText( current.getSecteur() );

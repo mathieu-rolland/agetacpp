@@ -165,8 +165,7 @@ public class SitacFragment extends MainFragment {
 				}
 			}
 			if (!exist
-					&& (newMoyen.getHFree() == null || newMoyen.getHFree()
-							.isEmpty())) {
+					&& (newMoyen.getHFree() == null)) {
 				addItemMenu(newMoyen);
 			}
 		}

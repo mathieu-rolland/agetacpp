@@ -74,32 +74,32 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter
             holder.name.setText( current.getLibelle() );
         }
 
-        if ( !AMoyenListAdapter.isNullOrBlank( current.getHDemande() ) )
+        if (current.getHDemande() != null )
         {
-            holder.hourDemand.setText( current.getHDemande() );
+            holder.hourDemand.setText(Moyen.FORMATER.format( current.getHDemande() ));
             holder.hourDemand.setVisibility( TextView.VISIBLE );
             holder.buttonDemand.setOnClickListener( new ListenerEngage( current, this ) );
             state = StateMoyen.demand;
         }
         
-        if ( !AMoyenListAdapter.isNullOrBlank( current.getHEngagement() ) )
+        if ( current.getHEngagement() != null)
         {
-            holder.hourEngage.setText( current.getHEngagement() );
+            holder.hourEngage.setText( Moyen.FORMATER.format(current.getHEngagement() ));
             holder.hourEngage.setVisibility( TextView.VISIBLE );
             holder.buttonDemand.setVisibility( Button.GONE );
             holder.name.setText( current.getLibelle() );
             state = StateMoyen.engage;
         }
 
-        if ( !AMoyenListAdapter.isNullOrBlank( current.getHArrival() ) )
+        if (current.getHArrival() != null )
         {
-            holder.hourArrived.setText( current.getHArrival() );
+            holder.hourArrived.setText( Moyen.FORMATER.format(current.getHArrival()));
             state = StateMoyen.arrived;
         }
 
-        if ( !AMoyenListAdapter.isNullOrBlank( current.getHFree() ) )
+        if ( current.getHFree()!= null )
         {
-            holder.hourFree.setText( current.getHFree() );
+            holder.hourFree.setText(Moyen.FORMATER.format( current.getHFree() ));
             holder.hourFree.setVisibility( View.VISIBLE );
             state = StateMoyen.free;
         }
@@ -108,7 +108,7 @@ public class MoyenListCodisAdapter extends AMoyenListAdapter
         {
             holder.sector.setVisibility( View.VISIBLE );
             holder.sector.setText( current.getSecteur() );
-            holder.hourArrived.setText( current.getHArrival() );
+            holder.hourArrived.setText(Moyen.FORMATER.format( current.getHArrival() ));
             
             Secteur sector = mSector.get( current.getSecteur() );
 

@@ -1,11 +1,13 @@
 package com.istic.agetac.model;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONObject;
 
 import android.os.Parcel;
+import android.text.format.Formatter;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.app.AgetacppApplication;
@@ -21,7 +23,7 @@ import com.istic.sit.framework.model.Property;
  * 
  * @author Anthony LE MEE - 10003134
  */
-public class Moyen extends Entity implements ConstitutionGroupCrmItemGroup {
+public class Moyen extends Entity implements ConstitutionGroupCrmItemGroup, IMoyen {
 
 	public static final SimpleDateFormat FORMATER = new SimpleDateFormat(
 			"ddMM '-' hhmm"); // ("ddMM '-' hhmm");
@@ -132,23 +134,51 @@ public class Moyen extends Entity implements ConstitutionGroupCrmItemGroup {
 
 		
 
-	} // method
+	} 
 
-	public String getHDemande() {
-		return super.getProperty(NAME_PROPERTY_HOUR_DEMAND).getValeur();
-	} // method
+	public Date getHDemande() {
+		try
+        {
+            return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_DEMAND).getValeur());
+        }
+        catch ( Exception e )
+        {
+            return null;
+        }
+	}
 
-	public String getHArrival() {
-		return super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).getValeur();
-	} // method
+	public Date getHArrival() {
+	    try
+        {
+            return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).getValeur());
+        }
+        catch ( Exception e )
+        {
+            return null;
+        }
+	}
 
-	public String getHEngagement() {
-		return super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).getValeur();
-	} // method
+	public Date getHEngagement() {
+	    try
+        {
+            return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).getValeur());
+        }
+        catch ( Exception e )
+        {
+            return null;
+        }
+	} 
 
-	public String getHFree() {
-		return super.getProperty(NAME_PROPERTY_HOUR_FREE).getValeur();
-	} // method
+	public Date getHFree() {
+	    try
+        {
+            return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_FREE).getValeur());
+        }
+        catch ( Exception e )
+        {
+            return null;
+        }
+	}
 
 	public String getSecteur() {
 		return super.getProperty(NAME_PROPERTY_SECTEUR).getValeur();

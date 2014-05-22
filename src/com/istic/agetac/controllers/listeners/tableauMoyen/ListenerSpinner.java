@@ -38,7 +38,7 @@ public class ListenerSpinner implements OnItemSelectedListener
         {
             mMoyen.setSecteur( sector );
            
-            if (mMoyen.getHArrival() == null ||  mMoyen.getHArrival() == "")
+            if (mMoyen.getHArrival() == null)
             {                
                 mMoyen.setHArrival( new Date() );
                 mAdapter.notifyDataSetChanged();

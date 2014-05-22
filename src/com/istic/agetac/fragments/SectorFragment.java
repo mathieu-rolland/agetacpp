@@ -30,6 +30,7 @@ import com.istic.agetac.controler.adapter.SecteurAdapter;
 import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerAddSecteur;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerDragSecteur;
+import com.istic.agetac.model.IMoyen;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 

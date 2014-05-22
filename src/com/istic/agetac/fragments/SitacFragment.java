@@ -2,6 +2,7 @@ package com.istic.agetac.fragments;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlarmManager;
@@ -15,9 +16,12 @@ import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -30,6 +34,7 @@ import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.TypeMoyen;
 import com.istic.sit.framework.adapter.EntityAdapter;
+import com.istic.sit.framework.adapter.ExpandableListAdapter;
 import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.api.view.IBackground;
 import com.istic.sit.framework.model.Entity;
@@ -60,7 +65,7 @@ public class SitacFragment extends MainFragment {
 
 		Geocoder coder = new Geocoder(getActivity());
 		Log.d("ADDRESSES", AgetacppApplication.getIntervention()
-							.getAdresse());
+				.getAdresse());
 		try {
 			ArrayList<Address> adresses = (ArrayList<Address>) coder
 					.getFromLocationName(AgetacppApplication.getIntervention()
@@ -86,7 +91,7 @@ public class SitacFragment extends MainFragment {
 			}
 		});
 
-		onClickGridMenuListener = new onClickGridMenuListener();
+		onClickExpandableListItemListener = new onClickExpandableListItemListener();
 
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
@@ -122,9 +127,9 @@ public class SitacFragment extends MainFragment {
 		environment.setLibelle("[+] Environnement");
 		environment.setId("#environment");
 		environment
-				.setRepresentationOK(new Representation(R.drawable.ic_water));
+		.setRepresentationOK(new Representation(R.drawable.ic_water));
 		environment
-				.setRepresentationKO(new Representation(R.drawable.ic_water));
+		.setRepresentationKO(new Representation(R.drawable.ic_water));
 
 		Log.d("TOTO", "onCreateSlideMenu");
 
@@ -209,171 +214,191 @@ public class SitacFragment extends MainFragment {
 
 	@Override
 	protected boolean onActionDropFromMenu(Entity typeEntity, DragEvent event) {
-		if (typeEntity.getId().equals("#environment")
-				|| typeEntity.getId().equals("#moyen")) {
+		listDataHeader = new ArrayList<String>();
+		listDataChild = new HashMap<String, List<IEntity>>();
+
+		if(typeEntity.getId().equals("#environment") || typeEntity.getId().equals("#moyen")){
 			// Affichage du gridview de choix de moyens
-			// MapFragment mapFragment = (MapFragment) fragment;
+			//			MapFragment mapFragment = (MapFragment) fragment;
 			showEntityGridMenu(typeEntity, event.getX(), event.getY());
 
-			clearItemEntityGridMenu();
-			if (typeEntity.getId().equals("#environment")) {
-				// Danger
-				IEntity danger_black = new Entity();
-				danger_black.setLibelle("Cheminements");
-				danger_black.setRepresentationOK(new Representation(
-						R.drawable.ic_danger_black));
-				danger_black.setRepresentationKO(new Representation(
-						R.drawable.ic_danger_black));
+			clearExpMenu();
+			if(typeEntity.getId().equals("#environment")){
+				Log.v("DEBUG_MAX", "DEBUG_MAX envi");
+				//Danger
+				listDataHeader.add("Sources de danger");
+				List<IEntity> danger = new ArrayList<IEntity>();
+
 				IEntity danger_blue = new Entity();
-				danger_blue.setLibelle("Eau");
-				danger_blue.setRepresentationOK(new Representation(
-						R.drawable.ic_danger_blue));
-				danger_blue.setRepresentationKO(new Representation(
-						R.drawable.ic_danger_blue));
+				danger_blue.setLibelle("Ayant trait à l'eau");
+				danger_blue.setRepresentationOK(new Representation(R.drawable.ic_danger_blue));
+				danger_blue.setRepresentationKO(new Representation(R.drawable.ic_danger_blue));
 				IEntity danger_green = new Entity();
 				danger_green.setLibelle("Personnes");
-				danger_green.setRepresentationOK(new Representation(
-						R.drawable.ic_danger_green));
-				danger_green.setRepresentationKO(new Representation(
-						R.drawable.ic_danger_green));
+				danger_green.setRepresentationOK(new Representation(R.drawable.ic_danger_green));
+				danger_green.setRepresentationKO(new Representation(R.drawable.ic_danger_green));
 				IEntity danger_orange = new Entity();
 				danger_orange.setLibelle("Particuliers");
-				danger_orange.setRepresentationOK(new Representation(
-						R.drawable.ic_danger_orange));
-				danger_orange.setRepresentationKO(new Representation(
-						R.drawable.ic_danger_orange));
-				IEntity danger_purple = new Entity();
-				danger_purple.setLibelle("Commandements");
-				danger_purple.setRepresentationOK(new Representation(
-						R.drawable.ic_danger_purple));
-				danger_purple.setRepresentationKO(new Representation(
-						R.drawable.ic_danger_purple));
+				danger_orange.setRepresentationOK(new Representation(R.drawable.ic_danger_orange));
+				danger_orange.setRepresentationKO(new Representation(R.drawable.ic_danger_orange));
 				IEntity danger_red = new Entity();
-				danger_red.setLibelle("Eau");
-				danger_red.setRepresentationOK(new Representation(
-						R.drawable.ic_danger_red));
-				danger_red.setRepresentationKO(new Representation(
-						R.drawable.ic_danger_red));
+				danger_red.setLibelle("Incendie");
+				danger_red.setRepresentationOK(new Representation(R.drawable.ic_danger_red));
+				danger_red.setRepresentationKO(new Representation(R.drawable.ic_danger_red));
 
-				addItemEntityGridMenu(danger_black);
-				addItemEntityGridMenu(danger_blue);
-				addItemEntityGridMenu(danger_green);
-				addItemEntityGridMenu(danger_orange);
-				addItemEntityGridMenu(danger_purple);
-				addItemEntityGridMenu(danger_red);
+				danger.add(danger_blue);
+				danger.add(danger_green);
+				danger.add(danger_orange);
+				danger.add(danger_red);
+				listDataChild.put(listDataHeader.get(0), danger);
 
-				// Risk
-				IEntity risk_black = new Entity();
-				risk_black.setLibelle("Cheminements");
-				risk_black.setRepresentationOK(new Representation(
-						R.drawable.ic_risk_black));
-				risk_black.setRepresentationKO(new Representation(
-						R.drawable.ic_risk_black));
+				//Risk
+				listDataHeader.add("Points sensibles");
+				List<IEntity> risk = new ArrayList<IEntity>();
+
 				IEntity risk_blue = new Entity();
-				risk_blue.setLibelle("Eau");
-				risk_blue.setRepresentationOK(new Representation(
-						R.drawable.ic_risk_blue));
-				risk_blue.setRepresentationKO(new Representation(
-						R.drawable.ic_risk_blue));
+				risk_blue.setLibelle("Ayant trait à l'eau");
+				risk_blue.setRepresentationOK(new Representation(R.drawable.ic_risk_blue));
+				risk_blue.setRepresentationKO(new Representation(R.drawable.ic_risk_blue));
 				IEntity risk_green = new Entity();
 				risk_green.setLibelle("Personnes");
-				risk_green.setRepresentationOK(new Representation(
-						R.drawable.ic_risk_green));
-				risk_green.setRepresentationKO(new Representation(
-						R.drawable.ic_risk_green));
+				risk_green.setRepresentationOK(new Representation(R.drawable.ic_risk_green));
+				risk_green.setRepresentationKO(new Representation(R.drawable.ic_risk_green));
 				IEntity risk_orange = new Entity();
 				risk_orange.setLibelle("Particuliers");
-				risk_orange.setRepresentationOK(new Representation(
-						R.drawable.ic_risk_orange));
-				risk_orange.setRepresentationKO(new Representation(
-						R.drawable.ic_risk_orange));
-				IEntity risk_purple = new Entity();
-				risk_purple.setLibelle("Commandements");
-				risk_purple.setRepresentationOK(new Representation(
-						R.drawable.ic_risk_purple));
-				risk_purple.setRepresentationKO(new Representation(
-						R.drawable.ic_risk_purple));
+				risk_orange.setRepresentationOK(new Representation(R.drawable.ic_risk_orange));
+				risk_orange.setRepresentationKO(new Representation(R.drawable.ic_risk_orange));
 				IEntity risk_red = new Entity();
-				risk_red.setLibelle("Eau");
-				risk_red.setRepresentationOK(new Representation(
-						R.drawable.ic_risk_red));
-				risk_red.setRepresentationKO(new Representation(
-						R.drawable.ic_risk_red));
+				risk_red.setLibelle("Incendie");
+				risk_red.setRepresentationOK(new Representation(R.drawable.ic_risk_red));
+				risk_red.setRepresentationKO(new Representation(R.drawable.ic_risk_red));
 
-				addItemEntityGridMenu(risk_black);
-				addItemEntityGridMenu(risk_blue);
-				addItemEntityGridMenu(risk_green);
-				addItemEntityGridMenu(risk_orange);
-				addItemEntityGridMenu(risk_purple);
+				risk.add(risk_blue);
+				risk.add(risk_green);
+				risk.add(risk_orange);
+				risk.add(risk_red);
+				listDataChild.put(listDataHeader.get(1), risk);
 
-				// Water
+				//Water
+				listDataHeader.add("Prise d'eau");
+				List<IEntity> eau = new ArrayList<IEntity>();
 				IEntity water = new Entity();
-				water.setLibelle("Point d'eau");
-				water.setRepresentationOK(new Representation(
-						R.drawable.ic_water));
-				water.setRepresentationKO(new Representation(
-						R.drawable.ic_water));
-				addItemEntityGridMenu(water);
+				water.setLibelle("Point d'eau pèrenne");
+				water.setRepresentationOK(new Representation(R.drawable.ic_water));
+				water.setRepresentationKO(new Representation(R.drawable.ic_water));
+				IEntity water2 = new Entity();
+				water2.setLibelle("Point d'eau non pèrenne");
+				water2.setRepresentationOK(new Representation(R.drawable.ic_water2));
+				water2.setRepresentationKO(new Representation(R.drawable.ic_water2));
+				IEntity water3 = new Entity();
+				water3.setLibelle("Point de ravitaillement");
+				water3.setRepresentationOK(new Representation(R.drawable.ic_water3));
+				water3.setRepresentationKO(new Representation(R.drawable.ic_water3));
+				eau.add(water);
+				eau.add(water2);
+				eau.add(water3);
+				listDataChild.put(listDataHeader.get(2), eau);
 
-				gridMenuTitle.setText("Elements d'environnement a placer");
-			} else if (typeEntity.getId().equals("#moyen")) {
-				Moyen fpt_alim = new Moyen(TypeMoyen.FPT_ALIM);
-				fpt_alim.setLibelle("FPT ALIM");
+				expMenuTitle.setText("Eléments d'environnement à placer");
+			}
+			else if(typeEntity.getId().equals("#moyen")){
+				listDataHeader.add("Vehicule");
+				List<IEntity> vehicule = new ArrayList<IEntity>();
+				
+				Moyen fpt = new Moyen(TypeMoyen.FPT);
+				fpt.setLibelle("FPT");
 
-				Moyen fpt_inc = new Moyen(TypeMoyen.FPT_INC);
-				fpt_inc.setLibelle("FPT INC");
+				Moyen vsav = new Moyen(TypeMoyen.VSAV);
+				vsav.setLibelle("VSAV");
 
-				Moyen fpt_sap = new Moyen(TypeMoyen.FPT_SAP);
-				fpt_sap.setLibelle("FPT SAP");
+				Moyen vsr = new Moyen(TypeMoyen.VSR);
+				vsr.setLibelle("VSR");
 
-				Moyen vsav_alim = new Moyen(TypeMoyen.VSAV_ALIM);
-				vsav_alim.setLibelle("VSAV ALIM");
+				Moyen ccfm = new Moyen(TypeMoyen.CCFM);
+				ccfm.setLibelle("CCFM");
 
-				Moyen vsav_inc = new Moyen(TypeMoyen.VSAV_INC);
-				vsav_inc.setLibelle("VSAV INC");
+				Moyen ccgc = new Moyen(TypeMoyen.CCGC);
+				ccgc.setLibelle("CCGC");
 
-				Moyen vsav_sap = new Moyen(TypeMoyen.VSAV_SAP);
-				vsav_sap.setLibelle("VSAV SAP");
+				Moyen var = new Moyen(TypeMoyen.VAR);
+				var.setLibelle("VAR");
+				
+				Moyen vls = new Moyen(TypeMoyen.VLS);
+				vls.setLibelle("VLS");
+				
+				Moyen vlcc = new Moyen(TypeMoyen.VLCC);
+				vlcc.setLibelle("VLS");
+				
+				Moyen vlcg = new Moyen(TypeMoyen.VLCG);
+				vlcg.setLibelle("VLS");
+				
+				vehicule.add(fpt);
+				vehicule.add(vsav);
+				vehicule.add(vsr);
+				vehicule.add(ccfm);
+				vehicule.add(ccgc);
+				vehicule.add(var);
+				vehicule.add(vls);
+				vehicule.add(vlcc);
+				vehicule.add(vlcg);
+				listDataChild.put(listDataHeader.get(0), vehicule);
 
-				addItemEntityGridMenu(fpt_alim);
-				addItemEntityGridMenu(fpt_inc);
-				addItemEntityGridMenu(fpt_sap);
-				addItemEntityGridMenu(vsav_alim);
-				addItemEntityGridMenu(vsav_inc);
-				addItemEntityGridMenu((Entity) vsav_sap);
+				listDataHeader.add("GROUPE");
+				List<IEntity> groupe = new ArrayList<IEntity>();
+				Moyen temp = new Moyen(TypeMoyen.FPT);
+				temp.setLibelle("Groupe");
+				
+				groupe.add(temp);
+				listDataChild.put(listDataHeader.get(1), groupe);
 
-				gridMenuTitle.setText("Moyen a engager");
+				expMenuTitle.setText("Moyen a engager");
+
 			}
 			currentX = event.getX();
 			currentY = event.getY();
-		} else {
-			// Create entity to set on map
-			((IBackground) fragment).addEntity(typeEntity, event.getX(),
-					event.getY());
 		}
-
+		else{
+			//Create entity to set on map
+			((IBackground) fragment).addEntity(typeEntity, event.getX(), event.getY());
+		}
+		expandableAdapter = new ExpandableListAdapter(this.getActivity(), listDataHeader, listDataChild);
+		// setting list adapter
+		expListView.setAdapter(expandableAdapter);
 		return true;
 	}
 
-	public class onClickGridMenuListener implements OnItemClickListener {
+
+	public class onClickExpandableListItemListener implements OnChildClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			// Get entity where user click on
-			EntityAdapter entityAdapter = (EntityAdapter) parent.getAdapter();
-			IEntity gridEntity = (IEntity) entityAdapter.getItem(position);
-			// Create entity to set on map
-			/*
-			 * Moyen moyen = new Moyen(TypeMoyen.VSAV);
-			 * moyen.setRepresentationOK(gridEntity.getRepresentation());
-			 * moyen.setRepresentationKO(gridEntity.getRepresentation());
-			 * moyen.setLibelle(gridEntity.getLibelle());
-			 */
-
-			((IBackground) fragment).addEntity((Entity) gridEntity, currentX,
+		public boolean onChildClick(ExpandableListView parent, View v,
+				int groupPosition, int childPosition, long id) {
+			IEntity i = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
+			((IBackground) fragment).addEntity((Entity) i, currentX,
 					currentY);
-
-			hideEntityGridMenu();
+			hideExpMenu();
+			return false;
 		}
+	}
+
+	/*
+	 * Preparing the list data
+	 */
+	@Override
+	protected void prepareListData() {
+		listDataHeader = new ArrayList<String>();
+		listDataChild = new HashMap<String, List<IEntity>>();
+
+		//		// Adding child data
+		//		listDataHeader.add("Top 250");
+		//
+		//		// Adding child data
+		//		List<IEntity> top250 = new ArrayList<IEntity>();
+		//		IEntity danger_black = new Entity();
+		//		danger_black.setLibelle("Cheminements");
+		//		danger_black.setRepresentationOK(new Representation(R.drawable.ic_danger_black));
+		//		danger_black.setRepresentationKO(new Representation(R.drawable.ic_danger_black));
+		//		top250.add(danger_black);
+		//		
+		//		listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
 	}
 }

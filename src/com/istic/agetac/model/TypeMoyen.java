@@ -6,28 +6,29 @@ import com.istic.sit.framework.model.Representation;
 
 /**
  * Concept métier représentant le type d'un véhicule dans son secteur attribué
+ * 
  * @author Anthony LE MÉE - 10003134
  */
 public enum TypeMoyen {
-	
-	VSAV_INC("VSAV_INC", 
-			new Representation(R.drawable.vsav_ok),
+
+	VSAV("VSAV", new Representation(R.drawable.vsav_ok), 
 			new Representation(R.drawable.vsav_ko)), 
-	VSAV_ALIM("VSAV_ALIM",
-			new Representation(R.drawable.vsav_ok), 
-			new Representation(R.drawable.vsav_ko)), 
-	VSAV_SAP("VSAV_SAP",
-			new Representation(R.drawable.vsav_ok), 
-			new Representation(R.drawable.vsav_ko)), 
-	FPT_SAP("FPT_SAP",
-			new Representation(R.drawable.fpt_sap), 
-			new Representation(R.drawable.fpt_sap)), 
-	FPT_INC("FPT_INC",
-			new Representation(R.drawable.fpt_inc), 
-			new Representation(R.drawable.fpt_inc)), 
-	FPT_ALIM("FPT_ALIM",
-			new Representation(R.drawable.fpt_alim), 
-			new Representation(R.drawable.fpt_alim));
+	FPT("FPT", new Representation(R.drawable.fpt_ok), 
+			new Representation(R.drawable.fpt_ko)), 
+	CCFM("CCFM", new Representation(R.drawable.ccfm_ok), 
+			new Representation(R.drawable.ccfm_ko)), 
+	CCGC("CCGC", new Representation(R.drawable.ccgc_ok), 
+			new Representation(R.drawable.ccgc_ko)), 
+	VAR("VAR", new Representation(R.drawable.var_ok), 
+			new Representation(R.drawable.var_ko)), 
+	VLCC("VLCC", new Representation(R.drawable.vlcc_ok), 
+			new Representation(R.drawable.vlcc_ko)), 
+	VLCG("VLCG", new Representation(R.drawable.vlcg_ok), 
+			new Representation(R.drawable.vlcg_ko)), 
+	VLS("VLS", new Representation(R.drawable.vls_ok), 
+			new Representation(R.drawable.vls_ko)), 
+	VSR("VSR", new Representation(R.drawable.vsr_ok), 
+			new Representation(R.drawable.vsr_ok));
 
 	private String mType;
 	private IRepresentation representationOK;

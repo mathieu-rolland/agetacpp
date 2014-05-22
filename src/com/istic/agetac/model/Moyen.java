@@ -48,6 +48,8 @@ public class Moyen extends Entity implements IMoyen {
 	 */
 	public Moyen(TypeMoyen typeValue) {
 		super();
+		this.setRepresentationKO(typeValue.getRepresentationKO());
+		this.setRepresentationOK(typeValue.getRepresentationOK());
 		IProperty typeProperty = creatProperty(NAME_PROPERTY_TYPE,
 				typeValue.toString());
 		IProperty hDemandProperty = creatProperty(NAME_PROPERTY_HOUR_DEMAND,
@@ -75,9 +77,9 @@ public class Moyen extends Entity implements IMoyen {
 	 *            : position of moyen
 	 */
 	public Moyen(TypeMoyen typeValue, IPosition position) {
-		
+
 		super(position);
-		
+
 		IProperty typeProperty = creatProperty(NAME_PROPERTY_TYPE,
 				typeValue.toString());
 		IProperty hDemandProperty = creatProperty(NAME_PROPERTY_HOUR_DEMAND,
@@ -88,7 +90,7 @@ public class Moyen extends Entity implements IMoyen {
 				null);
 		IProperty hFreeProperty = creatProperty(NAME_PROPERTY_HOUR_FREE, null);
 		IProperty secteurProperty = creatProperty(NAME_PROPERTY_SECTEUR, null);
-		
+
 		super.addPropriete(typeProperty);
 		super.addPropriete(hDemandProperty);
 		super.addPropriete(hEngagementProperty);
@@ -131,52 +133,52 @@ public class Moyen extends Entity implements IMoyen {
 			return null; // FIXME add throw WARNING  
 		}
 
-		
+
 
 	} 
 
 	public Date getHDemande() {
 		try
-        {
-            return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_DEMAND).getValeur());
-        }
-        catch ( Exception e )
-        {
-            return null;
-        }
+		{
+			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_DEMAND).getValeur());
+		}
+		catch ( Exception e )
+		{
+			return null;
+		}
 	}
 
 	public Date getHArrival() {
-	    try
-        {
-            return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).getValeur());
-        }
-        catch ( Exception e )
-        {
-            return null;
-        }
+		try
+		{
+			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).getValeur());
+		}
+		catch ( Exception e )
+		{
+			return null;
+		}
 	}
 
 	public Date getHEngagement() {
-	    try
-        {
-            return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).getValeur());
-        }
-        catch ( Exception e )
-        {
-            return null;
-        }
+		try
+		{
+			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).getValeur());
+		}
+		catch ( Exception e )
+		{
+			return null;
+		}
 	} 
 
 	public Date getHFree() {
-	    try
-        {
-            return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_FREE).getValeur());
-        }
-        catch ( Exception e )
-        {
-            return null;
-        }
+		try
+		{
+			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_FREE).getValeur());
+		}
+		catch ( Exception e )
+		{
+			return null;
+		}
 	}
 
 	public String getSecteur() {
@@ -308,32 +310,32 @@ public class Moyen extends Entity implements IMoyen {
 		super.addPropriete(property);
 	}
 
-	// @Override
-	// public IRepresentation getRepresentationOK() {
-	// return super.getRepresentationOK();
-	// }
+	@Override
+	public IRepresentation getRepresentationOK() {
+		return super.getRepresentationOK();
+	}
 
-	// @Override
-	// public void setRepresentationOK(IRepresentation representation) {
-	// super.setRepresentationOK(representation);
-	// }
+	@Override
+	public void setRepresentationOK(IRepresentation representation) {
+		super.setRepresentationOK(representation);
+	}
 
-	// @Override
-	// public IRepresentation getRepresentationKO() {
-	// return super.getRepresentationKO();
-	// }
+	@Override
+	public IRepresentation getRepresentationKO() {
+		return super.getRepresentationKO();
+	}
 
-	// @Override
-	// public void setRepresentationKO(IRepresentation representation) {
-	// super.setRepresentationKO(representation);
-	// }
+	@Override
+	public void setRepresentationKO(IRepresentation representation) {
+		super.setRepresentationKO(representation);
+	}
 
 	@Override
 	public IRepresentation getRepresentation() {
 		if (isOk()) {
-			return this.getType().getRepresentationOK();
+			return this.getRepresentationOK();
 		} else {
-			return this.getType().getRepresentationKO();
+			return this.getRepresentationKO();
 		}
 	}
 

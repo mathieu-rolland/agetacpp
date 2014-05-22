@@ -76,7 +76,7 @@ public class TableauMoyenFragment extends Fragment {
 			CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication.getIntervention().getId()));
 		}
 		
-		if (AgetacppApplication.getUser().getRole() == Role.codis) {
+		if (AgetacppApplication.getListIntervention() != null) {
 			mAdapterMoyens = new MoyenListCodisAdapter(getActivity(),mIsCreating);
 		} else {
 			mAdapterMoyens = new MoyenListIntervenantAdapter(getActivity());

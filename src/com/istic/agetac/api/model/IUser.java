@@ -3,13 +3,14 @@
  */
 package com.istic.agetac.api.model;
 
-import com.istic.sit.framework.couch.IPersistant;
+import com.istic.sit.framework.couch.ITaMere;
+
 
 /**
  * @author Christophe
  *
  */
-public interface IUser extends IPersistant {
+public interface IUser extends ITaMere {
 
 	public enum Role {codis, intervenant}
 	public String getName();

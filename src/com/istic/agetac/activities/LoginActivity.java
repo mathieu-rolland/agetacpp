@@ -1,6 +1,11 @@
 package com.istic.agetac.activities;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -29,9 +34,10 @@ import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.Intervenant;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.User;
 import com.istic.sit.framework.couch.APersitantRecuperator;
-import com.istic.sit.framework.couch.CouchDBUtils;
+import com.istic.sit.framework.couch.JsonSerializer;
 
 public class LoginActivity extends Activity {
 
@@ -52,10 +58,9 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-//		CreationBase.createCleanBase();
 		setContentView(R.layout.activity_login);
 		
-		//CreationBase.createCleanBase();
+		CreationBase.CreateTest();
 		// Set up the login form.
 		mUserView = (EditText) findViewById(R.id.activity_login_user);
 
@@ -142,7 +147,7 @@ public class LoginActivity extends Activity {
 			mLoginStatusMessageView
 					.setText(R.string.activity_login_progress_login_in);
 			showProgress(true);
-			CouchDBUtils.getFromCouch(new UserViewReceiver(User.class, "agetacpp", "connexion", mUser));
+//			CouchDBUtils.getFromCouch(new UserViewReceiver(User.class, "agetacpp", "connexion", mUser));
 		}
 	}
 
@@ -191,11 +196,10 @@ public class LoginActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserViewReceiver extends APersitantRecuperator<User> {
+	public class UserViewReceiver extends APersitantRecuperator<Intervention> {
 
-		public UserViewReceiver(Class<User> type, String design, String view,
-				String username) {
-			super(type, design, view, username);
+		public UserViewReceiver(String username, String password) {
+			super(Intervention.class, "agetacpp", "connexion", username+"|"+password);
 		}
 
 		@Override
@@ -203,56 +207,97 @@ public class LoginActivity extends Activity {
 			showProgress(false);
 			Log.e("LoginActivity", error.getMessage() == null ? error.toString() : error.getMessage() );
 		}
+		
+		@Override
+		public void onResponse(JSONObject json){
+			AgetacppApplication.setIntervention(null);
+			AgetacppApplication.setListIntervention(null);
+			AgetacppApplication.setRole(null);
+			try {
+				JSONArray a = (JSONArray) json.get("rows");
+				List<Intervention> interventions = new ArrayList<Intervention>();
+				for(int i=0; i<a.length(); i++){
+					JSONObject o = a.getJSONObject(i);
+					o = o.getJSONObject("value");
+					String role = o.getString("role");
+					if(role == "codis"){
+						AgetacppApplication.setRole(Role.codis);
+					}
+					else{
+						AgetacppApplication.setRole(Role.intervenant);
+					}
+					if((Boolean) o.get("ok")) {
+						//User ayant une/des interventions
+						JSONObject value = o.getJSONObject("res");
+						Intervention interv = (Intervention) JsonSerializer.deserialize(Intervention.class, value);
+						interventions.add(interv);
+					}
+					else{
+						//User sans intervention
+						JSONObject value = o.getJSONObject("res");
+						User u = (User) JsonSerializer.deserialize(User.class, value);
+						AgetacppApplication.setUser(u);
+						if(u.getRole() == Role.codis){
+							AgetacppApplication.setListIntervention(new ArrayList<Intervention>());
+						}
+					}
+				}
+				onResponse(interventions);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 		@Override
-		public void onResponse(List<User> users) {
+		public void onResponse(List<Intervention> interventions) {
 			mUserView.setError(null);
 			mPasswordView.setError(null);
-			boolean find = false;
-			for(User user : users){
-				find = true;
-				showProgress(false);
-				if(user.getPassword().equals(mPassword)){
-					AgetacppApplication.setUser(user);
-					if(user.getRole().equals(Role.codis)){
-						CodisActivity.launchActivity(LoginActivity.this);
-					}
-					else if(user.getRole().equals(Role.intervenant)){
-						Intervenant intervenant = (Intervenant)user;
-						if(intervenant.getIntervention() == null){
-							ImageView imageView = new ImageView(LoginActivity.this);
-							imageView.setImageResource(R.drawable.vacances);
-							AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-							builder.setMessage(R.string.activity_login_intervenant_message);
-							builder.setTitle(R.string.activity_login_intervenant_titre);
-							builder.setCancelable(false);
-							builder.setView(imageView);
-							builder.setPositiveButton(R.string.activity_login_intervenant_button, new DialogInterface.OnClickListener() {
-								
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.cancel();
-								}
-							});
-							AlertDialog alert = builder.create();
-							alert.show();
-						}
-						else{
-							ContainerActivity.launchActivity(MODE.INTERVENANT, LoginActivity.this);
-						}
-					}
+			if(!interventions.isEmpty()){
+				if(AgetacppApplication.getRole() == Role.intervenant) {
+					AgetacppApplication.setIntervention(interventions.get(0));
 				}
-				else{
-					mPasswordView.setError(getString(R.string.error_incorrect_password));
-					mPasswordView.requestFocus();
+				else {
+					AgetacppApplication.setListIntervention(interventions);
+					AgetacppApplication.setUser(interventions.get(0).getCodis());
 				}
 			}
-			if(!find){
-				showProgress(false);
+			showProgress(false);
+			if(AgetacppApplication.getRole() != null) {
+				// un utilisateur existant
+				if(AgetacppApplication.getRole() == Role.codis) {
+					CodisActivity.launchActivity(LoginActivity.this);
+				}
+				else {
+					if(AgetacppApplication.getIntervention() == null) {
+						// intervenant sans intervention => vacances
+						ImageView imageView = new ImageView(LoginActivity.this);
+						imageView.setImageResource(R.drawable.vacances);
+						AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+						builder.setMessage(R.string.activity_login_intervenant_message);
+						builder.setTitle(R.string.activity_login_intervenant_titre);
+						builder.setCancelable(false);
+						builder.setView(imageView);
+						builder.setPositiveButton(R.string.activity_login_intervenant_button, new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+							}
+						});
+						AlertDialog alert = builder.create();
+						alert.show();
+					}
+					else {
+						ContainerActivity.launchActivity(MODE.INTERVENANT, LoginActivity.this);
+					}
+				}
+			}
+			else {
+				// pas un utilisateur
 				mUserView.setError(getString(R.string.error_incorrect_login));
 				mUserView.requestFocus();
 			}
 		}
-		
 	}
 }

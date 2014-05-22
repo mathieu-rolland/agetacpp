@@ -194,42 +194,14 @@ public class Moyen extends Entity {
 	}
 
 	@Override
-	public String getUrl(int method) {
-		return super.getUrl(method);
-	}
-
-	@Override
-	public JSONObject getData() {
-		return super.getData();
-	}
-
-	@Override
 	public void save() {
-		super.save();
-	}
-
-	@Override
-	public void update() {
-		super.update();
+		AgetacppApplication.getIntervention().save();
 	}
 
 	@Override
 	public void delete() {
-		super.delete();
-	}
-
-	@Override
-	public void onResponse(JSONObject response) {
-		super.onResponse(response);
-		if(AgetacppApplication.getIntervention() != null && !AgetacppApplication.getIntervention().getMoyens().contains(this)){
-			AgetacppApplication.getIntervention().addMoyen(this);
-			AgetacppApplication.getIntervention().save();
-		}
-	}
-
-	@Override
-	public void onErrorResponse(VolleyError error) {
-		super.onErrorResponse(error);
+		AgetacppApplication.getIntervention().getMoyens().remove(this);
+		this.save();
 	}
 
 	@Override
@@ -250,16 +222,6 @@ public class Moyen extends Entity {
 	@Override
 	public void setId(String id) {
 		super.setId(id);
-	}
-
-	@Override
-	public String getRev() {
-		return super.getRev();
-	}
-
-	@Override
-	public void setRev(String rev) {
-		super.setRev(rev);
 	}
 
 	@Override

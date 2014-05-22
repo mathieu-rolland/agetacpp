@@ -10,6 +10,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.mapsDock.MapObserver;
+import com.istic.agetac.model.Environnement;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.TypeMoyen;
 import com.istic.sit.framework.adapter.EntityAdapter;
@@ -113,12 +115,12 @@ public class SitacFragment extends MainFragment {
 
 	@Override
 	public void onCreateSlideMenu() {
-		IEntity moyen = new Entity();
+		IEntity moyen = new Environnement();
 		moyen.setLibelle("[+] Moyens");
 		moyen.setId("#moyen");
 		moyen.setRepresentationOK(new Representation(R.drawable.ic_camion));
 		moyen.setRepresentationKO(new Representation(R.drawable.ic_camion));
-		IEntity environment = new Entity();
+		IEntity environment = new Environnement();
 		environment.setLibelle("[+] Environnement");
 		environment.setId("#environment");
 		environment
@@ -219,37 +221,37 @@ public class SitacFragment extends MainFragment {
 			clearItemEntityGridMenu();
 			if (typeEntity.getId().equals("#environment")) {
 				// Danger
-				IEntity danger_black = new Entity();
+				IEntity danger_black = new Environnement();
 				danger_black.setLibelle("Cheminements");
 				danger_black.setRepresentationOK(new Representation(
 						R.drawable.ic_danger_black));
 				danger_black.setRepresentationKO(new Representation(
 						R.drawable.ic_danger_black));
-				IEntity danger_blue = new Entity();
+				IEntity danger_blue = new Environnement();
 				danger_blue.setLibelle("Eau");
 				danger_blue.setRepresentationOK(new Representation(
 						R.drawable.ic_danger_blue));
 				danger_blue.setRepresentationKO(new Representation(
 						R.drawable.ic_danger_blue));
-				IEntity danger_green = new Entity();
+				IEntity danger_green = new Environnement();
 				danger_green.setLibelle("Personnes");
 				danger_green.setRepresentationOK(new Representation(
 						R.drawable.ic_danger_green));
 				danger_green.setRepresentationKO(new Representation(
 						R.drawable.ic_danger_green));
-				IEntity danger_orange = new Entity();
+				IEntity danger_orange = new Environnement();
 				danger_orange.setLibelle("Particuliers");
 				danger_orange.setRepresentationOK(new Representation(
 						R.drawable.ic_danger_orange));
 				danger_orange.setRepresentationKO(new Representation(
 						R.drawable.ic_danger_orange));
-				IEntity danger_purple = new Entity();
+				IEntity danger_purple = new Environnement();
 				danger_purple.setLibelle("Commandements");
 				danger_purple.setRepresentationOK(new Representation(
 						R.drawable.ic_danger_purple));
 				danger_purple.setRepresentationKO(new Representation(
 						R.drawable.ic_danger_purple));
-				IEntity danger_red = new Entity();
+				IEntity danger_red = new Environnement();
 				danger_red.setLibelle("Eau");
 				danger_red.setRepresentationOK(new Representation(
 						R.drawable.ic_danger_red));
@@ -264,37 +266,37 @@ public class SitacFragment extends MainFragment {
 				addItemEntityGridMenu(danger_red);
 
 				// Risk
-				IEntity risk_black = new Entity();
+				IEntity risk_black = new Environnement();
 				risk_black.setLibelle("Cheminements");
 				risk_black.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_black));
 				risk_black.setRepresentationKO(new Representation(
 						R.drawable.ic_risk_black));
-				IEntity risk_blue = new Entity();
+				IEntity risk_blue = new Environnement();
 				risk_blue.setLibelle("Eau");
 				risk_blue.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_blue));
 				risk_blue.setRepresentationKO(new Representation(
 						R.drawable.ic_risk_blue));
-				IEntity risk_green = new Entity();
+				IEntity risk_green = new Environnement();
 				risk_green.setLibelle("Personnes");
 				risk_green.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_green));
 				risk_green.setRepresentationKO(new Representation(
 						R.drawable.ic_risk_green));
-				IEntity risk_orange = new Entity();
+				IEntity risk_orange = new Environnement();
 				risk_orange.setLibelle("Particuliers");
 				risk_orange.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_orange));
 				risk_orange.setRepresentationKO(new Representation(
 						R.drawable.ic_risk_orange));
-				IEntity risk_purple = new Entity();
+				IEntity risk_purple = new Environnement();
 				risk_purple.setLibelle("Commandements");
 				risk_purple.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_purple));
 				risk_purple.setRepresentationKO(new Representation(
 						R.drawable.ic_risk_purple));
-				IEntity risk_red = new Entity();
+				IEntity risk_red = new Environnement();
 				risk_red.setLibelle("Eau");
 				risk_red.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_red));
@@ -308,7 +310,7 @@ public class SitacFragment extends MainFragment {
 				addItemEntityGridMenu(risk_purple);
 
 				// Water
-				IEntity water = new Entity();
+				IEntity water = new Environnement();
 				water.setLibelle("Point d'eau");
 				water.setRepresentationOK(new Representation(
 						R.drawable.ic_water));

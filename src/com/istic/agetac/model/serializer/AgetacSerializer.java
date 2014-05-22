@@ -14,7 +14,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
-import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
@@ -97,23 +96,4 @@ public class AgetacSerializer {
 		return json;
 	}
 	
-	public static JSONObject serializeUser(IUser user, boolean goInDeep) throws JSONException {
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		JSONObject json = new JSONObject(gson.toJson(user).toString());
-		// add users list to the JSON if goInDeep
-		if(goInDeep){
-			JSONArray interventions = new JSONArray();
-//			for(Intervention intervention : user.getInterventions()){
-//				interventions.put(serializeIntervention(intervention, false));
-//			}
-			json.accumulate("interventions", interventions);
-		}
-		// remove _rev in case of creation
-		if ( user.getRev() != null && user.getRev().isEmpty()) {
-			json.remove("_rev");
-		}
-		json.accumulate("type", JsonSerializer.getTypeHierarchy(user));
-		return json;
-	}
 }

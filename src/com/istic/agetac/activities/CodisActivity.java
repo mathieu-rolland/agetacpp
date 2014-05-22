@@ -1,5 +1,6 @@
 package com.istic.agetac.activities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,7 +63,13 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
         
         mListIntervention.setOnItemClickListener(this);
         
-        Codis codis =  (Codis)(AgetacppApplication.getUser());
+        Codis codis;
+        if(AgetacppApplication.getListIntervention().isEmpty()){
+        	codis =  (Codis)(AgetacppApplication.getUser());
+        }
+        else{
+        	codis = AgetacppApplication.getListIntervention().get(0).getCodis();
+        }
        
         mAdapter.addAll(codis.getInterventions());
 		mAdapter.notifyDataSetChanged();
@@ -82,13 +89,13 @@ public class CodisActivity extends FragmentActivity implements OnItemClickListen
 		{
 			mAdapter = new InterventionAdapter(getApplicationContext());
 		}
-		mAdapter.addAll(((Codis)AgetacppApplication.getUser()).getInterventions());
+			mAdapter.addAll(AgetacppApplication.getListIntervention());
 	};
 	
 	 @Override
      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intervention intervention =  (Intervention) mListIntervention.getItemAtPosition(position);
-     	AgetacppApplication.setCurrentInterventionCodis(intervention);
+     	AgetacppApplication.setIntervention(intervention);
 		ContainerActivity.launchActivity(MODE.CODIS, this);
      }
 	

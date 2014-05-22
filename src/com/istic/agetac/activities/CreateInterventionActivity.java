@@ -2,7 +2,6 @@ package com.istic.agetac.activities;
 
 import java.util.List;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +18,7 @@ import android.widget.Toast;
 
 import com.istic.agetac.R;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controler.adapter.AMoyenListAdapter;
-import com.istic.agetac.controler.adapter.MoyenListCodisAdapter;
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
-import com.istic.agetac.fragments.MessageFragment;
 import com.istic.agetac.fragments.TableauMoyenFragment;
 import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervention;

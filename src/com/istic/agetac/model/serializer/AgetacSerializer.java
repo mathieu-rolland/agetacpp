@@ -38,11 +38,7 @@ public class AgetacSerializer {
 
 		@Override
 		public IIntervention deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-			GsonBuilder builder = new GsonBuilder();
-			builder.registerTypeAdapter(IProperty.class, new JsonSerializer.IPropertyDeserializer());
-			builder.registerTypeAdapter(IRepresentation.class, new JsonSerializer.IRepresentationDeserializer());
-			builder.registerTypeAdapter(IPosition.class, new JsonSerializer.IPositionDeserializer());
-			Gson gson = builder.create();
+			Gson gson = JsonSerializer.getBuilder().create();
 			return gson.fromJson(json, Intervention.class);
 		}
 		
@@ -52,9 +48,7 @@ public class AgetacSerializer {
 
 		@Override
 		public IMessage deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-			GsonBuilder builder = new GsonBuilder();
-			builder.registerTypeHierarchyAdapter(IIntervention.class, new IInterventionDeserializer());
-			Gson gson = builder.create();
+			Gson gson = JsonSerializer.getBuilder().create();
 			return gson.fromJson(json, Message.class);
 		}
 		
@@ -64,9 +58,7 @@ public class AgetacSerializer {
 
 		@Override
 		public User deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-			GsonBuilder builder = new GsonBuilder();
-			builder.registerTypeHierarchyAdapter(IIntervention.class, new IInterventionDeserializer());
-			Gson gson = builder.create();
+			Gson gson = JsonSerializer.getBuilder().create();
 			if(json.getAsJsonObject().get("role").getAsString().equals("codis")){
 				return gson.fromJson(json, Codis.class);
 			}
@@ -77,8 +69,7 @@ public class AgetacSerializer {
 	}
 	
 	public static JSONObject serializeIntervention(IIntervention intervention, boolean goInDeep) throws JSONException {
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
+		Gson gson = JsonSerializer.getBuilder().create();
 		JSONObject json = new JSONObject(gson.toJson(intervention).toString());
 		// add users list to the JSON if goInDeep
 		if(goInDeep){

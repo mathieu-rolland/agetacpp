@@ -226,15 +226,11 @@ public class SitacFragment extends MainFragment {
 			if(typeEntity.getId().equals("#environment")){
 				Log.v("DEBUG_MAX", "DEBUG_MAX envi");
 				//Danger
-				listDataHeader.add("Danger");
+				listDataHeader.add("Sources de danger");
 				List<IEntity> danger = new ArrayList<IEntity>();
 
-				IEntity danger_black = new Entity();
-				danger_black.setLibelle("Cheminements");
-				danger_black.setRepresentationOK(new Representation(R.drawable.ic_danger_black));
-				danger_black.setRepresentationKO(new Representation(R.drawable.ic_danger_black));
 				IEntity danger_blue = new Entity();
-				danger_blue.setLibelle("Eau");
+				danger_blue.setLibelle("Ayant trait à l'eau");
 				danger_blue.setRepresentationOK(new Representation(R.drawable.ic_danger_blue));
 				danger_blue.setRepresentationKO(new Representation(R.drawable.ic_danger_blue));
 				IEntity danger_green = new Entity();
@@ -245,33 +241,23 @@ public class SitacFragment extends MainFragment {
 				danger_orange.setLibelle("Particuliers");
 				danger_orange.setRepresentationOK(new Representation(R.drawable.ic_danger_orange));
 				danger_orange.setRepresentationKO(new Representation(R.drawable.ic_danger_orange));
-				IEntity danger_purple = new Entity();
-				danger_purple.setLibelle("Commandements");
-				danger_purple.setRepresentationOK(new Representation(R.drawable.ic_danger_purple));
-				danger_purple.setRepresentationKO(new Representation(R.drawable.ic_danger_purple));
 				IEntity danger_red = new Entity();
-				danger_red.setLibelle("Eau");
+				danger_red.setLibelle("Incendie");
 				danger_red.setRepresentationOK(new Representation(R.drawable.ic_danger_red));
 				danger_red.setRepresentationKO(new Representation(R.drawable.ic_danger_red));
 
-				danger.add(danger_black);
 				danger.add(danger_blue);
 				danger.add(danger_green);
 				danger.add(danger_orange);
-				danger.add(danger_purple);
 				danger.add(danger_red);
 				listDataChild.put(listDataHeader.get(0), danger);
 
 				//Risk
-				listDataHeader.add("Risque");
+				listDataHeader.add("Points sensibles");
 				List<IEntity> risk = new ArrayList<IEntity>();
 
-				IEntity risk_black = new Entity();
-				risk_black.setLibelle("Cheminements");
-				risk_black.setRepresentationOK(new Representation(R.drawable.ic_risk_black));
-				risk_black.setRepresentationKO(new Representation(R.drawable.ic_risk_black));
 				IEntity risk_blue = new Entity();
-				risk_blue.setLibelle("Eau");
+				risk_blue.setLibelle("Ayant trait à l'eau");
 				risk_blue.setRepresentationOK(new Representation(R.drawable.ic_risk_blue));
 				risk_blue.setRepresentationKO(new Representation(R.drawable.ic_risk_blue));
 				IEntity risk_green = new Entity();
@@ -282,33 +268,38 @@ public class SitacFragment extends MainFragment {
 				risk_orange.setLibelle("Particuliers");
 				risk_orange.setRepresentationOK(new Representation(R.drawable.ic_risk_orange));
 				risk_orange.setRepresentationKO(new Representation(R.drawable.ic_risk_orange));
-				IEntity risk_purple = new Entity();
-				risk_purple.setLibelle("Commandements");
-				risk_purple.setRepresentationOK(new Representation(R.drawable.ic_risk_purple));
-				risk_purple.setRepresentationKO(new Representation(R.drawable.ic_risk_purple));
 				IEntity risk_red = new Entity();
-				risk_red.setLibelle("Eau");
+				risk_red.setLibelle("Incendie");
 				risk_red.setRepresentationOK(new Representation(R.drawable.ic_risk_red));
 				risk_red.setRepresentationKO(new Representation(R.drawable.ic_risk_red));
 
-				risk.add(risk_black);
 				risk.add(risk_blue);
 				risk.add(risk_green);
-				risk.add(risk_orange);	
-				risk.add(risk_purple);
+				risk.add(risk_orange);
+				risk.add(risk_red);
 				listDataChild.put(listDataHeader.get(1), risk);
 
 				//Water
-				listDataHeader.add("Eau");
+				listDataHeader.add("Prise d'eau");
 				List<IEntity> eau = new ArrayList<IEntity>();
 				IEntity water = new Entity();
-				water.setLibelle("Point d'eau");
+				water.setLibelle("Point d'eau pèrenne");
 				water.setRepresentationOK(new Representation(R.drawable.ic_water));
 				water.setRepresentationKO(new Representation(R.drawable.ic_water));
-				eau.add(risk_purple);
+				IEntity water2 = new Entity();
+				water2.setLibelle("Point d'eau non pèrenne");
+				water2.setRepresentationOK(new Representation(R.drawable.ic_water2));
+				water2.setRepresentationKO(new Representation(R.drawable.ic_water2));
+				IEntity water3 = new Entity();
+				water3.setLibelle("Point de ravitaillement");
+				water3.setRepresentationOK(new Representation(R.drawable.ic_water3));
+				water3.setRepresentationKO(new Representation(R.drawable.ic_water3));
+				eau.add(water);
+				eau.add(water2);
+				eau.add(water3);
 				listDataChild.put(listDataHeader.get(2), eau);
 
-				expMenuTitle.setText("Elements d'environnement a placer");
+				expMenuTitle.setText("Eléments d'environnement à placer");
 			}
 			else if(typeEntity.getId().equals("#moyen")){
 				listDataHeader.add("Vehicule");

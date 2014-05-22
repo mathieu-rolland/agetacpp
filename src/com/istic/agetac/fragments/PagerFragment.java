@@ -91,7 +91,7 @@ public class PagerFragment extends Fragment {
 				tabFragments.add(MessageFragment.newInstance());
 			} else if(modeStr.equals(MODE.INTERVENANT.toString())) {
 				titles = titlesIntervenant;
-				tabFragments.add(SitacFragment.newInstance());
+				tabFragments.add( SitacFragment.newInstance() );
 				tabFragments.add(TableauMoyenFragment.newInstance(false));
 				tabFragments.add(MessageFragment.newInstance());
 				tabFragments.add(DemandeDeMoyensFragment.newInstance());
@@ -159,5 +159,14 @@ public class PagerFragment extends Fragment {
 		public int getItemPosition(Object object) {
 			return PagerAdapter.POSITION_NONE;
 		}
+	}
+	
+	public void switchToTab( String title )
+	{
+		int index = -1;
+		//Recherche de i
+		for( int i = 0 ; i < titles.length && !titles[0].equals(title) ; i++, index=i );
+		
+		
 	}
 }

@@ -31,7 +31,6 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 	private String libelle;
 	private String color;
 	private List<Moyen> moyens;
-	private List<Groupe> groupes;
 	
 	public Secteur()
 	{
@@ -41,7 +40,6 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 		_id = "";
 		_rev = "";
 		moyens = new ArrayList<Moyen>();
-		groupes = new ArrayList<Groupe>();
 	}
 	
 	public Secteur(Parcel source) {
@@ -56,7 +54,6 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 			this.libelle = secteur.libelle;
 			this.color = secteur.color;
 			moyens = new ArrayList<Moyen>();
-			groupes = new ArrayList<Groupe>();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

@@ -3,9 +3,13 @@ package com.istic.agetac.fragments;
 import java.util.List;
 import java.util.Locale;
 
+import afzkl.development.colorpickerview.dialog.ColorPickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -30,227 +34,295 @@ import com.istic.agetac.controler.adapter.SecteurAdapter;
 import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerAddSecteur;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerDragSecteur;
-import com.istic.agetac.model.IMoyen;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 
-public class SectorFragment extends Fragment implements OnDragListener {
+public class SectorFragment extends Fragment implements OnDragListener
+{
 
-	public static Fragment newInstance() {
-		SectorFragment fragment = new SectorFragment();
-		return fragment;
-	}
+    public static Fragment newInstance()
+    {
+        SectorFragment fragment = new SectorFragment();
+        return fragment;
+    }
 
-	private Button createSector;
-	private Button cancelSector;
-	private Button placerCrm;
-	private ImageButton deleteSecteur;
+    private Button createSector;
 
-	private EditText libelleEdit;
-	private LinearLayout colorEdit;
+    private Button cancelSector;
 
-	private SecteurAdapter adapter;
-	private ListView secteurList;
+    private Button placerCrm;
 
-	private Secteur sll;
+    private ImageButton deleteSecteur;
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		View rootView = inflater.inflate(R.layout.fragment_create_sector, container, false);
+    private EditText libelleEdit;
 
-		createSector = ( Button ) rootView.findViewById(R.id.fragment_create_sector_validate);
-		cancelSector = ( Button ) rootView.findViewById(R.id.fragment_create_sector_cancel);
-		placerCrm = (Button) rootView.findViewById(R.id.fragment_create_sector_place_crm);
-		secteurList = (ListView) rootView.findViewById(R.id.fragment_create_sector_created);
-		deleteSecteur = (ImageButton) rootView.findViewById(R.id.fragment_create_sector_sector_delete);
+    private LinearLayout colorEdit;
 
-		adapter = new SecteurAdapter( getActivity(), AgetacppApplication.getIntervention().getSecteurs() );
-		secteurList.setAdapter(adapter);
+    private SecteurAdapter adapter;
 
-		libelleEdit = (EditText) rootView.findViewById(R.id.fragment_create_sector_libelle);
-		colorEdit = (LinearLayout) rootView.findViewById(R.id.fragment_create_sector_color_edit);
+    private ListView secteurList;
 
-		loadSecteurs();
+    private Secteur sll;
 
-		createSector.setOnClickListener(new ListenerAddSecteur(adapter, getActivity(), libelleEdit, colorEdit));
+    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
+    {
+        super.onCreate( savedInstanceState );
+        View rootView = inflater.inflate( R.layout.fragment_create_sector, container, false );
 
-		cancelSector.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				libelleEdit.setText("");
-				colorEdit.setBackgroundColor( Color.WHITE );
+        createSector = (Button) rootView.findViewById( R.id.fragment_create_sector_validate );
+        cancelSector = (Button) rootView.findViewById( R.id.fragment_create_sector_cancel );
+        placerCrm = (Button) rootView.findViewById( R.id.fragment_create_sector_place_crm );
+        secteurList = (ListView) rootView.findViewById( R.id.fragment_create_sector_created );
+        deleteSecteur = (ImageButton) rootView.findViewById( R.id.fragment_create_sector_sector_delete );
 
-				//Masquer le clavier :
-				InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
-						Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow( SectorFragment.this.libelleEdit.getWindowToken(), 0);
-			}
-		});
+        adapter = new SecteurAdapter( getActivity(), AgetacppApplication.getIntervention().getSecteurs() );
+        secteurList.setAdapter( adapter );
 
-		secteurList.setOnDragListener( this );
-		secteurList.setOnItemLongClickListener(new ListenerDragSecteur(adapter, getActivity()));
-		deleteSecteur.setOnDragListener(this);
+        libelleEdit = (EditText) rootView.findViewById( R.id.fragment_create_sector_libelle );
+        colorEdit = (LinearLayout) rootView.findViewById( R.id.fragment_create_sector_color_edit );
 
-		placerCrm.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				placerCrm();
-			}
-		});
-		
-		return rootView;
-	}
+        loadSecteurs();
 
-	private void loadSecteurs(){
-		SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
-		sdao.findAll();
-	}
+        createSector.setOnClickListener( new ListenerAddSecteur( adapter, getActivity(), libelleEdit, colorEdit ) );
 
-	//Récupération des secteurs :
-	private class OnSecteurReceived implements IViewReceiver<Secteur>
-	{
-		@Override
-		public void notifyResponseSuccess(List<Secteur> objects) {
-			if( objects != null ){
-				SectorFragment.this.adapter.addAll(objects);
-				if( adapter.isEmpty() ){
-					preconfigure();
-				}else{
-					findSecteurSll();
-				}
-			}
-			adapter.notifyDataSetChanged();
-		}
+        colorEdit.setOnClickListener( new OnClickListener()
+        {
+            @Override
+            public void onClick( View v )
+            {
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences( getActivity() );
+                int initialValue = prefs.getInt( "color_2", 0xFF000000 );
 
-		@Override
-		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getActivity(), "Erreur lors du chargement des secteurs"
-					, Toast.LENGTH_LONG).show();
-		}
-	}
+                final ColorPickerDialog colorDialog = new ColorPickerDialog( getActivity(), initialValue );
 
-	private void findSecteurSll() {
-		for( int i = 0 ; i < adapter.getCount() ; i++ ){
-			Secteur storedSecteur = (Secteur) adapter.getItem(i);
-			if( storedSecteur.getName().toUpperCase( Locale.FRENCH ).equals("SLL") ){
-				sll = storedSecteur;
-				return;
-			}
-		}
-		sll = new Secteur();
-		sll.setName("SLL");
-		sll.setColor("#CCCCCC");
-		sll.save();
-		adapter.addSecteur(sll);
-		adapter.notifyDataSetChanged();
-	}
+                colorDialog.setAlphaSliderVisible( true );
+                colorDialog.setTitle( "Choisir votre secteur" );
+                colorDialog.setButton( DialogInterface.BUTTON_POSITIVE, getString( android.R.string.ok ), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which )
+                    {
+                        int color = colorDialog.getColor();
 
-	private void preconfigure(){
-		Secteur secteur = new Secteur();
-		secteur.setName("INC");
-		secteur.setColor("#66CCFF");
-		secteur.save();
-		adapter.addSecteur(secteur);
+                        colorEdit.setBackgroundColor( color );
+                        // Save the value in our preferences.
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putInt( "color_2", colorDialog.getColor() );
+                        editor.commit();
+                    }
+                } );
 
-		secteur = new Secteur();
-		secteur.setName("SAP");
-		secteur.setColor("#FF1919");
-		secteur.save();
-		adapter.addSecteur(secteur);
+                colorDialog.setButton( DialogInterface.BUTTON_NEGATIVE, getString( android.R.string.cancel ), new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick( DialogInterface dialog, int which )
+                    {
+                        // Nothing to do here.
+                    }
+                } );
 
-		secteur = new Secteur();
-		secteur.setName("ALIM");
-		secteur.setColor("#0000FF");
-		secteur.save();
-		adapter.addSecteur(secteur);
+                colorDialog.show();
+            }
+        } );
 
-		sll = new Secteur();
-		sll.setName("SLL");
-		sll.setColor("#CCCCCC");
-		sll.save();
-		adapter.addSecteur(sll);
+        cancelSector.setOnClickListener( new OnClickListener()
+        {
+            @Override
+            public void onClick( View arg0 )
+            {
+                libelleEdit.setText( "" );
+                colorEdit.setBackgroundColor( Color.WHITE );
 
-		adapter.notifyDataSetChanged();
-	}
+                // Masquer le clavier :
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService( Context.INPUT_METHOD_SERVICE );
+                imm.hideSoftInputFromWindow( SectorFragment.this.libelleEdit.getWindowToken(), 0 );
+            }
+        } );
 
-	@Override
-	public boolean onDrag(View view, DragEvent event) {
+        secteurList.setOnDragListener( this );
+        secteurList.setOnItemLongClickListener( new ListenerDragSecteur( adapter, getActivity() ) );
+        deleteSecteur.setOnDragListener( this );
 
-		switch ( event.getAction() ) {
-		case DragEvent.ACTION_DRAG_STARTED:
-			return true;
-		case DragEvent.ACTION_DRAG_ENTERED:
-			if( view == deleteSecteur ){
-				view.setBackgroundColor( Color.RED );
-				view.setAlpha(60);
-			}
-			return true;
-		case DragEvent.ACTION_DRAG_LOCATION:
-			return true;
-		case DragEvent.ACTION_DRAG_EXITED:
-			if( view == deleteSecteur ){
-				view.setBackgroundColor( Color.WHITE );
-				view.setAlpha(100);
+        placerCrm.setOnClickListener( new OnClickListener()
+        {
+            @Override
+            public void onClick( View arg0 )
+            {
+                placerCrm();
+            }
+        } );
 
-			}
-			return true;
-		case DragEvent.ACTION_DROP:
-		{
-			
-			deleteSecteur.setBackgroundColor( Color.WHITE );
-			
-			Secteur dragged = (Secteur) event.getLocalState();
-			if( view.equals(deleteSecteur) ){
-				dragged.delete();
-				reafectMoyens(dragged);
-				return true;
-			}else{
-				return false;
-			}
-		}
-		case DragEvent.ACTION_DRAG_ENDED:
-		{
-			if( !event.getResult() && view == secteurList  ){
-				Secteur s = (Secteur) event.getLocalState();
-				adapter.addSecteur(s);
-				adapter.notifyDataSetChanged();
-				return true;
-			}
-			break;
-		}
-		default:
-			break;
-		}
-		return true;
-	}
+        return rootView;
+    }
 
-	private void reafectMoyens( ISecteur deletedSecteur ){
-		List<Moyen> moyens = deletedSecteur.getMoyens();
-		for( Moyen m : moyens ){
-			sll.addMoyen(m);
-		}
-	}
+    private void loadSecteurs()
+    {
+        SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
+        sdao.findAll();
+    }
 
-	public void placerCrm(){
-		Secteur crm = null;
-		
-		for( int i = 0 ; i < adapter.getCount() ; i++ )
-		{
-			Secteur storedSecteur = (Secteur) adapter.getItem(i);
-			if( storedSecteur.getName().toUpperCase(Locale.FRENCH).equals("CRM") )
-			{
-				crm = storedSecteur;
-				break;
-			}
-		}
-		
-		if( crm == null ){
-			Toast.makeText(getActivity(), "Le secteur CRM n'est pas définit"
-					, Toast.LENGTH_LONG).show();
-			return;
-		}
-		
-	}
-	
+    // Récupération des secteurs :
+    private class OnSecteurReceived implements IViewReceiver<Secteur>
+    {
+        @Override
+        public void notifyResponseSuccess( List<Secteur> objects )
+        {
+            if ( objects != null )
+            {
+                SectorFragment.this.adapter.addAll( objects );
+                if ( adapter.isEmpty() )
+                {
+                    preconfigure();
+                }
+                else
+                {
+                    findSecteurSll();
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void notifyResponseFail( VolleyError error )
+        {
+            Toast.makeText( getActivity(), "Erreur lors du chargement des secteurs", Toast.LENGTH_LONG ).show();
+        }
+    }
+
+    private void findSecteurSll()
+    {
+        for ( int i = 0; i < adapter.getCount(); i++ )
+        {
+            Secteur storedSecteur = (Secteur) adapter.getItem( i );
+            if ( storedSecteur.getName().toUpperCase( Locale.FRENCH ).equals( "SLL" ) )
+            {
+                sll = storedSecteur;
+                return;
+            }
+        }
+        sll = new Secteur();
+        sll.setName( "SLL" );
+        sll.setColor( "#CCCCCC" );
+        sll.save();
+        adapter.addSecteur( sll );
+        adapter.notifyDataSetChanged();
+    }
+
+    private void preconfigure()
+    {
+        Secteur secteur = new Secteur();
+        secteur.setName( "INC" );
+        secteur.setColor( "#66CCFF" );
+        secteur.save();
+        adapter.addSecteur( secteur );
+
+        secteur = new Secteur();
+        secteur.setName( "SAP" );
+        secteur.setColor( "#FF1919" );
+        secteur.save();
+        adapter.addSecteur( secteur );
+
+        secteur = new Secteur();
+        secteur.setName( "ALIM" );
+        secteur.setColor( "#0000FF" );
+        secteur.save();
+        adapter.addSecteur( secteur );
+
+        sll = new Secteur();
+        sll.setName( "SLL" );
+        sll.setColor( "#CCCCCC" );
+        sll.save();
+        adapter.addSecteur( sll );
+
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onDrag( View view, DragEvent event )
+    {
+
+        switch ( event.getAction() )
+        {
+        case DragEvent.ACTION_DRAG_STARTED:
+            return true;
+        case DragEvent.ACTION_DRAG_ENTERED:
+            if ( view == deleteSecteur )
+            {
+                view.setBackgroundColor( Color.RED );
+                view.setAlpha( 60 );
+            }
+            return true;
+        case DragEvent.ACTION_DRAG_LOCATION:
+            return true;
+        case DragEvent.ACTION_DRAG_EXITED:
+            if ( view == deleteSecteur )
+            {
+                view.setBackgroundColor( Color.WHITE );
+                view.setAlpha( 100 );
+
+            }
+            return true;
+        case DragEvent.ACTION_DROP: {
+
+            deleteSecteur.setBackgroundColor( Color.WHITE );
+
+            Secteur dragged = (Secteur) event.getLocalState();
+            if ( view.equals( deleteSecteur ) )
+            {
+                dragged.delete();
+                reafectMoyens( dragged );
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        case DragEvent.ACTION_DRAG_ENDED: {
+            if ( !event.getResult() && view == secteurList )
+            {
+                Secteur s = (Secteur) event.getLocalState();
+                adapter.addSecteur( s );
+                adapter.notifyDataSetChanged();
+                return true;
+            }
+            break;
+        }
+        default:
+            break;
+        }
+        return true;
+    }
+
+    private void reafectMoyens( ISecteur deletedSecteur )
+    {
+        List<Moyen> moyens = deletedSecteur.getMoyens();
+        for ( Moyen m : moyens )
+        {
+            sll.addMoyen( m );
+        }
+    }
+
+    public void placerCrm()
+    {
+        Secteur crm = null;
+
+        for ( int i = 0; i < adapter.getCount(); i++ )
+        {
+            Secteur storedSecteur = (Secteur) adapter.getItem( i );
+            if ( storedSecteur.getName().toUpperCase( Locale.FRENCH ).equals( "CRM" ) )
+            {
+                crm = storedSecteur;
+                break;
+            }
+        }
+
+        if ( crm == null )
+        {
+            Toast.makeText( getActivity(), "Le secteur CRM n'est pas définit", Toast.LENGTH_LONG ).show();
+            return;
+        }
+
+    }
+
 }

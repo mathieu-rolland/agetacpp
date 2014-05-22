@@ -43,6 +43,7 @@ public class SectorFragment extends Fragment implements OnDragListener {
 
 	private Button createSector;
 	private Button cancelSector;
+	private Button placerCrm;
 	private ImageButton deleteSecteur;
 
 	private EditText libelleEdit;
@@ -60,6 +61,7 @@ public class SectorFragment extends Fragment implements OnDragListener {
 
 		createSector = ( Button ) rootView.findViewById(R.id.fragment_create_sector_validate);
 		cancelSector = ( Button ) rootView.findViewById(R.id.fragment_create_sector_cancel);
+		placerCrm = (Button) rootView.findViewById(R.id.fragment_create_sector_place_crm);
 		secteurList = (ListView) rootView.findViewById(R.id.fragment_create_sector_created);
 		deleteSecteur = (ImageButton) rootView.findViewById(R.id.fragment_create_sector_sector_delete);
 
@@ -90,6 +92,13 @@ public class SectorFragment extends Fragment implements OnDragListener {
 		secteurList.setOnItemLongClickListener(new ListenerDragSecteur(adapter, getActivity()));
 		deleteSecteur.setOnDragListener(this);
 
+		placerCrm.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				placerCrm();
+			}
+		});
+		
 		return rootView;
 	}
 
@@ -223,4 +232,25 @@ public class SectorFragment extends Fragment implements OnDragListener {
 		}
 	}
 
+	public void placerCrm(){
+		Secteur crm = null;
+		
+		for( int i = 0 ; i < adapter.getCount() ; i++ )
+		{
+			Secteur storedSecteur = (Secteur) adapter.getItem(i);
+			if( storedSecteur.getName().toUpperCase(Locale.FRENCH).equals("CRM") )
+			{
+				crm = storedSecteur;
+				break;
+			}
+		}
+		
+		if( crm == null ){
+			Toast.makeText(getActivity(), "Le secteur CRM n'est pas définit"
+					, Toast.LENGTH_LONG).show();
+			return;
+		}
+		
+	}
+	
 }

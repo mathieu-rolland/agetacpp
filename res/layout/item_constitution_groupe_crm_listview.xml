@@ -17,7 +17,7 @@
         android:text="@string/general_empty_string"
         android:textSize="@dimen/text_size"
         android:textStyle="bold"
-        android:src="@drawable/fpt_1_sap"
+        android:src="@drawable/fpt_ok"
         android:contentDescription="@string/general_empty_string" />
 
     <TextView

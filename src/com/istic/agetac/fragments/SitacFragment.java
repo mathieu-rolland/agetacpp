@@ -311,33 +311,57 @@ public class SitacFragment extends MainFragment {
 				expMenuTitle.setText("Elements d'environnement a placer");
 			}
 			else if(typeEntity.getId().equals("#moyen")){
-				listDataHeader.add("FPT");
-				List<IEntity> fpt = new ArrayList<IEntity>();
-				Moyen fpt_alim = new Moyen(TypeMoyen.FPT_ALIM);
-				fpt_alim.setLibelle("FPT ALIM");
-				Moyen fpt_inc = new Moyen(TypeMoyen.FPT_INC);
-				fpt_inc.setLibelle("FPT INC");
-				Moyen fpt_sap = new Moyen(TypeMoyen.FPT_SAP);
-				fpt_sap.setLibelle("FPT SAP");
-				fpt.add(fpt_alim);
-				fpt.add(fpt_inc);
-				fpt.add(fpt_sap);
-				listDataChild.put(listDataHeader.get(0), fpt);
+				listDataHeader.add("Vehicule");
+				List<IEntity> vehicule = new ArrayList<IEntity>();
+				
+				Moyen fpt = new Moyen(TypeMoyen.FPT);
+				fpt.setLibelle("FPT");
 
-				listDataHeader.add("VSAV");
-				List<IEntity> vsav = new ArrayList<IEntity>();
-				Moyen vsav_alim = new Moyen(TypeMoyen.VSAV_ALIM);
-				vsav_alim.setLibelle("VSAV ALIM");
-				Moyen vsav_inc = new Moyen(TypeMoyen.VSAV_INC);
-				vsav_inc.setLibelle("VSAV INC");
-				Moyen vsav_sap = new Moyen(TypeMoyen.VSAV_SAP);
-				vsav_sap.setLibelle("VSAV SAP");
-				vsav.add(vsav_alim);
-				vsav.add(vsav_inc);
-				vsav.add(vsav_sap);
-				listDataChild.put(listDataHeader.get(1), vsav);
+				Moyen vsav = new Moyen(TypeMoyen.VSAV);
+				vsav.setLibelle("VSAV");
+
+				Moyen vsr = new Moyen(TypeMoyen.VSR);
+				vsr.setLibelle("VSR");
+
+				Moyen ccfm = new Moyen(TypeMoyen.CCFM);
+				ccfm.setLibelle("CCFM");
+
+				Moyen ccgc = new Moyen(TypeMoyen.CCGC);
+				ccgc.setLibelle("CCGC");
+
+				Moyen var = new Moyen(TypeMoyen.VAR);
+				var.setLibelle("VAR");
+				
+				Moyen vls = new Moyen(TypeMoyen.VLS);
+				vls.setLibelle("VLS");
+				
+				Moyen vlcc = new Moyen(TypeMoyen.VLCC);
+				vlcc.setLibelle("VLS");
+				
+				Moyen vlcg = new Moyen(TypeMoyen.VLCG);
+				vlcg.setLibelle("VLS");
+				
+				vehicule.add(fpt);
+				vehicule.add(vsav);
+				vehicule.add(vsr);
+				vehicule.add(ccfm);
+				vehicule.add(ccgc);
+				vehicule.add(var);
+				vehicule.add(vls);
+				vehicule.add(vlcc);
+				vehicule.add(vlcg);
+				listDataChild.put(listDataHeader.get(0), vehicule);
+
+				listDataHeader.add("GROUPE");
+				List<IEntity> groupe = new ArrayList<IEntity>();
+				Moyen temp = new Moyen(TypeMoyen.FPT);
+				temp.setLibelle("Groupe");
+				
+				groupe.add(temp);
+				listDataChild.put(listDataHeader.get(1), groupe);
 
 				expMenuTitle.setText("Moyen a engager");
+
 			}
 			currentX = event.getX();
 			currentY = event.getY();

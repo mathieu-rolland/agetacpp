@@ -112,23 +112,26 @@ public class Moyen extends Entity implements IMoyen {
 	public TypeMoyen getType() {
 
 		if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
-				.equals(TypeMoyen.VSAV_INC.toString())) {
-			return TypeMoyen.VSAV_INC;
+				.equals(TypeMoyen.VSAV.toString())) {
+			return TypeMoyen.VSAV;
 		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
-				.equals(TypeMoyen.FPT_ALIM.toString())) {
-			return TypeMoyen.FPT_ALIM;
+				.equals(TypeMoyen.FPT.toString())) {
+			return TypeMoyen.FPT;
 		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
-				.equals(TypeMoyen.FPT_INC.toString())) {
-			return TypeMoyen.FPT_INC;
+				.equals(TypeMoyen.CCFM.toString())) {
+			return TypeMoyen.CCGC;
 		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
-				.equals(TypeMoyen.FPT_SAP.toString())) {
-			return TypeMoyen.FPT_SAP;
+				.equals(TypeMoyen.VAR.toString())) {
+			return TypeMoyen.VAR;
 		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
-				.equals(TypeMoyen.VSAV_ALIM.toString())) {
-			return TypeMoyen.VSAV_ALIM;
+				.equals(TypeMoyen.VLCC.toString())) {
+			return TypeMoyen.VLCC;
 		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
-				.equals(TypeMoyen.VSAV_SAP.toString())) {
-			return TypeMoyen.VSAV_SAP;
+				.equals(TypeMoyen.VLS.toString())) {
+			return TypeMoyen.VLS;
+		} else if (super.getProperty(NAME_PROPERTY_TYPE).getValeur()
+				.equals(TypeMoyen.VSR.toString())) {
+			return TypeMoyen.VSR;
 		} else {
 			return null; // FIXME add throw WARNING  
 		}

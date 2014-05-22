@@ -26,37 +26,37 @@ public class CreationBase {
 
 	public static void createMoyen(){
 		// Moyen m1
-		Moyen m1 = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen m1 = new Moyen(TypeMoyen.VSAV);
 		CoordonateGPS pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 48.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
 		m1.setPosition(pos1);
 		m1.setLibelle("VSAV1");
-		m1.setRepresentationOK(new Representation(R.drawable.vsav));
+		m1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
 		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
 		
 		m1.save();
 		
-		m1 = new Moyen(TypeMoyen.VSAV_INC);
+		m1 = new Moyen(TypeMoyen.VSAV);
 		pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 49.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
 		m1.setPosition(pos1);
 		m1.setLibelle("VSAV2");
-		m1.setRepresentationOK(new Representation(R.drawable.vsav));
+		m1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
 		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
 		
 		m1.save();
 		
-		m1 = new Moyen(TypeMoyen.VSAV_INC);
+		m1 = new Moyen(TypeMoyen.VSAV);
 		pos1 = new CoordonateGPS();
 		pos1.set(AXIS.LAT, 50.11943311944856);
 		pos1.set(AXIS.LNG, -1.64665337651968);
 		m1.setPosition(pos1);
 		m1.setLibelle("VSAV3");
-		m1.setRepresentationOK(new Representation(R.drawable.vsav));
+		m1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
 		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
 		
@@ -218,10 +218,10 @@ public class CreationBase {
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
 		//moyens
-		Moyen mo1 = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen mo1 = new Moyen(TypeMoyen.VSAV);
 		mo1.setLibelle("VSAV 1");
-		mo1.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
-		mo1.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
+		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
+		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		
 		Property property1 = new Property();
 		property1.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
@@ -230,10 +230,10 @@ public class CreationBase {
 		
 		inter1.addMoyen(mo1);
 		
-		Moyen mo1bis = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen mo1bis = new Moyen(TypeMoyen.VSAV);
 		mo1bis.setLibelle("VSAV 3");
-		mo1bis.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
-		mo1bis.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
+		mo1bis.setRepresentationKO(new Representation(R.drawable.vsav_ko));
+		mo1bis.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		
 		Property property1Bis = new Property();
 		property1Bis.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
@@ -242,10 +242,10 @@ public class CreationBase {
 		
 		inter1.addMoyen(mo1bis);
 		
-		Moyen mo2 = new Moyen(TypeMoyen.VSAV_INC);
+		Moyen mo2 = new Moyen(TypeMoyen.VSAV);
 		mo2.setLibelle("VSAV 2");
-		mo2.setRepresentationKO(new Representation(R.drawable.vsav_inc_ko));
-		mo2.setRepresentationOK(new Representation(R.drawable.vsav_inc_ok));
+		mo2.setRepresentationKO(new Representation(R.drawable.vsav_ko));
+		mo2.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		
 		Property property2 = new Property();
 		property2.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);

@@ -96,37 +96,29 @@ public class TableauMoyenFragment extends Fragment
         mAdapterMoyens.notifyDataSetChanged();
 
         List<Moyen> moyens = new ArrayList<Moyen>();
-        Moyen m = new Moyen( TypeMoyen.VSAV_INC );
+        Moyen m = new Moyen( TypeMoyen.VSAV );
         m.setHDemande( new Date( 2014, 01, 01,10,00 ) );
-        m.setRepresentationOK( new Representation(R.drawable.fpt_1_sap) );
-        m.setRepresentationKO( new Representation(R.drawable.fpt_1_sap) );
         moyens.add(m);
-        Moyen m2 = new Moyen( TypeMoyen.VSAV_INC );
+        Moyen m2 = new Moyen( TypeMoyen.VSAV );
         m2.setHDemande( new Date( 2014, 02, 02,10,00 ) );
         m2.setHEngagement( new Date( 2014, 02, 02,10,30 ) );
         m2.setLibelle( "moyen2" );
-        m2.setRepresentationOK( new Representation(R.drawable.fpt_1_alim) );
-        m2.setRepresentationKO( new Representation(R.drawable.fpt_1_alim) );
         moyens.add(m2);
-        Moyen m3 = new Moyen( TypeMoyen.VSAV_INC );
+        Moyen m3 = new Moyen( TypeMoyen.VSAV );
         m3.setHDemande( new Date( 2014, 02, 02,14,00 ) );
         m3.setHEngagement( new Date( 2014, 02, 02,14,30 ) );
         m3.setLibelle( "moyen2" );
         m3.setSecteur( "CRM" );
         m3.setHArrival( new Date( 2014, 02, 02,15,00 ) );
-        m3.setRepresentationOK( new Representation(R.drawable.fpt_1_alim) );
-        m3.setRepresentationKO( new Representation(R.drawable.fpt_1_alim) );
         moyens.add(m3);
         
-        Moyen m4 = new Moyen( TypeMoyen.VSAV_INC );
+        Moyen m4 = new Moyen( TypeMoyen.VSAV );
         m4.setHDemande( new Date( 2014, 02, 02,14,00 ) );
         m4.setHEngagement( new Date( 2014, 02, 02,14,30 ) );
         m4.setLibelle( "moyen2" );
         m4.setSecteur( "SLL" );
         m4.setHArrival( new Date( 2014, 02, 02,15,00 ) );
         m4.setHFree( new Date() );
-        m4.setRepresentationOK( new Representation(R.drawable.ic_fpt_alim) );
-        m4.setRepresentationKO( new Representation(R.drawable.ic_fpt_1_alim) );
         moyens.add(m4);
         
         

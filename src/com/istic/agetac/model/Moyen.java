@@ -1,15 +1,19 @@
 package com.istic.agetac.model;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.json.JSONObject;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
-import android.text.format.Formatter;
 
 import com.android.volley.VolleyError;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IProperty;
@@ -28,17 +32,17 @@ public class Moyen extends Entity implements IMoyen {
 			"ddMM '-' hhmm"); // ("ddMM '-' hhmm");
 
 	/** Constante string which defines name of property of type of moyen */
-	public static final String NAME_PROPERTY_TYPE 				= "moyen_type";
+	public static final String NAME_PROPERTY_TYPE = "moyen_type";
 	/** Constante string which defines name of property of moyen demand hour */
-	public static final String NAME_PROPERTY_HOUR_DEMAND 		= "moyen_hour_demand";
+	public static final String NAME_PROPERTY_HOUR_DEMAND = "moyen_hour_demand";
 	/** Constante string which defines name of property of moyen engagement hour */
-	public static final String NAME_PROPERTY_HOUR_ENGAGEMENT 	= "moyen_hour_engagement";
+	public static final String NAME_PROPERTY_HOUR_ENGAGEMENT = "moyen_hour_engagement";
 	/** Constante string which defines name of property of moyen arrival hour */
-	public static final String NAME_PROPERTY_HOUR_ARRIVAL 		= "moyen_hour_arrival";
+	public static final String NAME_PROPERTY_HOUR_ARRIVAL = "moyen_hour_arrival";
 	/** Constante string which defines name of property of moyen free hour */
-	public static final String NAME_PROPERTY_HOUR_FREE 			= "moyen_hour_free";
+	public static final String NAME_PROPERTY_HOUR_FREE = "moyen_hour_free";
 	/** Constante string which defines name of property of moyen secteur hour */
-	public static final String NAME_PROPERTY_SECTEUR 			= "moyen_secteur";
+	public static final String NAME_PROPERTY_SECTEUR = "moyen_secteur";
 
 	/**
 	 * Constructeur de la classe Moyen
@@ -133,53 +137,43 @@ public class Moyen extends Entity implements IMoyen {
 				.equals(TypeMoyen.VSR.toString())) {
 			return TypeMoyen.VSR;
 		} else {
-			return null; // FIXME add throw WARNING  
+			return null; // FIXME add throw WARNING
 		}
 
-
-
-	} 
+	}
 
 	public Date getHDemande() {
-		try
-		{
-			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_DEMAND).getValeur());
-		}
-		catch ( Exception e )
-		{
+		try {
+			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_DEMAND)
+					.getValeur());
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	public Date getHArrival() {
-		try
-		{
-			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL).getValeur());
-		}
-		catch ( Exception e )
-		{
+		try {
+			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ARRIVAL)
+					.getValeur());
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	public Date getHEngagement() {
-		try
-		{
-			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_ENGAGEMENT).getValeur());
-		}
-		catch ( Exception e )
-		{
+		try {
+			return FORMATER.parse(super.getProperty(
+					NAME_PROPERTY_HOUR_ENGAGEMENT).getValeur());
+		} catch (Exception e) {
 			return null;
 		}
-	} 
+	}
 
 	public Date getHFree() {
-		try
-		{
-			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_FREE).getValeur());
-		}
-		catch ( Exception e )
-		{
+		try {
+			return FORMATER.parse(super.getProperty(NAME_PROPERTY_HOUR_FREE)
+					.getValeur());
+		} catch (Exception e) {
 			return null;
 		}
 	}
@@ -219,7 +213,30 @@ public class Moyen extends Entity implements IMoyen {
 	 * @return String : secteur of moyen
 	 */
 	public void setSecteur(String valeur) {
+		if (valeur == null || valeur.equals("SLL")) {
+			super.setColor(Color.WHITE);
+		} else if (valeur.equals("INC")) {
+			super.setColor(Color.RED);
+		} else if (valeur.equals("SAP")) {
+			super.setColor(Color.YELLOW);
+		} else if (valeur.equals("ALIM")) {
+			super.setColor(Color.GREEN);
+		} else if (valeur.equals("CRM")) {
+			super.setColor(Color.MAGENTA);
+		}else{
+			super.setColor(Color.WHITE);
+		}
 		super.getProperty(NAME_PROPERTY_SECTEUR).setValeur(valeur);
+	} // method
+	
+	/**
+	 * Method which return secteur of moyen
+	 * 
+	 * @return String : secteur of moyen
+	 */
+	public void setSecteur(Secteur secteur) {
+		super.setColor(Color.parseColor(secteur.getColor()));
+		super.getProperty(NAME_PROPERTY_SECTEUR).setValeur(secteur.getName());
 	} // method
 
 	public IProperty creatProperty(String name, String value) {
@@ -257,7 +274,9 @@ public class Moyen extends Entity implements IMoyen {
 	@Override
 	public void onResponse(JSONObject response) {
 		super.onResponse(response);
-		if(AgetacppApplication.getIntervention() != null && !AgetacppApplication.getIntervention().getMoyens().contains(this)){
+		if (AgetacppApplication.getIntervention() != null
+				&& !AgetacppApplication.getIntervention().getMoyens()
+						.contains(this)) {
 			AgetacppApplication.getIntervention().addMoyen(this);
 			AgetacppApplication.getIntervention().save();
 		}

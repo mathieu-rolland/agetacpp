@@ -147,6 +147,10 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
         	   property.setNom(Moyen.NAME_PROPERTY_HOUR_ARRIVAL);
         	   property.setValeur( Moyen.FORMATER.format(new Date()) );
         	   entity.addPropriete( property );
+        	   Property propertySector = new Property();
+        	   propertySector.setNom(Moyen.NAME_PROPERTY_SECTEUR);
+        	   propertySector.setValeur("SLL");
+        	   entity.addPropriete( propertySector );
         	   entity.setOk(true);
         	   entity.save();
         	   arrived.setVisibility(View.INVISIBLE);

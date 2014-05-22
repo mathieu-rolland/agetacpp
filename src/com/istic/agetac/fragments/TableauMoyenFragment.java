@@ -35,31 +35,29 @@ import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
-public class TableauMoyenFragment extends Fragment
-{
+public class TableauMoyenFragment extends Fragment {
 
-    public static TableauMoyenFragment newInstance( boolean isCreating )
-    {
-        TableauMoyenFragment fragment = new TableauMoyenFragment();
-        fragment.setmIsCreating( isCreating );
-        return fragment;
-    }
+	public static TableauMoyenFragment newInstance(boolean isCreating) {
+		TableauMoyenFragment fragment = new TableauMoyenFragment();
+		fragment.setmIsCreating(isCreating);
+		return fragment;
+	}
 
-    private List<IMoyen> mListMoyen;
+	private List<IMoyen> mListMoyen;
 
-    /* Instances des modï¿½les ï¿½ utiliser */
-    private MoyensDao mMoyen; // Modï¿½le Moyen
+	/* Instances des modï¿½les ï¿½ utiliser */
+	private MoyensDao mMoyen; // Modï¿½le Moyen
 
-    /* ï¿½lï¿½ments graphiques */
-    private ExpandableListView mListViewMoyen; // ListView des moyens
+	/* ï¿½lï¿½ments graphiques */
+	private ExpandableListView mListViewMoyen; // ListView des moyens
 
-    private AMoyenExpListAdapter mAdapterMoyens; // Adapter des moyens
+	private AMoyenExpListAdapter mAdapterMoyens; // Adapter des moyens
 
-    private TableauDesMoyensReceiver receiver;
+	private TableauDesMoyensReceiver receiver;
 
-    private boolean mIsCreating;
+	private boolean mIsCreating;
 
-    @Override
+	@Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
     {
         View view = inflater.inflate( R.layout.fragment_tableau_moyen, container, false );
@@ -112,7 +110,9 @@ public class TableauMoyenFragment extends Fragment
         m3.setHDemande( new Date( 2014, 02, 02, 14, 00 ) );
         m3.setHEngagement( new Date( 2014, 02, 02, 14, 30 ) );
         m3.setLibelle( "moyen2" );
-        m3.setSecteur( "CRM" );
+Secteur secteur3 = new Secteur();
+secteur3.setName("CRM");
+secteur3.setColor("#ffc0cb");
         m3.setHArrival( new Date( 2014, 02, 02, 15, 00 ) );
         m3.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
         m3.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
@@ -122,8 +122,11 @@ public class TableauMoyenFragment extends Fragment
         m4.setHDemande( new Date( 2014, 02, 02, 14, 00 ) );
         m4.setHEngagement( new Date( 2014, 02, 02, 14, 30 ) );
         m4.setLibelle( "moyen2" );
-        m4.setSecteur( "SLL" );
-        m4.setHArrival( new Date( 2014, 02, 02, 15, 00 ) );
+		Secteur secteur4 = new Secteur();
+		secteur4.setName("SLL");
+		secteur4.setColor("#ffc0cb");
+		m4.setSecteur(secteur4);
+        m4.setHArrival( new Date( 2014, 02, 02,15,00 ) );
         m4.setHFree( new Date() );
         m4.setRepresentationOK( new Representation( R.drawable.ic_fpt_alim ) );
         m4.setRepresentationKO( new Representation( R.drawable.ic_fpt_1_alim ) );
@@ -171,135 +174,125 @@ public class TableauMoyenFragment extends Fragment
         return view;
     }
 
-    /**
-     * @return the mMoyen
-     */
-    public MoyensDao getmMoyen()
-    {
-        return mMoyen;
-    }
+	/**
+	 * @return the mMoyen
+	 */
+	public MoyensDao getmMoyen() {
+		return mMoyen;
+	}
 
-    /**
-     * @param mMoyen
-     * the mMoyen to set
-     */
-    public void setmMoyen( MoyensDao mMoyen )
-    {
-        this.mMoyen = mMoyen;
-    }
+	/**
+	 * @param mMoyen
+	 *            the mMoyen to set
+	 */
+	public void setmMoyen(MoyensDao mMoyen) {
+		this.mMoyen = mMoyen;
+	}
 
-    public void updateTableauDesMoyen( List<Moyen> moyens )
-    {
-        // // TODO implï¿½menter la rï¿½ception de la synchro.
-        // Log.d( "Synch", " Recieve sync for tableau des moyens : " + moyens ==
-        // null ? "Moyen is null" : "Size : " + moyens.size() );
-        // List<Moyen> moyensWaiting = new ArrayList<Moyen>();
-        // for ( Moyen moyenServer : moyens )
-        // {
-        //
-        // boolean found = false;
-        // for ( Moyen localMoyen : mListMoyen )
-        // {
-        // if ( localMoyen.getId().equals( moyenServer.getId() ) )
-        // {
-        // found = true;
-        // localMoyen = moyenServer;
-        // break;
-        // }
-        // }
-        // if ( !found )
-        // {
-        // moyensWaiting.add( moyenServer );
-        // }
-        // }
-        // for ( Moyen moyen : moyensWaiting )
-        // {
-        // mListMoyen.add( moyen );
-        // }
-        // this.mAdapterMoyens.notifyDataSetChanged();
-    }
+	public void updateTableauDesMoyen(List<Moyen> moyens) {
+		// // TODO implï¿½menter la rï¿½ception de la synchro.
+		// Log.d( "Synch", " Recieve sync for tableau des moyens : " + moyens ==
+		// null ? "Moyen is null" : "Size : " + moyens.size() );
+		// List<Moyen> moyensWaiting = new ArrayList<Moyen>();
+		// for ( Moyen moyenServer : moyens )
+		// {
+		//
+		// boolean found = false;
+		// for ( Moyen localMoyen : mListMoyen )
+		// {
+		// if ( localMoyen.getId().equals( moyenServer.getId() ) )
+		// {
+		// found = true;
+		// localMoyen = moyenServer;
+		// break;
+		// }
+		// }
+		// if ( !found )
+		// {
+		// moyensWaiting.add( moyenServer );
+		// }
+		// }
+		// for ( Moyen moyen : moyensWaiting )
+		// {
+		// mListMoyen.add( moyen );
+		// }
+		// this.mAdapterMoyens.notifyDataSetChanged();
+	}
 
-    private void stopSynchronisation()
-    {
-        AlarmManager alarm = (AlarmManager) getActivity().getSystemService( Context.ALARM_SERVICE );
-        PendingIntent pi = receiver.getPendingIntent();
-        alarm.cancel( pi );
-    }
+	private void stopSynchronisation() {
+		AlarmManager alarm = (AlarmManager) getActivity().getSystemService(
+				Context.ALARM_SERVICE);
+		PendingIntent pi = receiver.getPendingIntent();
+		alarm.cancel(pi);
+	}
 
-    @Override
-    public void onStop()
-    {
-        stopSynchronisation();
-        super.onStop();
-    }
+	@Override
+	public void onStop() {
+		stopSynchronisation();
+		super.onStop();
+	}
 
-    @Override
-    public void onResume()
-    {
+	@Override
+	public void onResume() {
 
-        PoolSynchronisation pool = AgetacppApplication.getPoolSynchronisation();
+		PoolSynchronisation pool = AgetacppApplication.getPoolSynchronisation();
 
-        receiver = new TableauDesMoyensReceiver( this );
-        TableauDesMoyensSync sync = new TableauDesMoyensSync();
+		receiver = new TableauDesMoyensReceiver(this);
+		TableauDesMoyensSync sync = new TableauDesMoyensSync();
 
-        pool.registerServiceSync( TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER, sync, receiver );
-        super.onResume();
-    }
+		pool.registerServiceSync(TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER,
+				sync, receiver);
+		super.onResume();
+	}
 
-    public boolean ismIsCreating()
-    {
-        return mIsCreating;
-    }
+	public boolean ismIsCreating() {
+		return mIsCreating;
+	}
 
-    public void setmIsCreating( boolean mIsCreating )
-    {
-        this.mIsCreating = mIsCreating;
-    }
+	public void setmIsCreating(boolean mIsCreating) {
+		this.mIsCreating = mIsCreating;
+	}
 
-    public class MoyenRecuperator extends APersitantRecuperator<Moyen>
-    {
+	public class MoyenRecuperator extends APersitantRecuperator<Moyen> {
 
-        public MoyenRecuperator( String idIntervention )
-        {
-            super( Moyen.class, "agetacpp", "get_moyens_by_intervention", idIntervention );
-        }
+		public MoyenRecuperator(String idIntervention) {
+			super(Moyen.class, "agetacpp", "get_moyens_by_intervention",
+					idIntervention);
+		}
 
-        @Override
-        public void onErrorResponse( VolleyError error )
-        {
-            Toast.makeText( getActivity(), "Impossible de rÃ©cupÃ©rer les moyens", Toast.LENGTH_SHORT ).show();
-        }
+		@Override
+		public void onErrorResponse(VolleyError error) {
+			Toast.makeText(getActivity(),
+					"Impossible de rÃ©cupÃ©rer les moyens", Toast.LENGTH_SHORT)
+					.show();
+		}
 
-        @Override
-        public void onResponse( List<Moyen> moyens )
-        {
-            // mAdapterMoyens.addAll( moyens );
-            // Log.e( "Vincent", "Moyen recu de la bdd" );
-            // mAdapterMoyens.notifyDataSetChanged();
-            // mListViewMoyen.setAdapter( mAdapterMoyens );
-        }
-    }
+		@Override
+		public void onResponse(List<Moyen> moyens) {
+			// mAdapterMoyens.addAll( moyens );
+			// Log.e( "Vincent", "Moyen recu de la bdd" );
+			// mAdapterMoyens.notifyDataSetChanged();
+			// mListViewMoyen.setAdapter( mAdapterMoyens );
+		}
+	}
 
-    public class SectorRecuperator extends APersitantRecuperator<Secteur>
-    {
+	public class SectorRecuperator extends APersitantRecuperator<Secteur> {
 
-        public SectorRecuperator( String idIntervention )
-        {
-            super( Secteur.class );
-        }
+		public SectorRecuperator(String idIntervention) {
+			super(Secteur.class);
+		}
 
-        @Override
-        public void onErrorResponse( VolleyError error )
-        {
-            Toast.makeText( getActivity(), "Impossible de récupérer les moyens", Toast.LENGTH_SHORT ).show();
-        }
+		@Override
+		public void onErrorResponse(VolleyError error) {
+			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
+					Toast.LENGTH_SHORT).show();
+		}
 
-        @Override
-        public void onResponse( List<Secteur> secteurs )
-        {
-            mAdapterMoyens.setSectorAvailable( secteurs );
-            mAdapterMoyens.notifyDataSetChanged();
-        }
-    }
+		@Override
+		public void onResponse(List<Secteur> secteurs) {
+			mAdapterMoyens.setSectorAvailable(secteurs);
+			mAdapterMoyens.notifyDataSetChanged();
+		}
+	}
 
 }

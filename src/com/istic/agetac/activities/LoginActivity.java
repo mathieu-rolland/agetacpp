@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-//		CreationBase.createCleanBase();
+		//CreationBase.createCleanBase();
 		setContentView(R.layout.activity_login);
 		
 		// Set up the login form.

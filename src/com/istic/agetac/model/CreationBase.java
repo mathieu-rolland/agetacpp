@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -34,7 +35,10 @@ public class CreationBase {
 		m1.setLibelle("VSAV1");
 		m1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
-		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
+		Secteur secteur = new Secteur();
+		secteur.setName("INC");
+		secteur.setColor("#ff0000");
+		m1.setSecteur(secteur);
 		
 		m1.save();
 		
@@ -46,7 +50,10 @@ public class CreationBase {
 		m1.setLibelle("VSAV2");
 		m1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
-		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
+		Secteur secteur1 = new Secteur();
+		secteur1.setName("INC");
+		secteur1.setColor("#ff0000");
+		m1.setSecteur(secteur1);
 		
 		m1.save();
 		
@@ -58,7 +65,10 @@ public class CreationBase {
 		m1.setLibelle("VSAV3");
 		m1.setRepresentationOK(new Representation(R.drawable.vsav_ok));
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
-		m1.setSecteur("46eb1da52feeb90dc1211af7f4086800");
+		secteur1 = new Secteur();
+		secteur1.setName("INC");
+		secteur1.setColor("#ff0000");
+		m1.setSecteur(secteur1);
 		
 		m1.save();
 	}

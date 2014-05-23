@@ -1,6 +1,7 @@
 package com.istic.agetac.controler.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.view.View;
@@ -11,7 +12,7 @@ import com.istic.agetac.api.view.ItemView;
 
 public class ItemListAdapter<T> extends BaseAdapter {
 
-	private ArrayList<ItemView<T>> items;
+	private List<ItemView<T>> items;
 	private Context context;
 	
 	public ItemListAdapter( Context context ){
@@ -19,7 +20,12 @@ public class ItemListAdapter<T> extends BaseAdapter {
 		this.context = context;
 	}
 	
-	public ArrayList<ItemView<T>> getItems(){
+	public ItemListAdapter( Context context, List<ItemView<T>> items ){
+		this.items = items;
+		this.context = context;
+	}
+	
+	public List<ItemView<T>> getItems(){
 		return items;
 	}
 	

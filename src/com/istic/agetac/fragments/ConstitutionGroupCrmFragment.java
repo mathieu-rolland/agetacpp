@@ -145,7 +145,7 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 		@Override
 		public void onErrorResponse(VolleyError error) {
 			Log.e("Antho", "FAIL to get datas MOYEN - " + error.toString());
-			Log.e("Antho", error.getMessage());
+			Log.e("Antho", error.getMessage() == null ? "null" : error.getMessage() );
 			onMessageReveive("Impossible de récupérer les données MOYEN !");
 		}
 
@@ -168,7 +168,7 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 		@Override
 		public void onErrorResponse(VolleyError error) {
 			Log.e("Antho", "FAIL to get datas GROUPE - " + error.toString());
-			Log.e("Antho", error.getMessage());
+			Log.e("Antho", error.getMessage() == null ? "null" : error.getMessage() );
 			onMessageReveive("Impossible de récupérer les données GROUPE !");
 		}
 

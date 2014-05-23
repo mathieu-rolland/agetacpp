@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.istic.agetac.controler.adapter.SecteurAdapter;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Secteur;
 
 public class ListenerAddSecteur implements OnClickListener {
@@ -21,12 +22,19 @@ public class ListenerAddSecteur implements OnClickListener {
 	private EditText name;
 	private LinearLayout colorEdit;
 	
-	public ListenerAddSecteur( SecteurAdapter adapter, Context context, EditText name, LinearLayout colorEdit )
+	private Intervention intervention;
+	
+	public ListenerAddSecteur( SecteurAdapter adapter,
+								Context context,
+								EditText name,
+								LinearLayout colorEdit,
+								Intervention intervention)
 	{
 		this.adapter = adapter;
 		this.context = context;
 		this.name = name;
 		this.colorEdit = colorEdit;
+		this.intervention = intervention;
 	}
 	
 	@Override
@@ -48,7 +56,7 @@ public class ListenerAddSecteur implements OnClickListener {
 				return;
 			}
 		}
-		Secteur created = new Secteur();
+		Secteur created = new Secteur(intervention);
 		created.setName(label);
 		created.setColor(strColor);
 		adapter.addSecteur(created);

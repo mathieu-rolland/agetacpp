@@ -203,14 +203,15 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
             }
         }
 
+        List<IMoyen> moyenToAdd = new ArrayList<IMoyen>();
         for ( IMoyen moyen : mListMoyen ) // ajout des groupes
         {
             if ( !moyen.isGroup() && !areInAGroup.contains( moyen ) )
             {
-                mMoyens.add( 0, moyen );
+            	moyenToAdd.add( 0, moyen );
             }
         }
-
+        mMoyens.addAll(moyenToAdd);
     }
     
 }

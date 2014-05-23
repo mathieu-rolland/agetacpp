@@ -8,11 +8,14 @@ import java.util.UUID;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Parcel;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IGroupe;
 import com.istic.agetac.api.model.IMoyen;
+import com.istic.sit.framework.api.model.IPosition;
+import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;

@@ -61,6 +61,10 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 		}
 	}
 
+	public Secteur(Intervention intervention) {
+		this.intervention = intervention;
+	}
+
 	@Override
 	public void lock() {
 		lock = true;

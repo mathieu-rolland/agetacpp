@@ -66,7 +66,6 @@ public class TableauMoyenFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_tableau_moyen,
 				container, false);
 		intervention = AgetacppApplication.getIntervention();
-		//CreationBase.createSecteur();
 
 		mListViewMoyen = (ExpandableListView) view.findViewById(R.id.fragment_tableau_moyen_expandable_list);
 
@@ -80,7 +79,6 @@ public class TableauMoyenFragment extends Fragment {
 		
 		if(!mIsCreating)
 		{
-//			CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication.getIntervention().getId()));
 			Intervention intervention = AgetacppApplication.getIntervention();
 			mAdapterMoyens.addAll(intervention.getMoyens());
 			mListViewMoyen.setAdapter(mAdapterMoyens);
@@ -100,86 +98,88 @@ public class TableauMoyenFragment extends Fragment {
 			mAdapterMoyens.addAll(mListMoyen);
 		}
 
-        List<IMoyen> moyens = new ArrayList<IMoyen>();
-        Moyen m = new Moyen( TypeMoyen.VSAV  , intervention);
-        m.setHDemande( new Date( 2014, 01, 01, 10, 00 ) );
-        m.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
-        m.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
-        moyens.add( m );
-        Moyen m2 = new Moyen( TypeMoyen.VSAV  , intervention);
-        m2.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
-        m2.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
-        m2.setLibelle( "moyen2" );
-        m2.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
-        m2.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
-        moyens.add( m2 );
-        Moyen m3 = new Moyen( TypeMoyen.VSAV  , intervention);
-        m3.setHDemande( new Date( 2014, 02, 02, 14, 00 ) );
-        m3.setHEngagement( new Date( 2014, 02, 02, 14, 30 ) );
-        m3.setLibelle( "moyen2" );
-        
-		Secteur secteur3 = new Secteur();
-		secteur3.setName("CRM");
-		secteur3.setColor("#ffc0cb");
-        
-		m3.setHArrival( new Date( 2014, 02, 02, 15, 00 ) );
-        m3.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
-        m3.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
-        moyens.add( m3 );
-
-        Moyen m4 = new Moyen( TypeMoyen.VSAV  , intervention);
-        m4.setHDemande( new Date( 2014, 02, 02, 14, 00 ) );
-        m4.setHEngagement( new Date( 2014, 02, 02, 14, 30 ) );
-        m4.setLibelle( "moyen2" );
-		Secteur secteur4 = new Secteur();
-		secteur4.setName("SLL");
-		secteur4.setColor("#ffc0cb");
-		m4.setSecteur(secteur4);
-        m4.setHArrival( new Date( 2014, 02, 02,15,00 ) );
-        m4.setHFree( new Date() );
-        m4.setRepresentationOK( new Representation( R.drawable.ic_fpt_alim ) );
-        m4.setRepresentationKO( new Representation( R.drawable.ic_fpt_1_alim ) );
-        moyens.add( m4 );
-
-        Moyen m5 = new Moyen( TypeMoyen.VSAV  , intervention);
-        m5.setHDemande( new Date( 2014, 01, 01, 10, 00 ) );
-        m5.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
-        m5.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
-        moyens.add( m5 );
-
-        Moyen m6 = new Moyen( TypeMoyen.VSAV  , intervention);
-        m6.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
-        m6.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
-        m6.setLibelle( "moyen6" );
-        m6.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
-        m6.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
-        moyens.add( m6 );
-
-        Moyen m7 = new Moyen( TypeMoyen.VSAV  , intervention);
-        m7.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
-        m7.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
-        m7.setLibelle( "moyen7" );
-        m7.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
-        m7.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
-        moyens.add( m7 );
-
-        Groupe g = new Groupe( "Groupe 1" );
-        g.addMoyen( m );
-        g.addMoyen( m2 );
-
-        Groupe g2 = new Groupe( "Groupe 2" );
-        g2.addMoyen( m3 );
-        g2.addMoyen( m4 );
-
-        moyens.add( g );
-        moyens.add( g2 );
-
-        mAdapterMoyens.addAll( moyens );
+//        List<IMoyen> moyens = new ArrayList<IMoyen>();
+//        Moyen m = new Moyen( TypeMoyen.VSAV  , intervention);
+//        m.setHDemande( new Date( 2014, 01, 01, 10, 00 ) );
+//        m.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
+//        m.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
+//        moyens.add( m );
+//        Moyen m2 = new Moyen( TypeMoyen.VSAV  , intervention);
+//        m2.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
+//        m2.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
+//        m2.setLibelle( "moyen2" );
+//        m2.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
+//        m2.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
+//        moyens.add( m2 );
+//        Moyen m3 = new Moyen( TypeMoyen.VSAV  , intervention);
+//        m3.setHDemande( new Date( 2014, 02, 02, 14, 00 ) );
+//        m3.setHEngagement( new Date( 2014, 02, 02, 14, 30 ) );
+//        m3.setLibelle( "moyen2" );
+//        
+//		Secteur secteur3 = new Secteur(intervention);
+//		secteur3.setName("CRM");
+//		secteur3.setColor("#ffc0cb");
+//        
+//		m3.setHArrival( new Date( 2014, 02, 02, 15, 00 ) );
+//        m3.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
+//        m3.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
+//        moyens.add( m3 );
+//
+//        Moyen m4 = new Moyen( TypeMoyen.VSAV  , intervention);
+//        m4.setHDemande( new Date( 2014, 02, 02, 14, 00 ) );
+//        m4.setHEngagement( new Date( 2014, 02, 02, 14, 30 ) );
+//        m4.setLibelle( "moyen2" );
+//		Secteur secteur4 = new Secteur();
+//		secteur4.setName("SLL");
+//		secteur4.setColor("#ffc0cb");
+//		m4.setSecteur(secteur4);
+//        m4.setHArrival( new Date( 2014, 02, 02,15,00 ) );
+//        m4.setHFree( new Date() );
+//        m4.setRepresentationOK( new Representation( R.drawable.ic_fpt_alim ) );
+//        m4.setRepresentationKO( new Representation( R.drawable.ic_fpt_1_alim ) );
+//        moyens.add( m4 );
+//
+//        Moyen m5 = new Moyen( TypeMoyen.VSAV  , intervention);
+//        m5.setHDemande( new Date( 2014, 01, 01, 10, 00 ) );
+//        m5.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
+//        m5.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
+//        moyens.add( m5 );
+//
+//        Moyen m6 = new Moyen( TypeMoyen.VSAV  , intervention);
+//        m6.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
+//        m6.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
+//        m6.setLibelle( "moyen6" );
+//        m6.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
+//        m6.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
+//        moyens.add( m6 );
+//
+//        Moyen m7 = new Moyen( TypeMoyen.VSAV  , intervention);
+//        m7.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
+//        m7.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
+//        m7.setLibelle( "moyen7" );
+//        m7.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
+//        m7.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
+//        moyens.add( m7 );
+//
+//        Groupe g = new Groupe( "Groupe 1" );
+//        g.addMoyen( m );
+//        g.addMoyen( m2 );
+//
+//        Groupe g2 = new Groupe( "Groupe 2" );
+//        g2.addMoyen( m3 );
+//        g2.addMoyen( m4 );
+//
+//        moyens.add( g );
+//        moyens.add( g2 );
+//
+//        mAdapterMoyens.addAll( moyens );
+		
         mListViewMoyen.setAdapter( mAdapterMoyens );
         mAdapterMoyens.notifyDataSetChanged();
 
-        // CreationBase.createMoyen();
-
+        mAdapterMoyens.setSectorAvailable(intervention.getSecteurs());
+		mAdapterMoyens.notifyDataSetChanged();
+        
         return view;
     }
 
@@ -203,27 +203,6 @@ public class TableauMoyenFragment extends Fragment {
 			mAdapterMoyens.addAll(list);
 		}
 		
-	}
-
-	public class MoyenRecuperator extends APersitantRecuperator<IMoyen> {
-		
-		public MoyenRecuperator(String idIntervention) {
-			super(IMoyen.class, "agetacpp", "get_moyens_by_intervention", idIntervention);
-		}
-
-		@Override
-		public void onErrorResponse(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
-					Toast.LENGTH_SHORT).show();
-		}
-
-		@Override
-		public void onResponse(List<IMoyen> moyens) {
-			mAdapterMoyens.addAll(moyens);
-//			Log.e("Vincent", "Moyen recu de la bdd");
-			mAdapterMoyens.notifyDataSetChanged();
-			mListViewMoyen.setAdapter(mAdapterMoyens);
-		}
 	}
 
 	public void updateTableauDesMoyen(List<Moyen> moyens) {
@@ -290,23 +269,23 @@ public class TableauMoyenFragment extends Fragment {
 		this.mIsCreating = mIsCreating;
 	}
 
-	public class SectorRecuperator extends APersitantRecuperator<Secteur> {
-
-		public SectorRecuperator(String idIntervention) {
-			super(Secteur.class);
-		}
-
-		@Override
-		public void onErrorResponse(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
-					Toast.LENGTH_SHORT).show();
-		}
-
-		@Override
-		public void onResponse(List<Secteur> secteurs) {
-			mAdapterMoyens.setSectorAvailable(secteurs);
-			mAdapterMoyens.notifyDataSetChanged();
-		}
-	}
+//	public class SectorRecuperator extends APersitantRecuperator<Secteur> {
+//
+//		public SectorRecuperator(String idIntervention) {
+//			super(Secteur.class);
+//		}
+//
+//		@Override
+//		public void onErrorResponse(VolleyError error) {
+//			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
+//					Toast.LENGTH_SHORT).show();
+//		}
+//
+//		@Override
+//		public void onResponse(List<Secteur> secteurs) {
+//			mAdapterMoyens.setSectorAvailable(secteurs);
+//			mAdapterMoyens.notifyDataSetChanged();
+//		}
+//	}
 
 }

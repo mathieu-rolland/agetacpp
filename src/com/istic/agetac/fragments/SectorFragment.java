@@ -34,6 +34,7 @@ import com.istic.agetac.controler.adapter.SecteurAdapter;
 import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerAddSecteur;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerDragSecteur;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 
@@ -64,11 +65,15 @@ public class SectorFragment extends Fragment implements OnDragListener
 
     private Secteur sll;
 
+    private Intervention intervention;
+    
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
         View rootView = inflater.inflate( R.layout.fragment_create_sector, container, false );
-
+        
+        intervention = AgetacppApplication.getIntervention();
+        
         createSector = (Button) rootView.findViewById( R.id.fragment_create_sector_validate );
         cancelSector = (Button) rootView.findViewById( R.id.fragment_create_sector_cancel );
         placerCrm = (Button) rootView.findViewById( R.id.fragment_create_sector_place_crm );
@@ -83,7 +88,8 @@ public class SectorFragment extends Fragment implements OnDragListener
 
         loadSecteurs();
 
-        createSector.setOnClickListener( new ListenerAddSecteur( adapter, getActivity(), libelleEdit, colorEdit ) );
+        createSector.setOnClickListener( new ListenerAddSecteur( adapter, getActivity(), 
+        		libelleEdit, colorEdit, intervention ) );
 
         colorEdit.setOnClickListener( new OnClickListener()
         {
@@ -279,7 +285,7 @@ public class SectorFragment extends Fragment implements OnDragListener
             }
         }
         case DragEvent.ACTION_DRAG_ENDED: {
-            if ( !event.getResult() && view == secteurList )
+            if ( !event.getResult() && view == secteurList && event.getLocalState() instanceof Secteur )
             {
                 Secteur s = (Secteur) event.getLocalState();
                 adapter.addSecteur( s );

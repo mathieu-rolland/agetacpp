@@ -13,10 +13,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Message;
+import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.User;
 import com.istic.sit.framework.couch.JsonSerializer;
 
@@ -28,6 +30,7 @@ public class AgetacSerializer {
 		JsonSerializer.registerDeserializer(User.class, new UserDeserializer());
 		JsonSerializer.registerDeserializer(IMessage.class, new IMessageDeserializer());
 		JsonSerializer.registerDeserializer(IIntervention.class, new IInterventionDeserializer());
+		JsonSerializer.registerDeserializer(IMoyen.class, new IMoyenDeserializer());
 	}
 	
 	private static class IInterventionDeserializer implements JsonDeserializer<IIntervention> {
@@ -36,6 +39,15 @@ public class AgetacSerializer {
 		public IIntervention deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
 			Gson gson = JsonSerializer.getBuilder().create();
 			return gson.fromJson(json, Intervention.class);
+		}
+		
+	}
+	
+	private static class IMoyenDeserializer implements JsonDeserializer<IMoyen> {
+		@Override
+		public IMoyen deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
+			Gson gson = JsonSerializer.getBuilder().create();
+			return gson.fromJson(json, Moyen.class);
 		}
 		
 	}

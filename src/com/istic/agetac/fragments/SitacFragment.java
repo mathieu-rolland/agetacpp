@@ -31,6 +31,8 @@ import com.istic.agetac.model.Environnement;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.TypeMoyen;
+import com.istic.agetac.pattern.observer.Observer;
+import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.adapter.ExpandableListAdapter;
 import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.api.view.IBackground;
@@ -39,7 +41,7 @@ import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.view.MainFragment;
 import com.istic.sit.framework.view.MapFragment;
 
-public class SitacFragment extends MainFragment {
+public class SitacFragment extends MainFragment implements Observer {
 
 	public static SitacFragment newInstance() {
 		SitacFragment fragment = new SitacFragment();
@@ -54,15 +56,19 @@ public class SitacFragment extends MainFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		View v = super.onCreateView(inflater, container, savedInstanceState);
 
 		this.intervention = AgetacppApplication.getIntervention();
-		// DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/sitac/";
 		initializeBackground(TypeBackgroundEnum.Map, savedInstanceState);
 
 		listMoyens = intervention.getMoyens();
+		
 		MapFragment mapFragment = (MapFragment) super.getFragment();
+		
+		//register observer for map event :
+		mapFragment.setMapReadyObserver(this);
 		mapFragment.registerObserver(new MapObserver());
-
+		
 		Geocoder coder = new Geocoder(getActivity());
 		Log.d("ADDRESSES", intervention.getAdresse());
 		try {
@@ -77,14 +83,14 @@ public class SitacFragment extends MainFragment {
 		menuUpdate(listMoyens);
 
 		onClickExpandableListItemListener = new onClickExpandableListItemListener();
-
-		return super.onCreateView(inflater, container, savedInstanceState);
+		expListView.setOnChildClickListener(onClickExpandableListItemListener);
+		
+		return v;
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		loadEntities();
 		startServiceSynchronisation();
 	}
 
@@ -412,12 +418,11 @@ public class SitacFragment extends MainFragment {
 		return true;
 	}
 
-
-
 	public class onClickExpandableListItemListener implements OnChildClickListener {
 		@Override
 		public boolean onChildClick(ExpandableListView parent, View v,
 				int groupPosition, int childPosition, long id) {
+			Log.d("CLICK", "Click on child");
 			IEntity i = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
 			((IBackground) fragment).addEntity((Entity) i, currentX,
 					currentY);
@@ -446,5 +451,14 @@ public class SitacFragment extends MainFragment {
 		//		top250.add(danger_black);
 		//		
 		//		listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
+	}
+
+	@Override
+	public void update(Subject subject) {
+		List<Entity> entities = new ArrayList<Entity>();
+		for( IMoyen m :  intervention.getMoyens() ){
+			entities.add( (Entity) m);
+		}
+		loadEntities( entities );
 	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,27 +12,28 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.pattern.observer.Observer;
-import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.couch.DataBaseCommunication;
-import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class Intervention implements IIntervention, Subject {
+public class Intervention implements IIntervention {
 
 	private String _id;
 	private String _rev;
 	private String adresse;
 	private String nom;
 	private String codeSinistre;
-	private List<Moyen> moyens;
-	private transient List<Intervenant> intervenants;
-	private transient Codis codis;
+	private List<IMoyen> moyens;
 	private transient List<Observer> observers;
-	private transient List<IMessage> messages;
-	private List<Secteur> secteurs;
 	private List<Action> historique;
 	private OCT oct;
+	private List<Environnement> environnements;
+	private List<Intervenant> intervenants;
+	private Codis codis;
+	private List<IMessage> messages;
+	private List<Groupe> groupes;
+	private List<Secteur> secteurs;
 	
 	public Intervention(){
 		this._id = UUID.randomUUID().toString();
@@ -41,13 +41,14 @@ public class Intervention implements IIntervention, Subject {
 		this.adresse = "";
 		this.nom = "";
 		this.codeSinistre = "";
-		this.moyens = new ArrayList<Moyen>();
+		this.moyens = new ArrayList<IMoyen>();
+		this.environnements = new ArrayList<Environnement>();
 		this.intervenants = new ArrayList<Intervenant>();
-		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
 		this.historique = new ArrayList<Action>();
 		this.oct = new OCT();
+		this.groupes = new ArrayList<Groupe>();
 	}
 	
 	public OCT getOct() {
@@ -64,37 +65,39 @@ public class Intervention implements IIntervention, Subject {
 		this.adresse = adresse;
 		this.nom = nom;
 		this.codeSinistre = codeSinistre;
-		this.moyens = new ArrayList<Moyen>();
+		this.moyens = new ArrayList<IMoyen>();
+		this.environnements = new ArrayList<Environnement>();
 		this.intervenants = new ArrayList<Intervenant>();
-		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
-		this.secteurs = new ArrayList<Secteur>();
 		this.historique = new ArrayList<Action>();
+		this.groupes = new ArrayList<Groupe>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 	
-	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens){
+	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.adresse = adresse;
 		this.nom = nom;
 		this.codeSinistre = codeSinistre;
 		this.moyens = moyens;
+		this.environnements = new ArrayList<Environnement>();
 		this.intervenants = new ArrayList<Intervenant>();
-		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
 		this.historique = new ArrayList<Action>();
+		this.groupes = new ArrayList<Groupe>();
 	}
 	
-	public Intervention(String adresse, String nom, String codeSinistre, List<Moyen> moyens, List<Intervenant> users){
+	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.adresse = adresse;
 		this.nom = nom;
 		this.codeSinistre = codeSinistre;
 		this.moyens = moyens;
+		this.environnements = new ArrayList<Environnement>();
 		this.intervenants = users;
-		this.observers = new ArrayList<Observer>();
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
 		this.historique = new ArrayList<Action>();
@@ -106,6 +109,8 @@ public class Intervention implements IIntervention, Subject {
 
 	public void setHistorique(List<Action> historique) {
 		this.historique = historique;
+		this.groupes = new ArrayList<Groupe>();
+		this.secteurs = new ArrayList<Secteur>();
 	}
 
 	/**
@@ -160,7 +165,7 @@ public class Intervention implements IIntervention, Subject {
 	 * @return the moyens
 	 */
 	@Override
-	public List<Moyen> getMoyens() {
+	public List<IMoyen> getMoyens() {
 		return moyens;
 	}
 
@@ -168,94 +173,18 @@ public class Intervention implements IIntervention, Subject {
 	 * @param moyens the moyens to set
 	 */
 	@Override
-	public void setMoyens(List<Moyen> moyens) {
+	public void setMoyens(List<IMoyen> moyens) {
 		this.moyens = moyens;
 	}
 	
 	public void addMoyen(Moyen moyen) {
 		this.moyens.add(moyen);
 	}
-
-	/**
-	 * @return the users
-	 */
-	@Override
-	public void getIntervenants(final Observer o) {
-		DataBaseCommunication.sendGet(new IPersistant() {
-			
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				if(error.getMessage() != null) {
-					Log.e("Intervention", error.getMessage());
-				}
-				else{
-					Log.e("Intervention", error.toString());
-				};
-			}
-			
-			@Override
-			public void onResponse(JSONObject json) {
-				try {
-					JSONArray a = (JSONArray) json.get("rows");
-					for(int i=0; i<a.length(); i++){
-						JSONObject o = a.getJSONObject(i);
-						o = (JSONObject) o.get("value");
-						o.remove("type");
-						Intervention.this.intervenants.add((Intervenant) JsonSerializer.deserialize(Intervenant.class, o));
-					}
-					notifyObserver(o);
-				}
-				catch(JSONException e){
-					Log.e("Intervention", e.getMessage());
-				}
-			}
-			
-			@Override
-			public void update() {
-				
-			}
-			
-			@Override
-			public void setRev(String rev) {
-				
-			}
-			
-			@Override
-			public void setId(String id) {
-				
-			}
-			
-			@Override
-			public void save() {
-				
-			}
-			
-			@Override
-			public String getUrl(int method) {
-				return DataBaseCommunication.BASE_URL + "_design/agetacpp/_view/get_intervenants?key=\"" + Intervention.this._id + "\"";
-			}
-			
-			@Override
-			public String getRev() {
-				return null;
-			}
-			
-			@Override
-			public String getId() {
-				return null;
-			}
-			
-			@Override
-			public JSONObject getData() {
-				return null;
-			}
-			
-			@Override
-			public void delete() {
-				
-			}
-		});
-		
+	
+	public void addMoyens(List<Moyen> listMoyen) {
+		for (Moyen moyen : listMoyen) {
+			this.moyens.add(moyen);
+		}
 	}
 	
 	public List<Intervenant> getIntervenants(){
@@ -270,90 +199,22 @@ public class Intervention implements IIntervention, Subject {
 		this.intervenants = intervenants;
 	}
 	
+	@Override
+	public void addIntervenants(List<Intervenant> intervenants) {
+		this.intervenants.addAll(intervenants);
+	}
+	
+	@Override
+	public void addIntervenant(Intervenant intervenant) {
+		this.intervenants.add(intervenant);
+	}
+	
 	/**
 	 * @return the messages
 	 */
 	@Override
 	public List<IMessage> getMessages() {
 		return messages;
-	}
-	
-	@Override
-	public void getMessages(final Observer o){
-		DataBaseCommunication.sendGet(new IPersistant() {
-			
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				if(error.getMessage() != null) {
-					Log.e("Intervention", error.getMessage());
-				}
-				else{
-					Log.e("Intervention", error.toString());
-				};
-			}
-			
-			@Override
-			public void onResponse(JSONObject json) {
-				try {
-					JSONArray a = (JSONArray) json.get("rows");
-					for(int i=0; i<a.length(); i++){
-						JSONObject o = a.getJSONObject(i);
-						o = (JSONObject) o.get("value");
-						o.remove("type");
-						Intervention.this.messages.add((IMessage) JsonSerializer.deserialize(IMessage.class, o));
-					}
-					notifyObserver(o);
-				}
-				catch(JSONException e){
-					Log.e("Intervention", e.getMessage());
-				}
-			}
-			
-			@Override
-			public void update() {
-				
-			}
-			
-			@Override
-			public void setRev(String rev) {
-				
-			}
-			
-			@Override
-			public void setId(String id) {
-				
-			}
-			
-			@Override
-			public void save() {
-				
-			}
-			
-			@Override
-			public String getUrl(int method) {
-				return DataBaseCommunication.BASE_URL + "_design/agetacpp/_view/get_messages?key=\"" + Intervention.this._id + "\"";
-			}
-			
-			@Override
-			public String getRev() {
-				return null;
-			}
-			
-			@Override
-			public String getId() {
-				return null;
-			}
-			
-			@Override
-			public JSONObject getData() {
-				return null;
-			}
-			
-			@Override
-			public void delete() {
-				
-			}
-		});
 	}
 
 	/**
@@ -370,10 +231,10 @@ public class Intervention implements IIntervention, Subject {
 	}
 
 	@Override
-	public void addIntervenant(Intervenant intervenant) {
-		this.intervenants.add(intervenant);
+	public void addMessages(List<IMessage> messages) {
+		this.messages.addAll(messages);
 	}
-
+	
 	/**
 	 * @return the codis
 	 */
@@ -390,7 +251,7 @@ public class Intervention implements IIntervention, Subject {
 
 	@Override
 	public void onResponse(JSONObject json) {
-		Log.i("User - RESPONSE", json.toString());
+		Log.i("Intervention - RESPONSE", json.toString());
 		try {
 			if(_id.equals("")){
 				// the Intervention has just been created in database 
@@ -432,12 +293,7 @@ public class Intervention implements IIntervention, Subject {
 
 	@Override
 	public void save() {
-		if(this.getId().isEmpty()){
-			DataBaseCommunication.sendPost(this);
-		}
-		else{
-			DataBaseCommunication.sendPut(this);
-		}
+		DataBaseCommunication.sendPut(this);
 	}
 
 	@Override
@@ -471,32 +327,106 @@ public class Intervention implements IIntervention, Subject {
 	}
 
 	@Override
-	public void registerObserver(Observer observer) {
-		this.observers.add(observer);
+	public List<Environnement> getEnvironnements() {
+		return environnements;
 	}
 
 	@Override
-	public void unregisterObserver(Observer observer) {
-		this.observers.remove(observer);
+	public void setEnvironnements(List<Environnement> environnements) {
+		this.environnements = environnements;
 	}
 
 	@Override
-	public void notifyObserver(Observer observer) {
-		observer.update(this);
+	public void addEnvironnement(Environnement environnement) {
+		this.environnements.add(environnement);
 	}
 
 	@Override
-	public void notifyObservers() {
-		for(Observer observer : this.observers){
-			observer.update(this);
+	public void addEnvironnements(List<Environnement> environnements) {
+		this.environnements.addAll(environnements);
+	}
+	
+	public void updateDepandencies(){
+		
+		for(IMoyen moyen : moyens){
+			moyen.setIntervention(this);
 		}
+		
+		for(Environnement environnement : environnements){
+			environnement.setIntervention(this);
+		}
+		
+		for(Intervenant intervenant : intervenants){
+			intervenant.setIntervention(this);
+		}
+		
+		if( codis != null ) codis.setIntervention(this);
+		
+		for(IMessage message : messages ){
+			message.setIntervention(this);
+		}
+		
+		for(Groupe gr : groupes){
+			gr.setIntervention(this);
+		}
+		
+	}
+	
+	public String toString(){
+		String returned = "";
+		returned += "{\n \t_id : "+ this._id + ",\n";
+		returned += " \t_rev : "+ this._rev + ",\n";
+		returned += " \taddress : "+ this.adresse + ",\n";
+		returned += " \tcode sinistre : "+ this.codeSinistre + ",\n";
+		returned += " \tnom : "+ this.nom + ",\n";
+		returned += " \tCODIS : "+ this.codis == null ? "null" : codis.toString() + ",\n";
+		returned += " \tIntervents : [\n";
+			for( Intervenant intervenant : intervenants ){
+				returned += intervenant.toString() + ",\n";
+			}
+		returned += " \t],";
+		
+		return returned;
+	}
+	
+	public void delete( Environnement environnement ){
+		environnements.remove(environnement);
+		save();
+	}
+	
+	public void delete( Groupe groupe ){
+		groupes.remove(groupe);
+		save();
+	}
+	
+	public void delete( Message message ){
+		messages.remove(message);
+		save();
+	}
+	
+	public void delete( Moyen moyen ){
+		moyens.remove(moyen);
+		save();
+	}
+	
+	public void delete( Secteur secteur ){
+		this.secteurs.remove(secteur);
+		save();
+	}
+	
+	public void delete( TypeMoyen typeMoyen ){
+	}
+	
+	public void delete( UserAvailable user ){
+	}
+	
+
+	public List<Groupe> getGroupes() {
+		return groupes;
 	}
 
-	public void addMoyens(List<Moyen> listMoyen) {
-		Log.e("Vincent", "Ajout " + listMoyen.size() +" a l'intervention " + this.moyens.size());
-		for (Moyen moyen : listMoyen) {
-			this.moyens.add(moyen);
-		}
+	public void setGroupes(List<Groupe> groupes) {
+		this.groupes = groupes;
 	}
 
 	public List<Secteur> getSecteurs() {

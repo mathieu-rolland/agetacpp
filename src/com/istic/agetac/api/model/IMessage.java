@@ -3,8 +3,9 @@ package com.istic.agetac.api.model;
 import java.util.Date;
 
 import com.istic.agetac.pattern.observer.Subject;
+import com.istic.sit.framework.couch.ITaMere;
 
-public interface IMessage extends Subject{
+public interface IMessage extends ITaMere, Subject {
 
 	enum Message_part{
 		JE_SUIS, JE_VOIS, JE_PREVOIS, JE_FAIS, JE_DEMANDE
@@ -22,7 +23,6 @@ public interface IMessage extends Subject{
 	public void unlock();
 	public boolean isLock();
 	public void save();
-	public void update();
 	public boolean isComplet();
 	public void setDateEmission( Date date );
 	public Date getDateEmission();

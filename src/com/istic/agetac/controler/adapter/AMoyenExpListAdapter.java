@@ -1,6 +1,7 @@
 package com.istic.agetac.controler.adapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.model.Groupe;
-import com.istic.agetac.model.IMoyen;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
@@ -34,10 +35,10 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
 
     protected static String mWaitingText = "En attente";
 
-    public AMoyenExpListAdapter( Context context )
+    public AMoyenExpListAdapter( Context context, List<IMoyen> moyens )
     {
         this.mContext = context;
-        this.mMoyens = new ArrayList<IMoyen>();
+        this.mMoyens = moyens;
         mSector = new HashMap<String, Secteur>();
         mSectorString = new ArrayList<String>();
         mInflater = LayoutInflater.from( context );
@@ -211,5 +212,5 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
         }
 
     }
-
+    
 }

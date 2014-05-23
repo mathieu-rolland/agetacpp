@@ -8,16 +8,16 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controler.adapter.MoyenListExpIntervenantAdapter;
-import com.istic.agetac.model.Moyen;
 
 public class ListenerFree implements OnClickListener {
 	
 	/** Attributs */
-	private Moyen mItemMoyen; // Instance de l'item � traiter
+	private IMoyen mItemMoyen; // Instance de l'item � traiter
 	private MoyenListExpIntervenantAdapter mAdapterMoyen; // Instance de la vue d'o� est jou� le listener
 
-	public ListenerFree(Moyen item, MoyenListExpIntervenantAdapter adapter)
+	public ListenerFree(IMoyen item, MoyenListExpIntervenantAdapter adapter)
 	{		
 		this.mItemMoyen = item;
 		this.mAdapterMoyen = adapter;

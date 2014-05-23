@@ -1,6 +1,7 @@
 package com.istic.agetac.controler.adapter;
 
 import java.util.Date;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerFree;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerSpinner;
 import com.istic.agetac.model.Groupe;
@@ -23,9 +25,9 @@ import com.istic.agetac.widget.SpinnerWithTextInit;
 public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
 {
 
-    public MoyenListExpIntervenantAdapter( Context context )
+    public MoyenListExpIntervenantAdapter( Context context, List<IMoyen> moyens )
     {
-        super( context );
+        super( context, moyens );
     }
 
     @Override
@@ -50,7 +52,7 @@ public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
         }
     }
 
-    public void setFree( Moyen mItemMoyen, Date date )
+    public void setFree( IMoyen mItemMoyen, Date date )
     {
         mItemMoyen.setHFree( date );
         this.notifyDataSetChanged();

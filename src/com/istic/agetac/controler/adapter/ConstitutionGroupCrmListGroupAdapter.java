@@ -12,10 +12,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controllers.listeners.constitutionGroupCrm.ListenerCollapse;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
 import com.istic.agetac.model.Groupe;
-import com.istic.agetac.model.IMoyen;
 import com.istic.agetac.model.Moyen;
 
 /**

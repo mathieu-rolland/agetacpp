@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IGroupe;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
@@ -22,6 +23,7 @@ public class Groupe implements IGroupe, IMoyen {
 	private String _rev;
 	private String nom;
 	private List<Moyen> moyens;
+	private transient Intervention intervention;
 	
 	public Groupe(String nom){
 		this._id = UUID.randomUUID().toString();
@@ -78,18 +80,22 @@ public class Groupe implements IGroupe, IMoyen {
 			Log.e("Groupe", "_id ne doit pas être vide !");
 		}
 		else {
-			DataBaseCommunication.sendPut(this);
+//			DataBaseCommunication.sendPut(this);
+			if( !intervention.getGroupes().contains( this ) ) intervention.getGroupes().add(this);
+			intervention.save();
 		}
 	}
 
 	@Override
 	public void update() {
-		DataBaseCommunication.sendPut(this);
+//		DataBaseCommunication.sendPut(this);
+		intervention.update();
 	}
 
 	@Override
 	public void delete() {
-		DataBaseCommunication.sendDelete(this);
+//		DataBaseCommunication.sendDelete(this);
+		intervention.delete(this);
 	}
 
 	@Override
@@ -239,7 +245,14 @@ public class Groupe implements IGroupe, IMoyen {
 	@Override
 	public void setHFree(Date HourFree) {
 		// TODO Auto-generated method stub
+	}
 		
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 
 }

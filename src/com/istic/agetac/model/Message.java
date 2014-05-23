@@ -10,27 +10,22 @@ import org.json.JSONObject;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.pattern.observer.Observer;
-import com.istic.agetac.pattern.observer.Subject;
-import com.istic.sit.framework.couch.DataBaseCommunication;
-import com.istic.sit.framework.couch.IPersistant;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-public class Message implements IMessage, IPersistant, Parcelable, Subject {
+public class Message implements IMessage, Parcelable {
 
 	private String _id;
-	private String _rev;
-	private boolean lock;
+	private transient boolean lock;
 	private boolean validate;
 	private Date dateEmission;
 	private HashMap<Message_part, String> messages;
-	private Intervention intervention;
-	
+	private transient Intervention intervention;
 	private transient List<Observer> observers;
 	
 	public Message()
@@ -40,7 +35,6 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 		validate = false;
 		lock = false;
 		_id = "";
-		_rev = "";
 	}
 	
 	public Message( Intervention intervention )
@@ -51,7 +45,6 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 		validate = false;
 		lock = false;
 		_id = "";
-		_rev = "";
 	}
 	
 	public Message(Parcel source) {
@@ -60,9 +53,7 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 		try {
 			Message message = (Message) JsonSerializer.deserialize(Message.class, new JSONObject(serializedJson));
 			_id = "";
-			_rev = "";
 			this.setId( message.getId() );
-			this.setRev(message.getRev());
 			this.lock = message.lock;
 			this.messages = message.messages;
 			this.validate = message.validate;
@@ -101,17 +92,13 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 
 	@Override
 	public void save() {
-		if(this.getId().isEmpty()){
-			DataBaseCommunication.sendPost(this);
-		}
-		else{
-			DataBaseCommunication.sendPut(this);
-		}
+		if( !intervention.getMessages().contains(this) ) intervention.addMessage(this);
+		intervention.save();
 	}
-
+	
 	@Override
-	public void update() {
-		DataBaseCommunication.sendPut(this);
+	public void delete() {
+		intervention.delete(this);
 	}
 
 	public boolean isValidate() {
@@ -136,48 +123,6 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	}
 
 	@Override
-	public void onResponse(JSONObject json) {
-		try {
-			if( ((Boolean) json.get("ok")) == true ){
-				this._id = json.getString("id");
-				this._rev = json.getString("rev");
-				notifyObservers();
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-			notifyObservers();
-		}
-	}
-
-	@Override
-	public void onErrorResponse(VolleyError error) {
-		Log.e("Agetac++","[Failed : "+ 
-				(error.networkResponse == null ? "Unknown error" : 
-				"Error HTTP("+error.networkResponse.statusCode +")" ) 
-		+" ]");
-	}
-
-	@Override
-	public String getUrl(int method) {
-		return DataBaseCommunication.BASE_URL + _id;
-	}
-
-	@Override
-	public JSONObject getData() {
-		try {
-			return JsonSerializer.serialize(this);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public void delete() {
-		DataBaseCommunication.sendDelete(this);
-	}
-
-	@Override
 	public String getId() {
 		return _id;
 	}
@@ -188,28 +133,16 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	}
 
 	@Override
-	public String getRev() {
-		return _rev;
-	}
-
-	@Override
-	public void setRev(String rev) {
-		this._rev = rev;
-	}
-
-	@Override
 	public int describeContents() {
 		return 0;
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		try {
-			String message = JsonSerializer.serialize(this).toString();
-			dest.writeString(message);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		String message = gson.toJson(this).toString();
+		dest.writeString(message);
 	}
 
 	public static final Parcelable.Creator<Message> CREATOR = new Parcelable.Creator<Message>()
@@ -273,4 +206,6 @@ public class Message implements IMessage, IPersistant, Parcelable, Subject {
 	public void setIntervention(IIntervention intervention) {
 		this.intervention = (Intervention)intervention;
 	}
+
+	
 }

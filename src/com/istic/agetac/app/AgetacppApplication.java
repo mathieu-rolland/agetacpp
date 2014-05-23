@@ -1,9 +1,11 @@
 package com.istic.agetac.app;
 
+import java.util.List;
+
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.model.IUser.Role;
-import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
+import com.istic.agetac.model.UserAvailable;
 import com.istic.agetac.model.serializer.AgetacSerializer;
 import com.istic.sit.framework.application.FrameworkApplication;
 import com.istic.sit.framework.couch.DataBaseCommunication;
@@ -12,7 +14,10 @@ import com.istic.sit.framework.couch.JsonSerializer;
 public class AgetacppApplication extends FrameworkApplication {
 
 	private static IUser user;
-	private static Intervention currentInterventionCodis;
+	private static Intervention currentIntervention;
+	private static List<Intervention> listIntervention;
+	private static Role role;
+	private static UserAvailable userAvailable;
 	
 	@Override
 	public void onCreate() {
@@ -20,8 +25,7 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initSerializer();
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/comme_tu_veux/";
-		//CreationBase.createCleanBase();
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/test/";
 	}
 
 	/**
@@ -29,6 +33,14 @@ public class AgetacppApplication extends FrameworkApplication {
 	 */
 	public static IUser getUser() {
 		return user;
+	}
+
+	public static Role getRole(){
+		return role;
+	}
+
+	public static void setRole(Role role){
+		AgetacppApplication.role = role;
 	}
 
 	/**
@@ -39,17 +51,34 @@ public class AgetacppApplication extends FrameworkApplication {
 	}
 
 	public static Intervention getIntervention() {
-		if( user == null ) return null;
-		if( user.getRole() == Role.intervenant ){
-			return ((Intervenant)user).getIntervention();
-		}else{
-			return currentInterventionCodis;
-		}
+		return currentIntervention;
 	}
 
-	public static void setCurrentInterventionCodis(
-			Intervention currentInterventionCodis) {
-		AgetacppApplication.currentInterventionCodis = currentInterventionCodis;
+	public static void setIntervention(Intervention intervention) {
+		if( intervention != null ){
+			intervention.updateDepandencies();
+		}
+		AgetacppApplication.currentIntervention = intervention;
+	}
+
+	public static List<Intervention> getListIntervention() {
+		return listIntervention;
+	}
+
+	public static void setListIntervention(List<Intervention> interventions) {
+		if( interventions != null ){
+			for(Intervention intervention : interventions){
+				intervention.updateDepandencies();
+			}
+		}
+		listIntervention = interventions;
+	}
+	public static UserAvailable getUserAvailable(){
+		return userAvailable;
+	}
+	
+	public static void setUserPoubelle(UserAvailable userAvailable){
+		AgetacppApplication.userAvailable = userAvailable;  
 	}
 	
 }

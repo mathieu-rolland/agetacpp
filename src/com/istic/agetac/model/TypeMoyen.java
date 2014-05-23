@@ -33,7 +33,8 @@ public enum TypeMoyen {
 	private String mType;
 	private IRepresentation representationOK;
 	private IRepresentation representationKO;
-
+	private transient Intervention intervention;
+	
 	TypeMoyen(String type, IRepresentation representationOK,
 			IRepresentation representationKO) {
 		this.mType = type;
@@ -56,5 +57,13 @@ public enum TypeMoyen {
 
 	public IRepresentation getRepresentationKO() {
 		return this.representationKO;
+	}
+
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 }

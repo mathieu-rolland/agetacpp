@@ -112,9 +112,8 @@ public class CreateInterventionActivity extends FragmentActivity{
 		mInterventionCurrent.setNom( mName.getText().toString() );
 		Codis codis = (Codis)AgetacppApplication.getUser();
 		mInterventionCurrent.setCodis(codis);
-		codis.addIntervention(mInterventionCurrent);
+		AgetacppApplication.getListIntervention().add(mInterventionCurrent);
 		mInterventionCurrent.save();
-		codis.save();
 		
 		finish();
 	}

@@ -6,15 +6,10 @@ import java.util.Date;
 import org.json.JSONObject;
 
 import android.graphics.Color;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 
 import com.android.volley.VolleyError;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
@@ -44,13 +39,15 @@ public class Moyen extends Entity implements IMoyen {
 	/** Constante string which defines name of property of moyen secteur hour */
 	public static final String NAME_PROPERTY_SECTEUR = "moyen_secteur";
 
+	private transient Intervention intervention;
+	
 	/**
 	 * Constructeur de la classe Moyen
 	 * 
 	 * @param typeValue
 	 *            : Type of moyen
 	 */
-	public Moyen(TypeMoyen typeValue) {
+	public Moyen(TypeMoyen typeValue, Intervention intervention) {
 		super();
 		this.setRepresentationKO(typeValue.getRepresentationKO());
 		this.setRepresentationOK(typeValue.getRepresentationOK());
@@ -70,6 +67,7 @@ public class Moyen extends Entity implements IMoyen {
 		super.addPropriete(hArrivalProperty);
 		super.addPropriete(hFreeProperty);
 		super.addPropriete(secteurProperty);
+		this.intervention = intervention;
 	}
 
 	/**
@@ -247,44 +245,16 @@ public class Moyen extends Entity implements IMoyen {
 	}
 
 	@Override
-	public String getUrl(int method) {
-		return super.getUrl(method);
-	}
-
-	@Override
-	public JSONObject getData() {
-		return super.getData();
-	}
-
-	@Override
 	public void save() {
-		super.save();
-	}
-
-	@Override
-	public void update() {
-		super.update();
+		if( !intervention.getMoyens().contains(this) ){
+			intervention.addMoyen(this);
+		}
+		intervention.save();
 	}
 
 	@Override
 	public void delete() {
-		super.delete();
-	}
-
-	@Override
-	public void onResponse(JSONObject response) {
-		super.onResponse(response);
-		if (AgetacppApplication.getIntervention() != null
-				&& !AgetacppApplication.getIntervention().getMoyens()
-						.contains(this)) {
-			AgetacppApplication.getIntervention().addMoyen(this);
-			AgetacppApplication.getIntervention().save();
-		}
-	}
-
-	@Override
-	public void onErrorResponse(VolleyError error) {
-		super.onErrorResponse(error);
+		intervention.delete(this);
 	}
 
 	@Override
@@ -305,16 +275,6 @@ public class Moyen extends Entity implements IMoyen {
 	@Override
 	public void setId(String id) {
 		super.setId(id);
-	}
-
-	@Override
-	public String getRev() {
-		return super.getRev();
-	}
-
-	@Override
-	public void setRev(String rev) {
-		super.setRev(rev);
 	}
 
 	@Override
@@ -404,6 +364,14 @@ public class Moyen extends Entity implements IMoyen {
 	@Override
 	public boolean isGroup() {
 		return false;
+	}
+	
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 
 }

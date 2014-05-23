@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,13 +21,11 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.activities.CreateInterventionActivity;
 import com.istic.agetac.api.communication.IViewReceiver;
-import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenGridViewAdapter;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenListAdapter;
@@ -37,7 +34,7 @@ import com.istic.agetac.controllers.listeners.demandeDeMoyens.AddToList;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.AutoCompleteField;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.SpinnerVariation;
 import com.istic.agetac.filters.FilterInputNumber;
-import com.istic.agetac.model.CreationBase;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.saveInstanceState.DemandeMoyensSavedInstanceState;
@@ -45,7 +42,11 @@ import com.istic.agetac.view.item.DemandeDeMoyenItem;
 import com.istic.sit.framework.model.Representation;
 
 /**
+<<<<<<< HEAD
 * Classe DemandeDeMoyensFragment : affiche la fenétre de demande des moyens et permet de créer une liste de demandes de moyens
+=======
+* Classe DemandeDeMoyensFragment : affiche la fen�tre de demande des moyens et permet de cr�er une liste de demandes de moyens
+>>>>>>> remotes/origin/MDD
 * et de la soumettre ensuite.
 * 
 * @author Anthony LE MEE - 10003134
@@ -57,9 +58,6 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		DemandeDeMoyensFragment fragment = new DemandeDeMoyensFragment();
 		return fragment;
 	}
-	
-	/** Instances des modéles é utiliser */
-	private MoyensDao mMoyens;
 	
 	/** Instances des controlers é utiliser */
 	private AddToList 				cAddToList;					// Listener (Controler) sur le boutton d'ajout é la liste des moyens
@@ -83,6 +81,8 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	private TypeMoyen[]							namesOfAllMoyens;			// Liste des noms des moyens que l'on chargera dans la vue
 	private TypeMoyen[]							namesOfUsestMoyens;			// Liste (limitée au plus utilisés) des noms des moyens que l'on chargera dans la vue
 	private ArrayList<DemandeDeMoyenItem>		allMoyenAddedToList;   		// Liste des moyens ajoutés é la liste de demande de moyens
+
+	/** éléments de la vue */
 	private DemandeDeMoyenListAdapter 			adapterListToSend;			// Liste des moyens de la liste de demande de moyens
 	private TypeMoyen selectedTypeMoyen;
 	
@@ -90,8 +90,10 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	
 	private List<Moyen> mListMoyen;
 	
+	private Intervention intervention;
+	
 	/**
-	 * Méthode qui affiche un toast suite é la réception d'un message
+	 * Méthode qui affiche un toast suite à la réception d'un message
 	 * @param message
 	 */
 	public void onMessageReveive(String message) {
@@ -101,33 +103,29 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		}
 	}
 	
-	/** Méthode onCreate */
+	/** M�thode onCreate */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
 		
 	}
 	
-	/** Méthode onCreateView */
+	/** M�thode onCreateView */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
 	   	/** Chargement du layout */
 		View view = inflater.inflate(R.layout.fragment_demande_de_moyens, container, false);
+		intervention = AgetacppApplication.getIntervention();
 		
-		/** Instanciations des contrélers */
+		/** Instanciations des contr�lers */
 		this.cAddToList 		= new AddToList(this);
 		this.cQuantiteMoyens 	= new SpinnerVariation(this);
 		this.cAutresMoyens 		= new AutoCompleteField(this);
 		
 		/** Instanciations des modéles */
-		this.mMoyens 			= new MoyensDao(this);
 		this.mTypeMoyen = new ArrayList<TypeMoyen>();
 		this.mTypeMoyen.add(TypeMoyen.VSAV);
-		
-		/** Récupérations des données via les modéles */
-		this.mMoyens.findAll();
 		
 		/** Chargements des données dans les attributs correspondants */
 		this.namesOfAllMoyens 			= toArray(this.mTypeMoyen);
@@ -179,7 +177,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		    }
 		});
 		
-		// Ajout listener sur le boutton d'ajout à la liste des moyens
+		// Ajout listener sur le boutton d'ajout � la liste des moyens
 		buttonAddToList.setOnClickListener(this.cAddToList);
 		
 		// Ajout du filtre de domaine sur le champs numerique de quantite de moyens
@@ -200,8 +198,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	    /*
 	     * Remise en état suivant la sauvegarde
 	     */
-	    
-	    // Liste des moyens demandés : Si la sauvegarde a du contenu qui nous manque alors on le charge
+	    // Liste des moyens demand�s : Si la sauvegarde a du contenu qui nous manque alors on le charge
 	    if (this.allMoyenAddedToList.size() < sauvegarde.getDonneesMoyensAddedToList().size()) {
 	    	this.allMoyenAddedToList 	= sauvegarde.getDonneesMoyensAddedToList();
 	    	this.adapterListToSend 		= new DemandeDeMoyenListAdapter(this, android.R.layout.simple_dropdown_item_1line, this.allMoyenAddedToList);
@@ -221,13 +218,15 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	}
 	
 	private void send() {
-		if(AgetacppApplication.getUser().getRole()==Role.codis)
+		if(AgetacppApplication.getListIntervention() != null)
 		{
 			mListMoyen = new ArrayList<Moyen>();
-			Moyen m =new Moyen(TypeMoyen.VSAV);
+			Moyen m =new Moyen(TypeMoyen.VSAV, intervention);
+			m.setRepresentationOK(new Representation(R.drawable.fpt_sap));
 			m.setHDemande(new Date());
 			mListMoyen.add(m);
-			Moyen m2 =new Moyen(TypeMoyen.VSAV);
+			Moyen m2 =new Moyen(TypeMoyen.VSAV, intervention);
+			m2.setRepresentationOK(new Representation(R.drawable.fpt_sap));
 			m2.setHDemande(new Date(2014,01,01));
 			mListMoyen.add(m2);
 			CreateInterventionActivity activityParent = (CreateInterventionActivity)getActivity();
@@ -463,20 +462,6 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		this.adapterListToSend = adapterListToSend;
 	}
 
-	/**
-	 * @return the mMoyens
-	 */
-	public MoyensDao getmMoyens() {
-		return mMoyens;
-	}
-
-	/**
-	 * @param mMoyens the mMoyens to set
-	 */
-	public void setmMoyens(MoyensDao mMoyens) {
-		this.mMoyens = mMoyens;
-	}
-
 	/********************************************************************************************************/
     /** IViewReceiver methods
     /********************************************************************************************************/
@@ -493,8 +478,8 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	@Override
 	public void notifyResponseFail(VolleyError error) {
 		Log.e("Antho",  "FAIL to get datas MOYEN - " + error.toString());
-		Log.e("Antho", error.getMessage());
 		onMessageReveive("Impossible de récupérer les données MOYEN !");
+		Log.e("Antho", error.getMessage() == null ? "null" : error.getMessage() );
 	}
 
 	/**

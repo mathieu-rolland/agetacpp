@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,21 +18,20 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.api.model.IUser.Role;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.AMoyenExpListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpIntervenantAdapter;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.model.Groupe;
-import com.istic.agetac.model.IMoyen;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
 import com.istic.sit.framework.couch.APersitantRecuperator;
-import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
@@ -56,69 +56,78 @@ public class TableauMoyenFragment extends Fragment {
 	private TableauDesMoyensReceiver receiver;
 
 	private boolean mIsCreating;
-
+		
+	private Intervention intervention;
+	
 	@Override
-    public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
-    {
-        View view = inflater.inflate( R.layout.fragment_tableau_moyen, container, false );
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-        mListViewMoyen = (ExpandableListView) view.findViewById( R.id.fragment_tableau_moyen_expandable_list );
+		View view = inflater.inflate(R.layout.fragment_tableau_moyen,
+				container, false);
+		intervention = AgetacppApplication.getIntervention();
+		//CreationBase.createSecteur();
 
-        /* Rï¿½cupï¿½rations des donnï¿½es via les modï¿½les */
+		mListViewMoyen = (ExpandableListView) view.findViewById(R.id.fragment_tableau_moyen_expandable_list);
 
-        if ( !mIsCreating )
-        {
-            // CouchDBUtils.getFromCouch( new MoyenRecuperator(
-            // AgetacppApplication.getIntervention().getId() ) );
-            CouchDBUtils.getFromCouch( new SectorRecuperator( AgetacppApplication.getIntervention().getId() ) );
-        }
-
-        if ( AgetacppApplication.getUser().getRole() == Role.codis )
-        {
-            mAdapterMoyens = new MoyenListExpCodisAdapter( getActivity(), mIsCreating );
-        }
-        else
-        {
-            mAdapterMoyens = new MoyenListExpIntervenantAdapter( getActivity() );
-        }
-
-        mListViewMoyen.setAdapter( mAdapterMoyens );
-
-        if ( mListMoyen == null )
-        {
-            mListMoyen = new ArrayList<IMoyen>();
-        }
-        else
-        {
-            mAdapterMoyens.addAll( mListMoyen );
-        }
+		/* R�cup�rations des donn�es via les mod�les */
+		
+		if (AgetacppApplication.getListIntervention() != null) {
+			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity(),mIsCreating , intervention.getMoyens());
+		} else {
+			mAdapterMoyens = new MoyenListExpIntervenantAdapter(getActivity(),  intervention.getMoyens());
+		}
+		
+		if(!mIsCreating)
+		{
+//			CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication.getIntervention().getId()));
+			Intervention intervention = AgetacppApplication.getIntervention();
+			mAdapterMoyens.addAll(intervention.getMoyens());
+			mListViewMoyen.setAdapter(mAdapterMoyens);
+			mAdapterMoyens.notifyDataSetChanged();
+		}
+		
+		mAdapterMoyens.notifyDataSetChanged();
+		Log.e("Vincent", "Tableau des moyen set adapteur " + mAdapterMoyens.hashCode());
+		mListViewMoyen.setAdapter(mAdapterMoyens);
+		
+		if(mListMoyen==null)
+		{
+			mListMoyen = intervention.getMoyens();
+		}
+		else
+		{
+			mAdapterMoyens.addAll(mListMoyen);
+		}
 
         List<IMoyen> moyens = new ArrayList<IMoyen>();
-        Moyen m = new Moyen( TypeMoyen.VSAV );
+        Moyen m = new Moyen( TypeMoyen.VSAV  , intervention);
         m.setHDemande( new Date( 2014, 01, 01, 10, 00 ) );
         m.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
         m.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
         moyens.add( m );
-        Moyen m2 = new Moyen( TypeMoyen.VSAV );
+        Moyen m2 = new Moyen( TypeMoyen.VSAV  , intervention);
         m2.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
         m2.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
         m2.setLibelle( "moyen2" );
         m2.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
         m2.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
         moyens.add( m2 );
-        Moyen m3 = new Moyen( TypeMoyen.VSAV );
+        Moyen m3 = new Moyen( TypeMoyen.VSAV  , intervention);
         m3.setHDemande( new Date( 2014, 02, 02, 14, 00 ) );
         m3.setHEngagement( new Date( 2014, 02, 02, 14, 30 ) );
         m3.setLibelle( "moyen2" );
-Secteur secteur3 = new Secteur();
-secteur3.setName("CRM");
-secteur3.setColor("#ffc0cb");
-        m3.setHArrival( new Date( 2014, 02, 02, 15, 00 ) );
+        
+		Secteur secteur3 = new Secteur();
+		secteur3.setName("CRM");
+		secteur3.setColor("#ffc0cb");
+        
+		m3.setHArrival( new Date( 2014, 02, 02, 15, 00 ) );
         m3.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
         m3.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
         moyens.add( m3 );
 
-        Moyen m4 = new Moyen( TypeMoyen.VSAV );
+        Moyen m4 = new Moyen( TypeMoyen.VSAV  , intervention);
         m4.setHDemande( new Date( 2014, 02, 02, 14, 00 ) );
         m4.setHEngagement( new Date( 2014, 02, 02, 14, 30 ) );
         m4.setLibelle( "moyen2" );
@@ -132,13 +141,13 @@ secteur3.setColor("#ffc0cb");
         m4.setRepresentationKO( new Representation( R.drawable.ic_fpt_1_alim ) );
         moyens.add( m4 );
 
-        Moyen m5 = new Moyen( TypeMoyen.VSAV );
+        Moyen m5 = new Moyen( TypeMoyen.VSAV  , intervention);
         m5.setHDemande( new Date( 2014, 01, 01, 10, 00 ) );
         m5.setRepresentationOK( new Representation( R.drawable.fpt_ok ) );
         m5.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
         moyens.add( m5 );
 
-        Moyen m6 = new Moyen( TypeMoyen.VSAV );
+        Moyen m6 = new Moyen( TypeMoyen.VSAV  , intervention);
         m6.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
         m6.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
         m6.setLibelle( "moyen6" );
@@ -146,7 +155,7 @@ secteur3.setColor("#ffc0cb");
         m6.setRepresentationKO( new Representation( R.drawable.fpt_ko ) );
         moyens.add( m6 );
 
-        Moyen m7 = new Moyen( TypeMoyen.VSAV );
+        Moyen m7 = new Moyen( TypeMoyen.VSAV  , intervention);
         m7.setHDemande( new Date( 2014, 02, 02, 10, 00 ) );
         m7.setHEngagement( new Date( 2014, 02, 02, 10, 30 ) );
         m7.setLibelle( "moyen7" );
@@ -185,8 +194,36 @@ secteur3.setColor("#ffc0cb");
 	 * @param mMoyen
 	 *            the mMoyen to set
 	 */
-	public void setmMoyen(MoyensDao mMoyen) {
-		this.mMoyen = mMoyen;
+	public void AddAllMoyen(List<IMoyen> list)
+	{	
+		mListMoyen = list;
+		
+		if(mAdapterMoyens !=null)
+		{
+			mAdapterMoyens.addAll(list);
+		}
+		
+	}
+
+	public class MoyenRecuperator extends APersitantRecuperator<IMoyen> {
+		
+		public MoyenRecuperator(String idIntervention) {
+			super(IMoyen.class, "agetacpp", "get_moyens_by_intervention", idIntervention);
+		}
+
+		@Override
+		public void onErrorResponse(VolleyError error) {
+			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
+					Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onResponse(List<IMoyen> moyens) {
+			mAdapterMoyens.addAll(moyens);
+//			Log.e("Vincent", "Moyen recu de la bdd");
+			mAdapterMoyens.notifyDataSetChanged();
+			mListViewMoyen.setAdapter(mAdapterMoyens);
+		}
 	}
 
 	public void updateTableauDesMoyen(List<Moyen> moyens) {
@@ -251,29 +288,6 @@ secteur3.setColor("#ffc0cb");
 
 	public void setmIsCreating(boolean mIsCreating) {
 		this.mIsCreating = mIsCreating;
-	}
-
-	public class MoyenRecuperator extends APersitantRecuperator<Moyen> {
-
-		public MoyenRecuperator(String idIntervention) {
-			super(Moyen.class, "agetacpp", "get_moyens_by_intervention",
-					idIntervention);
-		}
-
-		@Override
-		public void onErrorResponse(VolleyError error) {
-			Toast.makeText(getActivity(),
-					"Impossible de rÃ©cupÃ©rer les moyens", Toast.LENGTH_SHORT)
-					.show();
-		}
-
-		@Override
-		public void onResponse(List<Moyen> moyens) {
-			// mAdapterMoyens.addAll( moyens );
-			// Log.e( "Vincent", "Moyen recu de la bdd" );
-			// mAdapterMoyens.notifyDataSetChanged();
-			// mListViewMoyen.setAdapter( mAdapterMoyens );
-		}
 	}
 
 	public class SectorRecuperator extends APersitantRecuperator<Secteur> {

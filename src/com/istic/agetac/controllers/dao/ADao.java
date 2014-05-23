@@ -6,14 +6,14 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.sit.framework.couch.APersitantRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
-import com.istic.sit.framework.couch.IPersistant;
+import com.istic.sit.framework.couch.ITaMere;
 
 /**
 * Classe Abstraite ADao
 * 
 * @author Anthony LE MEE - 10003134
 */
-public class ADao<T extends IPersistant> {
+public class ADao<T extends ITaMere> {
 
 	private IViewReceiver<T> iViewReceiver;
 	

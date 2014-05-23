@@ -21,13 +21,14 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.google.android.gms.maps.model.LatLng;
 import com.istic.agetac.R;
-import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.mapsDock.MapObserver;
+import com.istic.agetac.model.Environnement;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.TypeMoyen;
 import com.istic.sit.framework.adapter.ExpandableListAdapter;
@@ -45,47 +46,35 @@ public class SitacFragment extends MainFragment {
 		return fragment;
 	}
 
-	List<Moyen> listMoyens;
+	List<IMoyen> listMoyens;
 	MoyensDao menuMoyenUpdate;
 
+	private Intervention intervention;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
+		this.intervention = AgetacppApplication.getIntervention();
 		// DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/sitac/";
 		initializeBackground(TypeBackgroundEnum.Map, savedInstanceState);
 
-		listMoyens = new ArrayList<Moyen>();
+		listMoyens = intervention.getMoyens();
 		MapFragment mapFragment = (MapFragment) super.getFragment();
 		mapFragment.registerObserver(new MapObserver());
 
 		Geocoder coder = new Geocoder(getActivity());
-		Log.d("ADDRESSES", AgetacppApplication.getIntervention()
-				.getAdresse());
+		Log.d("ADDRESSES", intervention.getAdresse());
 		try {
 			ArrayList<Address> adresses = (ArrayList<Address>) coder
-					.getFromLocationName(AgetacppApplication.getIntervention()
-							.getAdresse(), 1);
-			mapFragment.INITPOSITION = new LatLng(adresses.get(0).getLatitude(), adresses.get(0)
+					.getFromLocationName(intervention.getAdresse(), 1);
+			MapFragment.INITPOSITION = new LatLng(adresses.get(0).getLatitude(), adresses.get(0)
 					.getLongitude());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		menuMoyenUpdate = new MoyensDao(new IViewReceiver<Moyen>() {
-
-			@Override
-			public void notifyResponseSuccess(List<Moyen> objects) {
-				listMoyens = objects;
-				menuUpdate(objects);
-			}
-
-			@Override
-			public void notifyResponseFail(VolleyError error) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		menuUpdate(listMoyens);
 
 		onClickExpandableListItemListener = new onClickExpandableListItemListener();
 
@@ -114,18 +103,19 @@ public class SitacFragment extends MainFragment {
 
 	@Override
 	public void onCreateSlideMenu() {
-		IEntity moyen = new Entity();
+		IEntity moyen = new Environnement( intervention );
 		moyen.setLibelle("[+] Moyens");
 		moyen.setId("#moyen");
 		moyen.setRepresentationOK(new Representation(R.drawable.ic_camion));
 		moyen.setRepresentationKO(new Representation(R.drawable.ic_camion));
-		IEntity environmentDynamique = new Entity();
+
+		IEntity environmentDynamique = new Environnement( intervention );
 		environmentDynamique.setLibelle("[+] Env. dynamique");
 		environmentDynamique.setId("#environmentDynamique");
 		environmentDynamique.setRepresentationOK(new Representation(R.drawable.ic_water));
 		environmentDynamique.setRepresentationKO(new Representation(R.drawable.ic_water));
 		
-		IEntity environmentStatique = new Entity();
+		IEntity environmentStatique = new Environnement( intervention );
 		environmentStatique.setLibelle("[+] Env. statique");
 		environmentStatique.setId("#environmentStatique");
 		environmentStatique.setRepresentationOK(new Representation(R.drawable.ic_water3));
@@ -135,42 +125,49 @@ public class SitacFragment extends MainFragment {
 		this.addItemMenuDefault(environmentDynamique);
 		this.addItemMenuDefault(environmentStatique);
 
-		new MoyensDao(new IViewReceiver<Moyen>() {
-
-			@Override
-			public void notifyResponseSuccess(List<Moyen> objects) {
-				listMoyens = objects;
-				for (IEntity moyenToadd : objects) {
-					addItemMenu(moyenToadd);
-				}
-			}
-
-			@Override
-			public void notifyResponseFail(VolleyError error) {
-				// TODO Auto-generated method stub
-
-			}
-		}).findAll();
+		Intervention intervention = AgetacppApplication.getIntervention();
+		listMoyens = intervention.getMoyens();
+		
+		for (IMoyen moyenToadd : listMoyens) {
+			addItemMenu(((Moyen)moyenToadd));
+		}
+		
+//		new MoyensDao(new IViewReceiver<Moyen>() {
+//
+//			@Override
+//			public void notifyResponseSuccess(List<Moyen> objects) {
+//				listMoyens = objects;
+//				for (IEntity moyenToadd : objects) {
+//					addItemMenu(moyenToadd);
+//				}
+//			}
+//
+//			@Override
+//			public void notifyResponseFail(VolleyError error) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//		}).findAll();
 	}
 
-	public void menuUpdate(List<Moyen> moyens) {
+	public void menuUpdate(List<IMoyen> moyens) {
 		boolean exist;
-		for (Moyen newMoyen : moyens) {
+		for (IMoyen newMoyen : moyens) {
 			exist = false;
 			for (int i = 0; i < itemsMenu.size(); i++) {
 				Entity oldentity = (Entity) itemsMenu.get(i);
-				if (newMoyen.getId().equals(oldentity.getId())) {
+				if (((Moyen) newMoyen).getId().equals(oldentity.getId())) {
 					exist = true;
 					// Mise a jour boolean
-					oldentity.setOk(newMoyen.isOk());
-					oldentity.setOnMap(newMoyen.isOnMap());
+					oldentity.setOk(((Moyen)newMoyen).isOk());
+					oldentity.setOnMap(((Moyen)newMoyen).isOnMap());
 
 					entityAdapter.notifyDataSetChanged();
 				}
 			}
 			if (!exist
 					&& (newMoyen.getHFree() == null)) {
-				addItemMenu(newMoyen);
+				addItemMenu((Moyen)newMoyen);
 			}
 		}
 	}
@@ -182,9 +179,9 @@ public class SitacFragment extends MainFragment {
 		if (!entity.isOnMap()) {
 			DragShadowBuilder entityShadow = new DragShadowBuilder(view);
 
-			view.startDrag(null, // ClipData
+			view.startDrag(null,  // ClipData
 					entityShadow, // View.DragShadowBuilder
-					entity, // Object myLocalState
+					entity,       // Object myLocalState
 					0);
 		}
 	}
@@ -227,19 +224,19 @@ public class SitacFragment extends MainFragment {
 				listDataHeader.add("Sources de danger");
 				List<IEntity> danger = new ArrayList<IEntity>();
 
-				IEntity danger_blue = new Entity();
+				IEntity danger_blue = new Environnement(intervention);
 				danger_blue.setLibelle("Ayant trait à l'eau");
 				danger_blue.setRepresentationOK(new Representation(R.drawable.ic_danger_blue));
 				danger_blue.setRepresentationKO(new Representation(R.drawable.ic_danger_blue));
-				IEntity danger_green = new Entity();
+				IEntity danger_green = new Environnement(intervention);
 				danger_green.setLibelle("Personnes");
 				danger_green.setRepresentationOK(new Representation(R.drawable.ic_danger_green));
 				danger_green.setRepresentationKO(new Representation(R.drawable.ic_danger_green));
-				IEntity danger_orange = new Entity();
+				IEntity danger_orange = new Environnement(intervention);
 				danger_orange.setLibelle("Particuliers");
 				danger_orange.setRepresentationOK(new Representation(R.drawable.ic_danger_orange));
 				danger_orange.setRepresentationKO(new Representation(R.drawable.ic_danger_orange));
-				IEntity danger_red = new Entity();
+				IEntity danger_red = new Environnement(intervention);
 				danger_red.setLibelle("Incendie");
 				danger_red.setRepresentationOK(new Representation(R.drawable.ic_danger_red));
 				danger_red.setRepresentationKO(new Representation(R.drawable.ic_danger_red));
@@ -254,19 +251,19 @@ public class SitacFragment extends MainFragment {
 				listDataHeader.add("Points sensibles");
 				List<IEntity> risk = new ArrayList<IEntity>();
 
-				IEntity risk_blue = new Entity();
+				IEntity risk_blue = new Environnement(intervention);
 				risk_blue.setLibelle("Ayant trait à l'eau");
 				risk_blue.setRepresentationOK(new Representation(R.drawable.ic_risk_blue));
 				risk_blue.setRepresentationKO(new Representation(R.drawable.ic_risk_blue));
-				IEntity risk_green = new Entity();
+				IEntity risk_green = new Environnement(intervention);
 				risk_green.setLibelle("Personnes");
 				risk_green.setRepresentationOK(new Representation(R.drawable.ic_risk_green));
 				risk_green.setRepresentationKO(new Representation(R.drawable.ic_risk_green));
-				IEntity risk_orange = new Entity();
+				IEntity risk_orange = new Environnement(intervention);
 				risk_orange.setLibelle("Particuliers");
 				risk_orange.setRepresentationOK(new Representation(R.drawable.ic_risk_orange));
 				risk_orange.setRepresentationKO(new Representation(R.drawable.ic_risk_orange));
-				IEntity risk_red = new Entity();
+				IEntity risk_red = new Environnement(intervention);
 				risk_red.setLibelle("Incendie");
 				risk_red.setRepresentationOK(new Representation(R.drawable.ic_risk_red));
 				risk_red.setRepresentationKO(new Representation(R.drawable.ic_risk_red));
@@ -280,15 +277,15 @@ public class SitacFragment extends MainFragment {
 				//Water
 				listDataHeader.add("Prise d'eau");
 				List<IEntity> eau = new ArrayList<IEntity>();
-				IEntity water = new Entity();
+				IEntity water = new Environnement(intervention);
 				water.setLibelle("Point d'eau pèrenne");
 				water.setRepresentationOK(new Representation(R.drawable.ic_water));
 				water.setRepresentationKO(new Representation(R.drawable.ic_water));
-				IEntity water2 = new Entity();
+				IEntity water2 = new Environnement(intervention);
 				water2.setLibelle("Point d'eau non pèrenne");
 				water2.setRepresentationOK(new Representation(R.drawable.ic_water2));
 				water2.setRepresentationKO(new Representation(R.drawable.ic_water2));
-				IEntity water3 = new Entity();
+				IEntity water3 = new Environnement(intervention);
 				water3.setLibelle("Point de ravitaillement");
 				water3.setRepresentationOK(new Representation(R.drawable.ic_water3));
 				water3.setRepresentationKO(new Representation(R.drawable.ic_water3));
@@ -304,19 +301,19 @@ public class SitacFragment extends MainFragment {
 				listDataHeader.add("Points sensibles");
 				List<IEntity> risk = new ArrayList<IEntity>();
 
-				IEntity risk_blue = new Entity();
+				IEntity risk_blue = new Environnement(intervention);
 				risk_blue.setLibelle("Ayant trait à l'eau");
 				risk_blue.setRepresentationOK(new Representation(R.drawable.ic_risk_blue));
 				risk_blue.setRepresentationKO(new Representation(R.drawable.ic_risk_blue));
-				IEntity risk_green = new Entity();
+				IEntity risk_green = new Environnement(intervention);
 				risk_green.setLibelle("Personnes");
 				risk_green.setRepresentationOK(new Representation(R.drawable.ic_risk_green));
 				risk_green.setRepresentationKO(new Representation(R.drawable.ic_risk_green));
-				IEntity risk_orange = new Entity();
+				IEntity risk_orange = new Environnement(intervention);
 				risk_orange.setLibelle("Particuliers");
 				risk_orange.setRepresentationOK(new Representation(R.drawable.ic_risk_orange));
 				risk_orange.setRepresentationKO(new Representation(R.drawable.ic_risk_orange));
-				IEntity risk_red = new Entity();
+				IEntity risk_red = new Environnement(intervention);
 				risk_red.setLibelle("Incendie");
 				risk_red.setRepresentationOK(new Representation(R.drawable.ic_risk_red));
 				risk_red.setRepresentationKO(new Representation(R.drawable.ic_risk_red));
@@ -330,15 +327,15 @@ public class SitacFragment extends MainFragment {
 				//Water
 				listDataHeader.add("Prise d'eau");
 				List<IEntity> eau = new ArrayList<IEntity>();
-				IEntity water = new Entity();
+				IEntity water = new Environnement(intervention);
 				water.setLibelle("Point d'eau pèrenne");
 				water.setRepresentationOK(new Representation(R.drawable.ic_water));
 				water.setRepresentationKO(new Representation(R.drawable.ic_water));
-				IEntity water2 = new Entity();
+				IEntity water2 = new Environnement(intervention);
 				water2.setLibelle("Point d'eau non pèrenne");
 				water2.setRepresentationOK(new Representation(R.drawable.ic_water2));
 				water2.setRepresentationKO(new Representation(R.drawable.ic_water2));
-				IEntity water3 = new Entity();
+				IEntity water3 = new Environnement(intervention);
 				water3.setLibelle("Point de ravitaillement");
 				water3.setRepresentationOK(new Representation(R.drawable.ic_water3));
 				water3.setRepresentationKO(new Representation(R.drawable.ic_water3));
@@ -353,31 +350,31 @@ public class SitacFragment extends MainFragment {
 				listDataHeader.add("Vehicule");
 				List<IEntity> vehicule = new ArrayList<IEntity>();
 				
-				Moyen fpt = new Moyen(TypeMoyen.FPT);
+				Moyen fpt = new Moyen(TypeMoyen.FPT, intervention);
 				fpt.setLibelle("FPT");
 
-				Moyen vsav = new Moyen(TypeMoyen.VSAV);
+				Moyen vsav = new Moyen(TypeMoyen.VSAV, intervention);
 				vsav.setLibelle("VSAV");
 
-				Moyen vsr = new Moyen(TypeMoyen.VSR);
+				Moyen vsr = new Moyen(TypeMoyen.VSR, intervention);
 				vsr.setLibelle("VSR");
 
-				Moyen ccfm = new Moyen(TypeMoyen.CCFM);
+				Moyen ccfm = new Moyen(TypeMoyen.CCFM, intervention);
 				ccfm.setLibelle("CCFM");
 
-				Moyen ccgc = new Moyen(TypeMoyen.CCGC);
+				Moyen ccgc = new Moyen(TypeMoyen.CCGC, intervention);
 				ccgc.setLibelle("CCGC");
 
-				Moyen var = new Moyen(TypeMoyen.VAR);
+				Moyen var = new Moyen(TypeMoyen.VAR, intervention);
 				var.setLibelle("VAR");
 				
-				Moyen vls = new Moyen(TypeMoyen.VLS);
+				Moyen vls = new Moyen(TypeMoyen.VLS, intervention);
 				vls.setLibelle("VLS");
 				
-				Moyen vlcc = new Moyen(TypeMoyen.VLCC);
+				Moyen vlcc = new Moyen(TypeMoyen.VLCC, intervention);
 				vlcc.setLibelle("VLS");
 				
-				Moyen vlcg = new Moyen(TypeMoyen.VLCG);
+				Moyen vlcg = new Moyen(TypeMoyen.VLCG, intervention);
 				vlcg.setLibelle("VLS");
 				
 				vehicule.add(fpt);
@@ -393,7 +390,7 @@ public class SitacFragment extends MainFragment {
 
 				listDataHeader.add("GROUPE");
 				List<IEntity> groupe = new ArrayList<IEntity>();
-				Moyen temp = new Moyen(TypeMoyen.FPT);
+				Moyen temp = new Moyen(TypeMoyen.FPT, intervention);
 				temp.setLibelle("Groupe");
 				
 				groupe.add(temp);
@@ -414,6 +411,7 @@ public class SitacFragment extends MainFragment {
 		expListView.setAdapter(expandableAdapter);
 		return true;
 	}
+
 
 
 	public class onClickExpandableListItemListener implements OnChildClickListener {

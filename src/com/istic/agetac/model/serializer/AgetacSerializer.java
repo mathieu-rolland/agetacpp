@@ -7,22 +7,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
-import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Message;
 import com.istic.agetac.model.User;
-import com.istic.sit.framework.api.model.IPosition;
-import com.istic.sit.framework.api.model.IProperty;
-import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.couch.JsonSerializer;
 
 
@@ -39,11 +34,7 @@ public class AgetacSerializer {
 
 		@Override
 		public IIntervention deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-			GsonBuilder builder = new GsonBuilder();
-			builder.registerTypeAdapter(IProperty.class, new JsonSerializer.IPropertyDeserializer());
-			builder.registerTypeAdapter(IRepresentation.class, new JsonSerializer.IRepresentationDeserializer());
-			builder.registerTypeAdapter(IPosition.class, new JsonSerializer.IPositionDeserializer());
-			Gson gson = builder.create();
+			Gson gson = JsonSerializer.getBuilder().create();
 			return gson.fromJson(json, Intervention.class);
 		}
 		
@@ -53,9 +44,7 @@ public class AgetacSerializer {
 
 		@Override
 		public IMessage deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-			GsonBuilder builder = new GsonBuilder();
-			builder.registerTypeHierarchyAdapter(IIntervention.class, new IInterventionDeserializer());
-			Gson gson = builder.create();
+			Gson gson = JsonSerializer.getBuilder().create();
 			return gson.fromJson(json, Message.class);
 		}
 		
@@ -65,9 +54,7 @@ public class AgetacSerializer {
 
 		@Override
 		public User deserialize(JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-			GsonBuilder builder = new GsonBuilder();
-			builder.registerTypeHierarchyAdapter(IIntervention.class, new IInterventionDeserializer());
-			Gson gson = builder.create();
+			Gson gson = JsonSerializer.getBuilder().create();
 			if(json.getAsJsonObject().get("role").getAsString().equals("codis")){
 				return gson.fromJson(json, Codis.class);
 			}
@@ -78,8 +65,7 @@ public class AgetacSerializer {
 	}
 	
 	public static JSONObject serializeIntervention(IIntervention intervention, boolean goInDeep) throws JSONException {
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
+		Gson gson = JsonSerializer.getBuilder().create();
 		JSONObject json = new JSONObject(gson.toJson(intervention).toString());
 		// add users list to the JSON if goInDeep
 		if(goInDeep){
@@ -97,23 +83,4 @@ public class AgetacSerializer {
 		return json;
 	}
 	
-	public static JSONObject serializeUser(IUser user, boolean goInDeep) throws JSONException {
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		JSONObject json = new JSONObject(gson.toJson(user).toString());
-		// add users list to the JSON if goInDeep
-		if(goInDeep){
-			JSONArray interventions = new JSONArray();
-//			for(Intervention intervention : user.getInterventions()){
-//				interventions.put(serializeIntervention(intervention, false));
-//			}
-			json.accumulate("interventions", interventions);
-		}
-		// remove _rev in case of creation
-		if ( user.getRev() != null && user.getRev().isEmpty()) {
-			json.remove("_rev");
-		}
-		json.accumulate("type", JsonSerializer.getTypeHierarchy(user));
-		return json;
-	}
 }

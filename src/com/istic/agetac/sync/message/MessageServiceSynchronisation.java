@@ -50,7 +50,7 @@ public class MessageServiceSynchronisation
 //		new MessageDAO(this).executeFindAll( Message.class );
 		Intervention intervention = AgetacppApplication.getIntervention();
 		if( intervention == null ) return; 
-		intervention.getMessages( this );
+		intervention.getMessages();
 	}
 
 	@Override

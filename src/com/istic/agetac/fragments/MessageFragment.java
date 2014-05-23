@@ -316,7 +316,7 @@ public class MessageFragment extends Fragment implements Observer {
 				}
 			}
 			if( !found ){
-				if( AgetacppApplication.getUser().getRole() == Role.codis ){
+				if( AgetacppApplication.getRole() == Role.codis ){
 					if( serverMsg.isValidate()) waitingMessage.add(serverMsg);
 				}else{
 					waitingMessage.add(serverMsg);

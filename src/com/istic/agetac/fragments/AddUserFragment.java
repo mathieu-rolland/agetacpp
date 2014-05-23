@@ -1,10 +1,7 @@
 package com.istic.agetac.fragments;
 
-import java.util.List;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,16 +10,15 @@ import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IUser.Role;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.UserAdapter;
-import com.istic.agetac.controllers.dao.ADao;
 import com.istic.agetac.controllers.listeners.users.ListenerUser;
 import com.istic.agetac.model.Intervenant;
 import com.istic.agetac.model.Intervention;
+import com.istic.agetac.model.User;
 
 import de.greenrobot.event.EventBus;
 
@@ -41,7 +37,6 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		Log.e("VINCENT", "LALALA");
 		View view = inflater.inflate(R.layout.fragment_add_user, container, false);
 
 		mListDispo = (ListView) view.findViewById(R.id.fragment_add_user_list_user_dispo);
@@ -49,15 +44,6 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 		mButton = (Button)view.findViewById(R.id.fragment_add_user_button_send);
 		
 		mIntervention = EventBus.getDefault().removeStickyEvent(Intervention.class);
-		
-//		mIntervention.getIntervenants(new Observer() {			
-//			@Override
-//			public void update(Subject subject) {
-//				Intervention intervention = (Intervention) subject;	
-//				Log.e("Vincent", intervention.getIntervenants().size()+"");
-//				mAdapterAdded.addAll(intervention.getIntervenants());			
-//			}
-//		});
 			
 		
 		mAdapterAdded = new UserAdapter(getActivity());
@@ -79,32 +65,13 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 				Send();
 			}
 		});
-				
-		ADao<Intervenant> intervenantdao = new ADao<Intervenant>(new IntervenantViewReceiver());
-		intervenantdao.executeFindAll(Intervenant.class);
-		
+		for(User u : AgetacppApplication.getUserAvailable().getUsers()){
+			if(u.getRole().equals(Role.intervenant)){
+				mAdapterDispo.add((Intervenant) u);
+			}
+		}
 		return view;
 	}	
-	
-	public class IntervenantViewReceiver implements IViewReceiver<Intervenant>
-	{
-		@Override
-		public void notifyResponseSuccess(List<Intervenant> intervenants) {
-			for (Intervenant intervenant : intervenants) {
-				if(intervenant.getIntervention()==null)
-				{
-					mAdapterDispo.add(intervenant);			
-				}
-			}
-			mAdapterDispo.notifyDataSetChanged();
-		}
-
-		@Override
-		public void notifyResponseFail(VolleyError error) {
-			Toast.makeText(getActivity(), "Impossible de charger les utilisateurs disponibles", Toast.LENGTH_SHORT).show();
-		}
-		
-	}
 	
 	public void Send()
 	{
@@ -112,16 +79,17 @@ public class AddUserFragment extends Fragment implements OnDragListener{
 		
 		for (Intervenant item : mAdapterAdded.getAll()) {
 			item.setIntervention(mIntervention);
-			item.save();
 			mIntervention.addIntervenant(item);
 		}
 		
+		AgetacppApplication.getUserAvailable().removeIntervenants();		
 		for (Intervenant item : mAdapterDispo.getAll()) {
 			item.setIntervention(null);
-			item.save();
+			AgetacppApplication.getUserAvailable().addUser(item);
 		}
 		
 		mIntervention.save();
+		AgetacppApplication.getUserAvailable().save();
 		
 		this.getActivity().finish();
 	}

@@ -55,7 +55,7 @@ public class MessageItem implements ItemView<IMessage> {
 		Button validateButton = (Button) view.findViewById(R.id.item_message_list_button_je_valide);
 		Button modifyButton = (Button) view.findViewById(R.id.item_message_list_button_message_modify);
 		
-		if( AgetacppApplication.getUser().getRole() == IUser.Role.intervenant ){
+		if( AgetacppApplication.getListIntervention() == null ){
 			validateButton.setOnClickListener(new OnValidateMessage(message));
 			modifyButton.setOnClickListener(new OnModifyMessage(message, activity));
 		}
@@ -87,7 +87,7 @@ public class MessageItem implements ItemView<IMessage> {
 
 	@Override
 	public int getLayout() {
-		if( AgetacppApplication.getUser().getRole() == IUser.Role.intervenant ){
+		if( AgetacppApplication.getListIntervention() == null ){
 			return R.layout.item_message_view;
 		}else{
 			return R.layout.item_message_view_cos;

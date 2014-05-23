@@ -3,8 +3,8 @@ package com.istic.agetac.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListGroupAdapter;
-import com.istic.agetac.model.IMoyen;
 
 /**
  * Sauvegarde des données de la liste des groupes constitués

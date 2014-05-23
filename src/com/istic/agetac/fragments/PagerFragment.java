@@ -91,7 +91,7 @@ public class PagerFragment extends Fragment {
 				tabFragments.add(MessageFragment.newInstance());
 			} else if(modeStr.equals(MODE.INTERVENANT.toString())) {
 				titles = titlesIntervenant;
-				tabFragments.add( SitacFragment.newInstance() );
+				tabFragments.add(SitacFragment.newInstance());
 				tabFragments.add(TableauMoyenFragment.newInstance(false));
 				tabFragments.add(MessageFragment.newInstance());
 				tabFragments.add(DemandeDeMoyensFragment.newInstance());

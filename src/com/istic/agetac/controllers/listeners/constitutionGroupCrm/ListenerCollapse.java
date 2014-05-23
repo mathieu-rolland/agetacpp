@@ -1,6 +1,6 @@
 package com.istic.agetac.controllers.listeners.constitutionGroupCrm;
 
-import com.istic.agetac.model.IMoyen;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.utils.SauvegardeStateCrm;
 
 import android.view.View;

@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListAdapter;
 import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListGroupAdapter;
 import com.istic.agetac.model.Groupe;
-import com.istic.agetac.model.IMoyen;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.utils.SauvegardeStateCrm;
 import com.istic.sit.framework.couch.APersitantRecuperator;

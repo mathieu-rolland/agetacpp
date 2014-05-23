@@ -31,6 +31,8 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 	private String libelle;
 	private String color;
 	private List<Moyen> moyens;
+
+	private transient Intervention intervention;
 	
 	public Secteur()
 	{
@@ -71,12 +73,15 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 
 	@Override
 	public void save() {
-		DataBaseCommunication.sendPost(this);
+//		DataBaseCommunication.sendPost(this);
+		if( !intervention.getSecteurs().contains(this) ) intervention.getSecteurs().add(this);
+		intervention.save();
 	}
 
 	@Override
 	public void update() {
-		DataBaseCommunication.sendPut(this);
+//		DataBaseCommunication.sendPut(this);
+		intervention.update();
 	}
 
 	@Override
@@ -121,7 +126,7 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 
 	@Override
 	public void delete() {
-		DataBaseCommunication.sendDelete(this);
+		intervention.delete(this);
 	}
 
 	@Override
@@ -211,6 +216,14 @@ public class Secteur implements ISecteur, IPersistant, Parcelable {
 	@Override
 	public List<Moyen> getMoyens() {
 		return moyens;
+	}
+	
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 	
 }

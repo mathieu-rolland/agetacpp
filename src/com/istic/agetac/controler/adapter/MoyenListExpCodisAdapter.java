@@ -1,6 +1,7 @@
 package com.istic.agetac.controler.adapter;
 
 import java.util.Date;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
 import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
@@ -22,9 +24,9 @@ public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
 {
     private boolean mIsCreating;
 
-    public MoyenListExpCodisAdapter( Context context, boolean isCreating )
+    public MoyenListExpCodisAdapter( Context context, boolean isCreating, List<IMoyen> moyens )
     {
-        super( context );
+        super( context , moyens);
         this.mIsCreating = isCreating;
     }
 

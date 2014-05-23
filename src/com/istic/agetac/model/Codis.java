@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Codis extends User {
 	
-	private List<Intervention> interventions;
+	private transient List<Intervention> interventions;
 
 	public Codis(String name, String username) {
 		super(name, username, Role.codis);
@@ -24,12 +24,25 @@ public class Codis extends User {
 	 */
 	public void setInterventions(List<Intervention> interventions) {
 		this.interventions = interventions;
-		for(Intervention intervention : interventions){
-		}
 	}
 	
 	public void addIntervention(Intervention intervention){
 		this.interventions.add(intervention);
+	}
+
+	@Override
+	public void save() {
+		for(Intervention i : interventions){
+			i.save();
+		}
+	}
+
+	@Override
+	public void delete() {
+		for(Intervention i : interventions){
+			i.setCodis(null);
+		}
+		this.save();
 	}
 
 }

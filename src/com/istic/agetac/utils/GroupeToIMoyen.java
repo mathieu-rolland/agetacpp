@@ -3,8 +3,8 @@ package com.istic.agetac.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.model.Groupe;
-import com.istic.agetac.model.IMoyen;
 
 /**
  * Class utils de convertion de List<Groupe> en List<IMoyen>

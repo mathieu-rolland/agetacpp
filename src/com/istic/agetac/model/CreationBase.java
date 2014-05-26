@@ -216,55 +216,18 @@ public class CreationBase {
 		msg1.setText(Message_part.JE_FAIS, "ma prise de COS");
 		msg1.setText(Message_part.JE_PREVOIS, "une intervention longue et difficile");
 		msg1.setText(Message_part.JE_SUIS, "Mathieu, COS");
-		msg1.setText(Message_part.JE_VOIS, "un bless� � la cuisse dans l'aile droite du batiment");
+		msg1.setText(Message_part.JE_VOIS, "un blessé à la cuisse dans l'aile droite du batiment");
 		
 		Message msg2 = new Message(inter1);
 		msg2.setDateEmission(new Date());
 		msg2.setText(Message_part.JE_DEMANDE, "Rien");
-		msg2.setText(Message_part.JE_FAIS, "Mise en s�curit�");
-		msg2.setText(Message_part.JE_PREVOIS, "une propagation g�n�ralis�");
+		msg2.setText(Message_part.JE_FAIS, "Mise en sécurité");
+		msg2.setText(Message_part.JE_PREVOIS, "une propagation généralisé");
 		msg2.setText(Message_part.JE_SUIS, "Mathieu, COS");
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
 		inter1.addMessage(msg1);
 		inter1.addMessage(msg2);
-		
-		//moyens
-		Moyen mo1 = new Moyen(TypeMoyen.VSAV, AgetacppApplication.getIntervention());
-		mo1.setLibelle("VSAV1");
-		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
-		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ko));
-		
-		Property property1 = new Property();
-		property1.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property1.setValeur(Moyen.FORMATER.format(new Date()));
-		mo1.addPropriete(property1);
-		
-		inter1.addMoyen(mo1);
-		
-		Moyen mo1bis = new Moyen(TypeMoyen.VSAV, AgetacppApplication.getIntervention());
-		mo1bis.setLibelle("VSAV 3");
-		mo1bis.setRepresentationKO(new Representation(R.drawable.vsav_ko));
-		mo1bis.setRepresentationOK(new Representation(R.drawable.vsav_ko));
-		
-		Property property1Bis = new Property();
-		property1Bis.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property1Bis.setValeur(Moyen.FORMATER.format(new Date()));
-		mo1bis.addPropriete(property1Bis);
-		
-		inter1.addMoyen(mo1bis);
-		
-		Moyen mo2 = new Moyen(TypeMoyen.VSAV, AgetacppApplication.getIntervention());
-		mo2.setLibelle("VSAV2");
-		mo2.setRepresentationKO(new Representation(R.drawable.vsav_ko));
-		mo2.setRepresentationOK(new Representation(R.drawable.vsav_ko));
-		
-		Property property2 = new Property();
-		property2.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property2.setValeur(Moyen.FORMATER.format(new Date()));
-		mo2.addPropriete(property2);
-		
-		inter1.addMoyen(mo2);
 		
 		//Secteurs
 		Secteur s1 = new Secteur();
@@ -293,14 +256,52 @@ public class CreationBase {
 		inter1.addSecteur(s4);
 		inter1.addSecteur(s5);
 		
+		//moyens
+		Moyen mo1 = new Moyen(TypeMoyen.VSAV, AgetacppApplication.getIntervention());
+		mo1.setLibelle("VSAV1");
+		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
+		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ko));
+		
+		Property property1 = new Property();
+		property1.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property1.setValeur(Moyen.FORMATER.format(new Date()));
+		mo1.addPropriete(property1);
+		mo1.setSecteur(s5);
+		
+		inter1.addMoyen(mo1);
+		
+		Moyen mo1bis = new Moyen(TypeMoyen.VSAV, AgetacppApplication.getIntervention());
+		mo1bis.setLibelle("VSAV 3");
+		mo1bis.setRepresentationKO(new Representation(R.drawable.vsav_ko));
+		mo1bis.setRepresentationOK(new Representation(R.drawable.vsav_ko));
+		
+		Property property1Bis = new Property();
+		property1Bis.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property1Bis.setValeur(Moyen.FORMATER.format(new Date()));
+		mo1bis.addPropriete(property1Bis);
+		mo1bis.setSecteur(s5);
+		
+		inter1.addMoyen(mo1bis);
+		
+		Moyen mo2 = new Moyen(TypeMoyen.VSAV, AgetacppApplication.getIntervention());
+		mo2.setLibelle("VSAV2");
+		mo2.setRepresentationKO(new Representation(R.drawable.vsav_ko));
+		mo2.setRepresentationOK(new Representation(R.drawable.vsav_ko));
+		
+		Property property2 = new Property();
+		property2.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property2.setValeur(Moyen.FORMATER.format(new Date()));
+		mo2.addPropriete(property2);
+		mo2.setSecteur(s5);		
+		
+		inter1.addMoyen(mo2);
+		
 		List<Moyen> listMoyen = new ArrayList<Moyen>();
 		listMoyen.add(mo1);
 		listMoyen.add(mo2);
 		Groupe g1 = new Groupe("Groupe 1 - Rennes", listMoyen);
 		Groupe g2 = new Groupe("Groupe 2 - Rennes", new ArrayList<Moyen>());
 		Groupe g3 = new Groupe("Groupe 3 - Rennes", new ArrayList<Moyen>());
-		mo1.setIsInGroup(true);
-		mo2.setIsInGroup(true);
 		
 		inter1.addGroupe(g1);
 		inter1.addGroupe(g2);

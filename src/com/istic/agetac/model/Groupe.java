@@ -34,17 +34,17 @@ public class Groupe implements IGroupe, IMoyen {
 	}
 
 	public Groupe(String nom){
-		this._id = UUID.randomUUID().toString();
-		this._rev = "";
-		this.nom = nom;
-		this.moyens = new ArrayList<Moyen>();
+		this._id 		= UUID.randomUUID().toString();
+		this._rev 		= "";
+		this.nom 		= nom;
+		this.addMoyens(new ArrayList<Moyen>());
 	}
 	
 	public Groupe(String nom, List<Moyen> moyens){
-		this._id = UUID.randomUUID().toString();
-		this._rev = "";
-		this.nom = nom;
-		this.moyens = moyens;
+		this._id 		= UUID.randomUUID().toString();
+		this._rev 		= "";
+		this.nom 		= nom;
+		this.addMoyens(moyens);
 	}
 	
 	@Override
@@ -89,7 +89,10 @@ public class Groupe implements IGroupe, IMoyen {
 		}
 		else {
 //			DataBaseCommunication.sendPut(this);
-			Log.d("Antho", "*999*9999*999*   " + intervention.getGroupes().size() + "");
+			if (intervention.getGroupes() == null) {
+				intervention.setGroupes(new ArrayList<Groupe>());
+				intervention.getGroupes().add(this);
+			}
 			if( !intervention.getGroupes().contains( this ) ) intervention.getGroupes().add(this);
 			intervention.save();
 		}
@@ -151,23 +154,42 @@ public class Groupe implements IGroupe, IMoyen {
 
 	@Override
 	public void setMoyens(List<Moyen> moyens) {
+		for(Moyen m : moyens) {
+			m.setIsInGroup(true);
+		}
 		this.moyens = moyens;
 	}
 
 	@Override
 	public void addMoyen(Moyen moyen) {
-		this.moyens.add(moyen);
-	}
+		moyen.setIsInGroup(true);
+		if (moyen != null) {
+			this.moyens.add(moyen);
+		}
+	} // method
 
 	@Override
 	public void deleteMoyen(Moyen moyen) {
-		this.moyens.remove(moyen);
-	}
+		moyen.setIsInGroup(false);
+		if (moyen != null) {
+			this.moyens.remove(moyen);
+		}
+	} // method
 
 	@Override
 	public void addMoyens(List<Moyen> moyens) {
-		this.moyens.addAll(moyens);
-	}
+		if (moyens != null ) {
+			if (moyens.size() > 0) {
+				for(Moyen m : moyens) {
+					m.setIsInGroup(true);
+				}
+				if (this.moyens == null) {
+					this.moyens = new ArrayList<Moyen>();
+				}
+				this.moyens.addAll(moyens);
+			}
+		}
+	} // method
 
 	@Override
 	public boolean isGroup() {

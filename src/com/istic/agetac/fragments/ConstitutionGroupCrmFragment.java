@@ -26,6 +26,7 @@ import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListGroupAdapter;
 import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.Secteur;
 
 /**
  * Classe DemandeDeMoyensFragment : affiche la fenétre de constitution des
@@ -190,7 +191,7 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 		this.getmListMoyen().clear();
 		List<IMoyen> moyenFiltered = new ArrayList<IMoyen>();
 		for (IMoyen m : this.getIntervention().getMoyens()) {
-			if (!((Moyen)m).isInGroup()){
+			if (!((Moyen)m).isInGroup() && ((Moyen)m).getSecteur().equals("CRM")){
 				moyenFiltered.add(m);
 			}
 		}
@@ -219,10 +220,12 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 			listIMoyenRetrieved.add(g);
 			List<Moyen> listMoyenOfGroup = g.getMoyens();
 			Log.d("Antho", g.toString());
-			for (Moyen moyen : listMoyenOfGroup) {
-				if (!moyen.isInGroup()){
-					listIMoyenRetrieved.add(moyen);
-					Log.d("Antho", " -- " + moyen.toString());
+			if (listMoyenOfGroup != null) {
+				for (Moyen moyen : listMoyenOfGroup) {
+					if (moyen.isInGroup() && moyen.getSecteur().equals("CRM")){
+						listIMoyenRetrieved.add(moyen);
+						Log.d("Antho", " -- " + moyen.toString());
+					}
 				}
 			}
 		}

@@ -23,8 +23,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.istic.agetac.R;
+import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.ISecteur;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.SecteurAdapter;
@@ -44,19 +47,13 @@ public class SectorFragment extends Fragment implements OnDragListener
     }
 
     private Button createSector;
-
     private Button cancelSector;
-
+    private Button placerCrm;
     private ImageButton deleteSecteur;
-
     private EditText libelleEdit;
-
     private LinearLayout colorEdit;
-
     private SecteurAdapter adapter;
-
     private ListView secteurList;
-
     private Secteur sll;
 
     private Intervention intervention;
@@ -146,7 +143,40 @@ public class SectorFragment extends Fragment implements OnDragListener
         return rootView;
     }
 
-   
+    private void loadSecteurs()
+    {
+//        SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
+//        sdao.findAll();
+    }
+
+    // Récupération des secteurs :
+    private class OnSecteurReceived implements IViewReceiver<Secteur>
+    {
+        @Override
+        public void notifyResponseSuccess( List<Secteur> objects )
+        {
+            if ( objects != null )
+            {
+                SectorFragment.this.adapter.addAll( objects );
+                if ( adapter.isEmpty() )
+                {
+                    preconfigure();
+                }
+                else
+                {
+                    findSecteurSll();
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void notifyResponseFail( VolleyError error )
+        {
+            Toast.makeText( getActivity(), "Erreur lors du chargement des secteurs", Toast.LENGTH_LONG ).show();
+        }
+    }
+
     private void findSecteurSll()
     {
         for ( int i = 0; i < adapter.getCount(); i++ )

@@ -596,6 +596,5 @@ public class SitacFragment extends MainFragment implements Observer {
 		}
 		
 		loadGraphics(lines);
-
 	}
 }

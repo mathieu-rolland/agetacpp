@@ -230,6 +230,7 @@ public class Intervention implements IIntervention {
 		for (Secteur secteur : listSecteur) {
 			if( !this.secteurs.contains(secteur) ){
 				this.secteurs.add(secteur);
+				secteur.setIntervention(this);
 			}
 		}
 	}
@@ -398,6 +399,11 @@ public class Intervention implements IIntervention {
 			message.setIntervention(this);
 		}
 	}
+	public void updateSecteursDependencies(){
+		for(Secteur s : secteurs){
+			s.setIntervention(this);
+		}
+	}
 	
 	public void updateDepandencies(){
 		
@@ -418,6 +424,7 @@ public class Intervention implements IIntervention {
 		updateMessagesDependencies();
 
 		for(IMoyen gr : getGroupes()){
+
 			gr.setIntervention(this);
 		}
 		

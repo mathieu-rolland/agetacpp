@@ -3,7 +3,6 @@
  */
 package com.istic.agetac.api.model;
 
-import com.istic.sit.framework.couch.IRecordable;
 
 
 /**

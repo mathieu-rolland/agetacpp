@@ -31,8 +31,10 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.controllers.dao.EnvironnementsStaticDao;
 import com.istic.agetac.controllers.dao.UserAvailableDao;
 import com.istic.agetac.fragments.PagerFragment.MODE;
+import com.istic.agetac.model.EnvironnementsStatic;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.User;
 import com.istic.agetac.model.UserAvailable;
@@ -305,10 +307,25 @@ public class LoginActivity extends Activity {
 
 		@Override
 		public void onResponse(UserAvailable users) {
-			AgetacppApplication.setUserPoubelle(users);
-			CouchDBUtils.getFromCouch(new UserViewReceiver(mUser, mPassword));
+			AgetacppApplication.setUserAvailable(users);
+			DataBaseCommunication.sendGet(new myEnvironnementsStaticDao());
 		}
 
+		@Override
+		public void onErrorResponse(VolleyError error) {
+			Log.e("LoginActivity", error.toString());
+		}
+		
+	}
+	
+	private class myEnvironnementsStaticDao extends EnvironnementsStaticDao {
+		
+		@Override
+		public void onResponse(EnvironnementsStatic environnementsStatic) {
+			AgetacppApplication.setEnvironnementsStatic(environnementsStatic);
+			CouchDBUtils.getFromCouch(new UserViewReceiver(mUser, mPassword));
+		}
+		
 		@Override
 		public void onErrorResponse(VolleyError error) {
 			Log.e("LoginActivity", error.toString());

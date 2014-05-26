@@ -28,7 +28,6 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
 		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/test/";
-		AgetacppApplication.environnementsStatic = new EnvironnementsStatic();
 	}
 
 	/**
@@ -80,7 +79,7 @@ public class AgetacppApplication extends FrameworkApplication {
 		return userAvailable;
 	}
 	
-	public static void setUserPoubelle(UserAvailable userAvailable){
+	public static void setUserAvailable(UserAvailable userAvailable){
 		AgetacppApplication.userAvailable = userAvailable;  
 	}
 

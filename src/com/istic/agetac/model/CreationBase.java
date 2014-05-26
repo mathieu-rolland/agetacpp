@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.graphics.Color;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -12,7 +11,6 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.IMessage.Message_part;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.dao.ADao;
 import com.istic.agetac.controllers.dao.InterventionDao;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.dao.UserDao;
@@ -518,5 +516,10 @@ public class CreationBase {
 		inter1.save();
 		inter2.save();
 		userPoubelle.save();
+	}
+	
+	public static void creationEnvStatic(){
+		EnvironnementsStatic env = new EnvironnementsStatic();
+		env.save();
 	}
 }

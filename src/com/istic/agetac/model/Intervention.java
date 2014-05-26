@@ -184,12 +184,16 @@ public class Intervention implements IIntervention {
 	}
 	
 	public void addMoyen(Moyen moyen) {
-		this.moyens.add(moyen);
+		if( !this.moyens.contains(moyen) ){
+			this.moyens.add(moyen);
+		}
 	}
 	
 	public void addMoyens(List<Moyen> listMoyen) {
 		for (Moyen moyen : listMoyen) {
-			this.moyens.add(moyen);
+			if( !this.moyens.contains(moyen) ){
+				this.moyens.add(moyen);
+			}
 		}
 	}
 	

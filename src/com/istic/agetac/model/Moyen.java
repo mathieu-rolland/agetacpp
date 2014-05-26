@@ -246,9 +246,9 @@ public class Moyen extends Entity implements IMoyen {
 
 	@Override
 	public void save() {
-		if( !intervention.getMoyens().contains(this) ){
+//		if( !intervention.contains(this) ){
 			intervention.addMoyen(this);
-		}
+//		}
 		intervention.save();
 	}
 
@@ -374,4 +374,8 @@ public class Moyen extends Entity implements IMoyen {
 		this.intervention = intervention;
 	}
 
+	public boolean equals( Moyen moyen ){
+		return this.getId().equals(moyen.getId());
+	}
+	
 }

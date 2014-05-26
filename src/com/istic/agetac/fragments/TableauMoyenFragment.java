@@ -72,9 +72,9 @@ public class TableauMoyenFragment extends Fragment {
 		/* R�cup�rations des donn�es via les mod�les */
 		
 		if (AgetacppApplication.getListIntervention() != null) {
-			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity(),mIsCreating , intervention.getMoyens());
+			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity(),mIsCreating , new ArrayList(intervention.getMoyens()));
 		} else {
-			mAdapterMoyens = new MoyenListExpIntervenantAdapter(getActivity(),  intervention.getMoyens());
+			mAdapterMoyens = new MoyenListExpIntervenantAdapter(getActivity(),  new ArrayList(intervention.getMoyens()));
 		}
 		
 		if(!mIsCreating)
@@ -91,7 +91,7 @@ public class TableauMoyenFragment extends Fragment {
 		
 		if(mListMoyen==null)
 		{
-			mListMoyen = intervention.getMoyens();
+			mListMoyen = new ArrayList<IMoyen>(intervention.getMoyens());
 		}
 		else
 		{

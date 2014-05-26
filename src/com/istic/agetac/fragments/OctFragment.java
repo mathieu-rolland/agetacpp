@@ -152,4 +152,9 @@ public class OctFragment extends Fragment{
 //		savedInstanceState.putSerializable("sauvegarde", sauvegarde);
 	    super.onSaveInstanceState(savedInstanceState);
 		}
+
+	public void update(List parcelableArrayList) {
+		// TODO Auto-generated method stub
+		
+	}
 }

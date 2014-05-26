@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/historique_ListView_linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="100dip"
+    android:orientation="horizontal"
+    android:background="#171f21"
+    android:weightSum="100" >
+
+    <TextView
+        android:id="@+id/historique_item_TextView_Username"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="20"
+        android:background="@drawable/button_style_blue"
+        android:text="@string/general_empty_string"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textColor="#b6b6b6"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/historique_item_TextView_Date"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="20"
+        android:text="@string/general_empty_string"
+        android:textAppearance="?android:attr/textAppearance"
+        android:padding="8dip"
+        android:background="#505050"
+        android:textColor="#efefef"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/historique_item_TextView_Action"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="60"
+        android:text="@string/general_empty_string"
+        android:textAppearance="?android:attr/textAppearance"
+        android:padding="8dip"
+          android:background="#505050"
+        android:textColor="#efefef"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold" />
+
+</LinearLayout>

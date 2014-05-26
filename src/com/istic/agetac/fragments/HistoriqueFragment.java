@@ -1,8 +1,13 @@
 package com.istic.agetac.fragments;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMessage;
+import com.istic.agetac.controler.adapter.HistoriqueListAdapter;
+import com.istic.agetac.controler.adapter.ItemListAdapter;
 import com.istic.agetac.model.Action;
 import com.istic.agetac.model.User;
 
@@ -18,8 +23,8 @@ import android.widget.ListView;
 public class HistoriqueFragment extends Fragment{
 
 	private ListView lvHisto;
-	private List<Action> listAction;
-	
+	private ArrayList<Action> listAction;
+	private HistoriqueListAdapter histoAdapter;
 	public static HistoriqueFragment newInstance() {
 		HistoriqueFragment fragment = new HistoriqueFragment();
 		return fragment;
@@ -57,8 +62,12 @@ public class HistoriqueFragment extends Fragment{
 		super.onCreate(savedInstanceState);			
 					
 		// Récupération des éléments 
-//		lvHisto = (ListView)getActivity().findViewById(R.id.lv_Histo);
-//	    listAction.add(new Action());
+		lvHisto = (ListView)getActivity().findViewById(R.id.lv_Histo);
+		listAction = new ArrayList<Action>();
+	    listAction.add(new Action("Jacques",new Date(), "Message envoyé à Joe"));
+	    listAction.add(new Action("Joe",new Date(), "Message envoyé à Jacques"));
+	    histoAdapter = new HistoriqueListAdapter(this, android.R.layout.simple_list_item_1, listAction);
+	    lvHisto.setAdapter(histoAdapter);
 	}
 	
 	/** Méthode onSaveInstanceState */

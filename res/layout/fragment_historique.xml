@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:gravity="left|top"
             android:paddingLeft="5dip"
             android:paddingRight="5dip"
@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:gravity="left|top"
             android:paddingLeft="5dip"
             android:paddingRight="5dip"
@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="30"
+            android:layout_weight="60"
             android:gravity="left|top"
             android:paddingLeft="5dip"
             android:paddingRight="5dip"

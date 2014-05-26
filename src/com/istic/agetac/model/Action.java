@@ -7,28 +7,28 @@ import com.istic.agetac.api.model.IUser.Role;
 
 public class Action {
 
-	private User user;
+	private String user;
 	private Date dateAction;
 	private String natureAction;
 	
-	public Action(User user,Date dateAction,String nature){
+	public Action(String user,Date dateAction,String nature){
 		this.user = user;
 		this.dateAction = dateAction;
 		this.natureAction=nature;
 	}
 	
 	public Action(){
-		this.user = new Codis("Codis", "Jacques");
+		this.user = "Jacques";
 		Calendar calendar = Calendar.getInstance();
 		this.dateAction = calendar.getTime();
 		this.natureAction = "Message envoyé à Jean";
 	}
 
-	public User getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 

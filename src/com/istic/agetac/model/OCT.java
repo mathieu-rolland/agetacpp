@@ -7,18 +7,17 @@ import java.util.UUID;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.pattern.observer.Observer;
-import com.istic.sit.framework.couch.ITaMere;
+import com.istic.sit.framework.couch.IRecordable;
 import com.istic.sit.framework.couch.JsonSerializer;
 
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class OCT implements ITaMere, Parcelable {
+public class OCT implements IRecordable, Parcelable {
 
 	static String codis = "CODIS";
 	static String cos = "COS";

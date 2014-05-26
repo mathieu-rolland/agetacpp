@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,33 +18,33 @@ public class SecteurAdapter extends BaseAdapter {
 
 	private List<Secteur> secteurs;
 	private LayoutInflater inflater;
-	
-	public SecteurAdapter( Context context ){
+
+	public SecteurAdapter(Context context) {
 		this.secteurs = new ArrayList<Secteur>();
 		this.inflater = LayoutInflater.from(context);
 	}
-	
-	public SecteurAdapter( Context context, List<Secteur> secteurs ){
+
+	public SecteurAdapter(Context context, List<Secteur> secteurs) {
 		this.secteurs = secteurs;
 		this.inflater = LayoutInflater.from(context);
 	}
-	
-	public void addSecteur( Secteur secteur ){
+
+	public void addSecteur(Secteur secteur) {
 		secteurs.add(secteur);
 	}
-	
-	public void addAll( List<Secteur> secteurs ){
+
+	public void addAll(List<Secteur> secteurs) {
 		this.secteurs.addAll(secteurs);
 	}
-	
-	public void remove( Secteur secteur ){
+
+	public void remove(Secteur secteur) {
 		secteurs.remove(secteur);
 	}
-	
-	public boolean isEmpty(){
+
+	public boolean isEmpty() {
 		return secteurs.isEmpty();
 	}
-	
+
 	@Override
 	public int getCount() {
 		return secteurs.size();
@@ -63,25 +62,26 @@ public class SecteurAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View view, ViewGroup viewGroup) {
-		
+
 		Secteur secteur = secteurs.get(position);
-		
-		if( view == null ){
-			view = inflater.inflate(R.layout.item_secteur,  null );
+
+		if (view == null) {
+			view = inflater.inflate(R.layout.item_secteur, null);
 		}
-		
+
 		TextView txt = (TextView) view.findViewById(R.id.item_secteur_label);
-		txt.setText( secteur.getName() );
-		LinearLayout layout = (LinearLayout) view.findViewById(R.id.item_secteur_color);
-		String color = secteur.getColor();
-		if( color != null && !color.isEmpty() ){
-			try{
-				layout.setBackgroundColor( Color.parseColor(color) );
-			}catch(Exception e){
-				e.printStackTrace();
-			}
+		txt.setText(secteur.getName());
+		LinearLayout layout = (LinearLayout) view
+				.findViewById(R.id.item_secteur_color);
+		int color = secteur.getColor();
+
+		try {
+			layout.setBackgroundColor(color);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 		return view;
 	}
-	
+
 }

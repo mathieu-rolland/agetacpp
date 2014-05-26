@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,8 +162,8 @@ public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
 
                 if ( sector != null )
                 {
-                    String color = mSector.get( current.getSecteur() ).getColor();
-                    holder.sector.setTextColor( Color.parseColor( color ) );
+                    int color = mSector.get( current.getSecteur() ).getColor();
+                    holder.sector.setTextColor( color );
                 }
 
             }

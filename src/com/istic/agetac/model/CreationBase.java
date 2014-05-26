@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -36,7 +37,7 @@ public class CreationBase {
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
 		Secteur secteur = new Secteur();
 		secteur.setName("INC");
-		secteur.setColor("#ff0000");
+		secteur.setColor(Color.parseColor("#ff0000"));
 		m1.setSecteur(secteur);
 		
 		m1.save();
@@ -51,7 +52,7 @@ public class CreationBase {
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
 		Secteur secteur1 = new Secteur();
 		secteur1.setName("INC");
-		secteur1.setColor("#ff0000");
+		secteur1.setColor(Color.parseColor("#ff0000"));
 		m1.setSecteur(secteur1);
 		
 		m1.save();
@@ -66,7 +67,7 @@ public class CreationBase {
 		m1.setRepresentationKO(new Representation(R.drawable.ic_launcher));
 		secteur1 = new Secteur();
 		secteur1.setName("INC");
-		secteur1.setColor("#ff0000");
+		secteur1.setColor(Color.parseColor("#ff0000"));
 		m1.setSecteur(secteur1);
 		
 		m1.save();
@@ -231,23 +232,23 @@ public class CreationBase {
 		
 		//Secteurs
 		Secteur s1 = new Secteur();
-		s1.setColor("#f8f8f8");
+		s1.setColor(Color.parseColor("#f8f8f8"));
 		s1.setName("SLL");
 		
 		Secteur s2 = new Secteur();
-		s2.setColor("#ce8bec");
+		s2.setColor(Color.parseColor("#ce8bec"));
 		s2.setName("SAP");
 		
 		Secteur s3 = new Secteur();
-		s3.setColor("#85ba8e");
+		s3.setColor(Color.parseColor("#85ba8e"));
 		s3.setName("ALIM");
 		
 		Secteur s4 = new Secteur();
-		s4.setColor("#992f2f");
+		s4.setColor(Color.parseColor("#992f2f"));
 		s4.setName("INC");
 		
 		Secteur s5 = new Secteur();
-		s5.setColor("#ce8bec");
+		s5.setColor(Color.parseColor("#ce8bec"));
 		s5.setName("CRM");
 		
 		inter1.addSecteur(s1);
@@ -405,27 +406,27 @@ public class CreationBase {
 	
 	public static void createSecteur(){
 		Secteur s1 = new Secteur();
-		s1.setColor("#f8f8f8");
+		s1.setColor(Color.parseColor("#f8f8f8"));
 		s1.setName("SLL");
 		s1.save();
 		
 		Secteur s2 = new Secteur();
-		s2.setColor("#ce8bec");
+		s2.setColor(Color.parseColor("#ce8bec"));
 		s2.setName("SAP");
 		s2.save();
 		
 		Secteur s3 = new Secteur();
-		s3.setColor("#85ba8e");
+		s3.setColor(Color.parseColor("#85ba8e"));
 		s3.setName("ALIM");
 		s3.save();
 		
 		Secteur s4 = new Secteur();
-		s4.setColor("#992f2f");
+		s4.setColor(Color.parseColor("#992f2f"));
 		s4.setName("INC");
 		s4.save();
 		
 		Secteur s5 = new Secteur();
-		s5.setColor("#ce8bec");
+		s5.setColor(Color.parseColor("#ce8bec"));
 		s5.setName("CRM");
 		s5.save();
 	}

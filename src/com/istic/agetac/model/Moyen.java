@@ -255,7 +255,7 @@ public class Moyen extends Entity implements IMoyen {
 	 * @return String : secteur of moyen
 	 */
 	public void setSecteur(Secteur secteur) {
-		super.setColor(Color.parseColor(secteur.getColor()));
+		super.setColor(secteur.getColor());
 		super.getProperty(NAME_PROPERTY_SECTEUR).setValeur(secteur.getName());
 	} // method
 

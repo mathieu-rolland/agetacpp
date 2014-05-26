@@ -68,7 +68,7 @@ public class ListenerDragSecteur implements OnItemLongClickListener {
 			externCircle.setAlpha(55);
 			int color = 0;
 			try{
-				color = Color.parseColor( secteur.getColor() );
+				color = secteur.getColor();
 			}catch(Exception e){
 				color = Color.GRAY;
 			}

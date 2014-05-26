@@ -56,9 +56,9 @@ public class ListenerAddSecteur implements OnClickListener {
 				return;
 			}
 		}
-		Secteur created = new Secteur(intervention);
+		Secteur created = new Secteur();
 		created.setName(label);
-		created.setColor(strColor);
+		created.setColor(Color.parseColor(strColor));
 		adapter.addSecteur(created);
 		adapter.notifyDataSetChanged();
 		created.save();

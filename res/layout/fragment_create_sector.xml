@@ -85,12 +85,6 @@
 	            android:text="@string/fragment_create_sector_btn_cancel" />
 	        
 	    </LinearLayout>
-	    
-	    <Button
-	        android:id="@+id/fragment_create_sector_place_crm"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/fragment_create_sector_btn_place_crm" />
 	        
 	    
     </LinearLayout>

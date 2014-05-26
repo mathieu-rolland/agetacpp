@@ -1,9 +1,11 @@
 package com.istic.agetac.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -23,6 +25,7 @@ import com.istic.agetac.fragments.TableauMoyenFragment;
 import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.Secteur;
 
 public class CreateInterventionActivity extends FragmentActivity{
 	
@@ -113,10 +116,42 @@ public class CreateInterventionActivity extends FragmentActivity{
 		Codis codis = (Codis)AgetacppApplication.getUser();
 		mInterventionCurrent.setCodis(codis);
 		AgetacppApplication.getListIntervention().add(mInterventionCurrent);
+		preconfigure();
 		mInterventionCurrent.save();
 		
 		finish();
 	}
+	
+	private void preconfigure()
+    {
+        List<Secteur> list = new ArrayList<Secteur>();
+        Secteur secteur = new Secteur();
+        secteur.setName( "INC" );
+        secteur.setColor( Color.parseColor("#66CCFF" ));
+        list.add( secteur );
+
+        Secteur sap = new Secteur();
+        sap.setName( "SAP" );
+        sap.setColor( Color.parseColor("#FF1919" ));
+        list.add( sap );
+
+        Secteur alim = new Secteur();
+        alim.setName( "ALIM" );
+        alim.setColor( Color.parseColor("#0000FF" ));
+        list.add( alim );
+
+        Secteur sll = new Secteur();
+        sll.setName( "SLL" );
+        sll.setColor( Color.parseColor("#CCCCCC" ));
+        list.add( sll );
+        
+        Secteur crm = new Secteur();
+        crm.setName( "CRM" );
+        crm.setColor( Color.parseColor("#FF0000" ));
+        list.add( crm );
+        
+        mInterventionCurrent.setSecteurs( list );
+    }
 	
 	private void SwitchFragment()
 	{

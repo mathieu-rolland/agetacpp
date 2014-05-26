@@ -23,15 +23,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.api.model.ISecteur;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.SecteurAdapter;
-import com.istic.agetac.controllers.dao.SecteurDao;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerAddSecteur;
 import com.istic.agetac.controllers.listeners.secteurs.ListenerDragSecteur;
 import com.istic.agetac.model.Intervention;
@@ -50,8 +46,6 @@ public class SectorFragment extends Fragment implements OnDragListener
     private Button createSector;
 
     private Button cancelSector;
-
-    private Button placerCrm;
 
     private ImageButton deleteSecteur;
 
@@ -76,7 +70,6 @@ public class SectorFragment extends Fragment implements OnDragListener
         
         createSector = (Button) rootView.findViewById( R.id.fragment_create_sector_validate );
         cancelSector = (Button) rootView.findViewById( R.id.fragment_create_sector_cancel );
-        placerCrm = (Button) rootView.findViewById( R.id.fragment_create_sector_place_crm );
         secteurList = (ListView) rootView.findViewById( R.id.fragment_create_sector_created );
         deleteSecteur = (ImageButton) rootView.findViewById( R.id.fragment_create_sector_sector_delete );
 
@@ -86,7 +79,7 @@ public class SectorFragment extends Fragment implements OnDragListener
         libelleEdit = (EditText) rootView.findViewById( R.id.fragment_create_sector_libelle );
         colorEdit = (LinearLayout) rootView.findViewById( R.id.fragment_create_sector_color_edit );
 
-        loadSecteurs();
+        findSecteurSll();
 
         createSector.setOnClickListener( new ListenerAddSecteur( adapter, getActivity(), 
         		libelleEdit, colorEdit, intervention ) );
@@ -149,52 +142,11 @@ public class SectorFragment extends Fragment implements OnDragListener
         secteurList.setOnItemLongClickListener( new ListenerDragSecteur( adapter, getActivity() ) );
         deleteSecteur.setOnDragListener( this );
 
-        placerCrm.setOnClickListener( new OnClickListener()
-        {
-            @Override
-            public void onClick( View arg0 )
-            {
-                placerCrm();
-            }
-        } );
-
+      
         return rootView;
     }
 
-    private void loadSecteurs()
-    {
-        SecteurDao sdao = new SecteurDao( new OnSecteurReceived() );
-        sdao.findAll();
-    }
-
-    // Récupération des secteurs :
-    private class OnSecteurReceived implements IViewReceiver<Secteur>
-    {
-        @Override
-        public void notifyResponseSuccess( List<Secteur> objects )
-        {
-            if ( objects != null )
-            {
-                SectorFragment.this.adapter.addAll( objects );
-                if ( adapter.isEmpty() )
-                {
-                    preconfigure();
-                }
-                else
-                {
-                    findSecteurSll();
-                }
-            }
-            adapter.notifyDataSetChanged();
-        }
-
-        @Override
-        public void notifyResponseFail( VolleyError error )
-        {
-            Toast.makeText( getActivity(), "Erreur lors du chargement des secteurs", Toast.LENGTH_LONG ).show();
-        }
-    }
-
+   
     private void findSecteurSll()
     {
         for ( int i = 0; i < adapter.getCount(); i++ )
@@ -208,7 +160,7 @@ public class SectorFragment extends Fragment implements OnDragListener
         }
         sll = new Secteur();
         sll.setName( "SLL" );
-        sll.setColor( "#CCCCCC" );
+        sll.setColor( Color.parseColor("#CCCCCC") );
         sll.save();
         adapter.addSecteur( sll );
         adapter.notifyDataSetChanged();
@@ -218,25 +170,25 @@ public class SectorFragment extends Fragment implements OnDragListener
     {
         Secteur secteur = new Secteur();
         secteur.setName( "INC" );
-        secteur.setColor( "#66CCFF" );
+        secteur.setColor( Color.parseColor("#66CCFF") );
         secteur.save();
         adapter.addSecteur( secteur );
 
         secteur = new Secteur();
         secteur.setName( "SAP" );
-        secteur.setColor( "#FF1919" );
+        secteur.setColor( Color.parseColor("#FF1919" ));
         secteur.save();
         adapter.addSecteur( secteur );
 
         secteur = new Secteur();
         secteur.setName( "ALIM" );
-        secteur.setColor( "#0000FF" );
+        secteur.setColor( Color.parseColor("#0000FF" ));
         secteur.save();
         adapter.addSecteur( secteur );
 
         sll = new Secteur();
         sll.setName( "SLL" );
-        sll.setColor( "#CCCCCC" );
+        sll.setColor( Color.parseColor("#CCCCCC" ));
         sll.save();
         adapter.addSecteur( sll );
 
@@ -308,27 +260,4 @@ public class SectorFragment extends Fragment implements OnDragListener
             sll.addMoyen( m );
         }
     }
-
-    public void placerCrm()
-    {
-        Secteur crm = null;
-
-        for ( int i = 0; i < adapter.getCount(); i++ )
-        {
-            Secteur storedSecteur = (Secteur) adapter.getItem( i );
-            if ( storedSecteur.getName().toUpperCase( Locale.FRENCH ).equals( "CRM" ) )
-            {
-                crm = storedSecteur;
-                break;
-            }
-        }
-
-        if ( crm == null )
-        {
-            Toast.makeText( getActivity(), "Le secteur CRM n'est pas définit", Toast.LENGTH_LONG ).show();
-            return;
-        }
-
-    }
-
 }

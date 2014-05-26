@@ -6,13 +6,11 @@ import com.istic.agetac.model.Moyen;
 
 
 public interface ISecteur {
-
-	public String getId();
-	public void setId(String id);
+	
 	public void setName( String libelle );
 	public String getName();
-	public void setColor( String color );
-	public String getColor();
+	public void setColor( int color );
+	public int getColor();
 	public void lock();
 	public void unlock();
 	public boolean isLock();

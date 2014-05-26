@@ -2,10 +2,8 @@ package com.istic.agetac.controler.adapter;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -143,8 +141,8 @@ public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
 
             if ( sector != null )
             {
-                String color = mSector.get( current.getSecteur() ).getColor();
-                holder.sector.setTextColor( Color.parseColor( color ) );
+                int color = mSector.get( current.getSecteur() ).getColor();
+                holder.sector.setTextColor( color );
             }
         }
 

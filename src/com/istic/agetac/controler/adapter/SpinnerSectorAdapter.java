@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +47,8 @@ public class SpinnerSectorAdapter extends ArrayAdapter<String>
         text.setText( items.get( position ) );
 
         Secteur secteur = mMap.get( items.get( position ) );
-        String color = secteur.getColor();
-        text.setTextColor( Color.parseColor( color ) );
+        int color = secteur.getColor();
+        text.setTextColor(color );
         return mySpinner;
     }
 }

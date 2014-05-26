@@ -91,7 +91,7 @@
                 android:layout_alignBottom="@+id/activity_intervention_labelAdresse"
                 android:layout_toRightOf="@+id/activity_intervention_labelAdresse"
                 android:ems="10"
-                android:hint="@string/textIntervention"
+                android:hint="@string/textAdresse"
                 android:inputType="text"
                 android:textColor="#efefef" />
            

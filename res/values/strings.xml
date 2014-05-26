@@ -23,7 +23,8 @@
     <string name="demande_de_moyen_Dialog_ButtonText_Delete">Supprimer</string>
 
     <!-- Layout intervention -->
-    <string name="textIntervention">Entrer un nom d\'intervention</string>
+    <string name="textIntervention">Entrer un nom pour l\'intervention</string>
+    <string name="textAdresse">Entrer une adresse pour l\'intervention</string>
     <string name="textCode">Entrer un code sinistre</string>
     <string name="switchFragment">Ajouter un moyen</string>
     <string name="validIntervention">Valider</string>

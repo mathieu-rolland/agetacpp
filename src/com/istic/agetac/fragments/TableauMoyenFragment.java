@@ -1,7 +1,6 @@
 package com.istic.agetac.fragments;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.app.AlarmManager;
@@ -9,14 +8,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
@@ -24,15 +20,10 @@ import com.istic.agetac.controler.adapter.AMoyenExpListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpIntervenantAdapter;
 import com.istic.agetac.controllers.dao.MoyensDao;
-import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
-import com.istic.agetac.model.Secteur;
-import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
-import com.istic.sit.framework.couch.APersitantRecuperator;
-import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.sync.PoolSynchronisation;
 
 public class TableauMoyenFragment extends Fragment {
@@ -71,27 +62,27 @@ public class TableauMoyenFragment extends Fragment {
 
 		/* R�cup�rations des donn�es via les mod�les */
 		
-		if (AgetacppApplication.getListIntervention() != null) {
-			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity(),mIsCreating);
+		if (intervention == null) {
+			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity(), mIsCreating);
 		} else {
 			mAdapterMoyens = new MoyenListExpIntervenantAdapter(getActivity());
 		}
 		
 		if(!mIsCreating)
 		{
-			Intervention intervention = AgetacppApplication.getIntervention();
 			mAdapterMoyens.addAll(intervention.getMoyens());
-			mListViewMoyen.setAdapter(mAdapterMoyens);
-			mAdapterMoyens.notifyDataSetChanged();
 		}
 		
-		mAdapterMoyens.notifyDataSetChanged();
-		Log.e("Vincent", "Tableau des moyen set adapteur " + mAdapterMoyens.hashCode());
 		mListViewMoyen.setAdapter(mAdapterMoyens);
 		
 		if(mListMoyen==null)
 		{
-			mListMoyen = new ArrayList<IMoyen>(intervention.getMoyens());
+			if(intervention == null) {
+				mListMoyen = new ArrayList<IMoyen>();
+			}
+			else {
+				mListMoyen = new ArrayList<IMoyen>(intervention.getMoyens());
+			}
 		}
 		else
 		{
@@ -99,9 +90,10 @@ public class TableauMoyenFragment extends Fragment {
 		}
 
         mListViewMoyen.setAdapter( mAdapterMoyens );
-        mAdapterMoyens.notifyDataSetChanged();
 
-        mAdapterMoyens.setSectorAvailable(intervention.getSecteurs());
+        if(intervention != null){
+        	mAdapterMoyens.setSectorAvailable(intervention.getSecteurs());
+        }
 		mAdapterMoyens.notifyDataSetChanged();
         
         return view;

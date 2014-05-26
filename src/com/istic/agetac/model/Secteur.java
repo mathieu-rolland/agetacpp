@@ -1,11 +1,15 @@
 package com.istic.agetac.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.istic.agetac.api.model.ISecteur;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.model.Entity;
+import com.istic.sit.framework.couch.DataBaseCommunication;
+import com.istic.sit.framework.couch.IPersistant;
+import com.istic.sit.framework.couch.JsonSerializer;
 
 /**
  * Classe Secteur : Mod�le qui repr�sente un secteur (i.e. SAP/INC/ALIM/...)
@@ -43,6 +47,9 @@ public class Secteur extends Entity implements ISecteur {
 		Intervention inter= AgetacppApplication.getIntervention();
 		if( !inter.getSecteurs().contains(this) ) inter.getSecteurs().add(this);
 		inter.save();
+		if( !intervention.getSecteurs().contains(this) ) intervention.getSecteurs().add(this);
+		intervention.addHistorique(new Action(AgetacppApplication.getUser().getName(),new Date(),"Création du secteur "+this.getName()));
+		intervention.save();
 	}
 
 	@Override

@@ -92,7 +92,7 @@ public class CreateInterventionActivity extends FragmentActivity{
 	
 	public void updateMoyenIntervention(List<Moyen> listMoyen)
 	{
-//		mInterventionCurrent.addMoyens(listMoyen);		
+	//	mInterventionCurrent.addMoyens(listMoyen);		
 //		mFragmentTableauDesMoyens.AddAllMoyen(listMoyen);
 	}
 	

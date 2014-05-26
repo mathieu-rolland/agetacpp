@@ -45,7 +45,9 @@ public class OctServiceSynchronisation extends ASynchornisationService implement
 	@Override
 	public void update(Subject subject) {
 		//QUESTION: POUR L'OCT ON NE TRANSMET PAS UNE LISTE MAIS UN OBJET UNIQUE.
-		//notifyResponseSuccess( ((Intervention) subject).getOct() );
+		ArrayList<OCT> list = new ArrayList<OCT>();
+		list.add(((Intervention) subject).getOct());
+		notifyResponseSuccess( list );
 		
 	}
 
@@ -60,7 +62,7 @@ public class OctServiceSynchronisation extends ASynchornisationService implement
 //		new MessageDAO(this).executeFindAll( Message.class );
 		Intervention intervention = AgetacppApplication.getIntervention();
 		if( intervention == null ) return; 
-		intervention.getMessages( this );
+		intervention.getOct();
 		
 	}
 

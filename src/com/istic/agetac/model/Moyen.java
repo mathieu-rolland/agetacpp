@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IMoyen;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.api.model.IPosition;
 import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
@@ -271,6 +272,7 @@ public class Moyen extends Entity implements IMoyen {
 //		if( !intervention.contains(this) ){
 			intervention.addMoyen(this);
 //		}
+		intervention.addHistorique(new Action(AgetacppApplication.getUser().getName(),new Date(),"Modification du moyen" +this.getLibelle()));
 		intervention.save();
 	}
 

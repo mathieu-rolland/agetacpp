@@ -148,9 +148,12 @@ public class Intervention implements IIntervention {
 
 	public void setHistorique(List<Action> historique) {
 		this.historique = historique;
-		this.groupes = new ArrayList<Groupe>();
-		this.secteurs = new ArrayList<Secteur>();
 	}
+	
+	public void addHistorique(Action action){
+		this.historique.add(action);
+	}
+	
 
 	/**
 	 * @return the adresse

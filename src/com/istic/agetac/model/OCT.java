@@ -1,6 +1,24 @@
 package com.istic.agetac.model;
 
-public class OCT {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.istic.agetac.app.AgetacppApplication;
+import com.istic.agetac.pattern.observer.Observer;
+import com.istic.sit.framework.couch.ITaMere;
+import com.istic.sit.framework.couch.JsonSerializer;
+
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class OCT implements ITaMere, Parcelable {
 
 	static String codis = "CODIS";
 	static String cos = "COS";
@@ -21,8 +39,13 @@ public class OCT {
 	private int frequenceS4Asc;
 	private int frequenceS4Desc;
 	
+	private String _id;
+	private transient Intervention intervention;
+	private transient List<Observer> observers;
+	
 	public OCT(String s1, String s2, String s3, String s4, int freqCodis, int freqCosA, int freqCosD,
 			int freqS1A, int freqS1D,int freqS2A, int freqS2D, int freqS3A, int freqS3D, int freqS4A, int freqS4D){
+		this._id = UUID.randomUUID().toString();
 		
 		this.secteur1 = s1;
 		this.secteur2 = s2;
@@ -43,8 +66,40 @@ public class OCT {
 	}
 
 	public OCT(){
-		
+		this._id = UUID.randomUUID().toString();
 	}
+	
+	
+	public OCT(Parcel source) {
+		String serializedJson = source.readString();
+		observers = new ArrayList<Observer>();
+		this._id = UUID.randomUUID().toString();
+		try {
+			OCT oct = (OCT) JsonSerializer.deserialize(OCT.class, new JSONObject(serializedJson));
+		
+			this.intervention = oct.intervention;
+			this.secteur1 = oct.secteur1;
+			this.secteur2 = oct.secteur2;
+			this.secteur3 = oct.secteur3;
+			this.secteur4 = oct.secteur4;
+			
+			this.frequenceCodis = oct.frequenceCodis;
+			this.frequenceCosAsc = oct.frequenceCosAsc;
+			this.frequenceCosDesc = oct.frequenceCosDesc;
+			this.frequenceS1Asc = oct.frequenceS1Asc;
+			this.frequenceS1Desc = oct.frequenceS1Desc;
+			this.frequenceS2Asc = oct.frequenceS2Asc;
+			this.frequenceS2Desc = oct.frequenceS2Desc;
+			this.frequenceS3Asc = oct.frequenceS3Asc;
+			this.frequenceS3Desc = oct.frequenceS3Desc;
+			this.frequenceS4Asc = oct.frequenceS4Asc;
+			this.frequenceS4Desc = oct.frequenceS4Desc;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public static String getCodis() {
 		return codis;
 	}
@@ -179,6 +234,43 @@ public class OCT {
 
 	public void setFrequenceS4Desc(int frequenceS4Desc) {
 		this.frequenceS4Desc = frequenceS4Desc;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		String oct = gson.toJson(this).toString();
+		dest.writeString(oct);
+		
+	}
+
+	@Override
+	public String getId() {
+		return this._id;
+	}
+
+	@Override
+	public void setId(String id) {
+		this._id = id;
+		
+	}
+
+	@Override
+	public void save() {
+		AgetacppApplication.getIntervention().save();
+		
+	}
+
+	@Override
+	public void delete() {
+		AgetacppApplication.getIntervention().setOct(null);
+		AgetacppApplication.getIntervention().save();
 	}
 	
 }

@@ -448,6 +448,15 @@ public class Intervention implements IIntervention {
 			gr.setIntervention(this);
 		}
 		
+		oct.setIntervention(this);
+		
+		for(Secteur secteur : secteurs){
+			secteur.setIntervention(this);
+		}
+		
+		for(Action action : historique){
+			action.setIntervention(this);
+		}
 	}
 	
 	public String toString(){

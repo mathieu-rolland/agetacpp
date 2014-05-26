@@ -99,6 +99,20 @@ public class OCT implements IRecordable, Parcelable {
 	}
 	
 	
+	/**
+	 * @return the intervention
+	 */
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	/**
+	 * @param intervention the intervention to set
+	 */
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
+	}
+
 	public static String getCodis() {
 		return codis;
 	}

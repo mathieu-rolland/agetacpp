@@ -3,13 +3,12 @@ package com.istic.agetac.model;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.istic.agetac.api.model.IUser.Role;
-
 public class Action {
 
 	private String user;
 	private Date dateAction;
 	private String natureAction;
+	private transient Intervention intervention;
 	
 	public Action(String user,Date dateAction,String nature){
 		this.user = user;
@@ -46,5 +45,19 @@ public class Action {
 
 	public void setNatureAction(String natureAction) {
 		this.natureAction = natureAction;
+	}
+
+	/**
+	 * @return the intervention
+	 */
+	public Intervention getIntervention() {
+		return intervention;
+	}
+
+	/**
+	 * @param intervention the intervention to set
+	 */
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 }

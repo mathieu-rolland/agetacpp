@@ -211,7 +211,7 @@ public class CreationBase {
 		thomas.setIntervention(inter1);
 		
 		// Messages
-		Message msg1 = new Message(inter1);
+		/*Message msg1 = new Message(inter1);
 		msg1.setDateEmission(new Date());
 		msg1.setText(Message_part.JE_DEMANDE, "un VSAV, 2 FPT");
 		msg1.setText(Message_part.JE_FAIS, "ma prise de COS");
@@ -228,7 +228,7 @@ public class CreationBase {
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
 		inter1.addMessage(msg1);
-		inter1.addMessage(msg2);
+		inter1.addMessage(msg2);*/
 		
 		//Secteurs
 		Secteur s1 = new Secteur();

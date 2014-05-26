@@ -13,6 +13,7 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IGroupe;
 import com.istic.agetac.api.model.IMoyen;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
@@ -37,6 +38,7 @@ public class Groupe implements IGroupe, IMoyen {
 		this._id 		= UUID.randomUUID().toString();
 		this._rev 		= "";
 		this.nom 		= nom;
+		this.intervention = AgetacppApplication.getIntervention();
 		this.addMoyens(new ArrayList<Moyen>());
 	}
 	
@@ -44,7 +46,9 @@ public class Groupe implements IGroupe, IMoyen {
 		this._id 		= UUID.randomUUID().toString();
 		this._rev 		= "";
 		this.nom 		= nom;
+		this.intervention = AgetacppApplication.getIntervention();
 		this.addMoyens(moyens);
+		
 	}
 	
 	@Override
@@ -89,10 +93,6 @@ public class Groupe implements IGroupe, IMoyen {
 		}
 		else {
 //			DataBaseCommunication.sendPut(this);
-			if (intervention.getGroupes() == null) {
-				intervention.setGroupes(new ArrayList<Groupe>());
-				intervention.getGroupes().add(this);
-			}
 			if( !intervention.getGroupes().contains( this ) ) intervention.getGroupes().add(this);
 			intervention.save();
 		}

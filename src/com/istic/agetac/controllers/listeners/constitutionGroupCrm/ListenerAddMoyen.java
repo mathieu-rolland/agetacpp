@@ -5,11 +5,14 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
 import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
@@ -25,7 +28,7 @@ public class ListenerAddMoyen implements OnClickListener{
 	private Moyen itemMoyen; 							// Instance de l'item à traiter
 	private ConstitutionGroupCrmFragment vue; 			// Instance de la vue 
 	private Groupe groupSelected;
-	private List<Groupe> listGroupe;
+	private List<IMoyen> listGroupe;
 	
 	/**
 	 * Contructeur de ListenerAddMoyen
@@ -37,7 +40,6 @@ public class ListenerAddMoyen implements OnClickListener{
 		this.itemMoyen = moyen;
 		this.vue = constitutionGroupCrm;
 		this.listGroupe = this.vue.getmListGroup();
-		
 		
 	} // méthode
 
@@ -57,11 +59,26 @@ public class ListenerAddMoyen implements OnClickListener{
 		final ConstitutionGroupCrmFragment vueDemandeMoyen = this.vue;
 		final Moyen item = this.getItemMoyen();
 		final Spinner tv = ((Spinner)alert.findViewById(R.id.constitution_group_crm_spinner_group));
+		this.groupSelected = (Groupe) tv.getItemAtPosition(0);
+		
+		
+		tv.setOnItemSelectedListener(new OnItemSelectedListener() {
+		    
+			@Override
+		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+		        groupSelected = (Groupe) tv.getItemAtPosition(position);
+		    }
+
+		    @Override
+		    public void onNothingSelected(AdapterView<?> parentView) {
+		    }
+
+		});
 		
 		// On set la valeur du titre de la boite de Dialog
 		((TextView)alert.findViewById(R.id.constitution_group_crm_dialog_TextView_Title)).setText("Choisissez le groupe dans lequel ajouter " + item.getLibelle());
 		
-		ArrayAdapter<Groupe> adapter = new ArrayAdapter<Groupe>(this.vue.getActivity().getApplicationContext(), android.R.layout.simple_spinner_item,this.listGroupe);
+		ArrayAdapter<IMoyen> adapter = new ArrayAdapter<IMoyen>(this.vue.getActivity().getApplicationContext(), android.R.layout.simple_spinner_item,this.listGroupe);
 		tv.setAdapter(adapter);
 		
 		// On pose le listener d'annulation de suppression
@@ -81,12 +98,13 @@ public class ListenerAddMoyen implements OnClickListener{
 				
 				// Ajout au group
 				groupSelected.addMoyen(item);
+				item.setIsInGroup(true);
 				
 				// Ajout en base
 				groupSelected.save();
 				
-				// MAJ ListGroupe
-				// TODO
+				// MAJ Groupe et Moyen in the view
+				vue.updateVue();
 				
 				// On ferme la boite de dialogue
 				alert.cancel();

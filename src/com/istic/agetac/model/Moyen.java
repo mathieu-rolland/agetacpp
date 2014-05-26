@@ -8,6 +8,8 @@ import org.json.JSONObject;
 import android.graphics.Color;
 import android.os.Parcel;
 
+import android.util.Log;
+
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.sit.framework.api.model.IPosition;
@@ -38,6 +40,7 @@ public class Moyen extends Entity implements IMoyen {
 	public static final String NAME_PROPERTY_HOUR_FREE = "moyen_hour_free";
 	/** Constante string which defines name of property of moyen secteur hour */
 	public static final String NAME_PROPERTY_SECTEUR = "moyen_secteur";
+	public static final String NAME_PROPERTY_INGROUP = "is_in_group";
 
 	private transient Intervention intervention;
 	
@@ -61,6 +64,7 @@ public class Moyen extends Entity implements IMoyen {
 				null);
 		IProperty hFreeProperty = creatProperty(NAME_PROPERTY_HOUR_FREE, null);
 		IProperty secteurProperty = creatProperty(NAME_PROPERTY_SECTEUR, null);
+		IProperty ingroupProperty = creatProperty(NAME_PROPERTY_INGROUP, "0");
 		super.addPropriete(typeProperty);
 		super.addPropriete(hDemandProperty);
 		super.addPropriete(hEngagementProperty);
@@ -68,8 +72,9 @@ public class Moyen extends Entity implements IMoyen {
 		super.addPropriete(hFreeProperty);
 		super.addPropriete(secteurProperty);
 		this.intervention = intervention;
+		super.addPropriete(ingroupProperty);
 	}
-
+	
 	/**
 	 * Constructeur de la classe Moyen
 	 * 
@@ -93,14 +98,31 @@ public class Moyen extends Entity implements IMoyen {
 		IProperty hFreeProperty = creatProperty(NAME_PROPERTY_HOUR_FREE, null);
 		IProperty secteurProperty = creatProperty(NAME_PROPERTY_SECTEUR, null);
 
+		IProperty ingroupProperty = creatProperty(NAME_PROPERTY_INGROUP, "0");
+
 		super.addPropriete(typeProperty);
 		super.addPropriete(hDemandProperty);
 		super.addPropriete(hEngagementProperty);
 		super.addPropriete(hArrivalProperty);
 		super.addPropriete(hFreeProperty);
 		super.addPropriete(secteurProperty);
+		super.addPropriete(ingroupProperty);
 	}
 
+	public boolean isInGroup() {
+		if(super.getProperty(NAME_PROPERTY_INGROUP).getValeur().equals("0")) { 
+			return false; 
+		} else { 
+			return true;
+		}
+	}
+	
+	public void setIsInGroup(boolean bool) {
+		String ingroup = (bool) ? "1" : "0";
+		super.getProperty(NAME_PROPERTY_INGROUP).setValeur(ingroup);
+		Log.d("Antho", ingroup + " pour : " + this.toString());
+	}
+	
 	/**
 	 * Constructeur de la classe Moyen
 	 * 
@@ -314,6 +336,15 @@ public class Moyen extends Entity implements IMoyen {
 
 	@Override
 	public IRepresentation getRepresentation() {
+		if (this.getType() == null) {
+			if (isOk()) {
+				return  super.getRepresentationOK();
+			}
+			else
+			{
+				return  super.getRepresentationOK();
+			}
+		}
 		if (isOk()) {
 			return this.getRepresentationOK();
 		} else {
@@ -372,6 +403,11 @@ public class Moyen extends Entity implements IMoyen {
 
 	public void setIntervention(Intervention intervention) {
 		this.intervention = intervention;
+	}
+	
+	@Override 
+	public String toString() {
+		return this.getLibelle();
 	}
 
 	public boolean equals( Moyen moyen ){

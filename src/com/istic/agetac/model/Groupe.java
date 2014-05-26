@@ -8,14 +8,11 @@ import java.util.UUID;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.os.Parcel;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IGroupe;
 import com.istic.agetac.api.model.IMoyen;
-import com.istic.sit.framework.api.model.IPosition;
-import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
@@ -27,7 +24,15 @@ public class Groupe implements IGroupe, IMoyen {
 	private String nom;
 	private List<Moyen> moyens;
 	private transient Intervention intervention;
+	private boolean isExpand = true;
 	
+	/**
+	 * @param isExpand the isExpand to set
+	 */
+	public void setExpand(boolean isExpand) {
+		this.isExpand = isExpand;
+	}
+
 	public Groupe(String nom){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
@@ -256,6 +261,10 @@ public class Groupe implements IGroupe, IMoyen {
 
 	public void setIntervention(Intervention intervention) {
 		this.intervention = intervention;
+	}
+	
+	public boolean isExpand() {
+		return isExpand;
 	}
 
 }

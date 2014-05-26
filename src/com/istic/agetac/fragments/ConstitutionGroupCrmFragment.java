@@ -3,26 +3,29 @@ package com.istic.agetac.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListAdapter;
 import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListGroupAdapter;
 import com.istic.agetac.model.Groupe;
+import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
-import com.istic.agetac.utils.SauvegardeStateCrm;
-import com.istic.sit.framework.couch.APersitantRecuperator;
-import com.istic.sit.framework.couch.CouchDBUtils;
 
 /**
  * Classe DemandeDeMoyensFragment : affiche la fenétre de constitution des
@@ -32,22 +35,17 @@ import com.istic.sit.framework.couch.CouchDBUtils;
  */
 public class ConstitutionGroupCrmFragment extends Fragment {
 
-	/** Instances des modéles é utiliser */
-	private List<Moyen> 	mListMoyen;
-	private List<Groupe> 	mListGroup;
+	/** Instances des modéles à utiliser */
+	private List<IMoyen> 	mListMoyen;
+	private List<IMoyen> 	mListGroup;
+	private Intervention 	intervention;
 
-	/** Instances des modéles formattés */
-	private List<IMoyen> moyenListItemGroup;
-
-	private ListView 	listViewMoyensAtCrm;
-	private ListView 	listViewMoyensGroup;
+	private ListView 		listViewMoyensAtCrm;
+	private ListView 		listViewMoyensGroup;
 
 	private ConstitutionGroupCrmListAdapter 		adapterMoyen;
 	private ConstitutionGroupCrmListGroupAdapter 	adapterGroup;
 
-	private boolean isGroupRetreived = false;
-	private boolean isMoyenRetreived = false;
-	
 	/**
 	 * Méthode qui affiche un toast suite é la réception d'un message
 	 * @param message
@@ -90,25 +88,17 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 		/** Instanciations des contrôlers */
 
 		/** Instanciations des modéles */
-		this.setmListMoyen(new ArrayList<Moyen>());
-		this.setmListGroup(new ArrayList<Groupe>());
-
-		/** Initialisation des modéles formatés */
-		this.moyenListItemGroup = new ArrayList<IMoyen>();
-
+		this.setIntervention(AgetacppApplication.getIntervention());
+		this.setmListMoyen(new ArrayList<IMoyen>());
+		this.setmListGroup(new ArrayList<IMoyen>());
+		
 		/** Instanciation des adapters */
 		this.setAdapterMoyen(new ConstitutionGroupCrmListAdapter(this,
 				android.R.layout.simple_dropdown_item_1line, this.mListMoyen));
 		
-		SauvegardeStateCrm.getInstance().setAdapterList(new ConstitutionGroupCrmListGroupAdapter(this,
-				android.R.layout.simple_dropdown_item_1line,
-				SauvegardeStateCrm.getInstance().getMoyenListItemOriginal()));
-		
-		/** Récupérations des données via les modèles */
-		CouchDBUtils.getFromCouch(new MoyenRecuperator(AgetacppApplication
-				.getIntervention().getId()));
-		CouchDBUtils.getFromCouch(new GroupeRecuperator());
-		
+		this.setAdapterGroup(new ConstitutionGroupCrmListGroupAdapter(this,
+				android.R.layout.simple_dropdown_item_1line, this.mListGroup));
+				
 		/** LOG */
 		Log.d("Antho", "Instanciations faites");
 
@@ -128,73 +118,120 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 		this.listViewMoyensAtCrm.setAdapter(this.adapterMoyen);
 		this.listViewMoyensGroup = (ListView) getActivity().findViewById(
 				R.id.consitution_group_crm_listGroup);
-		this.listViewMoyensGroup.setAdapter(SauvegardeStateCrm.getInstance().getAdapterList());
-	}
-
-	/********************************************************************************************************/
-	/** IViewReceiver methods */
-	/********************************************************************************************************/
-
-	public class MoyenRecuperator extends APersitantRecuperator<Moyen> {
-
-		public MoyenRecuperator(String idIntervention) {
-			super(Moyen.class, "agetacpp", "get_moyens_by_intervention",
-					idIntervention);
-		}
-
-		@Override
-		public void onErrorResponse(VolleyError error) {
-			Log.e("Antho", "FAIL to get datas MOYEN - " + error.toString());
-			Log.e("Antho", error.getMessage() == null ? "null" : error.getMessage() );
-			onMessageReveive("Impossible de récupérer les données MOYEN !");
-		}
-
-		@Override
-		public void onResponse(List<Moyen> moyens) {
-			setMoyenRetreived(true);
-			mListMoyen.addAll(moyens);
-			adapterMoyen.notifyDataSetChanged();
-			listViewMoyensAtCrm.setAdapter(adapterMoyen);
-			onMessageReveive("Récupération des données MOYEN réussie !");
-		}
-	}
-	
-	public class GroupeRecuperator extends APersitantRecuperator<Groupe> {
-
-		public GroupeRecuperator() {
-			super(Groupe.class, "agetacpp", "get");
-		}
-
-		@Override
-		public void onErrorResponse(VolleyError error) {
-			Log.e("Antho", "FAIL to get datas GROUPE - " + error.toString());
-			Log.e("Antho", error.getMessage() == null ? "null" : error.getMessage() );
-			onMessageReveive("Impossible de récupérer les données GROUPE !");
-		}
-
-		@Override
-		public void onResponse(List<Groupe> groupes) {
+		this.listViewMoyensGroup.setAdapter(this.adapterGroup);
+		
+		Button newGroup = (Button)getActivity().findViewById(
+				R.id.consitution_group_crm_button_addGroup);
+		newGroup.setOnClickListener(new OnClickListener() {
 			
-			setGroupRetreived(true);
-			setmListGroup(groupes);
-			
-			SauvegardeStateCrm.getInstance().getMoyenListItemOriginal().clear();
-			for(Groupe g : groupes) {
+			@Override
+			public void onClick(View v) {
 				
-				SauvegardeStateCrm.getInstance().getMoyenListItemOriginal().add(g);
-				List<Moyen> listMoyenOfGroup = g.getMoyens();
-				for (Moyen moyen : listMoyenOfGroup) {
-					SauvegardeStateCrm.getInstance().getMoyenListItemOriginal().add(moyen);
-				}
+				// Création de l'AlertDialog
+				AlertDialog.Builder adb = new AlertDialog.Builder(getView().getContext());
+		        final AlertDialog alert = adb.create();	
+				alert.show();
+				alert.setContentView(R.layout.dialog_constitution_group_crm_add);
+								
+				// On set la valeur du titre de la boite de Dialog
+				((TextView)alert.findViewById(R.id.constitution_group_crm_DialogAddGroup_TextView_Title)).setText("Choisissez le nom du groupe que vous souhaitez créer");
 				
+				alert.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+				
+				// On pose le listener d'annulation de suppression
+				alert.findViewById(R.id.constitution_group_crm_DialogAddGroup_Button_Cancel).setOnClickListener(new OnClickListener() {
+
+					public void onClick(View v) {
+
+						// On ferme la boite de dialogue
+						alert.cancel();
+
+					}});
+				
+				// On pose le listener de confirmation de suppression
+				alert.findViewById(R.id.constitution_group_crm_DialogAddGroup_Button_Add).setOnClickListener(new OnClickListener() {
+
+					public void onClick(View v) {
+						
+						String tmp = ((EditText)alert.findViewById(R.id.constitution_group_crm_DialogAddGroup_TextEdit_Name)).getText().toString();
+
+						Groupe groupe = new Groupe(tmp);
+						
+						// Lancement de la mise à jour
+						getmListGroup().add(groupe);
+						
+						groupe.save();
+						
+						getAdapterGroup().notifyDataSetChanged();
+						
+						// On ferme la boite de dialogue
+						alert.cancel();
+
+					}
+				});
 			}
-			
-			SauvegardeStateCrm.getInstance().getAdapterList().notifyDataSetChanged();
-			listViewMoyensGroup.setAdapter(SauvegardeStateCrm.getInstance().getAdapterList());
-			onMessageReveive("Récupération des données GROUPE réussie !");
-			
+		});
+		
+		/** Récupération des données */
+		retrieveGroupInBDD();
+		retrieveMoyenInBDD();
+		
+	} // method
+
+	/********************************************************************************************************/
+	/** Receiver methods */
+	/********************************************************************************************************/
+	
+	/**
+	 * Method which retrieves Moyen in BDD and save them only if their are not in a groupe
+	 */
+	public void retrieveMoyenInBDD() {
+		
+		this.getmListMoyen().clear();
+		List<IMoyen> moyenFiltered = new ArrayList<IMoyen>();
+		for (IMoyen m : this.getIntervention().getMoyens()) {
+			if (!((Moyen)m).isInGroup()){
+				moyenFiltered.add(m);
+			}
 		}
-	}
+		
+		this.setmListMoyen(moyenFiltered);
+		this.getAdapterMoyen().notifyDataSetChanged();
+		this.listViewMoyensAtCrm.setAdapter(this.getAdapterMoyen());
+		onMessageReveive("Récupération des données MOYEN réussie !");
+		
+	} // method
+	
+	public void updateVue() {
+		this.retrieveMoyenInBDD();
+		this.retrieveGroupInBDD();
+	} // method
+
+	/**
+	 * Method which retrieves Group and Moyens in BDD and save them only if their are not in a groupe
+	 */
+	public void retrieveGroupInBDD() {
+		
+		this.getmListGroup().clear();
+		ArrayList<IMoyen> listIMoyenRetrieved = new ArrayList<IMoyen>();
+		for(Groupe g : this.getIntervention().getGroupes()) {
+			
+			listIMoyenRetrieved.add(g);
+			List<Moyen> listMoyenOfGroup = g.getMoyens();
+			Log.d("Antho", g.toString());
+			for (Moyen moyen : listMoyenOfGroup) {
+				if (!moyen.isInGroup()){
+					listIMoyenRetrieved.add(moyen);
+					Log.d("Antho", " -- " + moyen.toString());
+				}
+			}
+		}
+		
+		this.getmListGroup().addAll(listIMoyenRetrieved);
+		this.getAdapterGroup().notifyDataSetChanged();
+		this.listViewMoyensGroup.setAdapter(this.getAdapterGroup());
+		
+	} // method
 	
 	/********************************************************************************************************/
 	/** GETTEURS ET SETTEURS /
@@ -203,7 +240,7 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 	/**
 	 * @return the mListGroup
 	 */
-	public List<Groupe> getmListGroup() {
+	public List<IMoyen> getmListGroup() {
 		return mListGroup;
 	}
 
@@ -211,7 +248,7 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 	 * @param mListGroup
 	 *            the mListGroup to set
 	 */
-	public void setmListGroup(List<Groupe> mListGroup) {
+	public void setmListGroup(List<IMoyen> mListGroup) {
 		this.mListGroup = mListGroup;
 	}
 
@@ -249,44 +286,30 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 	/**
 	 * @return the mListMoyen
 	 */
-	public List<Moyen> getmListMoyen() {
+	public List<IMoyen> getmListMoyen() {
 		return mListMoyen;
 	}
 
 	/**
-	 * @param mListMoyen
+	 * @param list
 	 *            the mListMoyen to set
 	 */
-	public void setmListMoyen(List<Moyen> mListMoyen) {
-		this.mListMoyen = mListMoyen;
+	public void setmListMoyen(List<IMoyen> list) {
+		this.mListMoyen = list;
 	}
 
 	/**
-	 * @return the isGroupRetreived
+	 * @return the intervention
 	 */
-	public boolean isGroupRetreived() {
-		return isGroupRetreived;
+	public Intervention getIntervention() {
+		return intervention;
 	}
 
 	/**
-	 * @param isGroupRetreived the isGroupRetreived to set
+	 * @param intervention the intervention to set
 	 */
-	public void setGroupRetreived(boolean isGroupRetreived) {
-		this.isGroupRetreived = isGroupRetreived;
-	}
-
-	/**
-	 * @return the isMoyenRetreived
-	 */
-	public boolean isMoyenRetreived() {
-		return isMoyenRetreived;
-	}
-
-	/**
-	 * @param isMoyenRetreived the isMoyenRetreived to set
-	 */
-	public void setMoyenRetreived(boolean isMoyenRetreived) {
-		this.isMoyenRetreived = isMoyenRetreived;
+	public void setIntervention(Intervention intervention) {
+		this.intervention = intervention;
 	}
 
 }// Class DemandeDeMoyensFragment

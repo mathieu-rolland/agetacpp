@@ -288,6 +288,8 @@ public class CreationBase {
 		Groupe g1 = new Groupe("Groupe 1 - Rennes", listMoyen);
 		Groupe g2 = new Groupe("Groupe 2 - Rennes", new ArrayList<Moyen>());
 		Groupe g3 = new Groupe("Groupe 3 - Rennes", new ArrayList<Moyen>());
+		mo1.setIsInGroup(true);
+		mo2.setIsInGroup(true);
 		
 		// sauvegarde en base
 		inter1.save();

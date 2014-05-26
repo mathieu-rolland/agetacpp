@@ -17,7 +17,8 @@ public class GroupeToIMoyen {
 		
 		List<IMoyen> imoyens = new ArrayList<IMoyen> ();
 		
-		for (Groupe groupe : groupes) {
+		for (Groupe groupe : groupes) 
+		{
 			
 			imoyens.add(groupe);
 			

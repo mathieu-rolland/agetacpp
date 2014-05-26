@@ -7,13 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
-import com.istic.agetac.controllers.listeners.constitutionGroupCrm.ListenerCollapse;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
 import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
@@ -49,24 +46,17 @@ public class ConstitutionGroupCrmListGroupAdapter extends ArrayAdapter<IMoyen> {
 		View v = convertView;
 	  
 		// On récupére les infos que l'on souhaite afficher
-				IMoyen itemMoyen = listItems.get(position);
+		IMoyen itemMoyen = listItems.get(position);
 		
-		// Si la vue n'existe pas 
-		if (v == null) {
-	    
-			// Alors on la créer via le layout maquette_item_moyens
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-			if (itemMoyen != null && itemMoyen.isGroup()) {
-				v = inflater.inflate(R.layout.item_constitution_groupe_crm_listview_group, null);
-			}
-			else
-			{
-				v = inflater.inflate(R.layout.item_constitution_groupe_crm_listview_moyen, null);
-			}
-	  
+		// Alors on la créer via le layout maquette_item_moyens
+		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		if (itemMoyen != null && itemMoyen.isGroup()) {
+			v = inflater.inflate(R.layout.item_constitution_groupe_crm_listview_group, null);
 		}
-			
-		
+		else
+		{
+			v = inflater.inflate(R.layout.item_constitution_groupe_crm_listview_moyen, null);
+		}
 		  
 		// Si on à bien récupèré les infos
 		if (itemMoyen != null) {
@@ -74,20 +64,19 @@ public class ConstitutionGroupCrmListGroupAdapter extends ArrayAdapter<IMoyen> {
 			if (itemMoyen.isGroup()) {
 				
 				// Création de la vue pour un group
-				
-				TextView groupName		= (TextView) v.findViewById(R.id.consitution_group_crm_item_listViewGroup_Group_TextView_nameMoyen);
-		        ImageButton collapse 	= (ImageButton) v.findViewById(R.id.consitution_group_crm_item_listViewGroup_Group_Button_assignToGroup);
+				TextView groupName	= (TextView) v.findViewById(R.id.consitution_group_crm_item_listViewGroup_Group_TextView_nameMoyen);
 		        
 		        groupName.setText(((Groupe)itemMoyen).getNom());
-				// Ajout du listener de collapse du group au click
-		        collapse.setOnClickListener(new ListenerCollapse(position, ((Groupe)itemMoyen).getMoyens().size(), (ListView)this.constitutionGroupCrm.getActivity().findViewById(R.id.consitution_group_crm_listGroup)));
+		        			
 			}
 			else
 			{
 				// Création de la vue pour un group
-				TextView groupName		= (TextView) v.findViewById(R.id.consitution_group_crm_item_listViewGroup_Moyen_TextView_nameMoyen);
+				TextView groupName = (TextView) v.findViewById(R.id.consitution_group_crm_item_listViewGroup_Moyen_TextView_nameMoyen);
 				groupName.setText(((Moyen)itemMoyen).getLibelle());
+				
 				// Ajout du listener demande de suppression au long click
+				
 			}
 			
 		}// if

@@ -18,19 +18,4 @@
         android:paddingLeft="10dip"
         android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/consitution_group_crm_item_listViewGroup_Group_Button_assignToGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/consitution_group_crm_item_listViewGroup_Group_TextView_nameMoyen"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/toggle_expand_red"
-        android:gravity="center"
-        android:layout_centerVertical="true"
-        android:padding="5dip"
-        android:text="@string/constitution_group_crm_button_assignToGroup_text"
-        android:textColor="#efefef"
-        android:textSize="@dimen/text_size"
-        android:contentDescription="@string/general_empty_string" />
-
 </RelativeLayout>

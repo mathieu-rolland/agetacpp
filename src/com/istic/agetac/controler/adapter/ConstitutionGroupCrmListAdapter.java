@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controllers.listeners.constitutionGroupCrm.ListenerAddMoyen;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
 import com.istic.agetac.model.Moyen;
@@ -22,10 +23,10 @@ import com.istic.agetac.model.Moyen;
  * 
  * @author Anthony LE MEE - 10003134
 */
-public class ConstitutionGroupCrmListAdapter extends ArrayAdapter<Moyen> {
+public class ConstitutionGroupCrmListAdapter extends ArrayAdapter<IMoyen> {
 	    
 	/** Attributs */
-	private List<Moyen> listItems; // Liste des moyens au CRM
+	private List<IMoyen> listItems; // Liste des moyens au CRM
 	private ConstitutionGroupCrmFragment constitutionGroupCrm;    
 	
 	/**
@@ -34,7 +35,7 @@ public class ConstitutionGroupCrmListAdapter extends ArrayAdapter<Moyen> {
 	 * @param textViewResourceId - ressource item
 	 * @param mListMoyen - liste des item à afficher
 	 */
-	public ConstitutionGroupCrmListAdapter(ConstitutionGroupCrmFragment f, int textViewResourceId, List<Moyen> mListMoyen) {
+	public ConstitutionGroupCrmListAdapter(ConstitutionGroupCrmFragment f, int textViewResourceId, List<IMoyen> mListMoyen) {
 	
 		super(f.getActivity().getApplicationContext(), textViewResourceId, mListMoyen);
 		this.listItems 				= mListMoyen;
@@ -45,28 +46,23 @@ public class ConstitutionGroupCrmListAdapter extends ArrayAdapter<Moyen> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 	
-		// ON récupère la vue affich�e
+		// ON récupère la vue affichée
 		View v = convertView;
 	  
-		// Si la vue n'existe pas 
-		if (v == null) {
-	    
-			// Alors on la créer via le layout maquette_item_moyens
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-			v = inflater.inflate(R.layout.item_constitution_groupe_crm_listview, null);
-	  
-		}
+		// Alors on la créer via le layout maquette_item_moyens
+		LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		v = inflater.inflate(R.layout.item_constitution_groupe_crm_listview, null);
 			
 		// On récupére les infos que l'on souhaite afficher
-		Moyen itemMoyen = listItems.get(position);
+		Moyen itemMoyen = (Moyen)listItems.get(position);
 		  
 		// Si on à bien récupèré les infos
 		if (itemMoyen != null && itemMoyen.getType() != null) {
 	            
 			// Alors on charge chacunes d'elles à leur place dans le layout
-			TextView nameMoyen 		= (TextView) v.findViewById(R.id.consitution_group_crm_item_TextView_nameMoyen);
-			ImageView typeMoyen 	= (ImageView) v.findViewById(R.id.consitution_group_crm_item_TextView_typeMoyen);
-	        Button buttonAssign 	= (Button) v.findViewById(R.id.consitution_group_crm_item_Button_assignToGroup);
+			TextView nameMoyen 		= (TextView) 	v.findViewById(R.id.consitution_group_crm_item_TextView_nameMoyen);
+			ImageView typeMoyen 	= (ImageView) 	v.findViewById(R.id.consitution_group_crm_item_TextView_typeMoyen);
+	        Button buttonAssign 	= (Button) 		v.findViewById(R.id.consitution_group_crm_item_Button_assignToGroup);
 	        
 	        // chargement du nom du moyen pouvant être assigné
 	        nameMoyen.setText(itemMoyen.getLibelle());

@@ -26,7 +26,7 @@ public abstract class UserAvailableDao implements IPersistant {
 			UserAvailable userPoubelle = (UserAvailable) JsonSerializer.deserialize(UserAvailable.class, value);
 			onResponse(userPoubelle);
 		} catch (JSONException e) {
-			Log.e("UserPoubelleDao", e.toString());
+			Log.e("UserAvailableDao", e.toString());
 		}
 	}
 	

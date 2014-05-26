@@ -226,6 +226,9 @@ public class CreationBase {
 		msg2.setText(Message_part.JE_SUIS, "Mathieu, COS");
 		msg2.setText(Message_part.JE_VOIS, "un batiment en feu sur sa partie droite");
 		
+		inter1.addMessage(msg1);
+		inter1.addMessage(msg2);
+		
 		//moyens
 		Moyen mo1 = new Moyen(TypeMoyen.VSAV, AgetacppApplication.getIntervention());
 		mo1.setLibelle("VSAV1");
@@ -261,6 +264,8 @@ public class CreationBase {
 		property2.setValeur(Moyen.FORMATER.format(new Date()));
 		mo2.addPropriete(property2);
 		
+		inter1.addMoyen(mo2);
+		
 		//Secteurs
 		Secteur s1 = new Secteur();
 		s1.setColor("#f8f8f8");
@@ -282,6 +287,12 @@ public class CreationBase {
 		s5.setColor("#ce8bec");
 		s5.setName("CRM");
 		
+		inter1.addSecteur(s1);
+		inter1.addSecteur(s2);
+		inter1.addSecteur(s3);
+		inter1.addSecteur(s4);
+		inter1.addSecteur(s5);
+		
 		List<Moyen> listMoyen = new ArrayList<Moyen>();
 		listMoyen.add(mo1);
 		listMoyen.add(mo2);
@@ -291,28 +302,22 @@ public class CreationBase {
 		mo1.setIsInGroup(true);
 		mo2.setIsInGroup(true);
 		
+		inter1.addGroupe(g1);
+		inter1.addGroupe(g2);
+		inter1.addGroupe(g3);
+		
+		UserAvailable userPoubelle = new UserAvailable();
+		
+		Environnement ev1 = new Environnement( AgetacppApplication.getIntervention() );
+		ev1.setLibelle("Bouche incendie");
+
+		inter1.addEnvironnement(ev1);
+		
+		CreationBase.creationEnvStatic();
+		
 		// sauvegarde en base
 		inter1.save();
-		msg1.save();
-		msg2.save();
-		vincent.save();
-		marion.save();
-		thomas.save();
-		maxime.save();
-		christophe.save();
-		mathieu.save();
-		antho.save();
-		mo1.save();
-		mo1bis.save();
-		mo2.save();
-		s1.save();
-		s2.save();
-		s3.save();
-		s4.save();
-		s5.save();
-		g1.save();
-		g2.save();
-		g3.save();
+		userPoubelle.save();
 	}
 	
 	public static void recupIntervention(String id){

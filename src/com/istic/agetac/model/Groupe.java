@@ -89,6 +89,7 @@ public class Groupe implements IGroupe, IMoyen {
 		}
 		else {
 //			DataBaseCommunication.sendPut(this);
+			Log.d("Antho", "*999*9999*999*   " + intervention.getGroupes().size() + "");
 			if( !intervention.getGroupes().contains( this ) ) intervention.getGroupes().add(this);
 			intervention.save();
 		}

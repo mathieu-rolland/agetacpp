@@ -105,6 +105,39 @@ public class Intervention implements IIntervention {
 		this.intervenants = users;
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
+		this.groupes = new ArrayList<Groupe>();
+		this.historique = new ArrayList<Action>();
+		this.lines = new ArrayList<Line>();
+	}
+	
+	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users, List<Groupe> groupes){
+		this._id = UUID.randomUUID().toString();
+		this._rev = "";
+		this.adresse = adresse;
+		this.nom = nom;
+		this.codeSinistre = codeSinistre;
+		this.moyens = moyens;
+		this.environnements = new ArrayList<Environnement>();
+		this.intervenants = users;
+		this.messages = new ArrayList<IMessage>();
+		this.secteurs = new ArrayList<Secteur>();
+		this.groupes = groupes;
+		this.historique = new ArrayList<Action>();
+		this.lines = new ArrayList<Line>();
+	}
+	
+	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users, List<Groupe> groupes, List<Secteur> secteurs){
+		this._id = UUID.randomUUID().toString();
+		this._rev = "";
+		this.adresse = adresse;
+		this.nom = nom;
+		this.codeSinistre = codeSinistre;
+		this.moyens = moyens;
+		this.environnements = new ArrayList<Environnement>();
+		this.intervenants = users;
+		this.messages = new ArrayList<IMessage>();
+		this.secteurs = secteurs;
+		this.groupes = groupes;
 		this.historique = new ArrayList<Action>();
 		this.lines = new ArrayList<Line>();
 	}
@@ -189,10 +222,38 @@ public class Intervention implements IIntervention {
 		}
 	}
 	
+	public void addGroupe(Groupe groupe) {
+		if( !this.groupes.contains(groupe) ){
+			this.groupes.add(groupe);
+		}
+	}
+	
+	public void addSecteur(Secteur secteur) {
+		if( !this.secteurs.contains(secteur) ){
+			this.secteurs.add(secteur);
+		}
+	}
+	
 	public void addMoyens(List<Moyen> listMoyen) {
 		for (Moyen moyen : listMoyen) {
 			if( !this.moyens.contains(moyen) ){
 				this.moyens.add(moyen);
+			}
+		}
+	}
+	
+	public void addGroupes(List<Groupe> listGroupe) {
+		for (Groupe groupe : listGroupe) {
+			if( !this.groupes.contains(groupe) ){
+				this.groupes.add(groupe);
+			}
+		}
+	}
+	
+	public void addSecteurs(List<Secteur> listSecteur) {
+		for (Secteur secteur : listSecteur) {
+			if( !this.secteurs.contains(secteur) ){
+				this.secteurs.add(secteur);
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,8 @@ public class MessageFragment extends Fragment implements Observer {
 	
 	private boolean isMessageModify;
 	
+	private Intervention intervention;
+	
 	public static Fragment newInstance() {
 		MessageFragment fragment = new MessageFragment();
 		return fragment;
@@ -75,6 +78,8 @@ public class MessageFragment extends Fragment implements Observer {
 		
 		/** Chargement du layout */
 		View view = inflater.inflate(R.layout.fragment_messages_list, container, false);
+		
+		intervention = AgetacppApplication.getIntervention();
 		
 		messageAdapter = new ItemListAdapter<IMessage>(getActivity());
 		messagesList = (ListView) view.findViewById(R.id.fragment_messages_list_list);
@@ -96,7 +101,7 @@ public class MessageFragment extends Fragment implements Observer {
 		
 		//Init message with new message :
 		isMessageModify = false;
-		initWithMessage( new Message( AgetacppApplication.getIntervention() ) );
+		initWithMessage( new Message( intervention ) );
 		
 		
 		//Start sync :
@@ -105,7 +110,7 @@ public class MessageFragment extends Fragment implements Observer {
 		
 		PoolSynchronisation synchro = FrameworkApplication.getPoolSynchronisation();
 		synchro.registerServiceSync(MessageServiceSynchronisation.FILTER_MESSAGE_RECEIVER, serviceSync, receiver);
-	
+		
 		return view;
 	}
 	
@@ -194,6 +199,7 @@ public class MessageFragment extends Fragment implements Observer {
 	
 	public void message_validate( View v )
 	{
+		Log.d("MESSAGE","Validate click");
 		String text = message.getText().toString();
 		if( !text.trim().equals("") ){
 			currentMessage.setText( currentPart , text);
@@ -202,6 +208,15 @@ public class MessageFragment extends Fragment implements Observer {
 			currentMessage.registerObserver(this);
 			isWaitingForSave = true;
 			currentMessage.save();
+			isWaitingForSave = false;
+			if( !isMessageModify ){
+				ItemView<IMessage> view = new MessageItem(currentMessage, this);
+				messageAdapter.addLast(view);
+				currentMessage.unregisterObserver(this);
+				messagesList.setSelection( messageAdapter.getCount() );
+			}
+			isMessageModify = false;
+			initWithMessage(new Message( AgetacppApplication.getIntervention() ));
 		}
 	}
 	
@@ -293,7 +308,9 @@ public class MessageFragment extends Fragment implements Observer {
 	}
 	
 	public void update(List<IMessage> newMessageState)
-	{	
+	{
+		Log.d("MESSAGE","Get into activity");
+		
 		//Attente de la reception du message;
 		if( isWaitingForSave ) return;
 		

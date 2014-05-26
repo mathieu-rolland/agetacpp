@@ -417,6 +417,12 @@ public class Intervention implements IIntervention {
 		this.environnements.addAll(environnements);
 	}
 	
+	public void updateMessagesDependencies( ){
+		for(IMessage message : messages ){
+			message.setIntervention(this);
+		}
+	}
+	
 	public void updateDepandencies(){
 		
 		for(IMoyen moyen : moyens){
@@ -433,9 +439,7 @@ public class Intervention implements IIntervention {
 		
 		if( codis != null ) codis.setIntervention(this);
 		
-		for(IMessage message : messages ){
-			message.setIntervention(this);
-		}
+		updateMessagesDependencies();
 		
 		for(Groupe gr : groupes){
 			gr.setIntervention(this);

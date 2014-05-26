@@ -29,8 +29,7 @@ public class Message implements IMessage, Parcelable {
 	private transient Intervention intervention;
 	private transient List<Observer> observers;
 	
-	public Message()
-	{
+	public Message(){
 		messages = new HashMap<IMessage.Message_part, String>();
 		observers = new ArrayList<Observer>();
 		validate = false;
@@ -58,6 +57,7 @@ public class Message implements IMessage, Parcelable {
 			this.messages = message.messages;
 			this.validate = message.validate;
 			this.intervention = message.intervention;
+			this.observers = new ArrayList<Observer>();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -92,8 +92,12 @@ public class Message implements IMessage, Parcelable {
 
 	@Override
 	public void save() {
-		if( !intervention.getMessages().contains(this) ) intervention.addMessage(this);
-		intervention.save();
+		try{
+			if( !intervention.getMessages().contains(this) ) intervention.addMessage(this);
+			intervention.save();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

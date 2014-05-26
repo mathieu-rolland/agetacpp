@@ -171,7 +171,7 @@ public class CreationBase {
 			@Override
 			public void onResponse(Intervention objet) {
 				// TODO Auto-generated method stub
-				Message m1 = new Message();
+				Message m1 = new Message( AgetacppApplication.getIntervention() );
 				m1.setDateEmission(new Date());
 				m1.setText(Message_part.JE_DEMANDE, "1 FPT et 2 VSAV");
 				m1.setText(Message_part.JE_FAIS, "Une coupure de l'alimentation du b�timent et la mise en s�curit� du personnel.");

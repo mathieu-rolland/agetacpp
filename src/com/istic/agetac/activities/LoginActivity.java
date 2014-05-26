@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.EnvironnementsStaticDao;
@@ -201,8 +202,12 @@ public class LoginActivity extends Activity {
 	 */
 	private class UserViewReceiver extends APersitantRecuperator<Intervention> {
 
+		private String username, password;
+		
 		public UserViewReceiver(String username, String password) {
 			super(Intervention.class, "agetacpp", "connexion", username+"|"+password);
+			this.username = username;
+			this.password = password;
 		}
 
 		@Override
@@ -217,10 +222,11 @@ public class LoginActivity extends Activity {
 			AgetacppApplication.setListIntervention(null);
 			AgetacppApplication.setRole(null);
 			try {
-				JSONArray a = (JSONArray) json.get("rows");
+				JSONArray row = (JSONArray) json.get("rows");
 				List<Intervention> interventions = new ArrayList<Intervention>();
-				for(int i=0; i<a.length(); i++){
-					JSONObject o = a.getJSONObject(i);
+				for(int i=0; i<row.length(); i++){
+					Log.d("d",row.toString());
+					JSONObject o = row.getJSONObject(i);
 					o = o.getJSONObject("value");
 					String role = o.getString("role");
 					if(role.equals("codis")){
@@ -258,6 +264,8 @@ public class LoginActivity extends Activity {
 			if(!interventions.isEmpty()){
 				if(AgetacppApplication.getRole() == Role.intervenant) {
 					AgetacppApplication.setIntervention(interventions.get(0));
+					//Recherche de l'utilisateur dans l'intervention :
+					AgetacppApplication.setUser( findUser(interventions.get(0), username, password ));
 				}
 				else {
 					AgetacppApplication.setListIntervention(interventions);
@@ -300,6 +308,14 @@ public class LoginActivity extends Activity {
 				mUserView.setError(getString(R.string.error_incorrect_login));
 				mUserView.requestFocus();
 			}
+		}
+
+		private IUser findUser(Intervention intervention, String username2,
+				String password2) {
+			for(User user : intervention.getIntervenants()){
+				if( user.getName().equals(username) && user.getPassword().equals(password)) return user;
+			}	
+			return null;
 		}
 	}
 	

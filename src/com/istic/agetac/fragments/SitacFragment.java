@@ -358,25 +358,25 @@ public class SitacFragment extends MainFragment implements Observer {
 				listDataHeader.add("Points sensibles");
 				List<IEntity> risk = new ArrayList<IEntity>();
 
-				IEntity risk_blue = new Environnement(intervention);
+				IEntity risk_blue = new EnvironnementStatic();
 				risk_blue.setLibelle("Ayant trait à l'eau");
 				risk_blue.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_blue));
 				risk_blue.setRepresentationKO(new Representation(
 						R.drawable.ic_risk_blue));
-				IEntity risk_green = new Environnement(intervention);
+				IEntity risk_green = new EnvironnementStatic();
 				risk_green.setLibelle("Personnes");
 				risk_green.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_green));
 				risk_green.setRepresentationKO(new Representation(
 						R.drawable.ic_risk_green));
-				IEntity risk_orange = new Environnement(intervention);
+				IEntity risk_orange = new EnvironnementStatic();
 				risk_orange.setLibelle("Particuliers");
 				risk_orange.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_orange));
 				risk_orange.setRepresentationKO(new Representation(
 						R.drawable.ic_risk_orange));
-				IEntity risk_red = new Environnement(intervention);
+				IEntity risk_red = new EnvironnementStatic();
 				risk_red.setLibelle("Incendie");
 				risk_red.setRepresentationOK(new Representation(
 						R.drawable.ic_risk_red));
@@ -392,19 +392,19 @@ public class SitacFragment extends MainFragment implements Observer {
 				// Water
 				listDataHeader.add("Prise d'eau");
 				List<IEntity> eau = new ArrayList<IEntity>();
-				IEntity water = new Environnement(intervention);
+				IEntity water = new EnvironnementStatic();
 				water.setLibelle("Point d'eau pèrenne");
 				water.setRepresentationOK(new Representation(
 						R.drawable.ic_water));
 				water.setRepresentationKO(new Representation(
 						R.drawable.ic_water));
-				IEntity water2 = new Environnement(intervention);
+				IEntity water2 = new EnvironnementStatic();
 				water2.setLibelle("Point d'eau non pèrenne");
 				water2.setRepresentationOK(new Representation(
 						R.drawable.ic_water2));
 				water2.setRepresentationKO(new Representation(
 						R.drawable.ic_water2));
-				IEntity water3 = new Environnement(intervention);
+				IEntity water3 = new EnvironnementStatic();
 				water3.setLibelle("Point de ravitaillement");
 				water3.setRepresentationOK(new Representation(
 						R.drawable.ic_water3));

@@ -3,17 +3,15 @@ package com.istic.agetac.api.model;
 import java.util.Date;
 
 import com.istic.agetac.model.Intervention;
-import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.api.model.IRepresentation;
-import com.istic.sit.framework.couch.IPersistant;
-import com.istic.sit.framework.couch.ITaMere;
+import com.istic.sit.framework.couch.IRecordable;
 
 /**
  * Interface qui regroupe les moyen et les groupes de moyens sous un même type.
  * @author Anthony LE MÉE - 1003134
  *
  */
-public interface IMoyen extends ITaMere {
+public interface IMoyen extends IRecordable {
 
 	public boolean isGroup();
 	

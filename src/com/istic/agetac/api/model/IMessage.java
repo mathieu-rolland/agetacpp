@@ -3,9 +3,9 @@ package com.istic.agetac.api.model;
 import java.util.Date;
 
 import com.istic.agetac.pattern.observer.Subject;
-import com.istic.sit.framework.couch.ITaMere;
+import com.istic.sit.framework.couch.IRecordable;
 
-public interface IMessage extends ITaMere, Subject {
+public interface IMessage extends IRecordable, Subject {
 
 	enum Message_part{
 		JE_SUIS, JE_VOIS, JE_PREVOIS, JE_FAIS, JE_DEMANDE

@@ -3,14 +3,14 @@
  */
 package com.istic.agetac.api.model;
 
-import com.istic.sit.framework.couch.ITaMere;
+import com.istic.sit.framework.couch.IRecordable;
 
 
 /**
  * @author Christophe
  *
  */
-public interface IUser extends ITaMere {
+public interface IUser extends IRecordable {
 
 	public enum Role {codis, intervenant}
 	public String getName();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +35,7 @@ public class Message implements IMessage, Parcelable {
 		observers = new ArrayList<Observer>();
 		validate = false;
 		lock = false;
-		_id = "";
+		_id = UUID.randomUUID().toString();
 	}
 	
 	public Message( Intervention intervention )
@@ -44,7 +45,7 @@ public class Message implements IMessage, Parcelable {
 		this.intervention = intervention;
 		validate = false;
 		lock = false;
-		_id = "";
+		_id = UUID.randomUUID().toString();
 	}
 	
 	public Message(Parcel source) {
@@ -52,7 +53,6 @@ public class Message implements IMessage, Parcelable {
 		observers = new ArrayList<Observer>();
 		try {
 			Message message = (Message) JsonSerializer.deserialize(Message.class, new JSONObject(serializedJson));
-			_id = "";
 			this.setId( message.getId() );
 			this.lock = message.lock;
 			this.messages = message.messages;

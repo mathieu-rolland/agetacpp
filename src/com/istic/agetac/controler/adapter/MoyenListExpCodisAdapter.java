@@ -1,5 +1,6 @@
 package com.istic.agetac.controler.adapter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
 {
     private boolean mIsCreating;
 
-    public MoyenListExpCodisAdapter( Context context, boolean isCreating, List<IMoyen> moyens )
+    public MoyenListExpCodisAdapter( Context context, boolean isCreating )
     {
-        super( context , moyens);
+        super( context , new ArrayList<IMoyen>());
         this.mIsCreating = isCreating;
     }
 

@@ -1,7 +1,7 @@
 package com.istic.agetac.controler.adapter;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -25,9 +25,9 @@ import com.istic.agetac.widget.SpinnerWithTextInit;
 public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
 {
 
-    public MoyenListExpIntervenantAdapter( Context context, List<IMoyen> moyens )
+    public MoyenListExpIntervenantAdapter( Context context)
     {
-        super( context, moyens );
+        super( context, new ArrayList<IMoyen>() );
     }
 
     @Override

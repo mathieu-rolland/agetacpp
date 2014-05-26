@@ -7,6 +7,7 @@ import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.model.EnvironnementsStatic;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.UserAvailable;
+import com.istic.agetac.model.factory.Factory;
 import com.istic.agetac.model.serializer.AgetacSerializer;
 import com.istic.sit.framework.application.FrameworkApplication;
 import com.istic.sit.framework.couch.DataBaseCommunication;
@@ -27,6 +28,7 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initSerializer();
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
+		FrameworkApplication.setFactory(new Factory());
 		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/antho/";
 		//CreationBase.createCleanBase();
 	}

@@ -16,7 +16,7 @@ import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.pattern.observer.Observer;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
-import com.istic.sit.framework.model.Line;
+import com.istic.sit.framework.model.ALine;
 
 public class Intervention implements IIntervention {
 
@@ -35,7 +35,7 @@ public class Intervention implements IIntervention {
 	private List<IMessage> messages;
 	private List<Groupe> groupes;
 	private List<Secteur> secteurs;
-	private List<Line> lines;
+	private List<ALine> lines;
 	
 	public Intervention(){
 		this._id = UUID.randomUUID().toString();
@@ -51,7 +51,7 @@ public class Intervention implements IIntervention {
 		this.historique = new ArrayList<Action>();
 		this.oct = new OCT();
 		this.groupes = new ArrayList<Groupe>();
-		this.lines = new ArrayList<Line>();
+		this.lines = new ArrayList<ALine>();
 	}
 	
 	public OCT getOct() {
@@ -75,7 +75,7 @@ public class Intervention implements IIntervention {
 		this.historique = new ArrayList<Action>();
 		this.groupes = new ArrayList<Groupe>();
 		this.secteurs = new ArrayList<Secteur>();
-		this.lines = new ArrayList<Line>();
+		this.lines = new ArrayList<ALine>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens){
@@ -91,7 +91,7 @@ public class Intervention implements IIntervention {
 		this.secteurs = new ArrayList<Secteur>();
 		this.historique = new ArrayList<Action>();
 		this.groupes = new ArrayList<Groupe>();
-		this.lines = new ArrayList<Line>();
+		this.lines = new ArrayList<ALine>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users){
@@ -107,7 +107,7 @@ public class Intervention implements IIntervention {
 		this.secteurs = new ArrayList<Secteur>();
 		this.groupes = new ArrayList<Groupe>();
 		this.historique = new ArrayList<Action>();
-		this.lines = new ArrayList<Line>();
+		this.lines = new ArrayList<ALine>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users, List<Groupe> groupes){
@@ -123,7 +123,7 @@ public class Intervention implements IIntervention {
 		this.secteurs = new ArrayList<Secteur>();
 		this.groupes = groupes;
 		this.historique = new ArrayList<Action>();
-		this.lines = new ArrayList<Line>();
+		this.lines = new ArrayList<ALine>();
 	}
 	
 	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users, List<Groupe> groupes, List<Secteur> secteurs){
@@ -139,7 +139,7 @@ public class Intervention implements IIntervention {
 		this.secteurs = secteurs;
 		this.groupes = groupes;
 		this.historique = new ArrayList<Action>();
-		this.lines = new ArrayList<Line>();
+		this.lines = new ArrayList<ALine>();
 	}
 
 	public List<Action> getHistorique() {
@@ -515,11 +515,11 @@ public class Intervention implements IIntervention {
 		this.secteurs = secteurs;
 	}
 	
-	public List<Line> getLines() {
+	public List<ALine> getLines() {
 		return lines;
 	}
 
-	public void setLines(List<Line> l) {
+	public void setLines(List<ALine> l) {
 		this.lines = l;
 	}
 	

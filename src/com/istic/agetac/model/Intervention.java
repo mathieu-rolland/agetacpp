@@ -12,9 +12,11 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.pattern.observer.Observer;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
+import com.istic.sit.framework.model.Line;
 
 public class Intervention implements IIntervention {
 

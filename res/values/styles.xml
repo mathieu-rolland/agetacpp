@@ -15,7 +15,7 @@
     <style name="Theme.Agetac" parent="@android:style/Theme.Holo">
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Agetac</item>
         <item name="android:actionBarStyle">@style/ActionBar.Transparent.Agetac</item>
-        <item name="android:textColor">@style/TextColor</item>
+        <item name="android:textColor">#000000</item>
         <item name="android:editTextStyle">@style/App_EditTextStyle</item>
         <item name="android:buttonStyle">@style/App_ButtonStyle</item>
     </style>
@@ -46,14 +46,10 @@
     <style name="ActionBarTabStyle.Agetac" parent="@android:style/Widget.Holo.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_agetac</item>
     </style>
-
-    <style name="TextColor">
-        <item name="android:textColor">#000000</item>
-    </style>
     
     <!-- AlertDialog text color fix thanks to Shawn Castrianni, see: http://groups.google.com/group/android-developers/browse_thread/thread/f0b34621d3a70c4b -->
 	<style name="AboutDialog" parent="@android:style/Theme.Dialog">
-		<item name="android:textColor">?android:attr/textColorPrimaryInverseDisableOnly</item>
+		<item name="android:textColor">#000000</item>
 	</style>
 
 </resources>

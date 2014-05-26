@@ -28,6 +28,8 @@ import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.agetac.model.Environnement;
+import com.istic.agetac.model.EnvironnementStatic;
+import com.istic.agetac.model.EnvironnementsStatic;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.TypeMoyen;
@@ -460,5 +462,10 @@ public class SitacFragment extends MainFragment implements Observer {
 			entities.add( (Entity) m);
 		}
 		loadEntities( entities );
+		List<Entity> entitiesStatic = new ArrayList<Entity>();
+		for( EnvironnementStatic m : AgetacppApplication.getEnvironnementsStatic().getListEnvironnement() ){
+			entitiesStatic.add( (Entity) m);
+		}
+		loadEntities(entitiesStatic);
 	}
 }

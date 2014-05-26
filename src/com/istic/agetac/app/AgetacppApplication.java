@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.model.IUser.Role;
+import com.istic.agetac.model.EnvironnementsStatic;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.UserAvailable;
 import com.istic.agetac.model.serializer.AgetacSerializer;
@@ -18,6 +19,7 @@ public class AgetacppApplication extends FrameworkApplication {
 	private static List<Intervention> listIntervention;
 	private static Role role;
 	private static UserAvailable userAvailable;
+	private static EnvironnementsStatic environnementsStatic;
 	
 	@Override
 	public void onCreate() {
@@ -25,7 +27,7 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initSerializer();
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/test/";
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/comme_tu_veux/";
 	}
 
 	/**
@@ -79,6 +81,20 @@ public class AgetacppApplication extends FrameworkApplication {
 	
 	public static void setUserPoubelle(UserAvailable userAvailable){
 		AgetacppApplication.userAvailable = userAvailable;  
+	}
+
+	/**
+	 * @return the environnementsStatic
+	 */
+	public static EnvironnementsStatic getEnvironnementsStatic() {
+		return environnementsStatic;
+	}
+
+	/**
+	 * @param environnementsStatic the environnementsStatic to set
+	 */
+	public static void setEnvironnementsStatic(EnvironnementsStatic environnementsStatic) {
+		AgetacppApplication.environnementsStatic = environnementsStatic;
 	}
 	
 }

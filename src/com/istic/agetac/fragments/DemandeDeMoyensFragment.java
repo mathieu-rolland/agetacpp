@@ -166,9 +166,17 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		buttonQuantityMore 		= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_OneMore);
 		buttonQuantityLess 		= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_OneLess);
 		buttonSend				= (Button) getActivity().findViewById(R.id.demande_de_moyen_Button_SendList);
+		textViewAutresMoyens 	= (AutoCompleteTextView) getActivity().findViewById(R.id.demande_de_moyen_AutoCompleteTextView_TextField);
 		editTextQuantity 		= (EditText) getActivity().findViewById(R.id.demande_de_moyen_EditText_DefaultQuantity);
 		gridViewMoyens 			= (GridView) getActivity().findViewById(R.id.demande_de_moyen_GridView);
 		listViewMoyensToSend	= (ListView) getActivity().findViewById(R.id.demande_de_moyen_ListView);
+		
+		this.getTextViewAutresMoyens().setOnItemClickListener(new OnItemClickListener() {
+		    public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
+		    	TypeMoyen selection = (TypeMoyen)parent.getItemAtPosition(position);
+		    	setSelectedTypeMoyen(selection);
+		    }
+		});
 		
 		// Ajout listener sur le boutton d'ajout é la liste des moyens
 		buttonAddToList.setOnClickListener(this.cAddToList);
@@ -182,6 +190,11 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 
 		// Creation de la grille de moyens
 		getGridViewMoyens().setAdapter(new DemandeDeMoyenGridViewAdapter(this, this.namesOfUsestMoyens)); 
+		
+		// Création du champs d'auto-complétion pour la recherche de d'autres moyens
+	    getTextViewAutresMoyens().addTextChangedListener(cAutresMoyens);
+	    getTextViewAutresMoyens().setAdapter(new ArrayAdapter<TypeMoyen>(getActivity(), android.R.layout.simple_dropdown_item_1line, this.namesOfAllMoyens));
+	    getTextViewAutresMoyens().setOnItemClickListener(cAutresMoyens);
 	    
 	    /*
 	     * Remise en état suivant la sauvegarde

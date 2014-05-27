@@ -30,6 +30,7 @@ import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.agetac.model.Environnement;
 import com.istic.agetac.model.EnvironnementStatic;
 import com.istic.agetac.model.Intervention;
+import com.istic.agetac.model.Line;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.model.TypeMoyen;
@@ -38,6 +39,7 @@ import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.adapter.ExpandableListAdapter;
 import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.api.view.IBackground;
+import com.istic.sit.framework.model.ALine;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Representation;
 import com.istic.sit.framework.view.MainFragment;
@@ -550,6 +552,13 @@ public class SitacFragment extends MainFragment implements Observer {
 		}
 		
 		loadEntities(secteurToDisplay);
+		
+		List<ALine> lines = new ArrayList<ALine>();
+		for (Line l : AgetacppApplication.getIntervention().getLines()) {
+			lines.add((ALine) l);
+		}
+		
+		loadGraphics(lines);
 
 	}
 }

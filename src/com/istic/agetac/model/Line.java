@@ -9,13 +9,14 @@ public class Line extends ALine {
 
 	@Override
 	public void save() {
+		AgetacppApplication.getIntervention().getLines().add(this);
 		AgetacppApplication.getIntervention().save();
 	}
 
 	@Override
 	public void delete() {
 		AgetacppApplication.getIntervention().getLines().remove(this);
-		save();
+		AgetacppApplication.getIntervention().save();
 	}
 
 	/**

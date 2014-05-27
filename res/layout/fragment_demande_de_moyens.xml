@@ -48,22 +48,6 @@
             android:layout_marginBottom="@dimen/text_size"
             android:layout_weight="0.03"
             android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/demande_de_moyen_TextView_TextField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/demande_de_moyen_TextView_TextField"
-                android:textColor="#efefef"
-                android:textSize="@dimen/text_size" />
-
-            <AutoCompleteTextView
-                android:id="@+id/demande_de_moyen_AutoCompleteTextView_TextField"
-                android:layout_width="match_parent"
-                android:layout_height="35dip"
-                android:background="#efefef"
-                android:textColor="#363636"
-                android:completionThreshold="1" />
         </LinearLayout>
 
         <LinearLayout

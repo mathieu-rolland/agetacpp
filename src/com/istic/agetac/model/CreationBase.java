@@ -90,6 +90,8 @@ public class CreationBase {
 		try{
 		    IMoyen moyen1 = new Moyen( TypeMoyen.VSAV, inter1 );
 	        moyen1.setHDemande( new Date(2014,27,05,14,22) );
+	        moyen1.setHEngagement( new Date(2014,27,05,15,00) ) ;
+            moyen1.setLibelle( "moyen1" );
 	        
 	        IMoyen moyen2 = new Moyen( TypeMoyen.VSAV, inter1 );
 	        moyen2.setHDemande( new Date(2014,27,05,14,22) );

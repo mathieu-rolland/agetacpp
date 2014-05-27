@@ -2,6 +2,7 @@ package com.istic.agetac.controler.adapter;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
@@ -53,6 +54,47 @@ public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
     public void setFree( IMoyen mItemMoyen, Date date )
     {
         mItemMoyen.setHFree( date );
+        if(mItemMoyen.isInGroup())
+        {
+            List<IMoyen> groupes = ((Moyen)mItemMoyen).getIntervention().getGroupes();
+            int i = 0;
+            IMoyen groupe = null;
+
+            while(i<groupes.size() && groupe == null)
+            {
+                if(groupes.get( i ).getListMoyen().contains( mItemMoyen ))
+                {
+                    groupe = groupes.get( i );
+                }                    
+                    i++;
+            }
+            
+            if(groupe != null)
+            {
+                boolean allFree = true;
+                int y =0;
+                while(allFree && y<groupe.getListMoyen().size())
+                {
+                    Date hourFree = groupe.getListMoyen().get( y ).getHFree();
+                    allFree = !(hourFree==null || hourFree.equals( "" ));
+                    y++;
+                }             
+                
+                if(allFree)
+                {
+                    groupe.setHFree( new Date() );
+                    Log.d( "Free", "Le groupe a tout compris ! " );
+                }
+                else
+                {
+                    Log.d( "Free", "Le groupe n'a PAS tout compris ! " );
+                }
+            }
+            else
+            {
+                Log.e("MoyenListExpIntervenantAdapter", "BUG : le moyen ne trouve pas son groupe !");
+            }
+        }
         this.notifyDataSetChanged();
     }
 

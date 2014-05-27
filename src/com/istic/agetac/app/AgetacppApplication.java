@@ -37,8 +37,8 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
 		FrameworkApplication.setFactory(new Factory());
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/to_define/";
-//		CreationBase.createCleanBase();
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/antho4/";
+		// CreationBase.createCleanBase();
 		
 	}
 
@@ -113,4 +113,5 @@ public class AgetacppApplication extends FrameworkApplication {
 			EnvironnementsStatic environnementsStatic) {
 		AgetacppApplication.environnementsStatic = environnementsStatic;
 	}
+
 }

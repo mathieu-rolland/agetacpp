@@ -1,7 +1,6 @@
 package com.istic.agetac.fragments;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.os.Bundle;
@@ -24,8 +23,8 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.activities.CreateInterventionActivity;
 import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenGridViewAdapter;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenListAdapter;
@@ -38,7 +37,6 @@ import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.saveInstanceState.DemandeMoyensSavedInstanceState;
 import com.istic.agetac.view.item.DemandeDeMoyenItem;
-import com.istic.sit.framework.model.Representation;
 
 /**
 * Classe DemandeDeMoyensFragment : affiche la fenétre de demande des moyens et permet de créer une liste de demandes de moyens
@@ -98,14 +96,14 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		}
 	}
 	
-	/** M�thode onCreate */
+	/** Méthode onCreate */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 	}
 	
-	/** M�thode onCreateView */
+	/** Méthode onCreateView */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
@@ -113,14 +111,22 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		View view = inflater.inflate(R.layout.fragment_demande_de_moyens, container, false);
 		intervention = AgetacppApplication.getIntervention();
 		
-		/** Instanciations des contr�lers */
+		/** Instanciations des contrélers */
 		this.cAddToList 		= new AddToList(this);
 		this.cQuantiteMoyens 	= new SpinnerVariation(this);
 		this.cAutresMoyens 		= new AutoCompleteField(this);
 		
 		/** Instanciations des modéles */
 		this.mTypeMoyen = new ArrayList<TypeMoyen>();
+		this.mTypeMoyen.add(TypeMoyen.CCFM);
+		this.mTypeMoyen.add(TypeMoyen.CCGC);
+		this.mTypeMoyen.add(TypeMoyen.FPT);
+		this.mTypeMoyen.add(TypeMoyen.VAR);
+		this.mTypeMoyen.add(TypeMoyen.VLCC);
+		this.mTypeMoyen.add(TypeMoyen.VLCG);
+		this.mTypeMoyen.add(TypeMoyen.VLS);
 		this.mTypeMoyen.add(TypeMoyen.VSAV);
+		this.mTypeMoyen.add(TypeMoyen.VSR);
 		
 		/** Chargements des données dans les attributs correspondants */
 		this.namesOfAllMoyens 			= toArray(this.mTypeMoyen);
@@ -172,7 +178,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		    }
 		});
 		
-		// Ajout listener sur le boutton d'ajout � la liste des moyens
+		// Ajout listener sur le boutton d'ajout é la liste des moyens
 		buttonAddToList.setOnClickListener(this.cAddToList);
 		
 		// Ajout du filtre de domaine sur le champs numerique de quantite de moyens
@@ -193,7 +199,7 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	    /*
 	     * Remise en état suivant la sauvegarde
 	     */
-	    // Liste des moyens demand�s : Si la sauvegarde a du contenu qui nous manque alors on le charge
+	    // Liste des moyens demandés : Si la sauvegarde a du contenu qui nous manque alors on le charge
 	    if (this.allMoyenAddedToList.size() < sauvegarde.getDonneesMoyensAddedToList().size()) {
 	    	this.allMoyenAddedToList 	= sauvegarde.getDonneesMoyensAddedToList();
 	    	this.adapterListToSend 		= new DemandeDeMoyenListAdapter(this, android.R.layout.simple_dropdown_item_1line, this.allMoyenAddedToList);
@@ -202,31 +208,101 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 	 	// Création du ListView de la liste de moyens demandés	 
 	    getListViewMoyensToSend().setAdapter(this.adapterListToSend);
 	    
-	    
 	    buttonSend.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
+				Log.d("Antho", "Listener Catch");
 				send();
 			}			
 		});
 	}
 	
 	private void send() {
-		if(AgetacppApplication.getListIntervention() != null)
+		
+		Log.d("Antho", "into send");
+		
+		Intervention iCourante = AgetacppApplication.getIntervention();
+		
+		if(iCourante != null)
 		{
-			mListMoyen = new ArrayList<Moyen>();
+			
+			Log.d("Antho", "execute into send");
+			/** mListMoyen = new ArrayList<Moyen>();
 			Moyen m =new Moyen(TypeMoyen.VSAV, intervention);
 			m.setHDemande(new Date());
 			mListMoyen.add(m);
-			Moyen m2 =new Moyen(TypeMoyen.VSAV, intervention);
+			Moyen m2 = new Moyen(TypeMoyen.VSAV, intervention);
+			m2.setRepresentationOK(new Representation(R.drawable.fpt_sap));
 			m2.setHDemande(new Date(2014,01,01));
 			mListMoyen.add(m2);
 			CreateInterventionActivity activityParent = (CreateInterventionActivity)getActivity();
-			activityParent.updateMoyenIntervention(mListMoyen);
+			activityParent.updateMoyenIntervention(mListMoyen); **/
+			
+			List<String> allLibellesMoyen = extractLibelleOfAllMoyens(iCourante.getMoyens());
+			List<Moyen> allMoyenToAddIntroIntervention = new ArrayList<Moyen>();
+			for (DemandeDeMoyenItem ddmi : this.allMoyenAddedToList) {
+				TypeMoyen type = ddmi.getType();
+				int cpt = 0;
+				int nbMoyenToAdd = ddmi.getNombre();
+				int i = 0;
+
+				Log.d("Antho", "nbMoyenToAdd : " + nbMoyenToAdd);
+				Log.d("Antho", "cpt : " + cpt);
+				Log.d("Antho", "i : " + i);
+
+				while (cpt < nbMoyenToAdd) {
+					
+					while (allLibellesMoyen.contains(type.toString() + " " + i + "")) {
+						i++;
+					}
+					
+					Log.d("Antho", "Ajout de :  " + type.toString() + i);
+					
+					IMoyen m = new Moyen(type, iCourante);
+					m.setLibelle(type.toString() + " " +i);
+					allMoyenToAddIntroIntervention.add((Moyen)m);
+					cpt++;
+					
+					Log.d("Antho", "nbMoyenToAdd : " + nbMoyenToAdd);
+					Log.d("Antho", "cpt : " + cpt);
+					Log.d("Antho", "i : " + i);
+					
+					i++;
+					
+				}
+			}
+			
+			iCourante.addMoyens(allMoyenToAddIntroIntervention);
+			iCourante.save();
+			
+			this.allMoyenAddedToList.clear();
+			this.getAdapterListToSend().notifyDataSetChanged();
+			
 		}
 	}
 	
+	private List<String> extractLibelleOfAllMoyens(List<IMoyen> moyens) {
+		
+		List<String> allLibelles = new ArrayList<String>();
+		for (IMoyen m : moyens) {
+			if (m.isGroup()) {
+				for (String s : extractLibelleOfAllMoyens(m.getListMoyen())) {
+					if (!allLibelles.contains(s)) {
+						allLibelles.add(s);
+					}
+				}
+			}
+			else
+			{
+				String libelle = m.getLibelle();
+				if (!allLibelles.contains(libelle)) {
+					allLibelles.add(libelle);
+				}
+			}
+		}
+		return allLibelles;
+	}
+
 	/** Méthode onSaveInstanceState */
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {

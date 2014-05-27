@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.api.model.ISecteur;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.model.Entity;
@@ -16,16 +17,16 @@ import com.istic.sit.framework.model.Entity;
 public class Secteur extends Entity implements ISecteur { 
 
 	private boolean lock;
-	private List<Moyen> moyens;
+	private List<IMoyen> moyens;
 
 	private transient Intervention intervention;
 	
-	public Secteur( Intervention intervention )
+	public Secteur()
 	{
 		super();
 		lock = false;
-		moyens = new ArrayList<Moyen>();
-		this.intervention = intervention;
+		moyens = new ArrayList<IMoyen>();
+		intervention = AgetacppApplication.getIntervention();
 	}
 
 	@Override
@@ -40,6 +41,10 @@ public class Secteur extends Entity implements ISecteur {
 
 	@Override
 	public void save() {
+//		DataBaseCommunication.sendPost(this);
+		Intervention inter= AgetacppApplication.getIntervention();
+		if( !inter.getSecteurs().contains(this) ) inter.getSecteurs().add(this);
+		inter.save();
 		if( !intervention.getSecteurs().contains(this) ) intervention.getSecteurs().add(this);
 		intervention.addHistorique(new Action(AgetacppApplication.getUser().getName(),new Date(),"Création du secteur "+this.getName()));
 		intervention.save();
@@ -48,8 +53,8 @@ public class Secteur extends Entity implements ISecteur {
 	@Override
 	public void update() {
 //		DataBaseCommunication.sendPut(this);
-		intervention.addHistorique(new Action(AgetacppApplication.getUser().getName(),new Date(),"MAJ du secteur "+this.getName()));
 		AgetacppApplication.getIntervention().update();
+		intervention.addHistorique(new Action(AgetacppApplication.getUser().getName(),new Date(),"Modification du secteur "+this.getName()));
 	}
 
 
@@ -86,12 +91,12 @@ public class Secteur extends Entity implements ISecteur {
 	}
 
 	@Override
-	public void addMoyen(Moyen moyen) {
+	public void addMoyen(IMoyen moyen) {
 		this.moyens.add(moyen);
 	}
 
 	@Override
-	public List<Moyen> getMoyens() {
+	public List<IMoyen> getMoyens() {
 		return moyens;
 	}
 	

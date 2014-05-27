@@ -11,11 +11,13 @@ import org.json.JSONObject;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.pattern.observer.Observer;
 import com.istic.sit.framework.couch.JsonSerializer;
 
@@ -94,6 +96,7 @@ public class Message implements IMessage, Parcelable {
 	public void save() {
 		try{
 			if( !intervention.getMessages().contains(this) ) intervention.addMessage(this);
+			AgetacppApplication.getIntervention().addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Envoi d'un message "));
 			intervention.save();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -102,7 +105,9 @@ public class Message implements IMessage, Parcelable {
 	
 	@Override
 	public void delete() {
+		AgetacppApplication.getIntervention().addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Suppression d'un message " ) );
 		intervention.delete(this);
+		
 	}
 
 	public boolean isValidate() {

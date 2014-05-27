@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.api.model.ISecteur;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.SecteurAdapter;
@@ -284,8 +285,8 @@ public class SectorFragment extends Fragment implements OnDragListener
 
     private void reafectMoyens( ISecteur deletedSecteur )
     {
-        List<Moyen> moyens = deletedSecteur.getMoyens();
-        for ( Moyen m : moyens )
+        List<IMoyen> moyens = deletedSecteur.getMoyens();
+        for ( IMoyen m : moyens )
         {
             sll.addMoyen( m );
         }

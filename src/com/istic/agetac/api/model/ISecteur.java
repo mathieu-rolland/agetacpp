@@ -16,6 +16,6 @@ public interface ISecteur {
 	public boolean isLock();
 	public void save();
 	public void update();
-	public void addMoyen( Moyen moyen );
-	public List<Moyen> getMoyens();
+	public void addMoyen( IMoyen moyen );
+	public List<IMoyen> getMoyens();
 }

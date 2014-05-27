@@ -90,27 +90,27 @@ public class CreateInterventionActivity extends FragmentActivity{
 	private void preconfigure()
     {
         List<Secteur> list = new ArrayList<Secteur>();
-        Secteur secteur = new Secteur(mInterventionCurrent);
+        Secteur secteur = new Secteur();
         secteur.setName( "INC" );
         secteur.setColor( Color.parseColor("#66CCFF" ));
         list.add( secteur );
 
-        Secteur sap = new Secteur(mInterventionCurrent);
+        Secteur sap = new Secteur();
         sap.setName( "SAP" );
         sap.setColor( Color.parseColor("#FF1919" ));
         list.add( sap );
 
-        Secteur alim = new Secteur(mInterventionCurrent);
+        Secteur alim = new Secteur();
         alim.setName( "ALIM" );
         alim.setColor( Color.parseColor("#0000FF" ));
         list.add( alim );
 
-        Secteur sll = new Secteur(mInterventionCurrent);
+        Secteur sll = new Secteur();
         sll.setName( "SLL" );
         sll.setColor( Color.parseColor("#CCCCCC" ));
         list.add( sll );
         
-        Secteur crm = new Secteur(mInterventionCurrent);
+        Secteur crm = new Secteur();
         crm.setName( "CRM" );
         crm.setColor( Color.parseColor("#FF0000" ));
         list.add( crm );

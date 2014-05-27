@@ -408,7 +408,7 @@ public class Intervention implements IIntervention {
 	public void updateDepandencies(){
 		
 		for(IMoyen moyen : moyens){
-			moyen.setIntervention(this);
+			moyen.setIntervention(this);			
 		}
 		
 		for(Environnement environnement : environnements){
@@ -427,11 +427,19 @@ public class Intervention implements IIntervention {
 
 			gr.setIntervention(this);
 		}
-		
+
 		oct.setIntervention(this);
 		
 		for(Secteur secteur : secteurs){
 			secteur.setIntervention(this);
+		}
+		
+		for (IMoyen moyen : moyens) {
+			Secteur secteur = moyen.getSecteur();
+			if(secteur != null)
+			{
+				secteur.addMoyen(moyen);
+			}
 		}
 		
 		for(Action action : historique){

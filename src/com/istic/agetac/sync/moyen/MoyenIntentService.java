@@ -18,9 +18,11 @@ import com.google.gson.GsonBuilder;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.model.Intervention;
+import com.istic.agetac.model.Line;
 import com.istic.agetac.model.Moyen;
 import com.istic.sit.framework.couch.AObjectRecuperator;
 import com.istic.sit.framework.couch.DataBaseCommunication;
+import com.istic.sit.framework.model.ALine;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.sync.ASynchornisationService;
 import com.istic.sit.framework.view.MainActivity;
@@ -29,6 +31,7 @@ public class MoyenIntentService extends IntentService{
 
 	private Intervention intervention;
 	public static final String CHANNEL = "com.istic.agetac.moyen";
+	public static final String CHANNEL_LIST = "com.istic.agetac.moyen_list";
 	
 	public MoyenIntentService() {
 		super(CHANNEL);
@@ -84,7 +87,11 @@ public class MoyenIntentService extends IntentService{
 					Log.d("Entity up to date" , g.toJson(moyen));
 				}
 			}
-			notifyResponseSuccess( entities );
+			List<ALine> lines = new ArrayList<ALine>();
+			for( Line l : objet.getLines() ){
+				lines.add(l);
+			}
+			notifyResponseSuccess( entities, lines );
 		}
 	}
 	
@@ -96,9 +103,11 @@ public class MoyenIntentService extends IntentService{
 		}
 	}
 	
-	protected void notifyResponseSuccess( List<Entity> entities ){
+	protected void notifyResponseSuccess( List<Entity> entities, List<ALine> lines ){
 		Intent intentReceiver = new Intent( CHANNEL );
 		intentReceiver.putParcelableArrayListExtra( CHANNEL , 
+				(ArrayList<? extends Parcelable>) entities);
+		intentReceiver.putParcelableArrayListExtra( CHANNEL_LIST, 
 				(ArrayList<? extends Parcelable>) entities);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intentReceiver);
 	}

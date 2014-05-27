@@ -24,6 +24,7 @@ public class MoyenBroadcast extends BroadcastReceiver{
 		Log.d("Moyen","Receive");
 		fragment.updateEntities((List)intent.getExtras()
 				.getParcelableArrayList( MoyenIntentService.CHANNEL ));
+		fragment.updateGraphics((List) intent.getExtras().getParcelableArrayList(MoyenIntentService.CHANNEL_LIST));
 	}
 
 }

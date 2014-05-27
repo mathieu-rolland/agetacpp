@@ -20,7 +20,6 @@ import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.AMoyenExpListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpIntervenantAdapter;
-import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
@@ -38,7 +37,6 @@ public class TableauMoyenFragment extends Fragment {
 	private List<IMoyen> mListMoyen;
 
 	/* Instances des modï¿½les ï¿½ utiliser */
-	private MoyensDao mMoyen; // Modï¿½le Moyen
 
 	/* ï¿½lï¿½ments graphiques */
 	private ExpandableListView mListViewMoyen; // ListView des moyens
@@ -99,13 +97,6 @@ public class TableauMoyenFragment extends Fragment {
         
         return view;
     }
-
-	/**
-	 * @return the mMoyen
-	 */
-	public MoyensDao getmMoyen() {
-		return mMoyen;
-	}
 
 	/**
 	 * @param mMoyen

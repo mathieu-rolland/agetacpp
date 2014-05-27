@@ -9,13 +9,9 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
-import com.istic.agetac.api.communication.IViewReceiver;
-import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.api.model.IMessage.Message_part;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.dao.InterventionDao;
-import com.istic.agetac.controllers.dao.MoyensDao;
-import com.istic.agetac.controllers.dao.UserDao;
 import com.istic.agetac.exceptions.AddInterventionException;
 import com.istic.sit.framework.api.model.IPosition.AXIS;
 import com.istic.sit.framework.couch.AObjectRecuperator;
@@ -139,23 +135,6 @@ public class CreationBase {
 //		});
 //	}
 	
-	
-	public static void testRecupMoyen(){
-		new MoyensDao(new IViewReceiver<Moyen>() {
-			
-			@Override
-			public void notifyResponseSuccess(List<Moyen> objects) {
-				// TODO Auto-generated method stub
-				objects.isEmpty();
-			}
-			
-			@Override
-			public void notifyResponseFail(VolleyError error) {
-				// TODO Auto-generated method stub
-				
-			}
-		}).findAll();
-	}
 	
 	public static void createMessage(){
 		CouchDBUtils.getObjectById(new AObjectRecuperator<Intervention>(Intervention.class, "42e5cfbd-3d32-4e96-abbf-ef5de3034b4e") {
@@ -343,71 +322,7 @@ public class CreationBase {
 			
 		});
 	}
-	
-	public static void viderBase(){
-		new UserDao(new IViewReceiver<User>() {
-			
-			@Override
-			public void notifyResponseSuccess(List<User> objects) {
-				for (User user : objects) {
-					user.delete();
-				}
-			}
-			
-			@Override
-			public void notifyResponseFail(VolleyError error) {
-				// TODO Auto-generated method stub
-				
-			}
-		}).findAll();
-		new InterventionDao(new IViewReceiver<Intervention>() {
-			
-			@Override
-			public void notifyResponseSuccess(List<Intervention> objects) {
-				for (Intervention intervention : objects) {
-					intervention.delete();
-				}
-			}
-			
-			@Override
-			public void notifyResponseFail(VolleyError error) {
-				// TODO Auto-generated method stub
-				
-			}
-		}).findAll();
 		
-		new MoyensDao(new IViewReceiver<Moyen>() {
-			
-			@Override
-			public void notifyResponseSuccess(List<Moyen> objects) {
-				for (Moyen moyen : objects) {
-					moyen.delete();
-				}
-			}
-			
-			@Override
-			public void notifyResponseFail(VolleyError error) {
-				// TODO Auto-generated method stub
-				
-			}
-		}).findAll();
-//		new ADao<Message>(new IViewReceiver<Message>() {
-//
-//			@Override
-//			public void notifyResponseSuccess(List<Message> objects) {
-//				// TODO Auto-generated method stub
-//				for (Message message : objects) {
-//					message.delete();
-//				}
-//			}
-//
-//			@Override
-//			public void notifyResponseFail(VolleyError error) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		}).executeFindAll(Message.class);
-	}
 	
 	public static void createSecteur(){
 		Secteur s1 = new Secteur();

@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
@@ -256,6 +257,7 @@ public class LoginActivity extends Activity {
 						AgetacppApplication.setUser(findIntervenant(interventions.get(0)));
 					} catch (UserNotFoundException e) {
 						Log.e("LoginActivity", e.getMessage());
+						Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
 					}
 				} else {
 					AgetacppApplication.setListIntervention(interventions);
@@ -263,7 +265,7 @@ public class LoginActivity extends Activity {
 				}
 			}
 			showProgress(false);
-			if (AgetacppApplication.getRole() != null) {
+			if (AgetacppApplication.getRole() != null && AgetacppApplication.getUser() != null) {
 				// un utilisateur existant
 				if (AgetacppApplication.getRole() == Role.codis) {
 					CodisActivity.launchActivity(LoginActivity.this);

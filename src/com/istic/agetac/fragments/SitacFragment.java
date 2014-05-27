@@ -25,7 +25,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
-import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.mapsDock.MapObserver;
 import com.istic.agetac.model.Environnement;
 import com.istic.agetac.model.EnvironnementStatic;
@@ -53,7 +52,6 @@ public class SitacFragment extends MainFragment implements Observer {
 	}
 
 	List<IMoyen> listMoyens;
-	MoyensDao menuMoyenUpdate;
 
 	private Intervention intervention;
 
@@ -228,7 +226,6 @@ public class SitacFragment extends MainFragment implements Observer {
 		if (synchronizedEntities != null)
 			((MapFragment) getFragment()).updateEntities(synchronizedEntities);
 
-		menuMoyenUpdate.findAll();
 	}
 
 	private void stopSynchronisation() {

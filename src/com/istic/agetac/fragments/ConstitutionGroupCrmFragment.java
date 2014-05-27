@@ -128,6 +128,15 @@ public class ConstitutionGroupCrmFragment extends Fragment
         this.listViewMoyensGroup = (ListView) getActivity().findViewById( R.id.consitution_group_crm_listGroup );
         this.listViewMoyensGroup.setAdapter( this.adapterGroup );
 
+        Button actualiser = (Button) getActivity().findViewById(R.id.consitution_group_crm_actualiser);
+        actualiser.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				updateVue();
+			}
+		});
+        
         Button newGroup = (Button) getActivity().findViewById( R.id.consitution_group_crm_button_addGroup );
         newGroup.setOnClickListener( new OnClickListener()
         {

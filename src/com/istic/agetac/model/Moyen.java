@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Parcel;
 import android.util.Log;
 
+import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.api.model.IPosition;
@@ -16,6 +17,7 @@ import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Property;
+import com.istic.sit.framework.model.Representation;
 
 /**
  * Classe Moyen : Modéle qui représente un moyen (i.e. Véhicule)
@@ -93,7 +95,8 @@ public class Moyen extends Entity implements IMoyen
     {
 
         super( position );
-
+        this.setRepresentationKO( typeValue.getRepresentationKO() );
+        this.setRepresentationOK( typeValue.getRepresentationOK() );
         IProperty typeProperty = creatProperty( NAME_PROPERTY_TYPE, typeValue.toString() );
         IProperty hDemandProperty = creatProperty( NAME_PROPERTY_HOUR_DEMAND, FORMATER.format( new Date() ) );
         IProperty hEngagementProperty = creatProperty( NAME_PROPERTY_HOUR_ENGAGEMENT, null );
@@ -128,7 +131,8 @@ public class Moyen extends Entity implements IMoyen
     	super();
     	super.setGroup(true);
     	this.intervention = intervention;
-    	
+        this.setRepresentationKO( new Representation(R.drawable.groupe_ko) );
+        this.setRepresentationOK( new Representation(R.drawable.groupe_ok) );
         IProperty typeProperty = creatProperty( NAME_PROPERTY_TYPE, null);
         IProperty hDemandProperty = creatProperty( NAME_PROPERTY_HOUR_DEMAND, FORMATER.format( new Date() ) );
         IProperty hEngagementProperty = creatProperty( NAME_PROPERTY_HOUR_ENGAGEMENT, null );

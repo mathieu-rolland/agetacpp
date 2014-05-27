@@ -84,7 +84,6 @@ public class MoyenIntentService extends IntentService{
 				if( moyen.getLibelle().equals("VSAV1")){
 					GsonBuilder builder = new GsonBuilder();
 					Gson g = builder.setPrettyPrinting().create();
-					Log.d("Entity up to date" , g.toJson(moyen));
 				}
 			}
 			List<ALine> lines = new ArrayList<ALine>();
@@ -108,7 +107,7 @@ public class MoyenIntentService extends IntentService{
 		intentReceiver.putParcelableArrayListExtra( CHANNEL , 
 				(ArrayList<? extends Parcelable>) entities);
 		intentReceiver.putParcelableArrayListExtra( CHANNEL_LIST, 
-				(ArrayList<? extends Parcelable>) entities);
+				(ArrayList<? extends Parcelable>) lines);
 		LocalBroadcastManager.getInstance(this).sendBroadcast(intentReceiver);
 	}
 	

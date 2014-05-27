@@ -280,6 +280,7 @@ public class SectorFragment extends Fragment implements OnDragListener
         default:
             break;
         }
+        
         return false;
     }
 

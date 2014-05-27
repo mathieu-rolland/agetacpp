@@ -2,15 +2,19 @@ package com.istic.agetac.fragments;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -35,6 +39,10 @@ import com.istic.agetac.model.Secteur;
 import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.pattern.observer.Observer;
 import com.istic.agetac.pattern.observer.Subject;
+import com.istic.agetac.sync.moyen.MoyenBroadcast;
+import com.istic.agetac.sync.moyen.MoyenBroadcast_custtom;
+import com.istic.agetac.sync.moyen.MoyenIntentService;
+import com.istic.agetac.sync.moyen.MoyenService;
 import com.istic.sit.framework.adapter.ExpandableListAdapter;
 import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.api.view.IBackground;
@@ -55,6 +63,11 @@ public class SitacFragment extends MainFragment implements Observer {
 
 	private Intervention intervention;
 
+	private MoyenBroadcast_custtom mb;
+	private MoyenService ms;
+	
+	private PendingIntent pendingIntent;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -98,16 +111,43 @@ public class SitacFragment extends MainFragment implements Observer {
 	}
 
 	@Override
+	public void startServiceSynchronisation()
+	{
+//		PoolSynchronisation ps = FrameworkApplication.getPoolSynchronisation();
+//		ms = new MoyenService("Moyen sync");
+//		mb = new MoyenBroadcast_custtom( this );
+//		ps.registerServiceSync(MainFragment.RECEIVE_SYNC, ms, mb);
+//		Log.d("Moyen", "Synchronisation started");
+		
+		LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(getActivity());
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction( MoyenIntentService.CHANNEL );
+		
+		MoyenIntentService service = new MoyenIntentService();
+		MoyenBroadcast broadcast = new MoyenBroadcast(this);
+		
+		bManager.registerReceiver( broadcast , intentFilter);
+
+		Intent intent = new Intent(getActivity(), service.getClass());
+		pendingIntent = PendingIntent.getService(getActivity(), 0, intent, 0);
+		
+		Calendar cal = Calendar.getInstance();
+		AlarmManager alarm = (AlarmManager)getActivity().getSystemService( Context.ALARM_SERVICE );
+		alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 
+				service.getIntervalToRefresh() * 1000 , pendingIntent); 
+		Log.d("Pool synchronisation service", "Service moyen now started.");
+	}
+	
+	@Override
 	public void onItemMenuClicked(int position, View view) {
 		IEntity entity = (IEntity) this.entityAdapter.getItem(position);
 
-		Toast.makeText(getActivity().getBaseContext(), "Click on Item",
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity().getBaseContext(), "Click on Item",Toast.LENGTH_SHORT).show();
 
 		// centrer sur entity
 		if (entity.getPosition() != null && entity.isOnMap())
 			((MapFragment) getFragment()).gotoMyLocation(entity.getPosition());
-		// TO DO : affichage infos
+		// TODO : affichage infos
 	}
 
 	@Override
@@ -223,9 +263,11 @@ public class SitacFragment extends MainFragment implements Observer {
 	@Override
 	public void updateEntities(List<Entity> synchronizedEntities) {
 		Log.d("SYNCHRO MAP", "SitacFragment - updateEntities");
-		if (synchronizedEntities != null)
+		if (synchronizedEntities != null && isAdded()){
 			((MapFragment) getFragment()).updateEntities(synchronizedEntities);
-
+		}
+		
+//		menuMoyenUpdate.findAll();
 	}
 
 	private void stopSynchronisation() {
@@ -237,7 +279,11 @@ public class SitacFragment extends MainFragment implements Observer {
 
 	@Override
 	public void onStop() {
-		stopSynchronisation();
+		//TODO faire stop synchro :
+		AlarmManager alarm = (AlarmManager)
+				getActivity().getSystemService(Context.ALARM_SERVICE);
+		alarm.cancel(pendingIntent);
+		
 		super.onStop();
 	}
 

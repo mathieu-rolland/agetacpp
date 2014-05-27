@@ -576,7 +576,6 @@ public class Moyen extends Entity implements IMoyen
     {
         return this.getId().equals( moyen.getId() );
     }
-
     @Override
     public List<IMoyen> getListMoyen()
     {
@@ -622,4 +621,6 @@ public class Moyen extends Entity implements IMoyen
             moyens.remove( moyen );
         }
     }
+
+
 }

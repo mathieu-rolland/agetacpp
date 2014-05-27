@@ -3,8 +3,6 @@ package com.istic.agetac.sync.message;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
-
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -19,7 +17,6 @@ import com.istic.agetac.pattern.observer.Observer;
 import com.istic.agetac.pattern.observer.Subject;
 import com.istic.sit.framework.couch.AObjectRecuperator;
 import com.istic.sit.framework.couch.DataBaseCommunication;
-import com.istic.sit.framework.couch.JsonSerializer;
 import com.istic.sit.framework.sync.ASynchornisationService;
 
 public class MessageServiceSynchronisation 
@@ -50,18 +47,14 @@ public class MessageServiceSynchronisation
 
 	@Override
 	protected void onHandleIntent(Intent arg0) {
-//		new MessageDAO(this).executeFindAll( Message.class );
 		intervention = AgetacppApplication.getIntervention();
-		Log.d("MESSAGE", "Service called");
 		if( intervention != null ){
-			Log.d("MESSAGE", "Send get called");
 			DataBaseCommunication.sendGet( new InterventionReceiver() );
 		}
 	}
 
 	@Override
 	public void notifyResponseSuccess(List<IMessage> objects) {
-		Log.d("MESSAGE", "Reception des messages => " + (objects == null ? "null" : objects.size()));
 		Intent intentReceiver = new Intent( FILTER_MESSAGE_RECEIVER );
 		intentReceiver.putParcelableArrayListExtra( ASynchornisationService.SYNC_SERVICE_EXTRA , 
 				(ArrayList<? extends Parcelable>) objects);
@@ -92,12 +85,6 @@ public class MessageServiceSynchronisation
 		
 		@Override
 		public void onResponse(Intervention objet) {
-			Log.d("MESSAGE", "On response : ");
-			try {
-				Log.d("MESSAGE", JsonSerializer.serialize(objet).toString());
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
 			objet.updateMessagesDependencies();
 			notifyResponseSuccess(objet.getMessages());
 		}

@@ -334,6 +334,7 @@ public class Moyen extends Entity implements IMoyen
     public void setHFree( Date valeur )
     {
         super.getProperty( NAME_PROPERTY_HOUR_FREE ).setValeur( FORMATER.format( valeur ) );
+        super.setOnMap(false);
     } // method
 
     /**
@@ -576,7 +577,15 @@ public class Moyen extends Entity implements IMoyen
     @Override
     public String toString()
     {
-        return this.getLibelle();
+    	if (isGroup()){
+    		String list = "";
+    		for (IMoyen m : moyens){
+    			list += m.getLibelle()+"\n";
+    		}
+    		return list;
+    	}else{
+            return this.getLibelle();
+    	}
     }
 
     public boolean equals( Moyen moyen )

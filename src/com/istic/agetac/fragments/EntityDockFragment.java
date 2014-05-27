@@ -58,7 +58,7 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 				
 				TextView lat2 = (TextView) view
 						.findViewById(R.id.fragment_activity_position_lat_value);
-				lat2.setText(entity.listToString());
+				lat2.setText(entity.toString());
 
 				TextView lng = (TextView) view
 						.findViewById(R.id.fragment_activity_position_lng_label);

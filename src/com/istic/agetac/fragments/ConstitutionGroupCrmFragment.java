@@ -202,43 +202,6 @@ public class ConstitutionGroupCrmFragment extends Fragment
     } // method
 
     /**
-     * Method which retrieves Moyen in BDD and save them only if their are not in a groupe
-     */
-    public void retrieveMoyenInBDD()
-    {
-
-        this.getmListMoyen().clear();
-        List<IMoyen> moyenFiltered = new ArrayList<IMoyen>();
-        for ( IMoyen m : this.getIntervention().getMoyens() )
-        {
-            if ( !m.isInGroup() && m.getSecteur() != null )
-            {
-                if ( m.getSecteur().getLibelle().equals( "CRM" ) )
-                {
-                    moyenFiltered.add( m );
-                }
-            }
-        }
-
-        if ( moyenFiltered.size() == 0 )
-        {
-            this.getActivity().findViewById( R.id.consitution_group_crm_listviewMoyensArrived ).setVisibility( View.GONE );
-            this.getActivity().findViewById( R.id.panel_empty_moyen ).setVisibility( View.VISIBLE );
-        }
-        else
-        {
-            this.getActivity().findViewById( R.id.consitution_group_crm_listviewMoyensArrived ).setVisibility( View.VISIBLE );
-            this.getActivity().findViewById( R.id.panel_empty_moyen ).setVisibility( View.GONE );
-        }
-
-        this.setmListMoyen( moyenFiltered );
-        this.getAdapterMoyen().notifyDataSetChanged();
-        this.listViewMoyensAtCrm.setAdapter( this.getAdapterMoyen() );
-        onMessageReveive( "Récupération des données MOYEN réussie !" );
-
-    } // method
-
-    /**
      * Method which retrieves Group and Moyens in BDD
      */
     public void retrieveDatas()
@@ -270,7 +233,10 @@ public class ConstitutionGroupCrmFragment extends Fragment
         	}
         	else
         	{
-        		listIMoyenRetrieved.add(g);
+        		if ( g.getSecteur() != null && g.getSecteur().getLibelle().equals( "CRM" ) )
+                {
+        			listIMoyenRetrieved.add(g);
+                }
         	}
         }
 

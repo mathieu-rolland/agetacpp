@@ -41,11 +41,11 @@ public class ListenerSpinner implements OnItemSelectedListener {
 			if (mMoyen.getHArrival() == null) {
 				mMoyen.setHArrival(new Date());
 				mAdapter.notifyDataSetChanged();
+				mMoyen.save();
 			}
 		} else {
 			//mMoyen.setSecteur("");
 		}
-		mMoyen.save();
 	}
 
 	@Override

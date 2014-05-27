@@ -426,6 +426,9 @@ public class Intervention implements IIntervention {
 		for(IMoyen gr : getGroupes()){
 
 			gr.setIntervention(this);
+			for(IMoyen m : gr.getListMoyen()){
+				m.setIntervention(this);
+			}
 		}
 
 		oct.setIntervention(this);

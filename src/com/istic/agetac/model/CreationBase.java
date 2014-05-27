@@ -89,8 +89,6 @@ public class CreationBase {
 		//moyens
 		Moyen mo1 = new Moyen(TypeMoyen.VSAV, inter1);
 		mo1.setLibelle("VSAV1");
-		mo1.setRepresentationKO(new Representation(R.drawable.vsav_ko));
-		mo1.setRepresentationOK(new Representation(R.drawable.vsav_ko));
 		
 		Property property1 = new Property();
 		property1.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
@@ -102,8 +100,6 @@ public class CreationBase {
 		
 		Moyen mo1bis = new Moyen(TypeMoyen.VSAV, inter1);
 		mo1bis.setLibelle("VSAV 3");
-		mo1bis.setRepresentationKO(new Representation(R.drawable.vsav_ko));
-		mo1bis.setRepresentationOK(new Representation(R.drawable.vsav_ko));
 		
 		Property property1Bis = new Property();
 		property1Bis.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
@@ -113,10 +109,8 @@ public class CreationBase {
 		
 		inter1.addMoyen(mo1bis);
 		
-		Moyen mo2 = new Moyen(TypeMoyen.VSAV, inter1);
-		mo2.setLibelle("VSAV2");
-		mo2.setRepresentationKO(new Representation(R.drawable.vsav_ko));
-		mo2.setRepresentationOK(new Representation(R.drawable.vsav_ko));
+		Moyen mo2 = new Moyen(TypeMoyen.FPT, inter1);
+		mo2.setLibelle("FPT2");
 		
 		Property property2 = new Property();
 		property2.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);

@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.os.Parcel;
 import android.util.Log;
 
-import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.api.model.IPosition;
@@ -17,7 +16,6 @@ import com.istic.sit.framework.api.model.IProperty;
 import com.istic.sit.framework.api.model.IRepresentation;
 import com.istic.sit.framework.model.Entity;
 import com.istic.sit.framework.model.Property;
-import com.istic.sit.framework.model.Representation;
 
 /**
  * Classe Moyen : Modéle qui représente un moyen (i.e. Véhicule)
@@ -164,6 +162,7 @@ public class Moyen extends Entity implements IMoyen
         {
             iMoyen.setIsInGroup( true );
         }
+        intervention.getMoyens().removeAll(liste);
         moyens.addAll( liste );
     }
 
@@ -384,9 +383,7 @@ public class Moyen extends Entity implements IMoyen
     @Override
     public void save()
     {
-        // if( !intervention.contains(this) ){
         AgetacppApplication.getIntervention().addMoyen( this );
-        // }
         try
         {
         	AgetacppApplication.getIntervention().addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Modification du moyen " + this.getLibelle() ) );
@@ -593,6 +590,7 @@ public class Moyen extends Entity implements IMoyen
     public void addMoyen( IMoyen moyen )
     {
         moyen.setIsInGroup( true );
+        intervention.getMoyens().remove(moyen);
         moyens.add( moyen );
     }
 
@@ -604,6 +602,7 @@ public class Moyen extends Entity implements IMoyen
             for ( IMoyen moyen : moyens )
             {
                 moyen.setIsInGroup( false );
+                intervention.addMoyen((Moyen)moyen);
             }
 
             moyens.clear();

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.model.IUser.Role;
+import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.EnvironnementsStatic;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.UserAvailable;
@@ -30,7 +31,7 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
 		FrameworkApplication.setFactory(new Factory());
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/TO_DEFINE/";
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/clean_base/";
 //		CreationBase.createCleanBase();
 		
 	}

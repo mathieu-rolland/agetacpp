@@ -285,7 +285,7 @@ public class Moyen extends Entity implements IMoyen
     public Secteur getSecteur()
     {
         int i = 0;
-        List<Secteur> secteurs = AgetacppApplication.getIntervention().getSecteurs();
+        List<Secteur> secteurs = intervention.getSecteurs();
         String name = super.getProperty( NAME_PROPERTY_SECTEUR ).getValeur();
         Secteur secteur = null;
 

@@ -260,9 +260,13 @@ public class SitacFragment extends MainFragment implements Observer {
 		Log.d("SYNCHRO MAP", "SitacFragment - updateEntities");
 		if (synchronizedEntities != null && isAdded()){
 			((MapFragment) getFragment()).updateEntities(synchronizedEntities);
+			
 		}
-		
-//		menuMoyenUpdate.findAll();
+		List<IMoyen> moyens = new ArrayList<IMoyen>();
+		for( Entity entity : synchronizedEntities ){
+			moyens.add( (IMoyen) entity );
+		}
+		menuUpdate(moyens);
 	}
 
 	private void stopSynchronisation() {

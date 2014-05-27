@@ -280,7 +280,7 @@ public class SectorFragment extends Fragment implements OnDragListener
         default:
             break;
         }
-        return true;
+        return false;
     }
 
     private void reafectMoyens( ISecteur deletedSecteur )

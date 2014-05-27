@@ -25,6 +25,7 @@ import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListAdapter;
 import com.istic.agetac.controler.adapter.ConstitutionGroupCrmListGroupAdapter;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.Secteur;
 import com.istic.agetac.model.TypeMoyen;
 
 /**
@@ -168,8 +169,9 @@ public class ConstitutionGroupCrmFragment extends Fragment
 
                         String tmp = ( (EditText) alert.findViewById( R.id.constitution_group_crm_DialogAddGroup_TextEdit_Name ) ).getText().toString();
 
-                        IMoyen groupe = new Moyen( TypeMoyen.VSAV, AgetacppApplication.getIntervention() );
-
+                        IMoyen groupe = new Moyen( new ArrayList<IMoyen>(), AgetacppApplication.getIntervention() );
+                        groupe.setLibelle(tmp);
+                        
                         // Lancement de la mise à jour
                         getmListGroup().add( groupe );
 
@@ -186,8 +188,7 @@ public class ConstitutionGroupCrmFragment extends Fragment
         } );
 
         /** Récupération des données */
-        retrieveGroupInBDD();
-        retrieveMoyenInBDD();
+        retrieveDatas();
 
     } // method
 
@@ -197,8 +198,7 @@ public class ConstitutionGroupCrmFragment extends Fragment
 
     public void updateVue()
     {
-        this.retrieveMoyenInBDD();
-        this.retrieveGroupInBDD();
+        this.retrieveDatas();
     } // method
 
     /**
@@ -213,7 +213,7 @@ public class ConstitutionGroupCrmFragment extends Fragment
         {
             if ( !m.isInGroup() && m.getSecteur() != null )
             {
-                if ( m.getSecteur().equals( "CRM" ) )
+                if ( m.getSecteur().getLibelle().equals( "CRM" ) )
                 {
                     moyenFiltered.add( m );
                 }
@@ -239,33 +239,42 @@ public class ConstitutionGroupCrmFragment extends Fragment
     } // method
 
     /**
-     * Method which retrieves Group and Moyens in BDD and save them only if their are not in a groupe
+     * Method which retrieves Group and Moyens in BDD
      */
-    public void retrieveGroupInBDD()
+    public void retrieveDatas()
     {
 
         this.getmListGroup().clear();
+        this.getmListMoyen().clear();
+        
         ArrayList<IMoyen> listIMoyenRetrieved = new ArrayList<IMoyen>();
-        for ( IMoyen g : this.getIntervention().getGroupes() )
+        ArrayList<IMoyen> listIGroupRetrieved = new ArrayList<IMoyen>();
+        for ( IMoyen g : this.getIntervention().getMoyens() )
         {
 
-            listIMoyenRetrieved.add( g );
-            List<IMoyen> listMoyenOfGroup = g.getListMoyen();
-            Log.d( "Antho", g.toString() );
-            if ( listMoyenOfGroup != null )
-            {
-                for ( IMoyen moyen : listMoyenOfGroup )
-                {
-                    if ( moyen.isInGroup() && moyen.getSecteur().equals( "CRM" ) )
-                    {
-                        listIMoyenRetrieved.add( moyen );
-                        Log.d( "Antho", " -- " + moyen.toString() );
-                    }
-                }
-            }
+        	if (g.isGroup()) {
+	            listIGroupRetrieved.add( g );
+	            List<IMoyen> listMoyenOfGroup = g.getListMoyen();
+	            Log.d( "Antho", g.toString() );
+	            if ( listMoyenOfGroup != null )
+	            {
+	                for ( IMoyen moyen : listMoyenOfGroup )
+	                {
+	                    if ( moyen.isInGroup() && moyen.getSecteur() != null && moyen.getSecteur().getLibelle().equals( "CRM" ) )
+	                    {
+	                    	listIGroupRetrieved.add( moyen );
+	                        Log.d( "Antho", " -- " + moyen.toString() );
+	                    }
+	                }
+	            }
+        	}
+        	else
+        	{
+        		listIMoyenRetrieved.add(g);
+        	}
         }
 
-        if ( listIMoyenRetrieved.size() == 0 )
+        if ( listIGroupRetrieved.size() == 0 )
         {
             this.getActivity().findViewById( R.id.consitution_group_crm_listGroup ).setVisibility( View.GONE );
             this.getActivity().findViewById( R.id.panel_empty_group ).setVisibility( View.VISIBLE );
@@ -276,9 +285,26 @@ public class ConstitutionGroupCrmFragment extends Fragment
             this.getActivity().findViewById( R.id.panel_empty_group ).setVisibility( View.GONE );
         }
 
-        this.getmListGroup().addAll( listIMoyenRetrieved );
+        this.getmListGroup().addAll( listIGroupRetrieved );
         this.getAdapterGroup().notifyDataSetChanged();
         this.listViewMoyensGroup.setAdapter( this.getAdapterGroup() );
+        onMessageReveive( "Récupération des données GROUPES réussie !" );
+        
+        if ( listIMoyenRetrieved.size() == 0 )
+        {
+            this.getActivity().findViewById( R.id.consitution_group_crm_listviewMoyensArrived ).setVisibility( View.GONE );
+            this.getActivity().findViewById( R.id.panel_empty_moyen ).setVisibility( View.VISIBLE );
+        }
+        else
+        {
+            this.getActivity().findViewById( R.id.consitution_group_crm_listviewMoyensArrived ).setVisibility( View.VISIBLE );
+            this.getActivity().findViewById( R.id.panel_empty_moyen ).setVisibility( View.GONE );
+        }
+
+        this.getmListMoyen().addAll(listIMoyenRetrieved);
+        this.getAdapterMoyen().notifyDataSetChanged();
+        this.listViewMoyensAtCrm.setAdapter( this.getAdapterMoyen() );
+        onMessageReveive( "Récupération des données MOYENS réussie !" );
 
     } // method
 

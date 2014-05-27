@@ -520,7 +520,7 @@ public class Intervention implements IIntervention {
 	public List<IMoyen> getGroupes() {
 		
 		List<IMoyen> groupe = new ArrayList<IMoyen>();
-		for (IMoyen iMoyen : groupe) {
+		for (IMoyen iMoyen : this.moyens) {
 			if(iMoyen.isGroup())
 				groupe.add(iMoyen);
 		}

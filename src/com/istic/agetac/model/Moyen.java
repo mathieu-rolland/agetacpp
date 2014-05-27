@@ -110,6 +110,9 @@ public class Moyen extends Entity implements IMoyen
         super.addPropriete( hFreeProperty );
         super.addPropriete( secteurProperty );
         super.addPropriete( ingroupProperty );
+        
+        this.intervention = intervention;
+        
         moyens = new ArrayList<IMoyen>();
         
     }
@@ -123,14 +126,15 @@ public class Moyen extends Entity implements IMoyen
     {
         
     	super();
-
+    	super.setGroup(true);
+    	this.intervention = intervention;
+    	
         IProperty typeProperty = creatProperty( NAME_PROPERTY_TYPE, null);
         IProperty hDemandProperty = creatProperty( NAME_PROPERTY_HOUR_DEMAND, FORMATER.format( new Date() ) );
         IProperty hEngagementProperty = creatProperty( NAME_PROPERTY_HOUR_ENGAGEMENT, null );
         IProperty hArrivalProperty = creatProperty( NAME_PROPERTY_HOUR_ARRIVAL, null );
         IProperty hFreeProperty = creatProperty( NAME_PROPERTY_HOUR_FREE, null );
         IProperty secteurProperty = creatProperty( NAME_PROPERTY_SECTEUR, null );
-
         IProperty ingroupProperty = creatProperty( NAME_PROPERTY_INGROUP, "0" );
 
         super.addPropriete( typeProperty );
@@ -140,8 +144,8 @@ public class Moyen extends Entity implements IMoyen
         super.addPropriete( hFreeProperty );
         super.addPropriete( secteurProperty );
         super.addPropriete( ingroupProperty );
+        
         addMoyens( liste );
-        super.setGroup(true);
         
         // On set une position par défaut si c'est possible
         /*FIXME NullPointer Exception 
@@ -620,6 +624,7 @@ public class Moyen extends Entity implements IMoyen
         {
             moyen.setIsInGroup( false );
             moyens.remove( moyen );
+            intervention.addMoyen((Moyen)moyen);
         }
     }
 

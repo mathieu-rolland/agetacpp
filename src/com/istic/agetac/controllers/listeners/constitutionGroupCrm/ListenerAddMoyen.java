@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
+import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
 import com.istic.agetac.model.Moyen;
 
@@ -38,7 +39,7 @@ public class ListenerAddMoyen implements OnClickListener{
 		
 		this.itemMoyen = moyen;
 		this.vue = constitutionGroupCrm;
-		this.listGroupe = this.vue.getmListGroup();
+		this.listGroupe = this.vue.getIntervention().getGroupes();
 		
 	} // méthode
 

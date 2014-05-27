@@ -6,16 +6,15 @@ import java.util.List;
 
 import android.graphics.Color;
 
-import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMessage.Message_part;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.model.Property;
-import com.istic.sit.framework.model.Representation;
 
 public class CreationBase {
 	
 	public static void createCleanBase(){
+		
 		// Users
 		Codis vincent = new Codis("Vincent", "vincent");
 		vincent.setPassword("vincent");
@@ -122,16 +121,16 @@ public class CreationBase {
 		
 		List<IMoyen> listMoyen = new ArrayList<IMoyen>();
 		listMoyen.add(mo1);
-		listMoyen.add(mo2);
+		
+		List<IMoyen> listMoyen2 = new ArrayList<IMoyen>();
+		listMoyen2.add(mo2);
+
 		Moyen g1 = new Moyen(listMoyen, inter1);
 		g1.setLibelle("Groupe 1 - Rennes");
-		g1.setGroup(true);
-		Moyen g2 = new Moyen(listMoyen, inter1);
+		Moyen g2 = new Moyen(listMoyen2, inter1);
 		g2.setLibelle("Groupe 2 - Rennes ");
-		g2.setGroup(true);
 		Moyen g3 = new Moyen(new ArrayList<IMoyen>(), inter1);
 		g3.setLibelle("Groupe 3 - Rennes");
-		g3.setGroup(true);
 		
 		inter1.addGroupe(g1);
 		inter1.addGroupe(g2);
@@ -143,7 +142,6 @@ public class CreationBase {
 		userAvailable.addUser(marion);
 		userAvailable.addUser(maxime);
 		userAvailable.addUser(mathieu);
-		
 		
 		Environnement ev1 = new Environnement( AgetacppApplication.getIntervention() );
 		ev1.setLibelle("Bouche incendie");

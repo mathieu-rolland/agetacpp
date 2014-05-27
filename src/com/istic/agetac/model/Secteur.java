@@ -17,7 +17,7 @@ import com.istic.sit.framework.model.Entity;
 public class Secteur extends Entity implements ISecteur { 
 
 	private boolean lock;
-	private List<IMoyen> moyens;
+	private transient List<IMoyen> moyens;
 
 	private transient Intervention intervention;
 	

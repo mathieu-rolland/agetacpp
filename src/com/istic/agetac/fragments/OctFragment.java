@@ -94,7 +94,6 @@ public class OctFragment extends Fragment {
 		View view = inflater.inflate(R.layout.fragment_oct, container, false);
 		intervention = AgetacppApplication.getIntervention();
 		oct = intervention.getOct();
-		listeSecteurs = new ArrayList<Secteur>();
 		listeSecteurs = intervention.getSecteurs();
 		
 		secteur1 = oct.getSecteur1();
@@ -202,6 +201,9 @@ public class OctFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
+			    
+			    oct.setSecteur1( OctFragment.this.listeSecteurs.get( position ));
+			    
 				listeMoyenS1 = oct.getSecteur1().getMoyens();
 				lvListeS1.setAdapter(new MoyenAdapter(getActivity(),
 						listeMoyenS1));

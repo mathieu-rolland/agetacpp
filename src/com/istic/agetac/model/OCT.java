@@ -24,10 +24,14 @@ public class OCT implements IRecordable, Parcelable {
 	static String codis = "CODIS";
 	static String cos = "COS";
 	
-	private Secteur secteur1;
-	private Secteur secteur2;
-	private Secteur secteur3;
-	private Secteur secteur4;
+	private transient Secteur secteur1;
+	private String secteur1_libelle;
+	private transient Secteur secteur2;
+	private String secteur2_libelle;
+	private transient Secteur secteur3;
+	private String secteur3_libelle;
+	private transient Secteur secteur4;
+	private String secteur4_libelle;
 	
 	private String frequenceCodis;
 	private String frequenceCosAsc;
@@ -49,10 +53,15 @@ public class OCT implements IRecordable, Parcelable {
 			String freqS1A, String freqS1D,String freqS2A, String freqS2D, String freqS3A, String freqS3D, String freqS4A, String freqS4D){
 		this._id = UUID.randomUUID().toString();
 		
-		this.secteur1 = s1;
-		this.secteur2 = s2;
-		this.secteur3 = s3;
-		this.secteur4 = s4;
+		setSecteur1( s1 );
+		setSecteur2( s2 );
+		setSecteur3( s3 );
+		setSecteur4( s4 );
+		
+		secteur1_libelle=  s1.getLibelle() ;
+        secteur2_libelle=  s2.getLibelle() ;
+        secteur3_libelle=  s3.getLibelle() ;
+        secteur4_libelle=  s4.getLibelle() ;
 		
 		this.frequenceCodis = freqCodis;
 		this.frequenceCosAsc = freqCosA;
@@ -81,10 +90,10 @@ public class OCT implements IRecordable, Parcelable {
 			OCT oct = (OCT) JsonSerializer.deserialize(OCT.class, new JSONObject(serializedJson));
 		
 			this.intervention = oct.intervention;
-			this.secteur1 = oct.secteur1;
-			this.secteur2 = oct.secteur2;
-			this.secteur3 = oct.secteur3;
-			this.secteur4 = oct.secteur4;
+			setSecteur1( oct.secteur1 );
+			setSecteur2( oct.secteur2 );
+			setSecteur3( oct.secteur3 );
+			setSecteur4( oct.secteur4 );
 			
 			this.frequenceCodis = oct.frequenceCodis;
 			this.frequenceCosAsc = oct.frequenceCosAsc;
@@ -139,6 +148,7 @@ public class OCT implements IRecordable, Parcelable {
 
 	public void setSecteur1(Secteur secteur1) {
 		this.secteur1 = secteur1;
+		this.secteur1_libelle = secteur1.getLibelle();
 	}
 
 	public Secteur getSecteur2() {
@@ -147,6 +157,7 @@ public class OCT implements IRecordable, Parcelable {
 
 	public void setSecteur2(Secteur secteur2) {
 		this.secteur2 = secteur2;
+		this.secteur2_libelle = secteur2.getLibelle();
 	}
 
 	public Secteur getSecteur3() {
@@ -155,6 +166,7 @@ public class OCT implements IRecordable, Parcelable {
 
 	public void setSecteur3(Secteur secteur3) {
 		this.secteur3 = secteur3;
+		this.secteur3_libelle = secteur3.getLibelle();
 	}
 
 	public Secteur getSecteur4() {
@@ -163,6 +175,7 @@ public class OCT implements IRecordable, Parcelable {
 
 	public void setSecteur4(Secteur secteur4) {
 		this.secteur4 = secteur4;
+		this.secteur4_libelle = secteur4.getLibelle();
 	}
 
 	public String getFrequenceCodis() {
@@ -253,7 +266,47 @@ public class OCT implements IRecordable, Parcelable {
 		this.frequenceS4Desc = frequenceS4Desc;
 	}
 
-	@Override
+	public String getSecteur1_libelle()
+    {
+        return secteur1_libelle;
+    }
+
+    public void setSecteur1_libelle( String secteur1_libelle )
+    {
+        this.secteur1_libelle = secteur1_libelle;
+    }
+
+    public String getSecteur2_libelle()
+    {
+        return secteur2_libelle;
+    }
+
+    public void setSecteur2_libelle( String secteur2_libelle )
+    {
+        this.secteur2_libelle = secteur2_libelle;
+    }
+
+    public String getSecteur3_libelle()
+    {
+        return secteur3_libelle;
+    }
+
+    public void setSecteur3_libelle( String secteur3_libelle )
+    {
+        this.secteur3_libelle = secteur3_libelle;
+    }
+
+    public String getSecteur4_libelle()
+    {
+        return secteur4_libelle;
+    }
+
+    public void setSecteur4_libelle( String secteur4_libelle )
+    {
+        this.secteur4_libelle = secteur4_libelle;
+    }
+
+    @Override
 	public int describeContents() {
 		return 0;
 	}

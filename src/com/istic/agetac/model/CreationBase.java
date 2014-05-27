@@ -167,6 +167,9 @@ public class CreationBase {
 		inter1.addGroupe(g1);
 		inter1.addGroupe(g2);
 		
+	      OCT oct = new OCT( s1, s2 , s3, s4, "70", "70", "30", "30", "11", "30", "12", "30", "13", "30", "14" );
+	        inter1.setOct( oct );
+		
 		UserAvailable userAvailable = new UserAvailable();
 		userAvailable.addUser(christophe);
 		userAvailable.addUser(antho);

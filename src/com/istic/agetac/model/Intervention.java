@@ -437,13 +437,11 @@ public class Intervention implements IIntervention {
 			intervenant.setIntervention(this);
 		}
 		
-		if( codis != null ) codis.setIntervention(this);
+		codis.setIntervention(this);
 		
 		updateMessagesDependencies();
 
 		for(IMoyen gr : getGroupes()){
-
-			gr.setIntervention(this);
 			for(IMoyen m : gr.getListMoyen()){
 				m.setIntervention(this);
 			}
@@ -453,6 +451,18 @@ public class Intervention implements IIntervention {
 		
 		for(Secteur secteur : secteurs){
 			secteur.setIntervention(this);
+			if(oct.getSecteur1_libelle().equals( secteur.getLibelle() )){
+			    oct.setSecteur1( secteur );
+			}
+			if(oct.getSecteur2_libelle().equals( secteur.getLibelle() )){
+			    oct.setSecteur2( secteur );
+			}
+			if(oct.getSecteur3_libelle().equals( secteur.getLibelle() )){
+			    oct.setSecteur3( secteur );
+			}
+			if(oct.getSecteur4_libelle().equals( secteur.getLibelle() )){
+			    oct.setSecteur4( secteur );
+			}
 		}
 		
 		for (IMoyen moyen : moyens) {

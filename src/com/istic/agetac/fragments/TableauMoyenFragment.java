@@ -128,10 +128,12 @@ public class TableauMoyenFragment extends Fragment {
 	}
 
 	private void stopSynchronisation() {
-		AlarmManager alarm = (AlarmManager) getActivity().getSystemService(
-				Context.ALARM_SERVICE);
-		PendingIntent pi = receiver.getPendingIntent();
-		alarm.cancel(pi);
+		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO && AgetacppApplication.ACTIVE_TDM_SYNCHRO ){
+			AlarmManager alarm = (AlarmManager) getActivity().getSystemService(
+					Context.ALARM_SERVICE);
+			PendingIntent pi = receiver.getPendingIntent();
+			alarm.cancel(pi);
+		}
 	}
 
 	@Override

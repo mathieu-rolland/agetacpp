@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.istic.agetac.api.model.IMessage.Message_part;
 import com.istic.agetac.api.model.IMoyen;
@@ -84,88 +85,71 @@ public class CreationBase {
 		inter1.addSecteur(s3);
 		inter1.addSecteur(s4);
 		inter1.addSecteur(s5);
-		
-		//moyens
-		Moyen mo1 = new Moyen(TypeMoyen.VSAV, inter1);
-		mo1.setLibelle("VSAV 1");
-		
-		Property property1 = new Property();
-		property1.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property1.setValeur(Moyen.FORMATER.format(new Date()));
-		mo1.addPropriete(property1);
-		mo1.setSecteur(s5);
-		
-		inter1.addMoyen(mo1);
-		
-		Moyen mo2 = new Moyen(TypeMoyen.VSAV, inter1);
-		mo2.setLibelle("VSAV 2");
-		
-		Property property2 = new Property();
-		property2.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property2.setValeur(Moyen.FORMATER.format(new Date()));
-		mo2.addPropriete(property2);
-		mo2.setSecteur(s5);
-		
-		inter1.addMoyen(mo2);
-		
-		Moyen mo1bis = new Moyen(TypeMoyen.VSAV, inter1);
-		mo1bis.setLibelle("VSAV 3");
-		
-		Property property1Bis = new Property();
-		property1Bis.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property1Bis.setValeur(Moyen.FORMATER.format(new Date()));
-		mo1bis.addPropriete(property1Bis);
-		mo1bis.setSecteur(s5);
-		
-		inter1.addMoyen(mo1bis);
-		
-		Moyen mo3 = new Moyen(TypeMoyen.FPT, inter1);
-		mo3.setLibelle("FPT 2");
-		
-		Property property3 = new Property();
-		property3.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property3.setValeur(Moyen.FORMATER.format(new Date()));
-		mo3.addPropriete(property3);
-		mo3.setSecteur(s5);		
-		
-		inter1.addMoyen(mo3);
-			
-		Moyen mo4 = new Moyen(TypeMoyen.CCGC, inter1);
-		mo4.setLibelle("CCGC 1");
-		
-		Property property4 = new Property();
-		property4.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property4.setValeur(Moyen.FORMATER.format(new Date()));
-		mo4.addPropriete(property4);
-		mo4.setSecteur(s5);		
-		
-		inter1.addMoyen(mo4);
-		
-		Moyen mo5 = new Moyen(TypeMoyen.VLCC, inter1);
-		mo5.setLibelle("VLCC 1");
-		
-		Property property5 = new Property();
-		property5.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property5.setValeur(Moyen.FORMATER.format(new Date()));
-		mo5.addPropriete(property5);
-		mo5.setSecteur(s5);		
-		
-		inter1.addMoyen(mo5);
-		
-		List<IMoyen> listMoyen = new ArrayList<IMoyen>();
-		listMoyen.add(mo1);
-		listMoyen.add(mo2);
-		
-		List<IMoyen> listMoyen2 = new ArrayList<IMoyen>();
-		listMoyen2.add(mo3);
 
-		Moyen g1 = new Moyen(listMoyen, inter1);
-		g1.setLibelle("Groupe 1 - Rennes");
-		Moyen g2 = new Moyen(listMoyen2, inter1);
-		g2.setLibelle("Groupe 2 - Rennes ");
 		
-		inter1.addGroupe(g1);
-		inter1.addGroupe(g2);
+		try{
+		    IMoyen moyen1 = new Moyen( TypeMoyen.VSAV, inter1 );
+	        moyen1.setHDemande( new Date(2014,27,05,14,22) );
+	        
+	        IMoyen moyen2 = new Moyen( TypeMoyen.VSAV, inter1 );
+	        moyen2.setHDemande( new Date(2014,27,05,14,22) );
+            moyen2.setHEngagement( new Date(2014,27,05,15,00) ) ;
+            moyen2.setLibelle( "moyen2" );
+            
+            IMoyen moyen3 = new Moyen( TypeMoyen.VSAV, inter1 );
+            moyen3.setHDemande( new Date(2014,27,05,14,22) );
+            moyen3.setLibelle( "moyen3" );
+            moyen3.setHEngagement(  new Date(2014,27,05,15,00) ) ;
+            moyen3.setHArrival( new Date(2014,27,05,15,30) );
+            moyen3.setSecteur( s2 );
+            
+            IMoyen moyen4 = new Moyen( TypeMoyen.VSAV, inter1 );
+            moyen4.setHDemande( new Date(2014,27,05,14,22) );
+            moyen4.setLibelle( "moyen4" );
+            moyen4.setHEngagement(  new Date(2014,27,05,15,00) ) ;
+            moyen4.setHArrival( new Date(2014,27,05,15,30) );
+            moyen4.setSecteur( s2 );
+            moyen4.setHFree( new Date(2014,27,05,17,30) );
+            
+            IMoyen moyen5 = new Moyen( TypeMoyen.VSAV, inter1 );
+            moyen5.setHDemande( new Date(2014,27,05,14,22) );
+            moyen5.setLibelle( "moyen5" );
+            moyen5.setHEngagement(  new Date(2014,27,05,15,00) ) ;
+            
+            IMoyen moyen6 = new Moyen( TypeMoyen.VSAV, inter1 );
+            moyen6.setHDemande( new Date(2014,27,05,14,22) );
+            moyen6.setLibelle( "moyen6" );
+            moyen6.setHEngagement(  new Date(2014,27,05,15,43) ) ;
+
+            List<IMoyen> listeMoyenDuGroupe1 = new ArrayList<IMoyen>();
+            listeMoyenDuGroupe1.add( moyen1 );
+            listeMoyenDuGroupe1.add( moyen2 );
+            
+            List<IMoyen> listeMoyenDuGroupe2 = new ArrayList<IMoyen>();
+            listeMoyenDuGroupe2.add( moyen3 );
+            listeMoyenDuGroupe2.add( moyen4 );
+            
+            
+            IMoyen groupe1 = new Moyen(listeMoyenDuGroupe1,inter1);
+            groupe1.setLibelle( "Groupe 1" );
+            IMoyen groupe2 = new Moyen(listeMoyenDuGroupe2,inter1);
+            groupe2.setLibelle( "Groupe 2" );
+            
+            List<IMoyen> moyensAAjouterALintervention = new ArrayList<IMoyen>();
+            moyensAAjouterALintervention.add( moyen5 );
+            moyensAAjouterALintervention.add( moyen6 );
+            moyensAAjouterALintervention.add(groupe1);
+            moyensAAjouterALintervention.add(groupe2);
+            
+            inter1.setMoyens( moyensAAjouterALintervention );
+	        
+		}catch(Exception e)
+		{
+		    Log.e("CREATION BASE","Erreur dans les dates des moyens");
+		}
+		
+		
+		
 		
 	      OCT oct = new OCT( s1, s2 , s3, s4, "70", "70", "30", "30", "11", "30", "12", "30", "13", "30", "14" );
 	        inter1.setOct( oct );

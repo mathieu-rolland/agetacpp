@@ -14,4 +14,5 @@ public interface IGroupe extends IPersistant {
 	public void addMoyen(Moyen moyen);
 	public void deleteMoyen(Moyen moyen);
 	public void addMoyens(List<Moyen> moyens);
+	public void deleteAllMoyen();
 }

@@ -182,6 +182,11 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 	/********************************************************************************************************/
 	/** Receiver methods */
 	/********************************************************************************************************/
+
+	public void updateVue() {
+		this.retrieveMoyenInBDD();
+		this.retrieveGroupInBDD();
+	} // method
 	
 	/**
 	 * Method which retrieves Moyen in BDD and save them only if their are not in a groupe
@@ -196,16 +201,21 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 			}
 		}
 		
+		if (moyenFiltered.size() == 0) {
+			this.getActivity().findViewById(R.id.consitution_group_crm_listviewMoyensArrived).setVisibility(View.GONE);
+			this.getActivity().findViewById(R.id.panel_empty_moyen).setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			this.getActivity().findViewById(R.id.consitution_group_crm_listviewMoyensArrived).setVisibility(View.VISIBLE);
+			this.getActivity().findViewById(R.id.panel_empty_moyen).setVisibility(View.GONE);
+		}
+		
 		this.setmListMoyen(moyenFiltered);
 		this.getAdapterMoyen().notifyDataSetChanged();
 		this.listViewMoyensAtCrm.setAdapter(this.getAdapterMoyen());
 		onMessageReveive("Récupération des données MOYEN réussie !");
 		
-	} // method
-	
-	public void updateVue() {
-		this.retrieveMoyenInBDD();
-		this.retrieveGroupInBDD();
 	} // method
 
 	/**
@@ -228,6 +238,16 @@ public class ConstitutionGroupCrmFragment extends Fragment {
 					}
 				}
 			}
+		}
+		
+		if (listIMoyenRetrieved.size() == 0) {
+			this.getActivity().findViewById(R.id.consitution_group_crm_listGroup).setVisibility(View.GONE);
+			this.getActivity().findViewById(R.id.panel_empty_group).setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			this.getActivity().findViewById(R.id.consitution_group_crm_listGroup).setVisibility(View.VISIBLE);
+			this.getActivity().findViewById(R.id.panel_empty_group).setVisibility(View.GONE);
 		}
 		
 		this.getmListGroup().addAll(listIMoyenRetrieved);

@@ -21,6 +21,15 @@
             android:layout_height="match_parent"
             android:divider="@null" />
         
+        <Button android:id="@+id/panel_empty_moyen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_style_grey_dotted"
+            android:text="Aucun moyen à ajouter"
+            android:textColor="#eeeeee"
+            android:textSize="@dimen/text_size"
+            android:visibility="gone"/>
+        
     </LinearLayout>
 
     <LinearLayout
@@ -35,7 +44,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1"
-            android:divider="@null" />
+            android:divider="@null"
+			/>
+        
+        <Button android:id="@+id/panel_empty_group"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:background="@drawable/button_style_grey_dotted"
+            android:text="Aucun groupe de créé"
+            android:textSize="@dimen/text_size"
+            android:layout_marginBottom="5dip"
+            android:textColor="#eeeeee"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/consitution_group_crm_button_addGroup"
@@ -43,6 +64,7 @@
             android:layout_height="50dip"
             android:background="@drawable/button_style_blue"
             android:text="Ajouter un nouveau groupe à la liste"
+            android:textColor="#eeeeee"
             android:textSize="@dimen/text_size" />
     </LinearLayout>
 

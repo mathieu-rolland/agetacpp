@@ -17,4 +17,18 @@
         android:text="@string/general_empty_string"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/consitution_group_crm_item_moyen_image_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/consitution_group_crm_item_listViewGroup_Moyen_TextView_nameMoyen"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:textColor="#eeeeee"
+        android:contentDescription="@string/general_empty_string"
+        android:drawableRight="@drawable/corbeille"
+        android:background="@android:color/transparent"
+        android:text="supprimer"
+        android:drawablePadding="5dip" />
+
 </RelativeLayout>

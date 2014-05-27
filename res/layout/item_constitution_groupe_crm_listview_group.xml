@@ -3,7 +3,7 @@
     android:id="@+id/demande_de_moyen_ListView_relativelayout"
     android:layout_width="match_parent"
     android:layout_height="100dip"
-    android:background="@drawable/button_style_white">
+    android:background="@drawable/button_style_white" >
 
     <TextView
         android:id="@+id/consitution_group_crm_item_listViewGroup_Group_TextView_nameMoyen"
@@ -12,10 +12,24 @@
         android:layout_centerHorizontal="false"
         android:layout_centerVertical="true"
         android:gravity="left|center_vertical"
+        android:paddingLeft="10dip"
+        android:text="@string/general_empty_string"
         android:textColor="#363636"
         android:textSize="@dimen/text_size"
-        android:text="@string/general_empty_string"
-        android:paddingLeft="10dip"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/consitution_group_crm_item_group_image_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/consitution_group_crm_item_listViewGroup_Group_TextView_nameMoyen"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:textColor="#363636"
+        android:contentDescription="@string/general_empty_string"
+        android:drawableRight="@drawable/corbeille_grey_dark"
+        android:background="@android:color/transparent"
+        android:text="supprimer"
+        android:drawablePadding="5dip" />
 
 </RelativeLayout>

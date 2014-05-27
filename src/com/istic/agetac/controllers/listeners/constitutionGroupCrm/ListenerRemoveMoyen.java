@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.drive.internal.RemoveEventListenerRequest;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
@@ -18,11 +19,11 @@ import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
 
 /**
-* Classe ListenerAddMoyen : Listener 
+* Classe ListenerRemoveMoyen : Listener 
 *
 * @author Anthony LE MEE - 10003134
 */
-public class ListenerAddMoyen implements OnClickListener{
+public class ListenerRemoveMoyen implements OnClickListener{
 
 	/** Attributs */
 	private Moyen itemMoyen; 							// Instance de l'item à traiter
@@ -31,15 +32,16 @@ public class ListenerAddMoyen implements OnClickListener{
 	private List<IMoyen> listGroupe;
 	
 	/**
-	 * Contructeur de ListenerAddMoyen
+	 * Contructeur de ListenerRemoveMoyen
 	 * @param user 
 	 * @param ConstitutionGroupCrmFragment 
 	 */
-	public ListenerAddMoyen(Moyen moyen, ConstitutionGroupCrmFragment constitutionGroupCrm) {
+	public ListenerRemoveMoyen(Moyen moyen, ConstitutionGroupCrmFragment constitutionGroupCrm, Groupe groupe) {
 		
 		this.itemMoyen = moyen;
 		this.vue = constitutionGroupCrm;
 		this.listGroupe = this.vue.getmListGroup();
+		this.groupSelected = groupe;
 		
 	} // méthode
 
@@ -53,36 +55,17 @@ public class ListenerAddMoyen implements OnClickListener{
 		AlertDialog.Builder adb = new AlertDialog.Builder(this.vue.getView().getContext());
         final AlertDialog alert = adb.create();	
 		alert.show();
-		alert.setContentView(R.layout.dialog_constitution_group_crm_item);
+		alert.setContentView(R.layout.dialog_constitution_group_crm_delete);
 		
 		// Récupération des données pour les listener internes
 		final ConstitutionGroupCrmFragment vueDemandeMoyen = this.vue;
-		final Moyen item = this.getItemMoyen();
-		final Spinner tv = ((Spinner)alert.findViewById(R.id.constitution_group_crm_spinner_group));
-		this.groupSelected = (Groupe) tv.getItemAtPosition(0);
-		
-		
-		tv.setOnItemSelectedListener(new OnItemSelectedListener() {
-		    
-			@Override
-		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		        groupSelected = (Groupe) tv.getItemAtPosition(position);
-		    }
-
-		    @Override
-		    public void onNothingSelected(AdapterView<?> parentView) {
-		    }
-
-		});
+		final Moyen item = this.getItemMoyen();		
 		
 		// On set la valeur du titre de la boite de Dialog
-		((TextView)alert.findViewById(R.id.constitution_group_crm_dialog_TextView_Title)).setText("Choisissez le groupe dans lequel ajouter " + item.getLibelle());
-		
-		ArrayAdapter<IMoyen> adapter = new ArrayAdapter<IMoyen>(this.vue.getActivity().getApplicationContext(), android.R.layout.simple_spinner_item,this.listGroupe);
-		tv.setAdapter(adapter);
-		
+		((TextView)alert.findViewById(R.id.constitution_group_crm_dialog_Delete_TextView_Title)).setText("Confirmez la suppression de " + item.getLibelle() + "");
+				
 		// On pose le listener d'annulation de suppression
-		alert.findViewById(R.id.demande_de_moyen_Dialog_Button_Cancel).setOnClickListener(new OnClickListener() {
+		alert.findViewById(R.id.constitution_group_crm_dialog_Button_Cancel).setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 
@@ -92,13 +75,12 @@ public class ListenerAddMoyen implements OnClickListener{
 			}});
 		
 		// On pose le listener de confirmation de suppression
-		alert.findViewById(R.id.demande_de_moyen_Dialog_Button_Delete).setOnClickListener(new OnClickListener() {
+		alert.findViewById(R.id.constitution_group_crm_dialog_Button_Delete).setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
 				
 				// Ajout au group
-				groupSelected.addMoyen(item);
-				item.setIsInGroup(true);
+				groupSelected.deleteMoyen(item);
 				
 				// Ajout en base
 				groupSelected.save();

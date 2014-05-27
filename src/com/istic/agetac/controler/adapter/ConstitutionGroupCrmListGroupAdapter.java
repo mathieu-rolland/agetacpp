@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
+import com.istic.agetac.controllers.listeners.constitutionGroupCrm.ListenerRemoveGroup;
+import com.istic.agetac.controllers.listeners.constitutionGroupCrm.ListenerRemoveMoyen;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
 import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
@@ -67,7 +70,10 @@ public class ConstitutionGroupCrmListGroupAdapter extends ArrayAdapter<IMoyen> {
 				TextView groupName	= (TextView) v.findViewById(R.id.consitution_group_crm_item_listViewGroup_Group_TextView_nameMoyen);
 		        
 		        groupName.setText(((Groupe)itemMoyen).getNom());
-		        			
+		        
+		        // Ajout du listener demande de suppression au click
+				Button delete = (Button) v.findViewById(R.id.consitution_group_crm_item_group_image_delete);
+				delete.setOnClickListener(new ListenerRemoveGroup((Groupe)itemMoyen, constitutionGroupCrm));
 			}
 			else
 			{
@@ -75,14 +81,28 @@ public class ConstitutionGroupCrmListGroupAdapter extends ArrayAdapter<IMoyen> {
 				TextView groupName = (TextView) v.findViewById(R.id.consitution_group_crm_item_listViewGroup_Moyen_TextView_nameMoyen);
 				groupName.setText(((Moyen)itemMoyen).getLibelle());
 				
-				// Ajout du listener demande de suppression au long click
-				
+				// Ajout du listener demande de suppression au click
+				Button delete = (Button) v.findViewById(R.id.consitution_group_crm_item_moyen_image_delete);
+				delete.setOnClickListener(new ListenerRemoveMoyen((Moyen)itemMoyen, constitutionGroupCrm, getLastPreviousGroupe((Moyen)itemMoyen)));
 			}
 			
 		}// if
 
 		return v;
 	    
+	}
+
+	private Groupe getLastPreviousGroupe(Moyen itemMoyen) {
+		for (IMoyen m : this.listItems) {
+			if (m.isGroup()) {
+				for (Moyen moyenOfGroupe : ((Groupe) m).getMoyens()) {
+					if (itemMoyen.getId() == moyenOfGroupe.getId()) {
+						return ((Groupe) m);
+					}
+				}
+			}
+		}
+		return null;
 	}// méthode
 	
 }// classe

@@ -175,6 +175,20 @@ public class Groupe implements IGroupe, IMoyen {
 			this.moyens.remove(moyen);
 		}
 	} // method
+	
+	@Override
+	public void deleteAllMoyen() {
+		
+		if (this.getMoyens() != null)
+		{
+			for (Moyen moyen : this.getMoyens()) {
+				moyen.setIsInGroup(false);
+			}
+			
+			this.getMoyens().clear();
+		}
+		
+	} // method
 
 	@Override
 	public void addMoyens(List<Moyen> moyens) {

@@ -216,7 +216,7 @@ public class Intervention implements IIntervention {
 	    }
 	   
 		if( !find ){
-			this.moyens.add(moyen);
+			this.moyens.add(0,moyen);
 		}
 	}
 	
@@ -235,7 +235,7 @@ public class Intervention implements IIntervention {
 	public void addMoyens(List<Moyen> listMoyen) {
 		for (Moyen moyen : listMoyen) {
 			if( !this.moyens.contains(moyen) ){
-				this.moyens.add(moyen);
+				this.moyens.add(0,moyen);
 			}
 		}
 	}

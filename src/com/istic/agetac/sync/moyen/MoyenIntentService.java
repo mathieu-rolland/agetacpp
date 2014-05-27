@@ -81,10 +81,6 @@ public class MoyenIntentService extends IntentService{
 			List<Entity> entities = new ArrayList<Entity>();
 			for( IMoyen moyen : objet.getMoyens() ){
 				entities.add((Moyen) moyen);
-				if( moyen.getLibelle().equals("VSAV1")){
-					GsonBuilder builder = new GsonBuilder();
-					Gson g = builder.setPrettyPrinting().create();
-				}
 			}
 			List<ALine> lines = new ArrayList<ALine>();
 			for( Line l : objet.getLines() ){

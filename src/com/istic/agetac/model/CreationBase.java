@@ -87,7 +87,7 @@ public class CreationBase {
 		
 		//moyens
 		Moyen mo1 = new Moyen(TypeMoyen.VSAV, inter1);
-		mo1.setLibelle("VSAV1");
+		mo1.setLibelle("VSAV 1");
 		
 		Property property1 = new Property();
 		property1.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
@@ -96,6 +96,17 @@ public class CreationBase {
 		mo1.setSecteur(s5);
 		
 		inter1.addMoyen(mo1);
+		
+		Moyen mo2 = new Moyen(TypeMoyen.VSAV, inter1);
+		mo2.setLibelle("VSAV 2");
+		
+		Property property2 = new Property();
+		property2.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property2.setValeur(Moyen.FORMATER.format(new Date()));
+		mo2.addPropriete(property2);
+		mo2.setSecteur(s5);
+		
+		inter1.addMoyen(mo2);
 		
 		Moyen mo1bis = new Moyen(TypeMoyen.VSAV, inter1);
 		mo1bis.setLibelle("VSAV 3");
@@ -108,33 +119,53 @@ public class CreationBase {
 		
 		inter1.addMoyen(mo1bis);
 		
-		Moyen mo2 = new Moyen(TypeMoyen.FPT, inter1);
-		mo2.setLibelle("FPT2");
+		Moyen mo3 = new Moyen(TypeMoyen.FPT, inter1);
+		mo3.setLibelle("FPT 2");
 		
-		Property property2 = new Property();
-		property2.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
-		property2.setValeur(Moyen.FORMATER.format(new Date()));
-		mo2.addPropriete(property2);
-		mo2.setSecteur(s5);		
+		Property property3 = new Property();
+		property3.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property3.setValeur(Moyen.FORMATER.format(new Date()));
+		mo3.addPropriete(property3);
+		mo3.setSecteur(s5);		
 		
-		inter1.addMoyen(mo2);
+		inter1.addMoyen(mo3);
+			
+		Moyen mo4 = new Moyen(TypeMoyen.CCGC, inter1);
+		mo4.setLibelle("CCGC 1");
+		
+		Property property4 = new Property();
+		property4.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property4.setValeur(Moyen.FORMATER.format(new Date()));
+		mo4.addPropriete(property4);
+		mo4.setSecteur(s5);		
+		
+		inter1.addMoyen(mo4);
+		
+		Moyen mo5 = new Moyen(TypeMoyen.VLCC, inter1);
+		mo5.setLibelle("VLCC 1");
+		
+		Property property5 = new Property();
+		property5.setNom(Moyen.NAME_PROPERTY_HOUR_ENGAGEMENT);
+		property5.setValeur(Moyen.FORMATER.format(new Date()));
+		mo5.addPropriete(property5);
+		mo5.setSecteur(s5);		
+		
+		inter1.addMoyen(mo5);
 		
 		List<IMoyen> listMoyen = new ArrayList<IMoyen>();
 		listMoyen.add(mo1);
+		listMoyen.add(mo2);
 		
 		List<IMoyen> listMoyen2 = new ArrayList<IMoyen>();
-		listMoyen2.add(mo2);
+		listMoyen2.add(mo3);
 
 		Moyen g1 = new Moyen(listMoyen, inter1);
 		g1.setLibelle("Groupe 1 - Rennes");
 		Moyen g2 = new Moyen(listMoyen2, inter1);
 		g2.setLibelle("Groupe 2 - Rennes ");
-		Moyen g3 = new Moyen(new ArrayList<IMoyen>(), inter1);
-		g3.setLibelle("Groupe 3 - Rennes");
 		
 		inter1.addGroupe(g1);
 		inter1.addGroupe(g2);
-		inter1.addGroupe(g3);
 		
 		UserAvailable userAvailable = new UserAvailable();
 		userAvailable.addUser(christophe);

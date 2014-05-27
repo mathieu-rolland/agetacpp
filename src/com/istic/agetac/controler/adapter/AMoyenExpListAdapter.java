@@ -186,7 +186,7 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
 
     public void addAll( List<IMoyen> mListMoyen )
     {        
-        mMoyens.addAll(mListMoyen);
+        mMoyens = mListMoyen;
     }
     
 }

@@ -3,6 +3,7 @@ package com.istic.agetac.controllers.listeners.tableauMoyen;
 import java.util.Date;
 import java.util.HashMap;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -40,12 +41,14 @@ public class ListenerSpinner implements OnItemSelectedListener {
 
 			if (mMoyen.getHArrival() == null) {
 				mMoyen.setHArrival(new Date());
-				mAdapter.notifyDataSetChanged();
-				mMoyen.save();
+				mAdapter.notifyDataSetChanged();				
 			}
 		} else {
 			//mMoyen.setSecteur("");
 		}
+		
+		Log.e("VINCENT", mMoyen.getSecteur().getLibelle());
+		mMoyen.save();
 	}
 
 	@Override

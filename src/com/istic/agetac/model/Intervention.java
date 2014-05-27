@@ -197,7 +197,25 @@ public class Intervention implements IIntervention {
 	}
 	
 	public void addMoyen(Moyen moyen) {
-		if( !this.moyens.contains(moyen) ){
+	    
+	    int i =0;
+	    boolean find = false;
+	    
+	    while(i<moyens.size() && !find)
+	    {
+	        IMoyen m = moyens.get( i );
+	        if(m.isGroup())
+            {
+	            find = m.getListMoyen().contains( moyen );               
+            }
+	        else
+	        {
+	            find = moyens.contains( moyen );
+	        }
+	        i++;
+	    }
+	   
+		if( !find ){
 			this.moyens.add(moyen);
 		}
 	}

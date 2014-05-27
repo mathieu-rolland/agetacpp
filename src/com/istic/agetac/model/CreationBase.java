@@ -8,6 +8,7 @@ import android.graphics.Color;
 
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMessage.Message_part;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.model.Property;
 import com.istic.sit.framework.model.Representation;
@@ -125,16 +126,16 @@ public class CreationBase {
 		
 		inter1.addMoyen(mo2);
 		
-		List<Moyen> listMoyen = new ArrayList<Moyen>();
+		List<IMoyen> listMoyen = new ArrayList<IMoyen>();
 		listMoyen.add(mo1);
 		listMoyen.add(mo2);
-		Moyen g1 = new Moyen(inter1);
+		Moyen g1 = new Moyen(listMoyen, inter1);
 		g1.setLibelle("Groupe 1 - Rennes");
 		g1.setGroup(true);
-		Moyen g2 = new Moyen(inter1);
+		Moyen g2 = new Moyen(listMoyen, inter1);
 		g2.setLibelle("Groupe 2 - Rennes ");
 		g2.setGroup(true);
-		Moyen g3 = new Moyen(inter1);
+		Moyen g3 = new Moyen(new ArrayList<IMoyen>(), inter1);
 		g3.setLibelle("Groupe 3 - Rennes");
 		g3.setGroup(true);
 		

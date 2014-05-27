@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.istic.agetac.R;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.util.Log;
 
+import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.sit.framework.api.model.IPosition;
@@ -54,7 +54,7 @@ public class Moyen extends Entity implements IMoyen
     private List<IMoyen> moyens;
 
     /**
-     * Constructeur de la classe Moyen
+     * Constructeur de la classe Moyen pour créer un MOYEN
      * 
      * @param typeValue
      * : Type of moyen
@@ -82,41 +82,16 @@ public class Moyen extends Entity implements IMoyen
 
         moyens = new ArrayList<IMoyen>();
     }
-    
-    public Moyen(Intervention intervention )
-    {
-        super();
-        //FIXME changer icone pour les groupes
-        this.setRepresentationKO( new Representation(R.drawable.vsav_ok ));
-        this.setRepresentationOK(  new Representation(R.drawable.vsav_ok ) );
-        IProperty typeProperty = creatProperty( NAME_PROPERTY_TYPE, null );
-        IProperty hDemandProperty = creatProperty( NAME_PROPERTY_HOUR_DEMAND, FORMATER.format( new Date() ) );
-        IProperty hEngagementProperty = creatProperty( NAME_PROPERTY_HOUR_ENGAGEMENT, null );
-        IProperty hArrivalProperty = creatProperty( NAME_PROPERTY_HOUR_ARRIVAL, null );
-        IProperty hFreeProperty = creatProperty( NAME_PROPERTY_HOUR_FREE, null );
-        IProperty secteurProperty = creatProperty( NAME_PROPERTY_SECTEUR, null );
-        IProperty ingroupProperty = creatProperty( NAME_PROPERTY_INGROUP, "0" );
-        super.addPropriete( typeProperty );
-        super.addPropriete( hDemandProperty );
-        super.addPropriete( hEngagementProperty );
-        super.addPropriete( hArrivalProperty );
-        super.addPropriete( hFreeProperty );
-        super.addPropriete( secteurProperty );
-        this.intervention = intervention;
-        super.addPropriete( ingroupProperty );
-
-        moyens = new ArrayList<IMoyen>();
-    }
 
     /**
-     * Constructeur de la classe Moyen
+     * Constructeur de la classe Moyen pour créer un MOYEN
      * 
      * @param typeValue
      * : Type of moyen
      * @param position
      * : position of moyen
      */
-    public Moyen( TypeMoyen typeValue, IPosition position )
+    public Moyen( TypeMoyen typeValue, Intervention intervention, IPosition position )
     {
 
         super( position );
@@ -138,13 +113,20 @@ public class Moyen extends Entity implements IMoyen
         super.addPropriete( secteurProperty );
         super.addPropriete( ingroupProperty );
         moyens = new ArrayList<IMoyen>();
+        
     }
 
-    public Moyen( TypeMoyen typeValue, IPosition position, List<IMoyen> liste )
+    /**
+     * Constructeur pour créer un GROUPE
+     * @param liste - Sa liste de moyen
+     * @param intervention - L'intervention à laquelle il est assigné
+     */
+    public Moyen(List<IMoyen> liste, Intervention intervention)
     {
-        super( position );
+        
+    	super();
 
-        IProperty typeProperty = creatProperty( NAME_PROPERTY_TYPE, typeValue.toString() );
+        IProperty typeProperty = creatProperty( NAME_PROPERTY_TYPE, null);
         IProperty hDemandProperty = creatProperty( NAME_PROPERTY_HOUR_DEMAND, FORMATER.format( new Date() ) );
         IProperty hEngagementProperty = creatProperty( NAME_PROPERTY_HOUR_ENGAGEMENT, null );
         IProperty hArrivalProperty = creatProperty( NAME_PROPERTY_HOUR_ARRIVAL, null );
@@ -162,6 +144,15 @@ public class Moyen extends Entity implements IMoyen
         super.addPropriete( ingroupProperty );
         addMoyens( liste );
         super.setGroup(true);
+        
+        // On set une position par défaut si c'est possible
+        if (liste.size() > 0 && liste.get(0).getSecteur() != null && liste.get(0).getSecteur().getPosition() != null) {
+        	for (IMoyen moyen : liste) {
+        		((Entity)moyen).setPosition(liste.get(0).getSecteur().getPosition());
+        	}
+        	this.setPosition(liste.get(0).getSecteur().getPosition());
+        }
+    
     }
 
     public void addMoyens( List<IMoyen> liste )

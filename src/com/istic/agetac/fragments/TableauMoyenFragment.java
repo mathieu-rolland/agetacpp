@@ -144,12 +144,14 @@ public class TableauMoyenFragment extends Fragment {
 	public void onResume() {
 
 		PoolSynchronisation pool = AgetacppApplication.getPoolSynchronisation();
-
-		receiver = new TableauDesMoyensReceiver(this);
-		TableauDesMoyensSync sync = new TableauDesMoyensSync();
-
-		pool.registerServiceSync(TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER,
-				sync, receiver);
+		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO
+				&& AgetacppApplication.ACTIVE_TDM_SYNCHRO ){
+			receiver = new TableauDesMoyensReceiver(this);
+			TableauDesMoyensSync sync = new TableauDesMoyensSync();
+	
+			pool.registerServiceSync(TableauDesMoyensSync.FILTER_MESSAGE_RECEIVER,
+					sync, receiver);
+		}
 		super.onResume();
 	}
 
@@ -160,24 +162,5 @@ public class TableauMoyenFragment extends Fragment {
 	public void setmIsCreating(boolean mIsCreating) {
 		this.mIsCreating = mIsCreating;
 	}
-
-//	public class SectorRecuperator extends APersitantRecuperator<Secteur> {
-//
-//		public SectorRecuperator(String idIntervention) {
-//			super(Secteur.class);
-//		}
-//
-//		@Override
-//		public void onErrorResponse(VolleyError error) {
-//			Toast.makeText(getActivity(), "Impossible de récupérer les moyens",
-//					Toast.LENGTH_SHORT).show();
-//		}
-//
-//		@Override
-//		public void onResponse(List<Secteur> secteurs) {
-//			mAdapterMoyens.setSectorAvailable(secteurs);
-//			mAdapterMoyens.notifyDataSetChanged();
-//		}
-//	}
 
 }

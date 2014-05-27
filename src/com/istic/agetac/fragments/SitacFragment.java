@@ -113,24 +113,26 @@ public class SitacFragment extends MainFragment implements Observer {
 //		mb = new MoyenBroadcast_custtom( this );
 //		ps.registerServiceSync(MainFragment.RECEIVE_SYNC, ms, mb);
 //		Log.d("Moyen", "Synchronisation started");
-		
-		LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(getActivity());
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction( MoyenIntentService.CHANNEL );
-		
-		MoyenIntentService service = new MoyenIntentService();
-		MoyenBroadcast broadcast = new MoyenBroadcast(this);
-		
-		bManager.registerReceiver( broadcast , intentFilter);
-
-		Intent intent = new Intent(getActivity(), service.getClass());
-		pendingIntent = PendingIntent.getService(getActivity(), 0, intent, 0);
-		
-		Calendar cal = Calendar.getInstance();
-		AlarmManager alarm = (AlarmManager)getActivity().getSystemService( Context.ALARM_SERVICE );
-		alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 
-				service.getIntervalToRefresh() * 1000 , pendingIntent); 
-		Log.d("Pool synchronisation service", "Service moyen now started.");
+		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO
+				&& AgetacppApplication.ACTIVE_MAP_SYNCHRO ){
+			LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(getActivity());
+			IntentFilter intentFilter = new IntentFilter();
+			intentFilter.addAction( MoyenIntentService.CHANNEL );
+			
+			MoyenIntentService service = new MoyenIntentService();
+			MoyenBroadcast broadcast = new MoyenBroadcast(this);
+			
+			bManager.registerReceiver( broadcast , intentFilter);
+	
+			Intent intent = new Intent(getActivity(), service.getClass());
+			pendingIntent = PendingIntent.getService(getActivity(), 0, intent, 0);
+			
+			Calendar cal = Calendar.getInstance();
+			AlarmManager alarm = (AlarmManager)getActivity().getSystemService( Context.ALARM_SERVICE );
+			alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 
+					service.getIntervalToRefresh() * 1000 , pendingIntent); 
+			Log.d("Pool synchronisation service", "Service moyen now started.");
+		}
 	}
 	
 	@Override
@@ -282,11 +284,14 @@ public class SitacFragment extends MainFragment implements Observer {
 
 	@Override
 	public void onStop() {
-		AlarmManager alarm = (AlarmManager)
-				getActivity().getSystemService(Context.ALARM_SERVICE);
-		alarm.cancel(pendingIntent);
-		
+		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO
+				&& AgetacppApplication.ACTIVE_MAP_SYNCHRO ){
+			AlarmManager alarm = (AlarmManager)
+					getActivity().getSystemService(Context.ALARM_SERVICE);
+			alarm.cancel(pendingIntent);
+		}
 		super.onStop();
+		
 	}
 
 	@Override

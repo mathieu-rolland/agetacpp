@@ -266,11 +266,14 @@ public class OctFragment extends Fragment {
 		receiver = new OctBroadcastReceiver(this);
 		serviceSync = new OctServiceSynchronisation("Service oct sync");
 
-		PoolSynchronisation synchro = FrameworkApplication
-				.getPoolSynchronisation();
-		synchro.registerServiceSync(
-				OctServiceSynchronisation.FILTER_OCT_RECEIVER, serviceSync,
-				receiver);
+		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO 
+				&& AgetacppApplication.ACTIVE_OCT_SYNCHRO ){
+			PoolSynchronisation synchro = FrameworkApplication
+					.getPoolSynchronisation();
+			synchro.registerServiceSync(
+					OctServiceSynchronisation.FILTER_OCT_RECEIVER, serviceSync,
+					receiver);
+		}
 
 		/** LOG */
 		Log.d("Marion", "Instanciations faites");

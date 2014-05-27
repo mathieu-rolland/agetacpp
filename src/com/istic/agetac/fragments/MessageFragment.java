@@ -107,10 +107,11 @@ public class MessageFragment extends Fragment implements Observer {
 		//Start sync :
 		receiver = new MessageBroadcastReceiver(this);
 		serviceSync = new MessageServiceSynchronisation("Service message sync");
-		
-		PoolSynchronisation synchro = FrameworkApplication.getPoolSynchronisation();
-		synchro.registerServiceSync(MessageServiceSynchronisation.FILTER_MESSAGE_RECEIVER, serviceSync, receiver);
-		
+		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO 
+				&& AgetacppApplication.ACTIVE_MESSAGE_SYNCHRO ){
+			PoolSynchronisation synchro = FrameworkApplication.getPoolSynchronisation();
+			synchro.registerServiceSync(MessageServiceSynchronisation.FILTER_MESSAGE_RECEIVER, serviceSync, receiver);
+		}
 		return view;
 	}
 	

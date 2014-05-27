@@ -182,11 +182,6 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 
 		// Creation de la grille de moyens
 		getGridViewMoyens().setAdapter(new DemandeDeMoyenGridViewAdapter(this, this.namesOfUsestMoyens)); 
-		
-		// Création du champs d'auto-complétion pour la recherche de d'autres moyens
-	    getTextViewAutresMoyens().addTextChangedListener(cAutresMoyens);
-	    getTextViewAutresMoyens().setAdapter(new ArrayAdapter<TypeMoyen>(getActivity(), android.R.layout.simple_dropdown_item_1line, this.namesOfAllMoyens));
-	    getTextViewAutresMoyens().setOnItemClickListener(cAutresMoyens);
 	    
 	    /*
 	     * Remise en état suivant la sauvegarde

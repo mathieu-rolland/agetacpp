@@ -31,7 +31,7 @@ public class AgetacppApplication extends FrameworkApplication {
 		JsonSerializer.initDeserializer();
 		AgetacSerializer.init();
 		FrameworkApplication.setFactory(new Factory());
-		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/clean_base/";
+		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/to_define/";
 //		CreationBase.createCleanBase();
 		
 	}

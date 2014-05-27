@@ -228,10 +228,14 @@ public class SitacFragment extends MainFragment implements Observer {
 				Entity oldentity = (Entity) itemsMenu.get(i);
 				if (((Moyen) newMoyen).getId().equals(oldentity.getId())) {
 					exist = true;
-					// Mise a jour boolean
-					oldentity.setOk(((Moyen) newMoyen).isOk());
-					oldentity.setOnMap(((Moyen) newMoyen).isOnMap());
-
+					
+					if (newMoyen.getHFree() != null){
+						removeItem((Moyen) oldentity);
+					}else{
+						// Mise a jour boolean
+						oldentity.setOk(((Moyen) newMoyen).isOk());
+						oldentity.setOnMap(((Moyen) newMoyen).isOnMap());
+					}
 					entityAdapter.notifyDataSetChanged();
 				}
 			}
@@ -485,10 +489,10 @@ public class SitacFragment extends MainFragment implements Observer {
 				vls.setLibelle("VLS");
 
 				Moyen vlcc = new Moyen(TypeMoyen.VLCC, intervention);
-				vlcc.setLibelle("VLS");
+				vlcc.setLibelle("VLCC");
 
 				Moyen vlcg = new Moyen(TypeMoyen.VLCG, intervention);
-				vlcg.setLibelle("VLS");
+				vlcg.setLibelle("VLCG");
 
 				vehicule.add(fpt);
 				vehicule.add(vsav);

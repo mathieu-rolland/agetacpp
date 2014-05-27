@@ -53,8 +53,23 @@ public class EntityDockFragment extends AbstractEntityInformationFragment {
 				img.setImageResource(entity.getRepresentation().getDrawable());
 				
 				TextView lat = (TextView) view
+						.findViewById(R.id.fragment_activity_position_lat_label);
+				lat.setVisibility(View.GONE);
+				
+				TextView lat2 = (TextView) view
 						.findViewById(R.id.fragment_activity_position_lat_value);
-				lat.setText(String.valueOf(entity.listToString()));
+				lat2.setText(entity.listToString());
+
+				TextView lng = (TextView) view
+						.findViewById(R.id.fragment_activity_position_lng_label);
+				lng.setVisibility(View.GONE);
+
+				modify = (Button) view
+						.findViewById(R.id.fragment_entity_button_supprimer);
+				modify.setVisibility(View.GONE);
+
+				arrived = (Button) view.findViewById(R.id.fragment_entity_button_arrived);
+				arrived.setVisibility(View.GONE);
 			} else {
 				ImageView img = (ImageView) view
 						.findViewById(R.id.fragment_entity_image_display);

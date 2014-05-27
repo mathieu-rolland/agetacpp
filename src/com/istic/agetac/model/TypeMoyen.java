@@ -28,7 +28,7 @@ public enum TypeMoyen {
 	VLS("VLS", new Representation(R.drawable.vls_ok), 
 			new Representation(R.drawable.vls_ko)), 
 	VSR("VSR", new Representation(R.drawable.vsr_ok), 
-			new Representation(R.drawable.vsr_ok));
+			new Representation(R.drawable.vsr_ko));
 
 	private String mType;
 	private IRepresentation representationOK;

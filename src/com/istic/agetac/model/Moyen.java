@@ -182,6 +182,7 @@ public class Moyen extends Entity implements IMoyen
     {
         String ingroup = ( bool ) ? "1" : "0";
         super.getProperty( NAME_PROPERTY_INGROUP ).setValeur( ingroup );
+        super.setOnGroup(bool);
         Log.d( "Antho", ingroup + " pour : " + this.toString() );
     }
 

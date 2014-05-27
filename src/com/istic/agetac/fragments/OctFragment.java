@@ -96,6 +96,7 @@ public class OctFragment extends Fragment {
 		oct = intervention.getOct();
 		listeSecteurs = new ArrayList<Secteur>();
 		listeSecteurs = intervention.getSecteurs();
+		
 		secteur1 = oct.getSecteur1();
 		secteur2 = oct.getSecteur2();
 		secteur3 = oct.getSecteur3();
@@ -150,33 +151,31 @@ public class OctFragment extends Fragment {
 		frequenceS4Asc.setText(oct.getFrequenceS4Asc());
 		frequenceS4Desc.setText(oct.getFrequenceS4Desc());
 
-		spin1.setSelection(listeSecteurs.indexOf(secteur1));
-		spin2.setSelection(listeSecteurs.indexOf(secteur2));
-		spin3.setSelection(listeSecteurs.indexOf(secteur3));
-		spin4.setSelection(listeSecteurs.indexOf(secteur4));
+		spin1.setSelection(getSecteurFromIntervention(secteur1));
+		spin2.setSelection(getSecteurFromIntervention(secteur2));
+		spin3.setSelection(getSecteurFromIntervention(secteur3));
+		spin4.setSelection(getSecteurFromIntervention(secteur4));
 		
 		// Initialisation avec les listes des moyens des secteurs.
-		if (oct.getSecteur1() == null) {
-			listeMoyenS1 = new ArrayList<IMoyen>();
-		} else {
+		
+		listeMoyenS1 = new ArrayList<IMoyen>();
+		listeMoyenS2 = new ArrayList<IMoyen>();
+		listeMoyenS3 = new ArrayList<IMoyen>();
+		listeMoyenS4 = new ArrayList<IMoyen>();
+		
+		if (oct.getSecteur1() != null) {
 			listeMoyenS1 = oct.getSecteur1().getMoyens();
 		}
 
-		if (oct.getSecteur2() == null) {
-			listeMoyenS2 = new ArrayList<IMoyen>();
-		} else {
+		if (oct.getSecteur2() != null) {
 			listeMoyenS2 = oct.getSecteur2().getMoyens();
 		}
 
-		if (oct.getSecteur3() == null) {
-			listeMoyenS3 = new ArrayList<IMoyen>();
-		} else {
+		if (oct.getSecteur3() != null) {
 			listeMoyenS3 = oct.getSecteur3().getMoyens();
 		}
 
-		if (oct.getSecteur4() == null) {
-			listeMoyenS4 = new ArrayList<IMoyen>();
-		} else {
+		if (oct.getSecteur4() != null) {
 			listeMoyenS4 = oct.getSecteur4().getMoyens();
 		}
 
@@ -203,11 +202,9 @@ public class OctFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
-				secteur1 = listeSecteurs.get(position);
-				listeMoyenS1 = secteur1.getMoyens();
+				listeMoyenS1 = oct.getSecteur1().getMoyens();
 				lvListeS1.setAdapter(new MoyenAdapter(getActivity(),
 						listeMoyenS1));
-				Log.d("Marion", "lvListeS1 : " + listeMoyenS1);
 			}
 
 			@Override
@@ -221,8 +218,7 @@ public class OctFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
-				secteur2 = listeSecteurs.get(position);
-				listeMoyenS2 = secteur2.getMoyens();
+				listeMoyenS2 = oct.getSecteur2().getMoyens();
 				lvListeS2.setAdapter(new MoyenAdapter(getActivity(),
 						listeMoyenS2));
 			}
@@ -238,8 +234,7 @@ public class OctFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
-				secteur3 = listeSecteurs.get(position);
-				listeMoyenS3 = secteur3.getMoyens();
+				listeMoyenS3 = oct.getSecteur1().getMoyens();
 				lvListeS3.setAdapter(new MoyenAdapter(getActivity(),
 						listeMoyenS3));
 			}
@@ -255,8 +250,7 @@ public class OctFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
-				secteur4 = listeSecteurs.get(position);
-				listeMoyenS4 = secteur4.getMoyens();
+				listeMoyenS4 = oct.getSecteur4().getMoyens();
 				lvListeS4.setAdapter(new MoyenAdapter(getActivity(),
 						listeMoyenS4));
 			}
@@ -285,6 +279,18 @@ public class OctFragment extends Fragment {
 
 	}
 
+	private int getSecteurFromIntervention(Secteur secteur)
+	{
+		int ret = -1;
+		for (Secteur sec : listeSecteurs) {
+			if(sec.getId().equals(secteur.getId()))
+			{
+				ret = listeSecteurs.indexOf(sec);
+			}
+		}
+		return ret;
+		
+	}
 	private void send() {
 
 		oct.setSecteur1(secteur1);

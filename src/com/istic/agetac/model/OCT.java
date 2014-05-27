@@ -1,6 +1,7 @@
 package com.istic.agetac.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,6 +10,7 @@ import org.json.JSONObject;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -279,13 +281,28 @@ public class OCT implements IRecordable, Parcelable {
 	@Override
 	public void save() {
 		AgetacppApplication.getIntervention().save();
-		
+		 try
+	        {
+	        	AgetacppApplication.getIntervention().addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Création de l'OCT " ) );
+	        }
+	        catch ( Exception e )
+	        {
+	            Log.e( "HISTORIQUE", "Impossible de récupérer le user deAgetacApplication" );
+	        }
 	}
 
 	@Override
 	public void delete() {
 		AgetacppApplication.getIntervention().setOct(null);
 		AgetacppApplication.getIntervention().save();
+		 try
+	        {
+	        	AgetacppApplication.getIntervention().addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Suppression de l'OCT " ) );
+	        }
+	        catch ( Exception e )
+	        {
+	            Log.e( "HISTORIQUE", "Impossible de récupérer le user deAgetacApplication" );
+	        }
 	}
 	
 }

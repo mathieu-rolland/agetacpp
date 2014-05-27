@@ -66,11 +66,8 @@ public class MoyenAdapter extends BaseAdapter {
 		
 		IMoyen moyen = mListMoyen.get(position);
 
-        if(convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_moyen_oct, null);  
-                     
-        }
-        
+        convertView = mInflater.inflate(R.layout.item_moyen_oct, null);  
+                   
         TextView txt = (TextView) convertView.findViewById(R.id.list_moyen_oct_name);
 		txt.setText( moyen.getLibelle());
 		

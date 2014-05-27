@@ -344,6 +344,9 @@
                 android:id="@+id/lv_moyensSecteur1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                 android:maxHeight="280dip"
+                android:scrollbars="vertical"
+                android:scrollbarSize="280dip"
                 android:background="#707978" />
         </LinearLayout>
 
@@ -433,8 +436,11 @@
 
             <ListView
                 android:id="@+id/lv_moyensSecteur2"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                 android:maxHeight="280dip"
+                android:scrollbars="vertical"
+                android:scrollbarSize="280dip"
                 android:background="#707978" />
         </LinearLayout>
 
@@ -528,6 +534,9 @@
                 android:id="@+id/lv_moyensSecteur3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                 android:maxHeight="280dip"
+                android:scrollbars="vertical"
+                android:scrollbarSize="280dip"
                 android:background="#707978" />
         </LinearLayout>
 
@@ -629,6 +638,9 @@
                 android:id="@+id/lv_moyensSecteur4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:maxHeight="280dip"
+                android:scrollbars="vertical"
+                android:scrollbarSize="280dip"
                 android:background="#707978" />
         </LinearLayout>
     </LinearLayout>
@@ -636,9 +648,7 @@
     <Button
         android:id="@+id/fragment_OCT_button_send"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:background="@drawable/button_style_grey"

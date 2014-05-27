@@ -303,7 +303,6 @@ public class CreationBase {
 		listMoyen.add(mo2);
 		IMoyen g1 = new Moyen(AgetacppApplication.getIntervention());
 		g1.setLibelle("Groupe 1 - Rennes");
-		
 		IMoyen g2 = new Moyen(AgetacppApplication.getIntervention());
 		g2.setLibelle("Groupe 2 - Rennes ");
 		IMoyen g3 = new Moyen(AgetacppApplication.getIntervention());
@@ -341,6 +340,7 @@ public class CreationBase {
 				// TODO Auto-generated method stub
 				objet.getCodeSinistre();
 			}
+			
 		});
 	}
 	

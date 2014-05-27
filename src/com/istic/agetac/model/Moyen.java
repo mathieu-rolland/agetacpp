@@ -161,6 +161,7 @@ public class Moyen extends Entity implements IMoyen
         super.addPropriete( secteurProperty );
         super.addPropriete( ingroupProperty );
         addMoyens( liste );
+        super.setGroup(true);
     }
 
     public void addMoyens( List<IMoyen> liste )
@@ -552,7 +553,7 @@ public class Moyen extends Entity implements IMoyen
     @Override
     public boolean isGroup()
     {
-        return false;
+        return super.isGroup();
     }
 
     public Intervention getIntervention()

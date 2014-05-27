@@ -40,9 +40,7 @@ import com.istic.agetac.model.TypeMoyen;
 import com.istic.agetac.pattern.observer.Observer;
 import com.istic.agetac.pattern.observer.Subject;
 import com.istic.agetac.sync.moyen.MoyenBroadcast;
-import com.istic.agetac.sync.moyen.MoyenBroadcast_custtom;
 import com.istic.agetac.sync.moyen.MoyenIntentService;
-import com.istic.agetac.sync.moyen.MoyenService;
 import com.istic.sit.framework.adapter.ExpandableListAdapter;
 import com.istic.sit.framework.api.model.IEntity;
 import com.istic.sit.framework.api.view.IBackground;
@@ -62,9 +60,6 @@ public class SitacFragment extends MainFragment implements Observer {
 	List<IMoyen> listMoyens;
 
 	private Intervention intervention;
-
-	private MoyenBroadcast_custtom mb;
-	private MoyenService ms;
 	
 	private PendingIntent pendingIntent;
 	
@@ -279,7 +274,6 @@ public class SitacFragment extends MainFragment implements Observer {
 
 	@Override
 	public void onStop() {
-		//TODO faire stop synchro :
 		AlarmManager alarm = (AlarmManager)
 				getActivity().getSystemService(Context.ALARM_SERVICE);
 		alarm.cancel(pendingIntent);

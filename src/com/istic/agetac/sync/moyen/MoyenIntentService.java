@@ -13,6 +13,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.model.Intervention;
@@ -71,10 +73,16 @@ public class MoyenIntentService extends IntentService{
 		
 		@Override
 		public void onResponse(Intervention objet) {
-			objet.updateMessagesDependencies();
+			objet.updateDepandencies();
+			intervention.setRev( objet.getRev() );
 			List<Entity> entities = new ArrayList<Entity>();
-			for( IMoyen moyen : intervention.getMoyens() ){
+			for( IMoyen moyen : objet.getMoyens() ){
 				entities.add((Moyen) moyen);
+				if( moyen.getLibelle().equals("VSAV1")){
+					GsonBuilder builder = new GsonBuilder();
+					Gson g = builder.setPrettyPrinting().create();
+					Log.d("Entity up to date" , g.toJson(moyen));
+				}
 			}
 			notifyResponseSuccess( entities );
 		}

@@ -15,17 +15,14 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
 import com.istic.agetac.model.Moyen;
-import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
 
 public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
 {
-    private boolean mIsCreating;
 
-    public MoyenListExpCodisAdapter( Context context, boolean isCreating )
+    public MoyenListExpCodisAdapter( Context context)
     {
         super( context, new ArrayList<IMoyen>() );
-        this.mIsCreating = isCreating;
     }
 
     @Override
@@ -140,10 +137,6 @@ public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
             holder.sector.setTextColor( color );
         }
 
-        if ( mIsCreating )
-        {
-            holder.buttonDemand.setVisibility( Button.GONE );
-        }
 
         switch ( state )
         {

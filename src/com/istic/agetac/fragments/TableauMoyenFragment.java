@@ -55,23 +55,21 @@ public class TableauMoyenFragment extends Fragment {
 
 		View view = inflater.inflate(R.layout.fragment_tableau_moyen,
 				container, false);
-		intervention = AgetacppApplication.getIntervention();
 
+		intervention = AgetacppApplication.getIntervention();
 		mListViewMoyen = (ExpandableListView) view.findViewById(R.id.fragment_tableau_moyen_expandable_list);
 
 		/* R�cup�rations des donn�es via les mod�les */
 		
 		if (AgetacppApplication.getUser().getRole() == Role.codis) {
-			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity(), mIsCreating);
+			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity());
 		} else {
 			mAdapterMoyens = new MoyenListExpIntervenantAdapter(getActivity());
 		}
-		
-		if(!mIsCreating)
-		{
-			mAdapterMoyens.addAll(intervention.getMoyens());
-		}
-		
+
+		List<IMoyen> liste = AgetacppApplication.getIntervention().getMoyens();
+		mAdapterMoyens.addAll(liste);
+				
 		mListViewMoyen.setAdapter(mAdapterMoyens);
 		
 		if(mListMoyen==null)
@@ -98,20 +96,6 @@ public class TableauMoyenFragment extends Fragment {
         return view;
     }
 
-	/**
-	 * @param mMoyen
-	 *            the mMoyen to set
-	 */
-	public void AddAllMoyen(List<IMoyen> list)
-	{	
-		mListMoyen = list;
-		
-		if(mAdapterMoyens !=null)
-		{
-			mAdapterMoyens.addAll(list);
-		}
-		
-	}
 
 	public void updateTableauDesMoyen(List<Moyen> moyens) {
 		// // TODO implï¿½menter la rï¿½ception de la synchro.

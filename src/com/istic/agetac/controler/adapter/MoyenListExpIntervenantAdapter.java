@@ -107,7 +107,7 @@ public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
             holder.spinner.setOnItemSelectedListener( new ListenerSpinner( this, dataAdapter, mSector, current ) );
 
             int positionSpinner = -1;
-            if ( current.getSecteur() != null )
+            if (current.getSecteur() != null )
             {
                 positionSpinner = dataAdapter.getPosition( current.getSecteur().getLibelle() );
             }

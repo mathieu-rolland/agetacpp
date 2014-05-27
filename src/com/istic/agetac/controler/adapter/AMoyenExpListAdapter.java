@@ -185,30 +185,8 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
     protected abstract View getChildVieww( int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent );
 
     public void addAll( List<IMoyen> mListMoyen )
-    {
-        List<IMoyen> areInAGroup = new ArrayList<IMoyen>();
-
-        for ( IMoyen moyen : mListMoyen ) // ajout des groupes
-        {
-            if ( moyen.isGroup() )
-            {
-                if ( !mMoyens.contains( moyen ) )
-                {
-                    mMoyens.add( moyen );
-                    areInAGroup.addAll( moyen.getListMoyen() );
-                }
-            }
-        }
-
-        List<IMoyen> moyenToAdd = new ArrayList<IMoyen>();
-        for ( IMoyen moyen : mListMoyen ) // ajout des groupes
-        {
-            if ( !moyen.isGroup() && !areInAGroup.contains( moyen ) )
-            {
-            	moyenToAdd.add( 0, moyen );
-            }
-        }
-        mMoyens.addAll(moyenToAdd);
+    {        
+        mMoyens.addAll(mListMoyen);
     }
     
 }

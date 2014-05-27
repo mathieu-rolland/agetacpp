@@ -65,6 +65,7 @@ public class AgetacppApplication extends FrameworkApplication {
 
 	public static void setIntervention(Intervention intervention) {
 		if (intervention != null) {
+		    AgetacppApplication.currentIntervention = intervention;
 			intervention.updateDepandencies();
 		}
 		AgetacppApplication.currentIntervention = intervention;

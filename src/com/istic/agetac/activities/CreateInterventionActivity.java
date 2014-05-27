@@ -19,6 +19,7 @@ import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.model.Codis;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.OCT;
 import com.istic.agetac.model.Secteur;
 
 public class CreateInterventionActivity extends FragmentActivity{
@@ -82,6 +83,8 @@ public class CreateInterventionActivity extends FragmentActivity{
 		mInterventionCurrent.setCodis(codis);
 		AgetacppApplication.getListIntervention().add(mInterventionCurrent);
 		preconfigure();
+		
+    
 		mInterventionCurrent.save();
 		
 		finish();
@@ -114,6 +117,9 @@ public class CreateInterventionActivity extends FragmentActivity{
         crm.setName( "CRM" );
         crm.setColor( Color.parseColor("#FF0000" ));
         list.add( crm );
+        
+        OCT oct = new OCT( sap, sll , crm, alim, "70", "70", "30", "30", "11", "30", "12", "30", "13", "30", "14" );
+        mInterventionCurrent.setOct( oct );
         
         mInterventionCurrent.setSecteurs( list );
     }

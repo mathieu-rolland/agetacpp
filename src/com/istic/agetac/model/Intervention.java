@@ -465,13 +465,30 @@ public class Intervention implements IIntervention {
 			}
 		}
 		
-		for (IMoyen moyen : moyens) {
-			Secteur secteur = moyen.getSecteur();
-			if(secteur != null)
-			{
-				secteur.addMoyen(moyen);
-			}
-		}
+		for ( IMoyen moyen : moyens )
+        {
+            Secteur secteur = null;
+            if ( moyen.isGroup() )
+            {
+                for ( IMoyen momo : moyen.getListMoyen() )
+                {
+                    secteur = momo.getSecteur();
+                    if ( secteur != null )
+                    {
+                        secteur.addMoyen( momo );
+                    }
+                }
+            }
+            else
+            {
+                secteur = moyen.getSecteur();
+
+                if ( secteur != null )
+                {
+                    secteur.addMoyen( moyen );
+                }
+            }
+        }
 		
 		for(Action action : historique){
 			action.setIntervention(this);

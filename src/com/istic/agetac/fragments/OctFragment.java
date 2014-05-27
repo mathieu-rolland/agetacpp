@@ -220,6 +220,8 @@ public class OctFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
+			    
+			    oct.setSecteur2( OctFragment.this.listeSecteurs.get( position ));
 				listeMoyenS2 = oct.getSecteur2().getMoyens();
 				lvListeS2.setAdapter(new MoyenAdapter(getActivity(),
 						listeMoyenS2));
@@ -236,7 +238,8 @@ public class OctFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
-				listeMoyenS3 = oct.getSecteur1().getMoyens();
+			    oct.setSecteur3( OctFragment.this.listeSecteurs.get( position ));
+				listeMoyenS3 = oct.getSecteur3().getMoyens();
 				lvListeS3.setAdapter(new MoyenAdapter(getActivity(),
 						listeMoyenS3));
 			}
@@ -252,6 +255,7 @@ public class OctFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView,
 					View selectedItemView, int position, long id) {
+			    oct.setSecteur4( OctFragment.this.listeSecteurs.get( position ));
 				listeMoyenS4 = oct.getSecteur4().getMoyens();
 				lvListeS4.setAdapter(new MoyenAdapter(getActivity(),
 						listeMoyenS4));

@@ -64,7 +64,6 @@ public class MapQuerySynchro extends APersitantRecuperator<Intervention>{
 	@SuppressWarnings("unchecked")
 	private void parseJsonMoyens( JSONArray moyens ){
 		this.moyens = (List<Entity>) JsonSerializer.deserialize(Moyen.class, moyens);
-		Log.d("SYNCHRO","Size : " + this.moyens.size());
 	}
 	
 	@Override

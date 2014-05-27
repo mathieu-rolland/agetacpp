@@ -10,8 +10,8 @@ import android.widget.Button;
 import com.istic.agetac.fragments.DemandeDeMoyensFragment;
 
 /**
- * Classe ListenerMoyens de DemandeDeMoyensFragment : Permet de changer le thème
- * de l'item que l'on sélectionne dans le gridView des moyens.
+ * Classe ListenerMoyens de DemandeDeMoyensFragment : Permet de changer le thï¿½me
+ * de l'item que l'on sï¿½lectionne dans le gridView des moyens.
  * 
  * @author Anthony LE MEE - 10003134
  */
@@ -20,7 +20,7 @@ public class DisplayItemIntoGridView implements OnClickListener {
 	/** Instance de l'activity principale */
 	private DemandeDeMoyensFragment demandeDeMoyens;
 
-	/** Position actuel du moyen sélectionné */
+	/** Position actuel du moyen sï¿½lectionnï¿½ */
 	private final int position;
 
 	/**
@@ -48,65 +48,41 @@ public class DisplayItemIntoGridView implements OnClickListener {
 	 */
 	public void onClick(View v) {
 
-		/*
-		 * Si on tente de sélectionner un moyen alors que l'on est en train
-		 * d'éditer le champs autre moyens, on ferme alors le clavier et on doit
-		 * recliquer sur un moyen pour que l'action de sélection fonctionne
-		 */
-		if (this.demandeDeMoyens.getTextViewAutresMoyens().isFocused()) {
+		if (v != null) {
 
-			// On ferme le clavier
-			((InputMethodManager) demandeDeMoyens.getActivity()
-					.getSystemService(Context.INPUT_METHOD_SERVICE))
-					.hideSoftInputFromWindow(this.demandeDeMoyens
-							.getTextViewAutresMoyens().getWindowToken(), 0);
+			// Pour chaque moyen du GridView on les dï¿½sactive
+			for (int i = 0; i < this.demandeDeMoyens.getGridViewMoyens()
+					.getCount(); i++) {
 
-			// On enlève le focus du champs autre moyens
-			this.demandeDeMoyens.getTextViewAutresMoyens().clearFocus();
+				try {
+					if (i != position) {
+						// Si ce n'est pas celui sur lequel j'ai cliquï¿½,
+						// alors je mets le thï¿½me sombre
+						((Button) this.demandeDeMoyens.getGridViewMoyens()
+								.getChildAt(i)).setBackgroundColor(Color
+								.parseColor(new String("#293133")));
 
-			// On désélectionne le champs autre moyens
-			this.demandeDeMoyens.getTextViewAutresMoyens().setSelected(false);
-			
-			this.demandeDeMoyens.setSelectedTypeMoyen(null);
+					} else {
+						// Sinon je lance la surbrillance
+						((Button) this.demandeDeMoyens.getGridViewMoyens()
+								.getChildAt(i)).setBackgroundColor(Color
+								.parseColor(new String("#efefef")));
 
-		} else {
-			if (v != null) {
+						// On met ï¿½ vide le champs autre moyen - ordre
+						// important !!
+						this.demandeDeMoyens.getTextViewAutresMoyens().setText(
+								"");
+						// Et ensuite on set l'indice
+						this.demandeDeMoyens.getSauvegarde().setIndiceMoyen(i);
 
-				// Pour chaque moyen du GridView on les désactive
-				for (int i = 0; i < this.demandeDeMoyens.getGridViewMoyens()
-						.getCount(); i++) {
+						this.demandeDeMoyens.setSelectedTypeMoyen(null);
 
-					try {
-						if (i != position) {
-							// Si ce n'est pas celui sur lequel j'ai cliqué,
-							// alors je mets le thème sombre
-							((Button) this.demandeDeMoyens.getGridViewMoyens()
-									.getChildAt(i)).setBackgroundColor(Color
-									.parseColor(new String("#293133")));
-
-						} else {
-							// Sinon je lance la surbrillance
-							((Button) this.demandeDeMoyens.getGridViewMoyens()
-									.getChildAt(i)).setBackgroundColor(Color
-									.parseColor(new String("#efefef")));
-														
-							// On met à vide le champs autre moyen - ordre
-							// important !!
-							this.demandeDeMoyens.getTextViewAutresMoyens()
-									.setText("");
-							// Et ensuite on set l'indice
-							this.demandeDeMoyens.getSauvegarde()
-									.setIndiceMoyen(i);
-							
-							this.demandeDeMoyens.setSelectedTypeMoyen(null);
-
-						}
-					} catch (Exception e) {
-						// FIXME nullPointerException à cause du fait que le boutton n'était pas affiché (trop d'élément)
-						// Ainsi l'indice n'est pas le même au scroll
-						// Et on dépasse le tableau
 					}
-
+				} catch (Exception e) {
+					// FIXME nullPointerException ï¿½ cause du fait que le boutton
+					// n'ï¿½tait pas affichï¿½ (trop d'ï¿½lï¿½ment)
+					// Ainsi l'indice n'est pas le mï¿½me au scroll
+					// Et on dï¿½passe le tableau
 				}
 
 			}

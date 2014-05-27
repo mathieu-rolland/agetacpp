@@ -34,6 +34,7 @@ import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.EnvironnementsStaticDao;
 import com.istic.agetac.controllers.dao.UserAvailableDao;
+import com.istic.agetac.exceptions.UserNotFoundException;
 import com.istic.agetac.fragments.PagerFragment.MODE;
 import com.istic.agetac.model.EnvironnementsStatic;
 import com.istic.agetac.model.Intervention;
@@ -61,7 +62,7 @@ public class LoginActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
@@ -69,34 +70,29 @@ public class LoginActivity extends Activity {
 		mUserView = (EditText) findViewById(R.id.activity_login_user);
 
 		mPasswordView = (EditText) findViewById(R.id.activity_login_password);
-		mPasswordView
-				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-					@Override
-					public boolean onEditorAction(TextView textView, int id,
-							KeyEvent keyEvent) {
-						if (id == R.id.activity_login_user
-								|| id == EditorInfo.IME_NULL) {
-							attemptLogin();
-							return true;
-						}
-						return false;
-					}
-				});
-		
+		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+				if (id == R.id.activity_login_user || id == EditorInfo.IME_NULL) {
+					attemptLogin();
+					return true;
+				}
+				return false;
+			}
+		});
+
 		mLoginFormView = findViewById(R.id.activity_login_form);
 		mLoginStatusView = findViewById(R.id.activity_login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.activity_login_status_message);
 
-		findViewById(R.id.activity_login_btnLogin).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-						imm.hideSoftInputFromWindow(
-								mPasswordView.getWindowToken(), 0);
-						attemptLogin();
-					}
-				});
+		findViewById(R.id.activity_login_btnLogin).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
+				attemptLogin();
+			}
+		});
 	}
 
 	@Override
@@ -148,8 +144,7 @@ public class LoginActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView
-					.setText(R.string.activity_login_progress_login_in);
+			mLoginStatusMessageView.setText(R.string.activity_login_progress_login_in);
 			showProgress(true);
 			DataBaseCommunication.sendGet(new myAvailableUserDao());
 		}
@@ -164,30 +159,23 @@ public class LoginActivity extends Activity {
 		// for very easy animations. If available, use these APIs to fade-in
 		// the progress spinner.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-			int shortAnimTime = getResources().getInteger(
-					android.R.integer.config_shortAnimTime);
+			int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 			mLoginStatusView.setVisibility(View.VISIBLE);
-			mLoginStatusView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 1 : 0)
-					.setListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							mLoginStatusView.setVisibility(show ? View.VISIBLE
-									: View.GONE);
-						}
-					});
+			mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+				}
+			});
 
 			mLoginFormView.setVisibility(View.VISIBLE);
-			mLoginFormView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 0 : 1)
-					.setListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							mLoginFormView.setVisibility(show ? View.GONE
-									: View.VISIBLE);
-						}
-					});
+			mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+				}
+			});
 		} else {
 			// The ViewPropertyAnimator APIs are not available, so simply show
 			// and hide the relevant UI components.
@@ -203,9 +191,9 @@ public class LoginActivity extends Activity {
 	private class UserViewReceiver extends APersitantRecuperator<Intervention> {
 
 		private String username, password;
-		
+
 		public UserViewReceiver(String username, String password) {
-			super(Intervention.class, "agetacpp", "connexion", username+"|"+password);
+			super(Intervention.class, "agetacpp", "connexion", username + "|" + password);
 			this.username = username;
 			this.password = password;
 		}
@@ -213,40 +201,39 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onErrorResponse(VolleyError error) {
 			showProgress(false);
-			Log.e("LoginActivity", error.getMessage() == null ? error.toString() : error.getMessage() );
+			Log.e("LoginActivity", error.getMessage() == null ? error.toString() : error.getMessage());
 		}
-		
+
 		@Override
-		public void onResponse(JSONObject json){
+		public void onResponse(JSONObject json) {
 			AgetacppApplication.setIntervention(null);
 			AgetacppApplication.setListIntervention(null);
 			AgetacppApplication.setRole(null);
+			AgetacppApplication.setUser(null);
 			try {
 				JSONArray row = (JSONArray) json.get("rows");
 				List<Intervention> interventions = new ArrayList<Intervention>();
-				for(int i=0; i<row.length(); i++){
-					Log.d("d",row.toString());
+				for (int i = 0; i < row.length(); i++) {
+					Log.d("d", row.toString());
 					JSONObject o = row.getJSONObject(i);
 					o = o.getJSONObject("value");
 					String role = o.getString("role");
-					if(role.equals("codis")){
+					if (role.equals("codis")) {
 						AgetacppApplication.setRole(Role.codis);
-					}
-					else{
+					} else {
 						AgetacppApplication.setRole(Role.intervenant);
 					}
-					if((Boolean) o.get("ok")) {
-						//User ayant une/des interventions
+					if ((Boolean) o.get("ok")) {
+						// User ayant une/des interventions
 						JSONObject value = o.getJSONObject("res");
 						Intervention interv = (Intervention) JsonSerializer.deserialize(Intervention.class, value);
 						interventions.add(interv);
-					}
-					else{
-						//User sans intervention
+					} else {
+						// User sans intervention
 						JSONObject value = o.getJSONObject("res");
 						User u = (User) JsonSerializer.deserialize(User.class, value);
 						AgetacppApplication.setUser(u);
-						if(u.getRole() == Role.codis){
+						if (u.getRole() == Role.codis) {
 							AgetacppApplication.setListIntervention(new ArrayList<Intervention>());
 						}
 					}
@@ -261,25 +248,27 @@ public class LoginActivity extends Activity {
 		public void onResponse(List<Intervention> interventions) {
 			mUserView.setError(null);
 			mPasswordView.setError(null);
-			if(!interventions.isEmpty()){
-				if(AgetacppApplication.getRole() == Role.intervenant) {
+			if (!interventions.isEmpty()) {
+				if (AgetacppApplication.getRole() == Role.intervenant) {
 					AgetacppApplication.setIntervention(interventions.get(0));
-					//Recherche de l'utilisateur dans l'intervention :
-					AgetacppApplication.setUser( findUser(interventions.get(0), username, password ));
-				}
-				else {
+					// Recherche de l'utilisateur dans l'intervention :
+					try {
+						AgetacppApplication.setUser(findIntervenant(interventions.get(0)));
+					} catch (UserNotFoundException e) {
+						Log.e("LoginActivity", e.getMessage());
+					}
+				} else {
 					AgetacppApplication.setListIntervention(interventions);
 					AgetacppApplication.setUser(interventions.get(0).getCodis());
 				}
 			}
 			showProgress(false);
-			if(AgetacppApplication.getRole() != null) {
+			if (AgetacppApplication.getRole() != null) {
 				// un utilisateur existant
-				if(AgetacppApplication.getRole() == Role.codis) {
+				if (AgetacppApplication.getRole() == Role.codis) {
 					CodisActivity.launchActivity(LoginActivity.this);
-				}
-				else {
-					if(AgetacppApplication.getIntervention() == null) {
+				} else {
+					if (AgetacppApplication.getIntervention() == null) {
 						// intervenant sans intervention => vacances
 						ImageView imageView = new ImageView(LoginActivity.this);
 						imageView.setImageResource(R.drawable.vacances);
@@ -289,7 +278,7 @@ public class LoginActivity extends Activity {
 						builder.setCancelable(false);
 						builder.setView(imageView);
 						builder.setPositiveButton(R.string.activity_login_intervenant_button, new DialogInterface.OnClickListener() {
-							
+
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								dialog.cancel();
@@ -297,28 +286,27 @@ public class LoginActivity extends Activity {
 						});
 						AlertDialog alert = builder.create();
 						alert.show();
-					}
-					else {
+					} else {
 						ContainerActivity.launchActivity(MODE.INTERVENANT, LoginActivity.this);
 					}
 				}
-			}
-			else {
+			} else {
 				// pas un utilisateur
 				mUserView.setError(getString(R.string.error_incorrect_login));
 				mUserView.requestFocus();
 			}
 		}
 
-		private IUser findUser(Intervention intervention, String username2,
-				String password2) {
-			for(User user : intervention.getIntervenants()){
-				if( user.getName().equals(username) && user.getPassword().equals(password)) return user;
-			}	
-			return null;
+		private IUser findIntervenant(Intervention intervention) throws UserNotFoundException {
+			for (User user : intervention.getIntervenants()) {
+				if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+					return user;
+				}
+			}
+			throw new UserNotFoundException();
 		}
 	}
-	
+
 	private class myAvailableUserDao extends UserAvailableDao {
 
 		@Override
@@ -331,21 +319,21 @@ public class LoginActivity extends Activity {
 		public void onErrorResponse(VolleyError error) {
 			Log.e("LoginActivity", error.toString());
 		}
-		
+
 	}
-	
+
 	private class myEnvironnementsStaticDao extends EnvironnementsStaticDao {
-		
+
 		@Override
 		public void onResponse(EnvironnementsStatic environnementsStatic) {
 			AgetacppApplication.setEnvironnementsStatic(environnementsStatic);
 			CouchDBUtils.getFromCouch(new UserViewReceiver(mUser, mPassword));
 		}
-		
+
 		@Override
 		public void onErrorResponse(VolleyError error) {
 			Log.e("LoginActivity", error.toString());
 		}
-		
+
 	}
 }

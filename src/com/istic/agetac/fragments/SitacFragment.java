@@ -582,6 +582,13 @@ public class SitacFragment extends MainFragment implements Observer {
 			entities.add((Entity) m);
 		}
 		loadEntities(entities);
+		
+		List<Entity> entitiesDynamique = new ArrayList<Entity>();
+		for (Environnement e : intervention.getEnvironnements()) {
+			entities.add((Entity) e);
+		}
+		loadEntities(entitiesDynamique);
+		
 		List<Entity> entitiesStatic = new ArrayList<Entity>();
 		for (EnvironnementStatic m : AgetacppApplication
 				.getEnvironnementsStatic().getListEnvironnement()) {

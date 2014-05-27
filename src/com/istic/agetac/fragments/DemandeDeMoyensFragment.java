@@ -217,11 +217,9 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		{
 			mListMoyen = new ArrayList<Moyen>();
 			Moyen m =new Moyen(TypeMoyen.VSAV, intervention);
-			m.setRepresentationOK(new Representation(R.drawable.fpt_sap));
 			m.setHDemande(new Date());
 			mListMoyen.add(m);
 			Moyen m2 =new Moyen(TypeMoyen.VSAV, intervention);
-			m2.setRepresentationOK(new Representation(R.drawable.fpt_sap));
 			m2.setHDemande(new Date(2014,01,01));
 			mListMoyen.add(m2);
 			CreateInterventionActivity activityParent = (CreateInterventionActivity)getActivity();

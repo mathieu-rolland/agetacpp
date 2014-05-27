@@ -146,12 +146,13 @@ public class Moyen extends Entity implements IMoyen
         super.setGroup(true);
         
         // On set une position par défaut si c'est possible
-        if (liste.size() > 0 && liste.get(0).getSecteur() != null && liste.get(0).getSecteur().getPosition() != null) {
+        /*FIXME NullPointer Exception 
+        	if (liste.size() > 0 && liste.get(0).getSecteur() != null && liste.get(0).getSecteur().getPosition() != null) {
         	for (IMoyen moyen : liste) {
         		((Entity)moyen).setPosition(liste.get(0).getSecteur().getPosition());
         	}
         	this.setPosition(liste.get(0).getSecteur().getPosition());
-        }
+        }*/
     
     }
 

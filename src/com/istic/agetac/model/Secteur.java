@@ -61,11 +61,9 @@ public class Secteur extends Entity implements ISecteur {
 
 	@Override
 	public void delete() {
-		intervention.delete(this);
+		AgetacppApplication.getIntervention().delete(this);
 	}
 
-	
-	
 
 	@Override
 	public int describeContents() {

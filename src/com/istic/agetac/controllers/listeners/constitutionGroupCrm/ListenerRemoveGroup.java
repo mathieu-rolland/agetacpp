@@ -6,8 +6,8 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.istic.agetac.R;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
-import com.istic.agetac.model.Groupe;
 
 /**
 * Classe ListenerRemoveGroup : Listener 
@@ -17,7 +17,7 @@ import com.istic.agetac.model.Groupe;
 public class ListenerRemoveGroup implements OnClickListener{
 
 	/** Attributs */
-	private Groupe itemGroupe; 							// Instance de l'item à traiter
+	private IMoyen itemGroupe; 							// Instance de l'item à traiter
 	private ConstitutionGroupCrmFragment vue; 			// Instance de la vue 
 	
 	/**
@@ -25,7 +25,7 @@ public class ListenerRemoveGroup implements OnClickListener{
 	 * @param user 
 	 * @param ConstitutionGroupCrmFragment 
 	 */
-	public ListenerRemoveGroup(Groupe groupe, ConstitutionGroupCrmFragment constitutionGroupCrm) {
+	public ListenerRemoveGroup(IMoyen groupe, ConstitutionGroupCrmFragment constitutionGroupCrm) {
 		
 		this.itemGroupe = groupe;
 		this.vue = constitutionGroupCrm;
@@ -45,10 +45,10 @@ public class ListenerRemoveGroup implements OnClickListener{
 		alert.setContentView(R.layout.dialog_constitution_group_crm_delete);
 		
 		// Récupération des données pour les listener internes
-		final Groupe item = this.getItemGroupe();		
+		final IMoyen item = this.getItemGroupe();		
 		
 		// On set la valeur du titre de la boite de Dialog
-		((TextView)alert.findViewById(R.id.constitution_group_crm_dialog_Delete_TextView_Title)).setText("Confirmez la suppression de " + item.getNom() + "");
+		((TextView)alert.findViewById(R.id.constitution_group_crm_dialog_Delete_TextView_Title)).setText("Confirmez la suppression de " + item.getLibelle() + "");
 				
 		// On pose le listener d'annulation de suppression
 		alert.findViewById(R.id.constitution_group_crm_dialog_Button_Cancel).setOnClickListener(new OnClickListener() {
@@ -88,14 +88,14 @@ public class ListenerRemoveGroup implements OnClickListener{
 	/**
 	 * @param itemGroupe the itemGroupe to set
 	 */
-	public void setItemGroupe(Groupe itemGroupe) {
+	public void setItemGroupe(IMoyen itemGroupe) {
 		this.itemGroupe = itemGroupe;
 	}
 
 	/**
 	 * @return the itemGroupe
 	 */
-	public Groupe getItemGroupe() {
+	public IMoyen getItemGroupe() {
 		return itemGroupe;
 	}
 

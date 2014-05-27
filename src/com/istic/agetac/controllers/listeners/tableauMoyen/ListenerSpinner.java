@@ -8,8 +8,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controler.adapter.MoyenListExpIntervenantAdapter;
-import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 
 
@@ -19,11 +19,11 @@ public class ListenerSpinner implements OnItemSelectedListener {
 
 	private HashMap<String, Secteur> mMap;
 
-	private Moyen mMoyen;
+	private IMoyen mMoyen;
 
 	public ListenerSpinner(MoyenListExpIntervenantAdapter adapter,
 			ArrayAdapter<String> arrayAdapter, HashMap<String, Secteur> map,
-			Moyen moyen) {
+			IMoyen moyen) {
 		mAdapter = adapter;
 		mArrayAdapter = arrayAdapter;
 		mMoyen = moyen;

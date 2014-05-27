@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
-import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
 
 /**
@@ -27,7 +26,7 @@ public class ListenerAddMoyen implements OnClickListener{
 	/** Attributs */
 	private Moyen itemMoyen; 							// Instance de l'item à traiter
 	private ConstitutionGroupCrmFragment vue; 			// Instance de la vue 
-	private Groupe groupSelected;
+	private IMoyen groupSelected;
 	private List<IMoyen> listGroupe;
 	
 	/**
@@ -59,14 +58,14 @@ public class ListenerAddMoyen implements OnClickListener{
 		final ConstitutionGroupCrmFragment vueDemandeMoyen = this.vue;
 		final Moyen item = this.getItemMoyen();
 		final Spinner tv = ((Spinner)alert.findViewById(R.id.constitution_group_crm_spinner_group));
-		this.groupSelected = (Groupe) tv.getItemAtPosition(0);
+		this.groupSelected = (IMoyen) tv.getItemAtPosition(0);
 		
 		
 		tv.setOnItemSelectedListener(new OnItemSelectedListener() {
 		    
 			@Override
 		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		        groupSelected = (Groupe) tv.getItemAtPosition(position);
+		        groupSelected = (IMoyen) tv.getItemAtPosition(position);
 		    }
 
 		    @Override

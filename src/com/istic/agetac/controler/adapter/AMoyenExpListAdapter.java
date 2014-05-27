@@ -1,7 +1,6 @@
 package com.istic.agetac.controler.adapter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,8 +15,6 @@ import android.widget.TextView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
-import com.istic.agetac.model.Groupe;
-import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
 
@@ -55,7 +52,7 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
     {
         if ( mMoyens.get( groupPosition ).isGroup() )
         {
-            return ( (Groupe) mMoyens.get( groupPosition ) ).getMoyens().size();
+            return mMoyens.get( groupPosition ).getListMoyen().size();
         }
         else
         {
@@ -74,7 +71,7 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
     {
         if ( mMoyens.get( groupPosition ).isGroup() )
         {
-            return ( (Groupe) mMoyens.get( groupPosition ) ).getMoyens().get( childPosition );
+            return mMoyens.get( groupPosition ).getListMoyen().get( childPosition );
         }
         else
         {
@@ -158,7 +155,7 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
     {
         if ( mMoyens.get( groupPosition ).isGroup() )
         {
-            Groupe groupe = (Groupe) mMoyens.get( groupPosition );
+            IMoyen groupe = mMoyens.get( groupPosition );
             // if ( convertView == null )
             // {
             LayoutInflater infalInflater = (LayoutInflater) this.mContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -166,7 +163,7 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
             // }
 
             TextView name = (TextView) convertView.findViewById( R.id.item_group_name );
-            name.setText( groupe.getNom() );
+            name.setText( groupe.getLibelle());
         }
         else
         {
@@ -189,7 +186,7 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
 
     public void addAll( List<IMoyen> mListMoyen )
     {
-        List<Moyen> areInAGroup = new ArrayList<Moyen>();
+        List<IMoyen> areInAGroup = new ArrayList<IMoyen>();
 
         for ( IMoyen moyen : mListMoyen ) // ajout des groupes
         {
@@ -198,7 +195,7 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
                 if ( !mMoyens.contains( moyen ) )
                 {
                     mMoyens.add( moyen );
-                    areInAGroup.addAll( ( (Groupe) moyen ).getMoyens() );
+                    areInAGroup.addAll( moyen.getListMoyen() );
                 }
             }
         }

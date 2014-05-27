@@ -15,6 +15,7 @@ import android.widget.ExpandableListView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
+import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.AMoyenExpListAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpCodisAdapter;
@@ -62,7 +63,7 @@ public class TableauMoyenFragment extends Fragment {
 
 		/* R�cup�rations des donn�es via les mod�les */
 		
-		if (intervention == null) {
+		if (AgetacppApplication.getUser().getRole() == Role.codis) {
 			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity(), mIsCreating);
 		} else {
 			mAdapterMoyens = new MoyenListExpIntervenantAdapter(getActivity());

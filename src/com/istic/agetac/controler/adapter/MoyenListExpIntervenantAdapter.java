@@ -16,7 +16,6 @@ import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerFree;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerSpinner;
-import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
@@ -24,7 +23,7 @@ import com.istic.agetac.widget.SpinnerWithTextInit;
 public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
 {
 
-    public MoyenListExpIntervenantAdapter( Context context)
+    public MoyenListExpIntervenantAdapter( Context context )
     {
         super( context, new ArrayList<IMoyen>() );
     }
@@ -56,18 +55,18 @@ public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
         mItemMoyen.setHFree( date );
         this.notifyDataSetChanged();
     }
-   
+
     public View getViewChildren( int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent )
     {
-        Moyen current;
+        IMoyen current;
 
         if ( childPosition == -1 )
         {
-            current = ( (Moyen) mMoyens.get( groupPosition ) );           
+            current = mMoyens.get( groupPosition );
         }
         else
         {
-            current = ( (Groupe) mMoyens.get( groupPosition ) ).getMoyens().get( childPosition );
+            current = mMoyens.get( groupPosition ).getListMoyen().get( childPosition );
         }
 
         convertView = super.mInflater.inflate( R.layout.item_moyen, null ); // pas
@@ -106,11 +105,16 @@ public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
             holder.spinner.setAdapter( dataAdapter );
 
             holder.spinner.setOnItemSelectedListener( new ListenerSpinner( this, dataAdapter, mSector, current ) );
-            int positionSpinner = dataAdapter.getPosition( current.getSecteur() );
+
+            int positionSpinner = -1;
+            if ( current.getSecteur() != null )
+            {
+                positionSpinner = dataAdapter.getPosition( current.getSecteur().getLibelle() );
+            }
 
             if ( positionSpinner >= 0 )
             {
-                if ( current.getSecteur() != "" )
+                if ( current.getSecteur().getLibelle() != "" )
                 {
                     holder.spinner.setSelection( positionSpinner );
                 }
@@ -156,7 +160,7 @@ public class MoyenListExpIntervenantAdapter extends AMoyenExpListAdapter
                 holder.hourFree.setText( Moyen.FORMATER.format( current.getHFree() ) );
                 holder.spinner.setVisibility( View.INVISIBLE );
                 holder.sector.setVisibility( View.VISIBLE );
-                holder.sector.setText( current.getSecteur() );
+                holder.sector.setText( current.getSecteur().getLibelle() );
 
                 Secteur sector = mSector.get( current.getSecteur() );
 

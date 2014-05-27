@@ -13,10 +13,8 @@ import com.android.volley.VolleyError;
 import com.istic.agetac.api.model.IIntervention;
 import com.istic.agetac.api.model.IMessage;
 import com.istic.agetac.api.model.IMoyen;
-import com.istic.agetac.pattern.observer.Observer;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.couch.JsonSerializer;
-import com.istic.sit.framework.model.ALine;
 
 public class Intervention implements IIntervention {
 
@@ -26,14 +24,12 @@ public class Intervention implements IIntervention {
 	private String nom;
 	private String codeSinistre;
 	private List<IMoyen> moyens;
-	private transient List<Observer> observers;
 	private List<Action> historique;
 	private OCT oct;
 	private List<Environnement> environnements;
 	private List<Intervenant> intervenants;
 	private Codis codis;
 	private List<IMessage> messages;
-	private List<Groupe> groupes;
 	private List<Secteur> secteurs;
 	private List<Line> lines;
 	
@@ -50,7 +46,6 @@ public class Intervention implements IIntervention {
 		this.secteurs = new ArrayList<Secteur>();
 		this.historique = new ArrayList<Action>();
 		this.oct = new OCT();
-		this.groupes = new ArrayList<Groupe>();
 		this.lines = new ArrayList<Line>();
 	}
 	
@@ -73,7 +68,6 @@ public class Intervention implements IIntervention {
 		this.intervenants = new ArrayList<Intervenant>();
 		this.messages = new ArrayList<IMessage>();
 		this.historique = new ArrayList<Action>();
-		this.groupes = new ArrayList<Groupe>();
 		this.secteurs = new ArrayList<Secteur>();
 		this.lines = new ArrayList<Line>();
 	}
@@ -90,7 +84,6 @@ public class Intervention implements IIntervention {
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
 		this.historique = new ArrayList<Action>();
-		this.groupes = new ArrayList<Groupe>();
 		this.lines = new ArrayList<Line>();
 	}
 	
@@ -105,28 +98,12 @@ public class Intervention implements IIntervention {
 		this.intervenants = users;
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = new ArrayList<Secteur>();
-		this.groupes = new ArrayList<Groupe>();
 		this.historique = new ArrayList<Action>();
 		this.lines = new ArrayList<Line>();
 	}
+		
 	
-	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users, List<Groupe> groupes){
-		this._id = UUID.randomUUID().toString();
-		this._rev = "";
-		this.adresse = adresse;
-		this.nom = nom;
-		this.codeSinistre = codeSinistre;
-		this.moyens = moyens;
-		this.environnements = new ArrayList<Environnement>();
-		this.intervenants = users;
-		this.messages = new ArrayList<IMessage>();
-		this.secteurs = new ArrayList<Secteur>();
-		this.groupes = groupes;
-		this.historique = new ArrayList<Action>();
-		this.lines = new ArrayList<Line>();
-	}
-	
-	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users, List<Groupe> groupes, List<Secteur> secteurs){
+	public Intervention(String adresse, String nom, String codeSinistre, List<IMoyen> moyens, List<Intervenant> users, List<Secteur> secteurs){
 		this._id = UUID.randomUUID().toString();
 		this._rev = "";
 		this.adresse = adresse;
@@ -137,7 +114,6 @@ public class Intervention implements IIntervention {
 		this.intervenants = users;
 		this.messages = new ArrayList<IMessage>();
 		this.secteurs = secteurs;
-		this.groupes = groupes;
 		this.historique = new ArrayList<Action>();
 		this.lines = new ArrayList<Line>();
 	}
@@ -148,6 +124,7 @@ public class Intervention implements IIntervention {
 
 	public void setHistorique(List<Action> historique) {
 		this.historique = historique;
+		this.secteurs = new ArrayList<Secteur>();
 	}
 	
 	public void addHistorique(Action action){
@@ -225,9 +202,9 @@ public class Intervention implements IIntervention {
 		}
 	}
 	
-	public void addGroupe(Groupe groupe) {
-		if( !this.groupes.contains(groupe) ){
-			this.groupes.add(groupe);
+	public void addGroupe(IMoyen groupe) {
+		if( !this.moyens.contains(groupe) ){
+			this.moyens.add(groupe);
 		}
 	}
 	
@@ -245,12 +222,8 @@ public class Intervention implements IIntervention {
 		}
 	}
 	
-	public void addGroupes(List<Groupe> listGroupe) {
-		for (Groupe groupe : listGroupe) {
-			if( !this.groupes.contains(groupe) ){
-				this.groupes.add(groupe);
-			}
-		}
+	public void addGroupes(List<IMoyen> listGroupe) {
+		moyens.addAll(listGroupe);
 	}
 	
 	public void addSecteurs(List<Secteur> listSecteur) {
@@ -443,8 +416,8 @@ public class Intervention implements IIntervention {
 		if( codis != null ) codis.setIntervention(this);
 		
 		updateMessagesDependencies();
-		
-		for(Groupe gr : groupes){
+
+		for(IMoyen gr : getGroupes()){
 			gr.setIntervention(this);
 		}
 		
@@ -457,6 +430,7 @@ public class Intervention implements IIntervention {
 		for(Action action : historique){
 			action.setIntervention(this);
 		}
+
 	}
 	
 	public String toString(){
@@ -481,8 +455,8 @@ public class Intervention implements IIntervention {
 		save();
 	}
 	
-	public void delete( Groupe groupe ){
-		groupes.remove(groupe);
+	public void delete( IMoyen groupe ){
+		moyens.remove(groupe);
 		save();
 	}
 	
@@ -507,13 +481,18 @@ public class Intervention implements IIntervention {
 	public void delete( UserAvailable user ){
 	}
 	
-
-	public List<Groupe> getGroupes() {
-		return groupes;
+	public List<IMoyen> getGroupes() {
+		
+		List<IMoyen> groupe = new ArrayList<IMoyen>();
+		for (IMoyen iMoyen : groupe) {
+			if(iMoyen.isGroup())
+				groupe.add(iMoyen);
+		}
+		return groupe;
 	}
 
-	public void setGroupes(List<Groupe> groupes) {
-		this.groupes = groupes;
+	public void setGroupes(List<IMoyen> groupes) {
+		this.moyens.addAll(groupes);
 	}
 
 	public List<Secteur> getSecteurs() {

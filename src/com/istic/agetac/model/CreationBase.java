@@ -10,6 +10,7 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.istic.agetac.R;
 import com.istic.agetac.api.communication.IViewReceiver;
+import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.api.model.IMessage.Message_part;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controllers.dao.InterventionDao;
@@ -300,9 +301,13 @@ public class CreationBase {
 		List<Moyen> listMoyen = new ArrayList<Moyen>();
 		listMoyen.add(mo1);
 		listMoyen.add(mo2);
-		Groupe g1 = new Groupe("Groupe 1 - Rennes", listMoyen);
-		Groupe g2 = new Groupe("Groupe 2 - Rennes", new ArrayList<Moyen>());
-		Groupe g3 = new Groupe("Groupe 3 - Rennes", new ArrayList<Moyen>());
+		IMoyen g1 = new Moyen(AgetacppApplication.getIntervention());
+		g1.setLibelle("Groupe 1 - Rennes");
+		
+		IMoyen g2 = new Moyen(AgetacppApplication.getIntervention());
+		g2.setLibelle("Groupe 2 - Rennes ");
+		IMoyen g3 = new Moyen(AgetacppApplication.getIntervention());
+		g3.setLibelle("Groupe 3 - Rennes");
 		
 		inter1.addGroupe(g1);
 		inter1.addGroupe(g2);

@@ -5,17 +5,11 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.drive.internal.RemoveEventListenerRequest;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.fragments.ConstitutionGroupCrmFragment;
-import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
 
 /**
@@ -26,9 +20,9 @@ import com.istic.agetac.model.Moyen;
 public class ListenerRemoveMoyen implements OnClickListener{
 
 	/** Attributs */
-	private Moyen itemMoyen; 							// Instance de l'item à traiter
+	private IMoyen itemMoyen; 							// Instance de l'item à traiter
 	private ConstitutionGroupCrmFragment vue; 			// Instance de la vue 
-	private Groupe groupSelected;
+	private IMoyen groupSelected;
 	private List<IMoyen> listGroupe;
 	
 	/**
@@ -36,7 +30,7 @@ public class ListenerRemoveMoyen implements OnClickListener{
 	 * @param user 
 	 * @param ConstitutionGroupCrmFragment 
 	 */
-	public ListenerRemoveMoyen(Moyen moyen, ConstitutionGroupCrmFragment constitutionGroupCrm, Groupe groupe) {
+	public ListenerRemoveMoyen(IMoyen moyen, ConstitutionGroupCrmFragment constitutionGroupCrm, IMoyen groupe) {
 		
 		this.itemMoyen = moyen;
 		this.vue = constitutionGroupCrm;
@@ -59,7 +53,7 @@ public class ListenerRemoveMoyen implements OnClickListener{
 		
 		// Récupération des données pour les listener internes
 		final ConstitutionGroupCrmFragment vueDemandeMoyen = this.vue;
-		final Moyen item = this.getItemMoyen();		
+		final IMoyen item = this.getItemMoyen();		
 		
 		// On set la valeur du titre de la boite de Dialog
 		((TextView)alert.findViewById(R.id.constitution_group_crm_dialog_Delete_TextView_Title)).setText("Confirmez la suppression de " + item.getLibelle() + "");
@@ -109,7 +103,7 @@ public class ListenerRemoveMoyen implements OnClickListener{
 	/**
 	 * @return the itemMoyen
 	 */
-	public Moyen getItemMoyen() {
+	public IMoyen getItemMoyen() {
 		return itemMoyen;
 	}
 

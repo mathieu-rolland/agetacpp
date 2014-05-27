@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
 import com.istic.agetac.controllers.listeners.tableauMoyen.ListenerEngage;
-import com.istic.agetac.model.Groupe;
 import com.istic.agetac.model.Moyen;
 import com.istic.agetac.model.Secteur;
 import com.istic.agetac.widget.SpinnerWithTextInit;
@@ -25,7 +24,7 @@ public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
 
     public MoyenListExpCodisAdapter( Context context, boolean isCreating )
     {
-        super( context , new ArrayList<IMoyen>());
+        super( context, new ArrayList<IMoyen>() );
         this.mIsCreating = isCreating;
     }
 
@@ -46,7 +45,7 @@ public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
         }
     }
 
-    public void setEngage( Moyen item, Date dateEngage )
+    public void setEngage( IMoyen item, Date dateEngage )
     {
         item.setHEngagement( dateEngage );
         this.notifyDataSetChanged();
@@ -62,18 +61,18 @@ public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
     {
         StateMoyen state = StateMoyen.demand;
 
-        Moyen current;
+        IMoyen current;
 
         if ( childPosition == -1 )
         {
-            current = ( (Moyen) mMoyens.get( groupPosition ) );            
+            current = mMoyens.get( groupPosition );
         }
         else
         {
-            current = ( (Groupe) mMoyens.get( groupPosition ) ).getMoyens().get( childPosition );
+            current = mMoyens.get( groupPosition ).getListMoyen().get( childPosition );
         }
 
-        convertView = super.mInflater.inflate( R.layout.item_moyen, null ); 
+        convertView = super.mInflater.inflate( R.layout.item_moyen, null );
         ViewHolder holder = new ViewHolder();
 
         holder = new ViewHolder();
@@ -131,19 +130,14 @@ public class MoyenListExpCodisAdapter extends AMoyenExpListAdapter
             state = StateMoyen.free;
         }
 
-        if ( !AMoyenExpListAdapter.isNullOrBlank( current.getSecteur() ) )
+        if ( current.getSecteur() != null && !AMoyenExpListAdapter.isNullOrBlank( current.getSecteur().getName() ) )
         {
             holder.sector.setVisibility( View.VISIBLE );
-            holder.sector.setText( current.getSecteur() );
+            holder.sector.setText( current.getSecteur().getLibelle() );
             holder.hourArrived.setText( Moyen.FORMATER.format( current.getHArrival() ) );
 
-            Secteur sector = mSector.get( current.getSecteur() );
-
-            if ( sector != null )
-            {
-                int color = mSector.get( current.getSecteur() ).getColor();
-                holder.sector.setTextColor( color );
-            }
+            int color = current.getSecteur().getColor();
+            holder.sector.setTextColor( color );
         }
 
         if ( mIsCreating )

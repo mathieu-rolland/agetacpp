@@ -29,7 +29,6 @@ import com.istic.agetac.api.communication.IViewReceiver;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenGridViewAdapter;
 import com.istic.agetac.controler.adapter.DemandeDeMoyenListAdapter;
-import com.istic.agetac.controllers.dao.MoyensDao;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.AddToList;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.AutoCompleteField;
 import com.istic.agetac.controllers.listeners.demandeDeMoyens.SpinnerVariation;
@@ -42,11 +41,7 @@ import com.istic.agetac.view.item.DemandeDeMoyenItem;
 import com.istic.sit.framework.model.Representation;
 
 /**
-<<<<<<< HEAD
 * Classe DemandeDeMoyensFragment : affiche la fenétre de demande des moyens et permet de créer une liste de demandes de moyens
-=======
-* Classe DemandeDeMoyensFragment : affiche la fen�tre de demande des moyens et permet de cr�er une liste de demandes de moyens
->>>>>>> remotes/origin/MDD
 * et de la soumettre ensuite.
 * 
 * @author Anthony LE MEE - 10003134

@@ -170,13 +170,6 @@ public class DemandeDeMoyensFragment extends Fragment implements IViewReceiver<M
 		gridViewMoyens 			= (GridView) getActivity().findViewById(R.id.demande_de_moyen_GridView);
 		listViewMoyensToSend	= (ListView) getActivity().findViewById(R.id.demande_de_moyen_ListView);
 		
-		this.getTextViewAutresMoyens().setOnItemClickListener(new OnItemClickListener() {
-		    public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
-		    	TypeMoyen selection = (TypeMoyen)parent.getItemAtPosition(position);
-		    	setSelectedTypeMoyen(selection);
-		    }
-		});
-		
 		// Ajout listener sur le boutton d'ajout é la liste des moyens
 		buttonAddToList.setOnClickListener(this.cAddToList);
 		

@@ -5,9 +5,14 @@ import java.util.List;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +27,9 @@ import com.istic.agetac.controler.adapter.MoyenListExpCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpIntervenantAdapter;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.sync.moyen.MoyenBroadcast;
+import com.istic.agetac.sync.moyen.MoyenIntentService;
+import com.istic.agetac.sync.tableaumoyens.ReceiverTdm;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
 import com.istic.sit.framework.sync.PoolSynchronisation;
@@ -48,7 +56,8 @@ public class TableauMoyenFragment extends Fragment {
 	private boolean mIsCreating;
 		
 	private Intervention intervention;
-	
+	BroadcastReceiver broadcastReceiver;
+//	ReceiverTdm rtdm ;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -93,6 +102,24 @@ public class TableauMoyenFragment extends Fragment {
         }
 		mAdapterMoyens.notifyDataSetChanged();
         
+		LocalBroadcastManager bManager = LocalBroadcastManager.getInstance( getActivity().getApplicationContext() );
+		
+		IntentFilter filter = new IntentFilter( MoyenIntentService.CHANNEL );
+		filter.addAction( MoyenIntentService.CHANNEL );
+		
+		broadcastReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				mAdapterMoyens.notifyDataSetChanged();
+				Log.d("SYNCHRO", "Notify data set change broadcast anonyme");
+			}
+		};
+		
+//		rtdm = new ReceiverTdm(this);
+		
+		bManager.registerReceiver( broadcastReceiver , filter);
+//		bManager.registerReceiver( rtdm , filter);
+		
         return view;
     }
 
@@ -139,12 +166,13 @@ public class TableauMoyenFragment extends Fragment {
 	@Override
 	public void onStop() {
 		stopSynchronisation();
+		LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
 		super.onStop();
 	}
 
 	@Override
 	public void onResume() {
-
+		
 		PoolSynchronisation pool = AgetacppApplication.getPoolSynchronisation();
 		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO
 				&& AgetacppApplication.ACTIVE_TDM_SYNCHRO ){
@@ -163,6 +191,12 @@ public class TableauMoyenFragment extends Fragment {
 
 	public void setmIsCreating(boolean mIsCreating) {
 		this.mIsCreating = mIsCreating;
+	}
+
+
+	public void updateView() {
+		mAdapterMoyens.notifyDataSetChanged();
+		Log.d("SYNCHRO", "notify data set change update view");
 	}
 
 }

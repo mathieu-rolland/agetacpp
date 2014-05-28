@@ -76,7 +76,15 @@
         <service android:name="com.istic.sit.framework.sync.ASynchronisationService"/> 
         <service android:name="com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync" />
         <service android:name="com.istic.agetac.sync.oct.OctServiceSynchronisation"/>
-        <service android:name="com.istic.agetac.sync.moyen.MoyenIntentService"/>       
+        <service android:name="com.istic.agetac.sync.moyen.MoyenIntentService" /> 
+        
+        <receiver android:name="com.istic.agetac.sync.tableaumoyens.ReceiverTdm" >
+            <intent-filter>
+                <action android:name="com.istic.agetac.moyen" >
+                    </action>
+            </intent-filter>
+        </receiver>
+        
     </application>
 
 </manifest>

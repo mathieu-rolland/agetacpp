@@ -63,6 +63,7 @@ public class MoyenIntentService extends IntentService{
 	
 	protected void notifyResponseSuccess( List<Entity> entities, List<Line> lines ){
 		Intent intentReceiver = new Intent( CHANNEL );
+		intentReceiver.setAction( CHANNEL );
 		intentReceiver.putParcelableArrayListExtra( CHANNEL , 
 				(ArrayList<? extends Parcelable>) entities);
 		intentReceiver.putParcelableArrayListExtra( CHANNEL_LIST, 

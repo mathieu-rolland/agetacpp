@@ -115,7 +115,8 @@ public class SitacFragment extends MainFragment implements Observer {
 //		Log.d("Moyen", "Synchronisation started");
 		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO
 				&& AgetacppApplication.ACTIVE_MAP_SYNCHRO ){
-			LocalBroadcastManager bManager = LocalBroadcastManager.getInstance(getActivity());
+			
+			LocalBroadcastManager bManager = LocalBroadcastManager.getInstance( getActivity().getApplicationContext() );
 			IntentFilter intentFilter = new IntentFilter();
 			intentFilter.addAction( MoyenIntentService.CHANNEL );
 			

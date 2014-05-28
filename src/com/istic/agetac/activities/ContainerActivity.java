@@ -70,6 +70,11 @@ public class ContainerActivity extends FragmentActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			break;
+		case R.id.action_settings:
+			break;
+		case R.id.refresh:
+			//ici thomas
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

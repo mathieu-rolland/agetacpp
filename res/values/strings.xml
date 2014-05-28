@@ -123,4 +123,6 @@
 	<string name="Histo_user">Utilisateur</string>
 	<string name="Histo_heure">Heure</string>
 	<string name="Histo_action">Action réalisée</string>
+	
+	<string name="menu_refresh">Rafraichir</string>
 </resources>

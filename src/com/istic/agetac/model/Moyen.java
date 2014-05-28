@@ -394,9 +394,10 @@ public class Moyen extends Entity implements IMoyen
     public void save()
     {
         AgetacppApplication.getIntervention().addMoyen( this );
+//        intervention.addMoyen( this );
         try
         {
-        	AgetacppApplication.getIntervention().addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Modification du moyen " + this.getLibelle() ) );
+            AgetacppApplication.getIntervention().addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Modification du moyen " + this.getLibelle() ) );
         }
         catch ( Exception e )
         {

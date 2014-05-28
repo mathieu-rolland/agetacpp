@@ -167,7 +167,7 @@ public class TableauMoyenFragment extends Fragment {
 		 Log.d( "Synchro", " Recieve sync for tableau des moyens : " + moyens ==
 				 null ? "Moyen is null" : "Size : " + moyens.size() );
 		 
-		 List<Moyen> moyensWaiting = new ArrayList<Moyen>();
+		 List<IMoyen> moyensWaiting = new ArrayList<IMoyen>();
 		 for ( Moyen moyenServer : moyens )
 		 {
 			 boolean found = false;
@@ -188,17 +188,23 @@ public class TableauMoyenFragment extends Fragment {
 						 localMoyen.setSecteur( secteur );					 
 				 }
 			 }
-			 if ( !found )
+			 if ( !found && AgetacppApplication.getUser().getRole()==Role.codis)
 			 {
-				 moyensWaiting.add( moyenServer );
+			     moyenServer.setIntervention( intervention );
+			     mAdapterMoyens.add( moyenServer );
+			     mListMoyen.add( moyenServer );
 			 }
 		 }
-		 for ( Moyen moyen : moyensWaiting )
-		 {
-			 intervention.addMoyen(moyen);
-			 moyen.setIntervention(intervention);
-//			 mListMoyen.add(moyen);
-		 }
+	 
+
+//		 for ( Moyen moyen : moyensWaiting )
+//		 {
+//			 intervention.addMoyen(moyen);
+//			 moyen.setIntervention(intervention);
+//			 this.mAdapterMoyens.addAll( mListMoyen )
+////			 mListMoyen.add(moyen);
+//		 }
+		 
 		 this.mAdapterMoyens.notifyDataSetChanged();
 	}
 

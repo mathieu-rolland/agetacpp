@@ -88,60 +88,61 @@ public class CreationBase {
 
 		
 		try{
-		    IMoyen moyen1 = new Moyen( TypeMoyen.VSAV, inter1 );
-	        moyen1.setHDemande( new Date(2014,27,05,14,22) );
-	        moyen1.setHEngagement( new Date(2014,27,05,15,00) ) ;
-            moyen1.setLibelle( "moyen1" );
-	        
-	        IMoyen moyen2 = new Moyen( TypeMoyen.VSAV, inter1 );
-	        moyen2.setHDemande( new Date(2014,27,05,14,22) );
-            moyen2.setHEngagement( new Date(2014,27,05,15,00) ) ;
-            moyen2.setLibelle( "moyen2" );
+//		    IMoyen moyen1 = new Moyen( TypeMoyen.VSAV, inter1 );
+//	        moyen1.setHDemande( new Date(2014,27,05,14,22) );
+//	        moyen1.setHEngagement( new Date(2014,27,05,15,00) ) ;
+//            moyen1.setLibelle( "moyen1" );
+//	        
+//	        IMoyen moyen2 = new Moyen( TypeMoyen.VSAV, inter1 );
+//	        moyen2.setHDemande( new Date(2014,27,05,14,22) );
+//            moyen2.setHEngagement( new Date(2014,27,05,15,00) ) ;
+//            moyen2.setLibelle( "moyen2" );
+//            
+//            IMoyen moyen3 = new Moyen( TypeMoyen.VSAV, inter1 );
+//            moyen3.setHDemande( new Date(2014,27,05,14,22) );
+//            moyen3.setLibelle( "moyen3" );
+//            moyen3.setHEngagement(  new Date(2014,27,05,15,00) ) ;
+//            moyen3.setHArrival( new Date(2014,27,05,15,30) );
+//            moyen3.setSecteur( s2 );
+//            
+//            IMoyen moyen4 = new Moyen( TypeMoyen.VSAV, inter1 );
+//            moyen4.setHDemande( new Date(2014,27,05,14,22) );
+//            moyen4.setLibelle( "moyen4" );
+//            moyen4.setHEngagement(  new Date(2014,27,05,15,00) ) ;
+//            moyen4.setHArrival( new Date(2014,27,05,15,30) );
+//            moyen4.setSecteur( s2 );
+//            moyen4.setHFree( new Date(2014,27,05,17,30) );
             
-            IMoyen moyen3 = new Moyen( TypeMoyen.VSAV, inter1 );
-            moyen3.setHDemande( new Date(2014,27,05,14,22) );
-            moyen3.setLibelle( "moyen3" );
-            moyen3.setHEngagement(  new Date(2014,27,05,15,00) ) ;
-            moyen3.setHArrival( new Date(2014,27,05,15,30) );
-            moyen3.setSecteur( s2 );
-            
-            IMoyen moyen4 = new Moyen( TypeMoyen.VSAV, inter1 );
-            moyen4.setHDemande( new Date(2014,27,05,14,22) );
-            moyen4.setLibelle( "moyen4" );
-            moyen4.setHEngagement(  new Date(2014,27,05,15,00) ) ;
-            moyen4.setHArrival( new Date(2014,27,05,15,30) );
-            moyen4.setSecteur( s2 );
-            moyen4.setHFree( new Date(2014,27,05,17,30) );
-            
-            IMoyen moyen5 = new Moyen( TypeMoyen.VSAV, inter1 );
+            IMoyen moyen5 = new Moyen( TypeMoyen.FPT, inter1 );
             moyen5.setHDemande( new Date(2014,27,05,14,22) );
-            moyen5.setLibelle( "moyen5" );
-            moyen5.setHEngagement(  new Date(2014,27,05,15,00) ) ;
             
             IMoyen moyen6 = new Moyen( TypeMoyen.VSAV, inter1 );
             moyen6.setHDemande( new Date(2014,27,05,14,22) );
-            moyen6.setLibelle( "moyen6" );
-            moyen6.setHEngagement(  new Date(2014,27,05,15,43) ) ;
+            
+//            IMoyen moyen6 = new Moyen( TypeMoyen.VSAV, inter1 );
+//            moyen6.setHDemande( new Date(2014,27,05,14,22) );
+//            moyen6.setLibelle( "moyen6" );
+//            moyen6.setHEngagement(  new Date(2014,27,05,15,43) ) ;
 
-            List<IMoyen> listeMoyenDuGroupe1 = new ArrayList<IMoyen>();
-            listeMoyenDuGroupe1.add( moyen1 );
-            listeMoyenDuGroupe1.add( moyen2 );
+//            List<IMoyen> listeMoyenDuGroupe1 = new ArrayList<IMoyen>();
+//            listeMoyenDuGroupe1.add( moyen1 );
+//            listeMoyenDuGroupe1.add( moyen2 );
+//            
+//            List<IMoyen> listeMoyenDuGroupe2 = new ArrayList<IMoyen>();
+//            listeMoyenDuGroupe2.add( moyen3 );
+//            listeMoyenDuGroupe2.add( moyen4 );
             
-            List<IMoyen> listeMoyenDuGroupe2 = new ArrayList<IMoyen>();
-            listeMoyenDuGroupe2.add( moyen3 );
-            listeMoyenDuGroupe2.add( moyen4 );
-            
-            
-            IMoyen groupe1 = new Moyen(listeMoyenDuGroupe1,inter1);
-            groupe1.setLibelle( "Groupe 1" );
-            IMoyen groupe2 = new Moyen(listeMoyenDuGroupe2,inter1);
-            groupe2.setLibelle( "Groupe 2" );
+//            
+//            IMoyen groupe1 = new Moyen(listeMoyenDuGroupe1,inter1);
+//            groupe1.setLibelle( "Groupe 1" );
+//            IMoyen groupe2 = new Moyen(listeMoyenDuGroupe2,inter1);
+//            groupe2.setLibelle( "Groupe 2" );
             
             List<IMoyen> moyensAAjouterALintervention = new ArrayList<IMoyen>();
             moyensAAjouterALintervention.add( moyen5 );
             moyensAAjouterALintervention.add( moyen6 );
-            moyensAAjouterALintervention.add(groupe1);
-            moyensAAjouterALintervention.add(groupe2);
+//            moyensAAjouterALintervention.add(groupe1);
+//            moyensAAjouterALintervention.add(groupe2);
             
             inter1.setMoyens( moyensAAjouterALintervention );
 	        
@@ -149,10 +150,6 @@ public class CreationBase {
 		{
 		    Log.e("CREATION BASE","Erreur dans les dates des moyens");
 		}
-		
-		
-		
-		
 	      OCT oct = new OCT( s1, s2 , s3, s4, "70", "70", "30", "30", "11", "30", "12", "30", "13", "30", "14" );
 	        inter1.setOct( oct );
 		

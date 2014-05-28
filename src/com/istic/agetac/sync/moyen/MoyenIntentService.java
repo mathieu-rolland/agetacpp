@@ -49,7 +49,7 @@ public class MoyenIntentService extends IntentService{
 	}
 	
 	public int getIntervalToRefresh(){
-		return 2;
+		return 5;
 	}
 
 	@Override

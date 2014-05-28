@@ -41,6 +41,7 @@ import com.istic.agetac.model.EnvironnementsStatic;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.User;
 import com.istic.agetac.model.UserAvailable;
+import com.istic.agetac.model.receiver.AUserViewReceiver;
 import com.istic.sit.framework.couch.APersitantRecuperator;
 import com.istic.sit.framework.couch.CouchDBUtils;
 import com.istic.sit.framework.couch.DataBaseCommunication;
@@ -189,60 +190,16 @@ public class LoginActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	private class UserViewReceiver extends APersitantRecuperator<Intervention> {
-
-		private String username, password;
+	private class UserViewReceiver extends AUserViewReceiver {
 
 		public UserViewReceiver(String username, String password) {
-			super(Intervention.class, "agetacpp", "connexion", username + "|" + password);
-			this.username = username;
-			this.password = password;
+			super(username, password);
 		}
 
 		@Override
 		public void onErrorResponse(VolleyError error) {
 			showProgress(false);
 			Log.e("LoginActivity", error.getMessage() == null ? error.toString() : error.getMessage());
-		}
-
-		@Override
-		public void onResponse(JSONObject json) {
-			AgetacppApplication.setIntervention(null);
-			AgetacppApplication.setListIntervention(null);
-			AgetacppApplication.setRole(null);
-			AgetacppApplication.setUser(null);
-			try {
-				JSONArray row = (JSONArray) json.get("rows");
-				List<Intervention> interventions = new ArrayList<Intervention>();
-				for (int i = 0; i < row.length(); i++) {
-					Log.d("d", row.toString());
-					JSONObject o = row.getJSONObject(i);
-					o = o.getJSONObject("value");
-					String role = o.getString("role");
-					if (role.equals("codis")) {
-						AgetacppApplication.setRole(Role.codis);
-					} else {
-						AgetacppApplication.setRole(Role.intervenant);
-					}
-					if ((Boolean) o.get("ok")) {
-						// User ayant une/des interventions
-						JSONObject value = o.getJSONObject("res");
-						Intervention interv = (Intervention) JsonSerializer.deserialize(Intervention.class, value);
-						interventions.add(interv);
-					} else {
-						// User sans intervention
-						JSONObject value = o.getJSONObject("res");
-						User u = (User) JsonSerializer.deserialize(User.class, value);
-						AgetacppApplication.setUser(u);
-						if (u.getRole() == Role.codis) {
-							AgetacppApplication.setListIntervention(new ArrayList<Intervention>());
-						}
-					}
-				}
-				onResponse(interventions);
-			} catch (JSONException e) {
-				Log.e("LoginActivity", e.toString());
-			}
 		}
 
 		@Override
@@ -257,7 +214,7 @@ public class LoginActivity extends Activity {
 						AgetacppApplication.setUser(findIntervenant(interventions.get(0)));
 					} catch (UserNotFoundException e) {
 						Log.e("LoginActivity", e.getMessage());
-						Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+						Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
 					}
 				} else {
 					AgetacppApplication.setListIntervention(interventions);

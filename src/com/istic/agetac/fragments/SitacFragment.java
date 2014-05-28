@@ -585,7 +585,7 @@ public class SitacFragment extends MainFragment implements Observer {
 		
 		List<Entity> entitiesDynamique = new ArrayList<Entity>();
 		for (Environnement e : intervention.getEnvironnements()) {
-			entities.add((Entity) e);
+			entitiesDynamique.add((Entity) e);
 		}
 		loadEntities(entitiesDynamique);
 		

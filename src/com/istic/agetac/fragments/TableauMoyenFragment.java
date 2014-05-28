@@ -195,9 +195,8 @@ public class TableauMoyenFragment extends Fragment {
 		 }
 		 for ( Moyen moyen : moyensWaiting )
 		 {
-			 intervention.addMoyen(moyen);
 			 moyen.setIntervention(intervention);
-//			 this.mAdapterMoyens.add(moyen);
+			 mListMoyen.add(moyen);
 		 }
 		 this.mAdapterMoyens.notifyDataSetChanged();
 	}

@@ -197,7 +197,7 @@ public class TableauMoyenFragment extends Fragment {
 		 {
 			 intervention.addMoyen(moyen);
 			 moyen.setIntervention(intervention);
-			 this.mAdapterMoyens.add(moyen);
+//			 this.mAdapterMoyens.add(moyen);
 		 }
 		 this.mAdapterMoyens.notifyDataSetChanged();
 	}

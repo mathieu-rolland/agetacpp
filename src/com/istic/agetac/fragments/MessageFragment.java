@@ -378,8 +378,10 @@ public class MessageFragment extends Fragment implements Observer {
 			if (!found) {
 				if (AgetacppApplication.getRole() == Role.codis) {
 					if (serverMsg.isValidate())
+						serverMsg.setIntervention(intervention);
 						waitingMessage.add(serverMsg);
 				} else {
+					serverMsg.setIntervention(intervention);
 					waitingMessage.add(serverMsg);
 				}
 			}

@@ -31,13 +31,13 @@ public class Message implements IMessage, Parcelable {
 	private transient Intervention intervention;
 	private transient List<Observer> observers;
 	
-	public Message(){
-		messages = new HashMap<IMessage.Message_part, String>();
-		observers = new ArrayList<Observer>();
-		validate = false;
-		lock = false;
-		_id = UUID.randomUUID().toString();
-	}
+//	public Message(){
+//		messages = new HashMap<IMessage.Message_part, String>();
+//		observers = new ArrayList<Observer>();
+//		validate = false;
+//		lock = false;
+//		_id = UUID.randomUUID().toString();
+//	}
 	
 	public Message( Intervention intervention )
 	{
@@ -94,13 +94,40 @@ public class Message implements IMessage, Parcelable {
 
 	@Override
 	public void save() {
-		try{
-			if( !intervention.getMessages().contains(this) ) intervention.addMessage(this);
-			AgetacppApplication.getIntervention().addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Envoi d'un message "));
-			intervention.save();
-		}catch(Exception e){
-			e.printStackTrace();
+		int position = isThereSameMessage(this);
+		if( position == -1) {
+			Log.d("Antho", "save message - NEW -> addMessage");
+			intervention.addMessage(this);
 		}
+		else
+		{
+			IMessage im = intervention.getMessages().get(position);
+			im.setText(IMessage.Message_part.JE_DEMANDE,
+					this.getText(IMessage.Message_part.JE_DEMANDE));
+			im.setText(IMessage.Message_part.JE_FAIS,
+					this.getText(IMessage.Message_part.JE_FAIS));
+			im.setText(IMessage.Message_part.JE_PREVOIS,
+					this.getText(IMessage.Message_part.JE_PREVOIS));
+			im.setText(IMessage.Message_part.JE_SUIS,
+					this.getText(IMessage.Message_part.JE_SUIS));
+			im.setText(IMessage.Message_part.JE_VOIS,
+					this.getText(IMessage.Message_part.JE_VOIS));
+			if (this.isValidate()) im.validate();
+		}
+		intervention.addHistorique( new Action( AgetacppApplication.getUser().getName(), new Date(), "Envoi d'un message "));
+		intervention.save();
+		Log.d("Antho", "save message - save intervention");
+		
+	}
+	
+	public int isThereSameMessage(Message message) {
+		for(IMessage m : intervention.getMessages()) {
+			Log.d("Antho", ((Message) m).getId() + " - " + message.getId());
+			if (((Message) m).getId().equals(message.getId())) {
+				return intervention.getMessages().indexOf(m);
+			}
+		}
+		return -1;
 	}
 	
 	@Override

@@ -196,6 +196,7 @@ public class TableauMoyenFragment extends Fragment {
 		 for ( Moyen moyen : moyensWaiting )
 		 {
 			 mListMoyen.add( moyen );
+			 this.mAdapterMoyens.add(moyen);
 		 }
 		 this.mAdapterMoyens.notifyDataSetChanged();
 	}

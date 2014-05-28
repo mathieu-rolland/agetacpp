@@ -189,4 +189,8 @@ public abstract class AMoyenExpListAdapter extends BaseExpandableListAdapter
         mMoyens = mListMoyen;
     }
     
+    public void add(IMoyen moyen){
+    	this.mMoyens.add(moyen);
+    }
+    
 }

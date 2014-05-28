@@ -15,7 +15,6 @@ import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.pattern.observer.Observer;
 import com.istic.agetac.pattern.observer.Subject;
-import com.istic.sit.framework.couch.AObjectRecuperator;
 import com.istic.sit.framework.couch.DataBaseCommunication;
 import com.istic.sit.framework.sync.ASynchornisationService;
 
@@ -49,12 +48,14 @@ public class MessageServiceSynchronisation
 	protected void onHandleIntent(Intent arg0) {
 		intervention = AgetacppApplication.getIntervention();
 		if( intervention != null ){
-			DataBaseCommunication.sendGet( new InterventionReceiver() );
+			MessageQuerySynchro mqs = new MessageQuerySynchro(Intervention.class, intervention, this);
+			DataBaseCommunication.sendGet( mqs );
 		}
 	}
 
 	@Override
 	public void notifyResponseSuccess(List<IMessage> objects) {
+		Log.d("Antho", "NB MESSAGE DE SYNC : " + objects.size());
 		Intent intentReceiver = new Intent( FILTER_MESSAGE_RECEIVER );
 		intentReceiver.putParcelableArrayListExtra( ASynchornisationService.SYNC_SERVICE_EXTRA , 
 				(ArrayList<? extends Parcelable>) objects);
@@ -71,23 +72,4 @@ public class MessageServiceSynchronisation
 		notifyResponseSuccess( ((Intervention) subject).getMessages() );
 	}
 
-	private class InterventionReceiver extends AObjectRecuperator<Intervention>{
-
-		public InterventionReceiver(){
-			super(Intervention.class, intervention.getId() );
-		}
-
-		@Override
-		public void onErrorResponse(VolleyError error) {
-			Log.e("MESSAGE", error.getMessage() == null 
-					? error.toString() : error.getMessage() );
-		}
-		
-		@Override
-		public void onResponse(Intervention objet) {
-			objet.updateMessagesDependencies();
-			notifyResponseSuccess(objet.getMessages());
-		}
-	}
-	
 }

@@ -1,6 +1,7 @@
 package com.istic.agetac.fragments;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.AlarmManager;
@@ -20,6 +21,7 @@ import android.widget.ExpandableListView;
 
 import com.istic.agetac.R;
 import com.istic.agetac.api.model.IMoyen;
+import com.istic.agetac.api.model.ISecteur;
 import com.istic.agetac.api.model.IUser.Role;
 import com.istic.agetac.app.AgetacppApplication;
 import com.istic.agetac.controler.adapter.AMoyenExpListAdapter;
@@ -27,6 +29,8 @@ import com.istic.agetac.controler.adapter.MoyenListExpCodisAdapter;
 import com.istic.agetac.controler.adapter.MoyenListExpIntervenantAdapter;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.Moyen;
+import com.istic.agetac.model.Secteur;
+import com.istic.agetac.sync.moyen.MoyenBroadcast;
 import com.istic.agetac.sync.moyen.MoyenIntentService;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensReceiver;
 import com.istic.agetac.sync.tableaumoyens.TableauDesMoyensSync;
@@ -55,6 +59,9 @@ public class TableauMoyenFragment extends Fragment {
 		
 	private Intervention intervention;
 	BroadcastReceiver broadcastReceiver;
+	
+	private PendingIntent pendingIntent;
+	
 //	ReceiverTdm rtdm ;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +77,7 @@ public class TableauMoyenFragment extends Fragment {
 		
 		if (AgetacppApplication.getUser().getRole() == Role.codis) {
 			mAdapterMoyens = new MoyenListExpCodisAdapter(getActivity());
+			startSynchroForCodis();
 		} else {
 			mAdapterMoyens = new MoyenListExpIntervenantAdapter(getActivity());
 		}
@@ -108,7 +116,13 @@ public class TableauMoyenFragment extends Fragment {
 		broadcastReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
+				if( AgetacppApplication.getUser().getRole() == Role.codis ){
+					updateTableauDesMoyen( (List)intent.getExtras()
+					.getParcelableArrayList( MoyenIntentService.CHANNEL ) );
+					Log.d("SYNCHRO", "Notify CODIS");
+				}
 				mAdapterMoyens.notifyDataSetChanged();
+				
 				Log.d("SYNCHRO", "Notify data set change broadcast anonyme");
 			}
 		};
@@ -121,35 +135,67 @@ public class TableauMoyenFragment extends Fragment {
         return view;
     }
 
+	private void startSynchroForCodis() {
+		if( AgetacppApplication.ACTIVE_ALL_SYNCHRO
+				&& AgetacppApplication.ACTIVE_TDM_CODIS_SYNCHRO ){
+			
+			LocalBroadcastManager bManager = LocalBroadcastManager.getInstance( getActivity().getApplicationContext() );
+			IntentFilter intentFilter = new IntentFilter();
+			intentFilter.addAction( MoyenIntentService.CHANNEL );
+			
+			MoyenIntentService service = new MoyenIntentService();
+			MoyenBroadcast broadcast = new MoyenBroadcast(this);
+			
+			bManager.registerReceiver( broadcast , intentFilter);
+	
+			Intent intent = new Intent(getActivity(), service.getClass());
+			pendingIntent = PendingIntent.getService(getActivity(), 0, intent, 0);
+			
+			Calendar cal = Calendar.getInstance();
+			AlarmManager alarm = (AlarmManager)getActivity().getSystemService( Context.ALARM_SERVICE );
+			alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 
+					service.getIntervalToRefresh() * 1000 , pendingIntent); 
+			Log.d("Pool synchronisation service", "Service moyen now started.");
+		}
+	}
+
 
 	public void updateTableauDesMoyen(List<Moyen> moyens) {
 		// // TODO implï¿½menter la rï¿½ception de la synchro.
-		// Log.d( "Synch", " Recieve sync for tableau des moyens : " + moyens ==
-		// null ? "Moyen is null" : "Size : " + moyens.size() );
-		// List<Moyen> moyensWaiting = new ArrayList<Moyen>();
-		// for ( Moyen moyenServer : moyens )
-		// {
-		//
-		// boolean found = false;
-		// for ( Moyen localMoyen : mListMoyen )
-		// {
-		// if ( localMoyen.getId().equals( moyenServer.getId() ) )
-		// {
-		// found = true;
-		// localMoyen = moyenServer;
-		// break;
-		// }
-		// }
-		// if ( !found )
-		// {
-		// moyensWaiting.add( moyenServer );
-		// }
-		// }
-		// for ( Moyen moyen : moyensWaiting )
-		// {
-		// mListMoyen.add( moyen );
-		// }
-		// this.mAdapterMoyens.notifyDataSetChanged();
+		 Log.d( "Synchro", " Recieve sync for tableau des moyens : " + moyens ==
+				 null ? "Moyen is null" : "Size : " + moyens.size() );
+		 
+		 List<Moyen> moyensWaiting = new ArrayList<Moyen>();
+		 for ( Moyen moyenServer : moyens )
+		 {
+			 boolean found = false;
+			 for ( IMoyen localMoyen : mListMoyen )
+			 {
+				 if ( localMoyen.getId().equals( moyenServer.getId() ) )
+				 {
+					 found = true;
+					 if(moyenServer.getHArrival() != null && !moyenServer.getHArrival().equals("")) localMoyen.setHArrival( moyenServer.getHArrival() );
+					 localMoyen.setHDemande(moyenServer.getHDemande());
+					 if(moyenServer.getHEngagement() != null && !moyenServer.getHEngagement().equals("")) localMoyen.setHEngagement( moyenServer.getHEngagement() );
+					 if(moyenServer.getHFree() != null && !moyenServer.getHFree().equals("")) localMoyen.setHFree( moyenServer.getHFree() );
+					 localMoyen.setIsInGroup( moyenServer.isInGroup() );
+					 localMoyen.setLibelle( moyenServer.getLibelle() );
+					 localMoyen.setRepresentationOK( moyenServer.getRepresentationOK() );
+					 Secteur secteur = moyenServer.getSecteur(intervention);
+					 if( secteur != null)
+						 localMoyen.setSecteur( secteur );					 
+				 }
+			 }
+			 if ( !found )
+			 {
+				 moyensWaiting.add( moyenServer );
+			 }
+		 }
+		 for ( Moyen moyen : moyensWaiting )
+		 {
+			 mListMoyen.add( moyen );
+		 }
+		 this.mAdapterMoyens.notifyDataSetChanged();
 	}
 
 	private void stopSynchronisation() {
@@ -165,6 +211,11 @@ public class TableauMoyenFragment extends Fragment {
 	public void onStop() {
 		stopSynchronisation();
 		LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
+		if( pendingIntent != null ){
+			AlarmManager alarm = (AlarmManager) getActivity().getSystemService(
+					Context.ALARM_SERVICE);
+			alarm.cancel(pendingIntent);
+		}
 		super.onStop();
 	}
 

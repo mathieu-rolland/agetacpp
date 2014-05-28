@@ -36,7 +36,6 @@ public interface IMoyen extends IRecordable {
     void setHFree(Date HourFree);
     void setSecteur(Secteur secteur);
     
-    
 
 	public void setIntervention(Intervention intervention);
 	
@@ -46,5 +45,6 @@ public interface IMoyen extends IRecordable {
 	public void deleteAllMoyen();
 	public void deleteMoyen(IMoyen moyen);
 	void addMoyens( List<IMoyen> liste );
+	Secteur getSecteur(Intervention intervention);
    
 } // interface

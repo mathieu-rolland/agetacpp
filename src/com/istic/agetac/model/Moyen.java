@@ -641,5 +641,22 @@ public class Moyen extends Entity implements IMoyen
         }
     }
 
+	@Override
+	public Secteur getSecteur( Intervention intervention ) {
+		int i = 0;
+        List<Secteur> secteurs = intervention.getSecteurs();
+        String name = super.getProperty( NAME_PROPERTY_SECTEUR ).getValeur();
+        Secteur secteur = null;
+        while ( i < secteurs.size() && secteur == null )
+        {
+            if ( secteurs.get( i ).getName().equals(name) )
+            {
+                secteur = secteurs.get( i );
+            }
+            i++;
+        }
+        return secteur;
+	}
+
 
 }

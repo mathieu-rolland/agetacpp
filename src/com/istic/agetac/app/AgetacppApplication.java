@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.istic.agetac.api.model.IUser;
 import com.istic.agetac.api.model.IUser.Role;
-import com.istic.agetac.model.CreationBase;
 import com.istic.agetac.model.EnvironnementsStatic;
 import com.istic.agetac.model.Intervention;
 import com.istic.agetac.model.UserAvailable;
@@ -28,6 +27,7 @@ public class AgetacppApplication extends FrameworkApplication {
 	public static final boolean ACTIVE_MAP_SYNCHRO 		= true;
 	public static final boolean ACTIVE_OCT_SYNCHRO 		= false;
 	public static final boolean ACTIVE_TDM_SYNCHRO 		= false;
+	public static final boolean ACTIVE_TDM_CODIS_SYNCHRO= true;
 	
 	@Override
 	public void onCreate() {
@@ -39,7 +39,6 @@ public class AgetacppApplication extends FrameworkApplication {
 		FrameworkApplication.setFactory(new Factory());
 		DataBaseCommunication.BASE_URL = "http://148.60.11.236:5984/tomgay/";
 		// CreationBase.createCleanBase();
-		
 	}
 
 	/**

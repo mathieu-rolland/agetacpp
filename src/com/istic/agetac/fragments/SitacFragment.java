@@ -205,22 +205,6 @@ public class SitacFragment extends MainFragment implements Observer {
 			Log.e("VINCENT", "ON LA PAS TROUVé CE PUTIN DE CRM");
 		}
 
-		// new MoyensDao(new IViewReceiver<Moyen>() {
-		//
-		// @Override
-		// public void notifyResponseSuccess(List<Moyen> objects) {
-		// listMoyens = objects;
-		// for (IEntity moyenToadd : objects) {
-		// addItemMenu(moyenToadd);
-		// }
-		// }
-		//
-		// @Override
-		// public void notifyResponseFail(VolleyError error) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// }).findAll();
 	}
 
 	public void menuUpdate(List<IMoyen> moyens) {

@@ -23,7 +23,7 @@ public class AgetacppApplication extends FrameworkApplication {
 	private static EnvironnementsStatic environnementsStatic;
 
 	public static final boolean ACTIVE_ALL_SYNCHRO 		= true;
-	public static final boolean ACTIVE_MESSAGE_SYNCHRO	= false;
+	public static final boolean ACTIVE_MESSAGE_SYNCHRO	= true;
 	public static final boolean ACTIVE_MAP_SYNCHRO 		= true;
 	public static final boolean ACTIVE_OCT_SYNCHRO 		= false;
 	public static final boolean ACTIVE_TDM_SYNCHRO 		= false;

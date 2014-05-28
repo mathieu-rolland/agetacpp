@@ -108,28 +108,30 @@ public class TableauMoyenFragment extends Fragment {
         }
 		mAdapterMoyens.notifyDataSetChanged();
         
-		LocalBroadcastManager bManager = LocalBroadcastManager.getInstance( getActivity().getApplicationContext() );
-		
-		IntentFilter filter = new IntentFilter( MoyenIntentService.CHANNEL );
-		filter.addAction( MoyenIntentService.CHANNEL );
-		
-		broadcastReceiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				if( AgetacppApplication.getUser().getRole() == Role.codis ){
-					updateTableauDesMoyen( (List)intent.getExtras()
-					.getParcelableArrayList( MoyenIntentService.CHANNEL ) );
-					Log.d("SYNCHRO", "Notify CODIS");
-				}
-				mAdapterMoyens.notifyDataSetChanged();
-				
-				Log.d("SYNCHRO", "Notify data set change broadcast anonyme");
-			}
-		};
+		if( AgetacppApplication.getUser().getRole() != Role.codis ){
+			LocalBroadcastManager bManager = LocalBroadcastManager.getInstance( getActivity().getApplicationContext() );
+			
+			IntentFilter filter = new IntentFilter( MoyenIntentService.CHANNEL );
+			filter.addAction( MoyenIntentService.CHANNEL );
+			
+			broadcastReceiver = new BroadcastReceiver() {
+				@Override
+				public void onReceive(Context context, Intent intent) {
+	//				if( AgetacppApplication.getUser().getRole() == Role.codis ){
+						updateTableauDesMoyen( (List)intent.getExtras()
+						.getParcelableArrayList( MoyenIntentService.CHANNEL ) );
+						Log.d("SYNCHRO", "Notify CODIS");
+	//				}
+					mAdapterMoyens.notifyDataSetChanged();
+					
+					Log.d("SYNCHRO", "Notify data set change broadcast anonyme");
+					}
+			};
 		
 //		rtdm = new ReceiverTdm(this);
 		
-		bManager.registerReceiver( broadcastReceiver , filter);
+			bManager.registerReceiver( broadcastReceiver , filter);
+		}
 //		bManager.registerReceiver( rtdm , filter);
 		
         return view;
